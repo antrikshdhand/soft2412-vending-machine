@@ -60,53 +60,39 @@ javadoc {
 } 
 
 
-// jacocoTestReport {
-
-//     afterEvaluate {
-//         classDirectories.setFrom(files(classDirectories.files.collect {
-//             fileTree(dir: "build/classes/java/main/CurrencyConverter",
-//                     exclude: ['WelcomeScreen.class',
-//                               'SelectPopular.class',
-//                               'History.class',
-//                               'History$MyTableModel.class',
-//                               'Desktop.class',
-//                               'Desktop$1.class',
-//                               'CurrencyExchange.class',
-//                               'AdminPortal.class',
-//                               'Calculator.class',
-//                               'Converter.class',
-//                               'Converter$1.class',
-//                               'DisplayPopular.class',
-//                               'DisplayPopular$MyTableModel.class',
-//                               'UpdateExchange.class'])
-//         }))
-//     }
-// }
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: "build/classes/java/main/CurrencyConverter",
+                    exclude: ['WelcomeScreen.class'])
+        }))
+    }
+}
 
 
-// jar {
-//     archiveBaseName = 'Currency-Converter'
-//     archiveVersion =  '1.0.1'
+jar {
+    archiveBaseName = 'Vending-Machine'
+    archiveVersion =  '1.0.0'
 
-//     manifest {
-//     attributes(
-//         'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
-//         'Main-Class': 'CurrencyConverter.App'
-//     )
-//   }
-// }
+    manifest {
+    attributes(
+        'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
+        'Main-Class': 'vending-machine.App'
+    )
+  }
+}
 
-// version = '1.1'
+version = '1.1'
 
-// task fatJar(type: Jar) {
+task fatJar(type: Jar) {
 
-//     archiveBaseName = 'Currency-Converter'
-// 	manifest {
-//         attributes 'Implementation-Title': 'Currency Converter',  
-//         	'Implementation-Version': version,
-//         	'Main-Class': 'CurrencyConverter.App'
-//     }
-//     baseName = project.name + '-all'
-//     from { configurations.runtimeClasspath.files.collect { it.isDirectory() ? it : zipTree(it) } }
-//     with jar
-// }
+    archiveBaseName = 'Vending-Machine'
+	manifest {
+        attributes 'Implementation-Title': 'Vending Machine',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'vending-machine.App'
+    }
+    baseName = project.name + '-all'
+    from { configurations.runtimeClasspath.files.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
