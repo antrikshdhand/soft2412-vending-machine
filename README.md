@@ -1,6 +1,3 @@
-# vending-machine
-CC_06_Thu_14_Rasim_Group-2
-
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 
@@ -126,6 +123,8 @@ We welcome any collaboration and contributions from the public to this open sour
 ## Contact
 
 Created for SOFT2412: Agile Software Development Practices in Semester 2, 2022.
+
+Group: CC_06_Thu_14_Rasim_Group-2
 
 ```bash
 | name           | unikey   | sid       |
