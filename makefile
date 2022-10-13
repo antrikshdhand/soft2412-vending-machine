@@ -3,7 +3,10 @@ app:
 	make test
 	make run
 
-
+git $(m):
+	git add -A
+	git commit -m '$(m)'
+	git push
 
 full_commit:
 	rm .DS_Store
