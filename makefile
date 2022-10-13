@@ -1,4 +1,4 @@
-application:
+app:
 	make build
 	make test
 	make run
