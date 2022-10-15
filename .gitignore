@@ -12,6 +12,8 @@ app/bin/*
 .idea
 .idea/*
 
+**/.idea/
+
 app/.vscode
 
 gradlew/
