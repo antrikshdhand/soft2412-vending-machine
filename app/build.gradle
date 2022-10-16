@@ -10,6 +10,9 @@ plugins {
 
     // Apply the jacoco plugin to add support for test reports on test code coverage.
     id 'jacoco'
+
+    // Apply the javafx plugin to add support for GUI development for the project in java. 
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
@@ -24,6 +27,14 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
+
+javafx {
+    version = '17.0.2'
+    modules = ['javafx.controls', 'javafx.media']
+}
+
+// group 'org.example'
+// version '1.0-SNAPSHOT'
 
 dependencies {
     // Use JUnit test framework.
