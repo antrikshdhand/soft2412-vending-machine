@@ -133,6 +133,7 @@ Group: CC_06_Thu_14_Rasim_Group-2
 | Nemo Gage      | ngag3129 | 500496851 |
 | Udit Samant    | usam6049 | 500700976 |
 | Sulav Malla    | smal8154 | 500495980 |
+| Ankit Kapoor   |          |           |
 ```
 
 Project Link: [https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine](https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine)
