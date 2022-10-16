@@ -15,5 +15,6 @@ app/.vscode
 
 gradlew/
 gradle/
+**/.vscode
 
-
+gradle.properties
