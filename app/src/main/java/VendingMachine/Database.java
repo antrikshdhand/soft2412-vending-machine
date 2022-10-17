@@ -1,13 +1,6 @@
 package VendingMachine;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.*;
 
 //////////////////////// README ////////////////////////
 /**
@@ -130,6 +123,60 @@ public class Database {
         }
 
     }
+
+
+    /**
+     * Function to add a new Owner into the database.
+     * @param userName userName of the new user
+     * @param password password of the new user
+     * @return
+     */
+
+    public int insertNewOwner(String userName, String password){
+
+        // Add error handling
+        try {
+
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', 'O')", userName, password));
+
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+
+    }
+
+    /**
+     * Funciton to check if a certain user has the wanted role, of not. Returns true if the user has the wanted role, false if it doesn't.
+     * @param userName Username one wants to check the role of
+     * @param role the role you want to check the username has
+     * @return true if successful, false if not successful
+     */
+
+    public boolean checkRole(String userName, String role){
+
+        try{
+            ResultSet query = openStatement.executeQuery(String.format("select role from roles where username  = '%s'", userName));
+            if ( query.getString("role") .equalsIgnoreCase(role)){
+                return true;
+            }
+
+        }
+        catch(SQLException e){
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return false;
+        }
+
+        return false;
+    }
+
 
 
     /// TO DO ADD YOUR FUNCTIONS HERE
