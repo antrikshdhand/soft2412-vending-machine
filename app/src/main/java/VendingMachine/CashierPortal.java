@@ -11,6 +11,22 @@ import javafx.stage.Stage;
 public class CashierPortal extends App {
 
     public CashierPortal() {
+
+        // Create Buttons
+        Button modifyAvailableCash = new Button();
+        Button generateSummaryOfChange = new Button();
+        Button generateSummaryOfTransaction = new Button();
+        // Setting text to the button
+        modifyAvailableCash.setText("Modify Available Cash");
+        generateSummaryOfChange.setText("Generate Summary of Change");
+        generateSummaryOfTransaction.setText("Generate Summary of Transaction");
+        // Setting the location of the button
+        modifyAvailableCash.setTranslateX(150);
+        modifyAvailableCash.setTranslateY(60);
+        generateSummaryOfChange.setTranslateX(150);
+        generateSummaryOfChange.setTranslateY(60);
+        generateSummaryOfTransaction.setTranslateX(150);
+        generateSummaryOfTransaction.setTranslateY(60);
         
     }
 }
