@@ -1,26 +1,26 @@
 package VendingMachine;
 
-import VendingMachine.SellerPortal;
-
-import javafx.application.Application; //check
-import javafx.scene.*;
-import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class App extends Application {
 
-    private Parent createContent() {
-        return new StackPane(new Text("Hello World"));
-    }
+    // Constants
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = 250;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(createContent(), 1280, 720));
-        stage.show();
-    }
+    public static final int BUTTONWIDTH = WIDTH / 8;
+    public static final int BUTTONHEIGHT = HEIGHT / 8;
 
     public static void main(String[] args) {
+
+        // View screen
+        Application.launch(args);
 
         Database db = new Database();
 
