@@ -18,6 +18,12 @@ public class App extends Application {
     public static final int BUTTONWIDTH = WIDTH / 8;
     public static final int BUTTONHEIGHT = HEIGHT / 8;
 
+    @Override
+    public void start(Stage stage) {
+
+        return;
+    }
+
     public static void main(String[] args) {
 
         // View screen
