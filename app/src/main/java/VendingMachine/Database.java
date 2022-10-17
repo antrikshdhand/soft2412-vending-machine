@@ -202,5 +202,45 @@ public class Database {
 
     }
 
+    /**
+     * Gets Average, Minimum , Maximum, and Varience of the conversion values for a particular exchange between 2 dates.
+     *
+     * @param currOne currency from
+     * @param currTwo currency to
+     * @param dayOne date one wants the exchange rate after, in format "YYYY-MM-DD" inclusive
+     * @param dayTwo date one wants the exchange rate before, in format "YYYY-MM-DD" inclusive
+     * @return HashMap<String, Double> containing the full the Summaries of a particular exchange rate, in format {Summary Name e.g Average, double value}.
+     */
+    public HashMap<String, Double> getSummaries(String currOne, String currTwo, String dayOne, String dayTwo) {
+
+        HashMap<String, Double> map = new HashMap<String, Double>();
+
+        String avgQuery = String.format("select avg(conv_val) as \"Average\" from exchange where currency_ex_code = '%s' and time_added >= '%s 00.00.00' and time_added <= '%s 23.59.59' order by time_added DESC", currOne + currTwo, dayOne, dayTwo);
+        String minQuery = String.format("select min(conv_val) as \"Min\" from exchange where currency_ex_code = '%s' and time_added >= '%s 00.00.00' and time_added <= '%s 23.59.59' order by time_added DESC", currOne + currTwo, dayOne, dayTwo);
+        String maxQuery = String.format("select max(conv_val) as \"Max\" from exchange where currency_ex_code = '%s' and time_added >= '%s 00.00.00' and time_added <= '%s 23.59.59' order by time_added DESC", currOne + currTwo, dayOne, dayTwo);
+        //String varQuery = String.format("Select avg((t.conv_val - SUB.mean) * (t.conv_val - SUB.mean)) as \"Var\" from exchange t,(SELECT AVG(conv_val) AS mean FROM exchange) AS SUB) where currency_ex_code = '%s' and time_added >= '%s 00.00.00' and time_added <= '%s 23.59.59' order by time_added DESC", currOne + currTwo, dayOne, dayTwo);
+
+        try {
+
+            ResultSet query1 = openStatement.executeQuery(avgQuery);
+            map.put("Average", query1.getDouble("Average"));
+
+
+            ResultSet query2 =  openStatement.executeQuery(minQuery);
+            map.put("Min", query2.getDouble("Min"));
+
+            ResultSet query3 = openStatement.executeQuery(maxQuery);
+            map.put("Max", query3.getDouble("Max"));
+
+//            ResultSet query4 = openStatement.executeQuery(varQuery);
+//            map.put("Var",query4.getDouble("Var"));
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+
+        return map;
+    }
+
     //////////////////////
 }
