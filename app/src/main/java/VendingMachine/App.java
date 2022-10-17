@@ -6,7 +6,7 @@ public class App {
      * @return "Hello World!"
      */
     public String getGreeting() {
-        return "Hello Worrld!";
+        return "Hello World!";
     }
 
     public static void main(String[] args) {
