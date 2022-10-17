@@ -6,12 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 //////////////////////// README ////////////////////////
-/*
+/**
  * This is a basic instruction manual for this Vending-
  * Machine.
  * 
