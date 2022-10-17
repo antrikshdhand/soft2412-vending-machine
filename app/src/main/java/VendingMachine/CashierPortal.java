@@ -7,5 +7,5 @@ public class CashierPortal {
         System.out.println("Hello world!");
 
     }
-    
+
 }

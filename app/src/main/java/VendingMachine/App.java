@@ -1,12 +1,23 @@
 package VendingMachine;
 
-public class App {
-    /**
-     * This method gets the user a lovely greeting.
-     * @return "Hello World!"
-     */
-    public String getGreeting() {
-        return "Hello World!";
+import VendingMachine.SellerPortal;
+
+import javafx.application.Application; //check
+import javafx.scene.*;
+import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+
+public class App extends Application {
+
+    private Parent createContent() {
+        return new StackPane(new Text("Hello World"));
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.setScene(new Scene(createContent(), 1280, 720));
+        stage.show();
     }
 
     public static void main(String[] args) {
@@ -14,7 +25,7 @@ public class App {
         Database db = new Database();
 
         /// Example Query ///
-        
+
         db.openConn();
         if (db.dropAllTables() == 0) {
             System.out.println("App.Java - Dropped All Tables");
@@ -23,6 +34,7 @@ public class App {
 
         /// Example Query ///
 
-        System.out.println(new App().getGreeting());
+        // launch();
+        Application.launch(SellerPortal.class);
     }
 }
