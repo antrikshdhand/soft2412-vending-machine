@@ -51,6 +51,9 @@ public class App extends Application {
         
         StackPane root = new StackPane();
         root.getChildren().add(btn);
+
+        CashierPortal cp = new CashierPortal(root);
+
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
     }

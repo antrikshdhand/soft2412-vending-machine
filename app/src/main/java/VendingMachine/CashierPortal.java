@@ -8,9 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class CashierPortal extends App {
+public class CashierPortal {
 
-    public CashierPortal() {
+    public CashierPortal(StackPane root) {
 
         // Create Buttons
         Button modifyAvailableCash = new Button();
@@ -36,6 +36,8 @@ public class CashierPortal extends App {
 
         returnButton.setTranslateX(150);
         returnButton.setTranslateY(60);
+
+        root.getChildren().add(modifyAvailableCash);
         
     }
 }
