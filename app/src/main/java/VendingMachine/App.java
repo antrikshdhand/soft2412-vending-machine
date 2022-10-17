@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.CashierPortal;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,7 +21,7 @@ public class App extends Application {
     public static void main(String[] args) {
 
         // View screen
-        Application.launch(args);
+        // Application.launch(args);
 
         Database db = new Database();
 
@@ -36,5 +37,6 @@ public class App extends Application {
 
         // launch();
         Application.launch(SellerPortal.class);
+        // Application.launch(CashierPortal.class);
     }
 }
