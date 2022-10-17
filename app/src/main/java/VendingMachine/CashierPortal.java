@@ -16,17 +16,26 @@ public class CashierPortal extends App {
         Button modifyAvailableCash = new Button();
         Button generateSummaryOfChange = new Button();
         Button generateSummaryOfTransaction = new Button();
+        Button returnButton = new Button();
+
         // Setting text to the button
         modifyAvailableCash.setText("Modify Available Cash");
         generateSummaryOfChange.setText("Generate Summary of Change");
         generateSummaryOfTransaction.setText("Generate Summary of Transaction");
+        returnButton.setText("Return to Default Page");
+
         // Setting the location of the button
         modifyAvailableCash.setTranslateX(150);
         modifyAvailableCash.setTranslateY(60);
+
         generateSummaryOfChange.setTranslateX(150);
         generateSummaryOfChange.setTranslateY(60);
+
         generateSummaryOfTransaction.setTranslateX(150);
         generateSummaryOfTransaction.setTranslateY(60);
+
+        returnButton.setTranslateX(150);
+        returnButton.setTranslateY(60);
         
     }
 }
