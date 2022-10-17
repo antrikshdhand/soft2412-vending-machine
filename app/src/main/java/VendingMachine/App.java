@@ -9,13 +9,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    /**
-     * This method gets the user a lovely greeting.
-     * @return "Hello World!"
-     */
-    public String getGreeting() {
-        return "Hello World!";
-    }
+
+    // Constants
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = 250;
+
+    public static final int BUTTONWIDTH = WIDTH / 8;
+    public static final int BUTTONHEIGHT = HEIGHT / 8;
 
     public static void main(String[] args) {
 
@@ -33,8 +33,6 @@ public class App extends Application {
         db.closeConn();
 
         /// Example Query ///
-
-        System.out.println(new App().getGreeting());
     }
 
     // Stub code
@@ -53,7 +51,7 @@ public class App extends Application {
         
         StackPane root = new StackPane();
         root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
     }
 }
