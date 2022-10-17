@@ -1,7 +1,5 @@
 package VendingMachine;
 
-import VendingMachine.Database;
-
 public class App {
     /**
      * This method gets the user a lovely greeting.
