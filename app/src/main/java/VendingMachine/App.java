@@ -42,7 +42,6 @@ public class App extends Application {
         /// Example Query ///
 
         // launch();
-        Application.launch(SellerPortal.class);
-        Application.launch(CashierPortal.class);
+        //Application.launch(SellerPortal.class);
     }
 }

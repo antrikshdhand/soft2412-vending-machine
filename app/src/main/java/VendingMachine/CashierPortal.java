@@ -10,9 +10,7 @@ import javafx.stage.Stage;
 
 public class CashierPortal {
 
-    public CashierPortal() {
-
-        var root = new StackPane();
+    public CashierPortal(StackPane root) {
 
         // Create Buttons
         Button modifyAvailableCash = new Button();

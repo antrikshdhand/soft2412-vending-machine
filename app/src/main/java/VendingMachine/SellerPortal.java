@@ -19,7 +19,6 @@ public class SellerPortal extends Application {
 
     @Override
     public void start(Stage stage) {
-
         initUI(stage);
     }
 
