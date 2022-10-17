@@ -37,6 +37,6 @@ public class App extends Application {
 
         // launch();
         Application.launch(SellerPortal.class);
-        // Application.launch(CashierPortal.class);
+        Application.launch(CashierPortal.class);
     }
 }
