@@ -13,8 +13,13 @@ import java.io.IOException;
  
 public class DefaultPage {
 
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
+
     private BorderPane rootPane = new BorderPane();
     public Button proceedToPortalBtn = new Button();
+
+    private Scene scene;
 
     public DefaultPage(Scene ownerscene, Stage primaryStage, App app, OwnerPortal owner) {
         proceedToPortalBtn.setText("Proceed to Portal");
@@ -53,9 +58,11 @@ public class DefaultPage {
         defaultPageRightVbox.getChildren().addAll(new Button("Log Out"), proceedToPortalBtn, new Button("Proceed to Checkout"));
         rootPane.setRight(defaultPageRightVbox);
 
+        scene = new Scene(rootPane, WIDTH, HEIGHT);
+
     }
 
-    public Pane getRootPane() {
-        return rootPane;
+    public Scene getScene() {
+        return scene;
     }
 }
