@@ -50,7 +50,7 @@ public class CashierPortal {
         buttons.add(generateSummaryOfTransaction);
         buttons.add(returnButton);
 
-        // Set global values
+        // Set universal values
         for (Button button : buttons) {
             button.setMinWidth(box.getPrefWidth());
         }
@@ -74,8 +74,10 @@ public class CashierPortal {
         returnButton.setTranslateX(150);
         returnButton.setTranslateY(60);
 
-        //
-        pane.getChildren().add(modifyAvailableCash);
+        // Add objects to pane
+        for (Button button : buttons) {
+            pane.getChildren().add(button);
+        }
 
         return scene;
         
