@@ -13,6 +13,9 @@ import javafx.geometry.Pos;
 
 public class SellerPortal extends Application {
 
+    private final int width = 1280;
+    private final int height = 720;
+
     public SellerPortal() {
 
     }

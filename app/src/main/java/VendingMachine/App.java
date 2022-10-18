@@ -21,7 +21,6 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-
         // Stage is basically the window, and you are given the name of the window.
         primaryStage.setTitle("Vending Machine");
 
@@ -43,7 +42,6 @@ public class App extends Application {
         // DefaultPage defaultPage = new DefaultPage();
         // primaryStage.setScene(defaultPage.getScene());
 
-
         primaryStage.show();
 
     }
@@ -62,9 +60,6 @@ public class App extends Application {
             System.out.println("App.Java - Dropped All Tables");
         }
         db.closeConn();
-
-
-
 
         /// Example Query ///
 
