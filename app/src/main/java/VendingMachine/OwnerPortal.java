@@ -52,7 +52,7 @@ public class OwnerPortal{
         summary.setMinWidth(box.getPrefWidth());
         cancelledTransactions.setMinWidth(box.getPrefWidth());
 
-        returnToDp.setTranslateX(- 550);
+        returnToDp.setTranslateX(-550);
         returnToDp.setTranslateY(320);
 
         Text title = new Text();

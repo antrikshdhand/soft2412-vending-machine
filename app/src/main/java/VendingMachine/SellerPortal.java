@@ -1,17 +1,20 @@
 package VendingMachine;
 
-import javafx.application.Application; //check
+import javafx.application.Application; // check
 import javafx.scene.layout.Pane;
-import javafx.scene.Scene; //check
-import javafx.scene.control.Label; //check
+import javafx.scene.Scene; // check
+import javafx.scene.control.Label; // check
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font; //check
-import javafx.scene.text.FontWeight; //check
-import javafx.stage.Stage; //check
+import javafx.scene.text.Font; // check
+import javafx.scene.text.FontWeight; // check
+import javafx.stage.Stage; // check
 import javafx.geometry.Pos;
 
 public class SellerPortal extends Application {
+
+    private final int width = 1280;
+    private final int height = 720;
 
     public SellerPortal() {
 
