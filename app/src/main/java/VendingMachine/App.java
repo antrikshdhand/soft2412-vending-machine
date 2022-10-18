@@ -40,6 +40,10 @@ public class App extends Application {
         OwnerPortal portal = new OwnerPortal();
         primaryStage.setScene(portal.getScene());
 
+        // DefaultPage defaultPage = new DefaultPage();
+        // primaryStage.setScene(defaultPage.getScene());
+
+
         primaryStage.show();
 
     }
