@@ -1,6 +1,6 @@
 package VendingMachine;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -17,9 +17,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-import javax.swing.plaf.ViewportUI;
-import java.awt.*;
-
 public class CashierPortal {
 
     ArrayList<Button> buttons = new ArrayList<Button>();
@@ -27,6 +24,8 @@ public class CashierPortal {
     private Scene scene;
     private final int width = App.WIDTH;
     private final int height = App.HEIGHT;
+    private final double prefWidth = App.PREFWIDTH;
+    private final int spacing = App.SPACING;
     private Pane pane;
 
     public Scene getScene() {
@@ -35,8 +34,8 @@ public class CashierPortal {
         scene = new Scene(pane, width, height);
 
         VBox box = new VBox();
-        box.setSpacing(5);
-        box.setPrefWidth(190.00);
+        box.setSpacing(spacing);
+        box.setPrefWidth(prefWidth);
         box.setAlignment(Pos.CENTER);
 
         // Create Buttons

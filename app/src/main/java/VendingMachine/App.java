@@ -12,11 +12,14 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     // Constants
-    public static final int WIDTH = 300;
-    public static final int HEIGHT = 250;
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
 
     public static final int BUTTONWIDTH = WIDTH / 8;
     public static final int BUTTONHEIGHT = HEIGHT / 8;
+
+    public static final double PREFWIDTH = 190.00;
+    public static final int SPACING = 5;
 
     @Override
     public void start(Stage primaryStage) {
@@ -28,8 +31,8 @@ public class App extends Application {
         primaryStage.setResizable(false);
 
         // Setting the height and the width of the window.
-        primaryStage.setWidth(1280);
-        primaryStage.setHeight(720);
+        primaryStage.setWidth(WIDTH);
+        primaryStage.setHeight(HEIGHT);
 
         // If you wanna add an icon for the program
         // Image icon = new Image('File path')
