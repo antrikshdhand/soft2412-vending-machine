@@ -19,9 +19,29 @@ public class App extends Application {
     public static final int BUTTONHEIGHT = HEIGHT / 8;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage primaryStage) {
 
-        return;
+
+        // Stage is basically the window, and you are given the name of the window.
+        primaryStage.setTitle("Vending Machine");
+
+        // we do not want the window to be resizable/
+        primaryStage.setResizable(false);
+
+        // Setting the height and the width of the window.
+        primaryStage.setWidth(1280);
+        primaryStage.setHeight(720);
+
+        // If you wanna add an icon for the program
+        // Image icon = new Image('File path')
+        // primaryStage.setIcon(icon);
+
+        // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
+        OwnerPortal portal = new OwnerPortal();
+        primaryStage.setScene(portal.getScene());
+
+        primaryStage.show();
+
     }
 
     public static void main(String[] args) {
@@ -39,9 +59,11 @@ public class App extends Application {
         }
         db.closeConn();
 
+
+
+
         /// Example Query ///
 
-        // launch();
-        //Application.launch(SellerPortal.class);
+        launch(args);
     }
 }

@@ -2,8 +2,8 @@ plugins {
     // Apply the java plugin to add basic functionality for Java Code.
     id 'java'
 
-
-    id("java-library")
+//
+//    id("java-library")
 
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'

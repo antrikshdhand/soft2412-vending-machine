@@ -52,6 +52,8 @@ public class Database {
                     "create table if not exists categories (category_id serial, category_name varchar(20))");
             openStatement.executeUpdate(
                     "create table if not exists items (item_id serial, category_id int references categories(category_id))");
+            // There is already guest account in the db when it is created.
+            openStatement.executeUpdate("insert into roles values('guest', 'guest', 'G')");
 
             // Owner - O
             // Cashier - C
@@ -124,26 +126,35 @@ public class Database {
     }
 
     /**
-     * Function to add a new Owner into the database.
+     * Function to add a new User into the database.
      * 
      * @param userName userName of the new user
      * @param password password of the new user
+     * @param role role of the new user
      * @return
      */
 
-    public int insertNewOwner(String userName, String password) {
+    public int insertNewUser(String userName, String password, String role) {
+
+        // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
 
         // Add error handling
         try {
 
+            // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
+            if( userName.length() > 15 || password.length() > 20){
+                throw new SQLException("userName or password too long");
+            }
+
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', 'O')", userName, password));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", userName, password,role.toUpperCase()));
 
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
+            System.out.println(userName);
             return -1;
         }
         return 0;
