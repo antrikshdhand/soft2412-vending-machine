@@ -25,6 +25,9 @@ public class DatabaseTest {
     // Get rid of the database
     @AfterEach
     void tearDown(){
+        db.openConn();
+        db.dropAllTables();
+        db.closeConn();
         db = null;
     }
 
