@@ -29,7 +29,7 @@ public class CashierPortal {
     private final int height = App.HEIGHT;
     private Pane pane;
 
-    public CashierPortal(StackPane root) {
+    public Scene getScene() {
 
         pane = new StackPane();
         scene = new Scene(pane, width, height);
@@ -75,7 +75,10 @@ public class CashierPortal {
         returnButton.setTranslateX(150);
         returnButton.setTranslateY(60);
 
-        root.getChildren().add(modifyAvailableCash);
+        //
+        pane.getChildren().add(modifyAvailableCash);
+
+        return scene;
         
     }
 }

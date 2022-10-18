@@ -36,7 +36,9 @@ public class App extends Application {
         // primaryStage.setIcon(icon);
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
-        OwnerPortal portal = new OwnerPortal();
+
+        // Test CASHIERPORTAL
+        CashierPortal portal = new CashierPortal();
         primaryStage.setScene(portal.getScene());
 
         // DefaultPage defaultPage = new DefaultPage();
