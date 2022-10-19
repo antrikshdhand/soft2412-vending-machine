@@ -11,21 +11,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
  
-public class DefaultPage {
-
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
+public class DefaultPage extends Page {
 
     private BorderPane rootPane = new BorderPane();
     public Button proceedToPortalBtn = new Button();
 
-    private Scene scene;
-
-    public DefaultPage(Scene ownerscene, Stage primaryStage, App app, OwnerPortal owner) {
+    public DefaultPage(App app) {
         proceedToPortalBtn.setText("Proceed to Portal");
 
         proceedToPortalBtn.setOnAction(e -> {
-            System.out.println("Hello");
+            app.switchScenes(app.getSceneManager().getOwnerPortalScene());
         });
 
         // proceedToPortalBtn.setOnAction(e -> {
@@ -62,7 +57,4 @@ public class DefaultPage {
 
     }
 
-    public Scene getScene() {
-        return scene;
-    }
 }

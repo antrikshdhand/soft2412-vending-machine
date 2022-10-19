@@ -16,11 +16,9 @@ import javafx.scene.text.Font;
 import javax.swing.plaf.ViewportUI;
 import java.awt.*;
 
-public class OwnerPortal{
+public class OwnerPortal extends Page{
 
-    private Scene scene;
-    private final int width = 1280;
-    private final int height = 720;
+
     private Pane pane;
 
     private Button cashierPortal;
@@ -30,9 +28,10 @@ public class OwnerPortal{
     private Button cancelledTransactions;
     private Button returnToDp;
 
-    public OwnerPortal(){
+    public OwnerPortal(App app){
+
         pane = new StackPane();
-        scene = new Scene(pane, width, height);
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
         VBox box = new VBox();
         box.setSpacing(5);
@@ -40,11 +39,25 @@ public class OwnerPortal{
         box.setAlignment(Pos.CENTER);
 
         cashierPortal = new Button("Cashier portal");
+
+        cashierPortal.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getCashierPortalScene());
+        });
+
         sellerPortal = new Button("Seller portal");
+
+        sellerPortal.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getSellerPortalScene());
+        });
+
         manageSCO = new Button("Managed privileged users");
         summary = new Button("Generate Users Summary");
         cancelledTransactions = new Button("View unsuccessful transaction");
         returnToDp = new Button("Return to default page");
+
+        returnToDp.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+        });
 
         cashierPortal.setMinWidth(box.getPrefWidth());
         sellerPortal.setMinWidth(box.getPrefWidth());

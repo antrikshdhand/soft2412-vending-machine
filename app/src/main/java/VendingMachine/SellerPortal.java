@@ -59,6 +59,12 @@ public class SellerPortal {
         Button bn3 = new Button("Generate Summary");
         Button bn4 = new Button("Return to Default Page");
 
+        bn4.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+        });
+
+        scene = new Scene(root, WIDTH, HEIGHT);
+
 
         Label lbl = new Label("Seller Portal");
         lbl.setTranslateY(20);
@@ -180,6 +186,4 @@ public class SellerPortal {
     public void showScene() {
         this.window.setScene(scene);
     }
-
-
 }

@@ -17,25 +17,20 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-public class CashierPortal {
+public class CashierPortal extends Page {
 
     ArrayList<Button> buttons = new ArrayList<Button>();
 
-    private Scene scene;
-    private final int width = App.WIDTH;
-    private final int height = App.HEIGHT;
-    private final double prefWidth = App.PREFWIDTH;
-    private final int spacing = App.SPACING;
     private Pane pane;
 
-    public Scene getScene() {
-
+    public CashierPortal(App app) {
+        
         pane = new StackPane();
-        scene = new Scene(pane, width, height);
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
         VBox box = new VBox();
-        box.setSpacing(spacing);
-        box.setPrefWidth(prefWidth);
+        box.setSpacing(SPACING);
+        box.setPrefWidth(PREFWIDTH);
         box.setAlignment(Pos.CENTER);
 
         // Create Buttons
@@ -61,6 +56,10 @@ public class CashierPortal {
         generateSummaryOfTransaction.setText("Generate Summary of Transaction");
         returnButton.setText("Return to Default Page");
 
+        returnButton.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+        });
+
         // Setting the location of the button
         modifyAvailableCash.setTranslateX(150);
         modifyAvailableCash.setTranslateY(60);
@@ -79,7 +78,9 @@ public class CashierPortal {
             pane.getChildren().add(button);
         }
 
+    }
+
+    public Scene getScene() {
         return scene;
-        
     }
 }
