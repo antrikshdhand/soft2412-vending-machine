@@ -11,10 +11,12 @@ import javafx.geometry.Side;
 
 import java.io.IOException;
 
+import VendingMachine.SceneManager;
+
  
 public class DefaultPage extends Page {
 
-    public DefaultPage(App app) {
+    public DefaultPage(SceneManager sceneManager) {
 
         SplitPane splitPane = new SplitPane();
         splitPane.setDividerPosition(0, 0.668);
@@ -38,7 +40,7 @@ public class DefaultPage extends Page {
         proceedToPortalBtn.setText("Proceed to Portal");
         
         proceedToPortalBtn.setOnAction(e -> {
-            app.switchScenes(app.getSceneManager().getOwnerPortalScene());
+            sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
         });
 
         rightAnchorPane.getChildren().add(proceedToPortalBtn);
