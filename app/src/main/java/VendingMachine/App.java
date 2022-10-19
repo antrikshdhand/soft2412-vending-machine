@@ -12,14 +12,6 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     // Constants
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
-
-    public static final int BUTTONWIDTH = WIDTH / 8;
-    public static final int BUTTONHEIGHT = HEIGHT / 8;
-
-    public static final double PREFWIDTH = 190.00;
-    public static final int SPACING = 5;
 
     private SceneManager sceneManager = new SceneManager(this);
 
@@ -35,25 +27,14 @@ public class App extends Application {
         // we do not want the window to be resizable/
         primaryStage.setResizable(false);
 
-        // Setting the height and the width of the window.
-        // primaryStage.setWidth(WIDTH);
-        // primaryStage.setHeight(HEIGHT);
 
         // If you wanna add an icon for the program
         // Image icon = new Image('File path')
         // primaryStage.setIcon(icon);
 
-
-
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
-        // OwnerPortal portal = new OwnerPortal();
-        // primaryStage.setScene(portal.getScene());
-
         primaryStage.setScene(sceneManager.getDeafultPageScene());
-
-        // CashierPortal portal = new CashierPortal();
-        // primaryStage.setScene(portal.getScene());
 
         primaryStage.show();
 

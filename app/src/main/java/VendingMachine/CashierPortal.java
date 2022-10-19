@@ -17,25 +17,20 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-public class CashierPortal {
+public class CashierPortal extends Page {
 
     ArrayList<Button> buttons = new ArrayList<Button>();
 
-    private Scene scene;
-    private final int width = App.WIDTH;
-    private final int height = App.HEIGHT;
-    private final double prefWidth = App.PREFWIDTH;
-    private final int spacing = App.SPACING;
     private Pane pane;
 
     public CashierPortal(App app) {
         
         pane = new StackPane();
-        scene = new Scene(pane, width, height);
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
         VBox box = new VBox();
-        box.setSpacing(spacing);
-        box.setPrefWidth(prefWidth);
+        box.setSpacing(SPACING);
+        box.setPrefWidth(PREFWIDTH);
         box.setAlignment(Pos.CENTER);
 
         // Create Buttons

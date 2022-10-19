@@ -11,15 +11,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
  
-public class DefaultPage {
-
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
+public class DefaultPage extends Page {
 
     private BorderPane rootPane = new BorderPane();
     public Button proceedToPortalBtn = new Button();
-
-    private Scene scene;
 
     public DefaultPage(App app) {
         proceedToPortalBtn.setText("Proceed to Portal");
@@ -62,7 +57,4 @@ public class DefaultPage {
 
     }
 
-    public Scene getScene() {
-        return scene;
-    }
 }

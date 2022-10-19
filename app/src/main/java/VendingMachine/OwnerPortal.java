@@ -16,11 +16,9 @@ import javafx.scene.text.Font;
 import javax.swing.plaf.ViewportUI;
 import java.awt.*;
 
-public class OwnerPortal{
+public class OwnerPortal extends Page{
 
-    private Scene scene;
-    private final int width = 1280;
-    private final int height = 720;
+
     private Pane pane;
 
     private Button cashierPortal;
@@ -33,7 +31,7 @@ public class OwnerPortal{
     public OwnerPortal(App app){
 
         pane = new StackPane();
-        scene = new Scene(pane, width, height);
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
         VBox box = new VBox();
         box.setSpacing(5);
