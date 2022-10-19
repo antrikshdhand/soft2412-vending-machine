@@ -24,5 +24,5 @@ public abstract class Page {
     public Scene getScene() {
         return scene;
     }
-    
+
 }

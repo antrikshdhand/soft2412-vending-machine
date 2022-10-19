@@ -12,7 +12,7 @@ public class SceneManager {
 
     private App app;
 
-    private SellerPortal ownerPortal;
+    private OwnerPortal ownerPortal;
     private DefaultPage defaultPage;
     private SellerPortal cashierPortal;
     private SellerPortal sellerPortal;
@@ -22,9 +22,8 @@ public class SceneManager {
         this.app = app;
 
         defaultPage = new DefaultPage(this);
-        ownerPortal = new SellerPortal(this);
+        ownerPortal = new OwnerPortal(this);
         cashierPortal = new SellerPortal(this);
-        // ownerPortal = new OwnerPortal(this);
         // cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
     }
