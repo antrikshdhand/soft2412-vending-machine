@@ -1,14 +1,14 @@
 package VendingMachine;
 
 import VendingMachine.CashierPortal;
-import VendingMachine.SellerPortal;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 public class App extends Application {
 
@@ -19,7 +19,7 @@ public class App extends Application {
     private Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage0) {
+    public void start(Stage primaryStage0) throws Exception {
 
         primaryStage = primaryStage0;
         // Stage is basically the window, and you are given the name of the window.
@@ -35,21 +35,9 @@ public class App extends Application {
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
-
-//         OwnerPortal portal = new OwnerPortal();
-//         primaryStage.setScene(portal.getScene());
-
-        // DefaultPage defaultPage = new DefaultPage();
-        // primaryStage.setScene(defaultPage.getScene());
-
-//        CashierPortal portal = new CashierPortal();
-//        primaryStage.setScene(portal.getScene());
-//        SellerPortal p2 = new SellerPortal(primaryStage);
-//        p2.showScene();
-//        primaryStage.setScene((p2.manageItems));
         primaryStage.setScene(sceneManager.getDeafultPageScene());
-
         primaryStage.show();
+
 
     }
 
