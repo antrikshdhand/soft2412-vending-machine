@@ -1,6 +1,5 @@
 package VendingMachine;
 
-import VendingMachine.CashierPortal;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,9 +12,9 @@ public class SceneManager {
 
     private App app;
 
-    private OwnerPortal ownerPortal;
+    private SellerPortal ownerPortal;
     private DefaultPage defaultPage;
-    private CashierPortal cashierPortal;
+    private SellerPortal cashierPortal;
     private SellerPortal sellerPortal;
 
     public SceneManager(App app) {
@@ -23,8 +22,10 @@ public class SceneManager {
         this.app = app;
 
         defaultPage = new DefaultPage(this);
-        ownerPortal = new OwnerPortal(this);
-        cashierPortal = new CashierPortal(this);
+        ownerPortal = new SellerPortal(this);
+        cashierPortal = new SellerPortal(this);
+        // ownerPortal = new OwnerPortal(this);
+        // cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
     }
 
