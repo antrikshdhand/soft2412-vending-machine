@@ -29,6 +29,9 @@ public class Database {
     public Database() {
 
         openConn();
+        dropAllTables();
+        addDummyItems();
+        queryCategory("Cat1");
         closeConn();
 
     }
@@ -51,7 +54,7 @@ public class Database {
             openStatement.executeUpdate(
                     "create table if not exists categories (category_id serial, category_name varchar(20))");
             openStatement.executeUpdate(
-                    "create table if not exists items (item_id serial, category_id int references categories(category_id))");
+                    "create table if not exists items (item_name varchar(20), category_name varchar(20))");
             // There is already guest account in the db when it is created.
             openStatement.executeUpdate("insert into roles values('guest', 'guest', 'G')");
 
@@ -124,6 +127,50 @@ public class Database {
         }
 
     }
+
+
+    /**/
+
+    public int addDummyItems() {
+
+        try {
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Item1", "Cat1"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Item2", "Cat2"));
+
+
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+
+
+        return 0;
+    }
+
+
+    public void queryCategory(String category) {
+
+        try{
+            ResultSet query = openStatement.executeQuery(String.format("select item_name from items where category_name = '%s'", category));
+
+            while(query.next()) {
+                System.out.println(query.getString("item_name"));
+            }
+
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+
+        }
+
+
+    }
+
 
     /**
      * Function to add a new User into the database.
