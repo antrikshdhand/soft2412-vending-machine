@@ -11,27 +11,47 @@ import javafx.scene.text.FontWeight; // check
 import javafx.stage.Stage; // check
 import javafx.geometry.Pos;
 
-public class SellerPortal extends Application {
+public class SellerPortal {
 
+
+    private Scene scene;
     private final int width = 1280;
     private final int height = 720;
+    private StackPane pane;
 
-    public SellerPortal() {
+    private Stage window;
+
+    public Scene manageItems;
+    private Scene generateList;
+    private Scene generateSummary;
+
+    private StackPane manageItemsPane;
+    private StackPane generateListPane;
+    private StackPane generateSummaryPane;
+
+
+    public SellerPortal(Stage stage) {
+        this.window = stage;
+        createMainPage();
+        createManageItems();
+        createGenerateList();
+        createGenerateSummary();
+
+//        window.setScene(manageItems);
 
     }
 
-    @Override
-    public void start(Stage stage) {
-        initUI(stage);
-    }
 
-    private void initUI(Stage stage) {
-
-        var root = new StackPane();
+    public void createMainPage() {
+        pane = new StackPane();
+        scene = new Scene(pane, width, height);
 
         VBox buttons = new VBox(10);
-        // var root = new Pane();
-        // root.setHgap(10);
+        buttons.setSpacing(5);
+        buttons.setPrefWidth(190.00);
+        buttons.setAlignment(Pos.CENTER);
+        // var pane = new Pane();
+        // pane.setHgap(10);
 
         Button bn1 = new Button("Manage Items");
         // bn1.relocate(0, 50);
@@ -39,23 +59,127 @@ public class SellerPortal extends Application {
         Button bn3 = new Button("Generate Summary");
         Button bn4 = new Button("Return to Default Page");
 
-        var scene = new Scene(root, 1280, 720);
 
-        var lbl = new Label("Seller Portal");
-        // lbl.relocate(0, 20);
+        Label lbl = new Label("Seller Portal");
+        lbl.setTranslateY(20);
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-        root.getChildren().addAll(lbl, bn4);
-        root.setAlignment(lbl, Pos.TOP_CENTER);
-        root.setAlignment(bn4, Pos.BOTTOM_LEFT);
-        lbl.relocate(0, 30);
+
+        pane.setAlignment(lbl, Pos.TOP_CENTER);
+        pane.setAlignment(bn4, Pos.BOTTOM_LEFT);
+
+//        bn4.setTranslateX(-550);
+//        bn4.setTranslateY(320);
+
+//        lbl.relocate(0, 30);
 
         buttons.getChildren().addAll(bn1, bn2, bn3);
         buttons.setAlignment(Pos.CENTER);
         buttons.setAlignment(Pos.CENTER);
-        root.getChildren().add(buttons);
-
-        stage.setTitle("Seller Portal");
-        stage.setScene(scene);
-        stage.show();
+        pane.getChildren().add(buttons);
+        pane.getChildren().addAll(lbl, bn4);
+        bn1.setOnMouseClicked(e -> this.gotoCreateItems());
+        bn2.setOnMouseClicked(e -> this.gotoGenerateList());
+        bn3.setOnMouseClicked(e -> this.gotoGenerateSummary());
     }
+
+
+    public void createManageItems() {
+        manageItemsPane = new StackPane();
+        manageItems = new Scene(manageItemsPane, width, height);
+
+        Button bn = new Button("Return to Seller Portal");
+
+        Label lbl = new Label("Manage Items Portal");
+        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+        manageItemsPane.setAlignment(lbl, Pos.TOP_CENTER);
+        lbl.setTranslateY(20);
+//        generateListPane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+        bn.setTranslateX(-550);
+        bn.setTranslateY(320);
+
+        lbl.relocate(0, 30);
+
+        manageItemsPane.getChildren().addAll(lbl, bn);
+        bn.setOnMouseClicked(e -> this.gotoSeller());
+    }
+
+    public void createGenerateList() {
+        generateListPane = new StackPane();
+        generateList = new Scene(generateListPane, width, height);
+
+        Button bn = new Button("Return to Seller Portal");
+
+        Label lbl = new Label("Generate List Portal");
+        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+        generateListPane.setAlignment(lbl, Pos.TOP_CENTER);
+        lbl.setTranslateY(20);
+//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+        bn.setTranslateX(-550);
+        bn.setTranslateY(320);
+
+        lbl.relocate(0, 30);
+
+        generateListPane.getChildren().addAll(lbl, bn);
+        bn.setOnMouseClicked(e -> this.gotoSeller());
+    }
+
+    public void createGenerateSummary() {
+        generateSummaryPane = new StackPane();
+        generateSummary = new Scene(generateSummaryPane, width, height);
+
+        Button bn = new Button("Return to Seller Portal");
+
+        Label lbl = new Label("Generate Summary Portal");
+        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+        generateSummaryPane.setAlignment(lbl, Pos.TOP_CENTER);
+        lbl.setTranslateY(20);
+//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+        bn.setTranslateX(-550);
+        bn.setTranslateY(320);
+
+        lbl.relocate(0, 30);
+
+        generateSummaryPane.getChildren().addAll(lbl, bn);
+        bn.setOnMouseClicked(e -> this.gotoSeller());
+    }
+
+    public void gotoCreateItems() {
+        window.hide();
+        window.setScene(manageItems);
+        window.show();
+    }
+
+    public void gotoSeller() {
+        window.hide();
+        window.setScene(scene);
+        window.show();
+    }
+
+    public void gotoGenerateList() {
+        window.hide();
+        window.setScene(generateList);
+        window.show();
+    }
+
+    public void gotoGenerateSummary() {
+        window.hide();
+        window.setScene(generateSummary);
+        window.show();
+    }
+
+    public Scene getScene(){
+        return this.scene;
+    }
+
+    public void showScene() {
+        this.window.setScene(scene);
+    }
+
+
 }

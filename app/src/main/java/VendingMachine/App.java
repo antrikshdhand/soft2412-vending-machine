@@ -1,6 +1,7 @@
 package VendingMachine;
 
 import VendingMachine.CashierPortal;
+import VendingMachine.SellerPortal;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,14 +41,17 @@ public class App extends Application {
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
-        // OwnerPortal portal = new OwnerPortal();
-        // primaryStage.setScene(portal.getScene());
+//         OwnerPortal portal = new OwnerPortal();
+//         primaryStage.setScene(portal.getScene());
 
         // DefaultPage defaultPage = new DefaultPage();
         // primaryStage.setScene(defaultPage.getScene());
 
-        CashierPortal portal = new CashierPortal();
-        primaryStage.setScene(portal.getScene());
+//        CashierPortal portal = new CashierPortal();
+//        primaryStage.setScene(portal.getScene());
+        SellerPortal p2 = new SellerPortal(primaryStage);
+        p2.showScene();
+//        primaryStage.setScene((p2.manageItems));
 
         primaryStage.show();
 
