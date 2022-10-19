@@ -14,10 +14,14 @@ public class SceneManager {
 
     private OwnerPortal ownerPortal;
     private DefaultPage defaultPage;
+    private CashierPortal cashierPortal;
+    private SellerPortal sellerPortal;
 
     public SceneManager(App app) {
         defaultPage = new DefaultPage(app);
         ownerPortal = new OwnerPortal(app);
+        cashierPortal = new CashierPortal(app);
+        sellerPortal = new SellerPortal(app);
     }
     
     public Scene getDeafultPageScene() {
@@ -26,6 +30,14 @@ public class SceneManager {
 
     public Scene getOwnerPortalScene() {
         return ownerPortal.getScene();
+    }
+
+    public Scene getCashierPortalScene() {
+        return cashierPortal.getScene();
+    }
+
+    public Scene getSellerPortalScene() {
+        return sellerPortal.getScene();
     }
     
 }

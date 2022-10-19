@@ -11,19 +11,21 @@ import javafx.scene.text.FontWeight; // check
 import javafx.stage.Stage; // check
 import javafx.geometry.Pos;
 
-public class SellerPortal extends Application {
+public class SellerPortal {
+
+    private Scene scene;
 
     private final int width = 1280;
     private final int height = 720;
 
-    public SellerPortal() {
+    public SellerPortal(App app) {
 
     }
 
-    @Override
-    public void start(Stage stage) {
-        initUI(stage);
-    }
+    // @Override
+    // public void start(Stage stage) {
+    //     initUI(stage);
+    // }
 
     private void initUI(Stage stage) {
 
@@ -39,7 +41,7 @@ public class SellerPortal extends Application {
         Button bn3 = new Button("Generate Summary");
         Button bn4 = new Button("Return to Default Page");
 
-        var scene = new Scene(root, 1280, 720);
+        scene = new Scene(root, 1280, 720);
 
         var lbl = new Label("Seller Portal");
         // lbl.relocate(0, 20);
@@ -57,5 +59,10 @@ public class SellerPortal extends Application {
         stage.setTitle("Seller Portal");
         stage.setScene(scene);
         stage.show();
+    }
+
+
+    public Scene getScene() {
+        return scene;
     }
 }

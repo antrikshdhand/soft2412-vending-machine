@@ -41,6 +41,11 @@ public class OwnerPortal{
         box.setAlignment(Pos.CENTER);
 
         cashierPortal = new Button("Cashier portal");
+
+        cashierPortal.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getCashierPortalScene());
+        });
+
         sellerPortal = new Button("Seller portal");
         manageSCO = new Button("Managed privileged users");
         summary = new Button("Generate Users Summary");

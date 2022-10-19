@@ -28,8 +28,8 @@ public class CashierPortal {
     private final int spacing = App.SPACING;
     private Pane pane;
 
-    public Scene getScene() {
-
+    public CashierPortal(App app) {
+        
         pane = new StackPane();
         scene = new Scene(pane, width, height);
 
@@ -61,6 +61,10 @@ public class CashierPortal {
         generateSummaryOfTransaction.setText("Generate Summary of Transaction");
         returnButton.setText("Return to Default Page");
 
+        returnButton.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+        });
+
         // Setting the location of the button
         modifyAvailableCash.setTranslateX(150);
         modifyAvailableCash.setTranslateY(60);
@@ -79,7 +83,9 @@ public class CashierPortal {
             pane.getChildren().add(button);
         }
 
+    }
+
+    public Scene getScene() {
         return scene;
-        
     }
 }
