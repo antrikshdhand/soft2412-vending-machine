@@ -44,11 +44,11 @@ public class App extends Application {
 
 //        CashierPortal portal = new CashierPortal();
 //        primaryStage.setScene(portal.getScene());
-//        SellerPortal p2 = new SellerPortal(primaryStage);
-//        p2.showScene();
-//        primaryStage.setScene((p2.manageItems));
-        primaryStage.setScene(sceneManager.getDeafultPageScene());
-
+        SellerPortal p2 = new SellerPortal(primaryStage);
+        p2.showScene();
+        primaryStage.setScene((p2.manageItems));
+//        primaryStage.setScene(sceneManager.getDeafultPageScene());
+//
         primaryStage.show();
 
     }
