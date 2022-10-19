@@ -8,11 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.Side;
-
 import java.io.IOException;
-
-import VendingMachine.SceneManager;
-
  
 public class DefaultPage extends Page {
 

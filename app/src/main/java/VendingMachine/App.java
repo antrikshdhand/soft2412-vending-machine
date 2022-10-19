@@ -12,10 +12,7 @@ import javafx.fxml.FXMLLoader;
 
 public class App extends Application {
 
-    // Constants
-
     private SceneManager sceneManager = new SceneManager(this);
-
     private Stage primaryStage;
 
     @Override
@@ -28,7 +25,6 @@ public class App extends Application {
         // we do not want the window to be resizable/
         primaryStage.setResizable(false);
 
-
         // If you wanna add an icon for the program
         // Image icon = new Image('File path')
         // primaryStage.setIcon(icon);
@@ -38,13 +34,9 @@ public class App extends Application {
         primaryStage.setScene(sceneManager.getDeafultPageScene());
         primaryStage.show();
 
-
     }
 
     public static void main(String[] args) {
-
-        // View screen
-        // Application.launch(args);
 
         Database db = new Database();
 
@@ -58,6 +50,7 @@ public class App extends Application {
 
         /// Example Query ///
 
+        // View screen
         launch(args);
     }
 
@@ -65,7 +58,4 @@ public class App extends Application {
         primaryStage.setScene(scene);
     }
 
-    public SceneManager getSceneManager() {
-        return this.sceneManager;
-    }
 }
