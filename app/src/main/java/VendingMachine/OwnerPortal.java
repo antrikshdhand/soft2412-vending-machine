@@ -47,6 +47,11 @@ public class OwnerPortal{
         });
 
         sellerPortal = new Button("Seller portal");
+
+        sellerPortal.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getSellerPortalScene());
+        });
+
         manageSCO = new Button("Managed privileged users");
         summary = new Button("Generate Users Summary");
         cancelledTransactions = new Button("View unsuccessful transaction");

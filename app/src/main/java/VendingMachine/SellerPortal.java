@@ -18,16 +18,12 @@ public class SellerPortal {
     private final int width = 1280;
     private final int height = 720;
 
-    public SellerPortal(App app) {
-
-    }
-
     // @Override
     // public void start(Stage stage) {
     //     initUI(stage);
     // }
 
-    private void initUI(Stage stage) {
+    public SellerPortal(App app)  {
 
         var root = new StackPane();
 
@@ -40,6 +36,10 @@ public class SellerPortal {
         Button bn2 = new Button("Generate List of Available items");
         Button bn3 = new Button("Generate Summary");
         Button bn4 = new Button("Return to Default Page");
+
+        bn4.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+        });
 
         scene = new Scene(root, 1280, 720);
 
@@ -56,9 +56,9 @@ public class SellerPortal {
         buttons.setAlignment(Pos.CENTER);
         root.getChildren().add(buttons);
 
-        stage.setTitle("Seller Portal");
-        stage.setScene(scene);
-        stage.show();
+        // stage.setTitle("Seller Portal");
+        // stage.setScene(scene);
+        // stage.show();
     }
 
 

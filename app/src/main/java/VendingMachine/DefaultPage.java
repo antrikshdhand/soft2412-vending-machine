@@ -25,7 +25,6 @@ public class DefaultPage {
         proceedToPortalBtn.setText("Proceed to Portal");
 
         proceedToPortalBtn.setOnAction(e -> {
-            System.out.println("Hello");
             app.switchScenes(app.getSceneManager().getOwnerPortalScene());
         });
 
