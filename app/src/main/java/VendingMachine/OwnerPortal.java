@@ -1,7 +1,5 @@
 package VendingMachine;
 
-import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,15 +9,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.scene.text.Font;
 
-import javax.swing.plaf.ViewportUI;
-import java.awt.*;
-import java.sql.Statement;
-import java.util.Stack;
-
- public class OwnerPortal extends Page{
+public class OwnerPortal extends Page{
 
 
      private Pane pane;
@@ -121,7 +113,7 @@ import java.util.Stack;
      */
 
     public void retToDefaultPortal(){
-        sm.switchScenes(sm.getDeafultPageScene());
+        sm.switchScenes(sm.getDefaultPageScene());
     }
 
     /**

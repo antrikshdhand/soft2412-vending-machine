@@ -1,18 +1,13 @@
 package VendingMachine;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
 
 public class App extends Application {
 
-    private SceneManager sceneManager = new SceneManager(this);
     private Stage primaryStage;
+    SceneManager sceneManager = new SceneManager(this);
 
     @Override
     public void start(Stage primaryStage0) throws Exception {
@@ -30,26 +25,12 @@ public class App extends Application {
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
-        primaryStage.setScene(sceneManager.getDeafultPageScene());
+        primaryStage.setScene(sceneManager.getDefaultPageScene());
         primaryStage.show();
 
     }
 
     public static void main(String[] args) {
-
-        Database db = new Database();
-
-        /// Example Query ///
-
-        db.openConn();
-        if (db.dropAllTables() == 0) {
-            System.out.println("App.Java - Dropped All Tables");
-        }
-        db.closeConn();
-
-        /// Example Query ///
-
-        // View screen
         launch(args);
     }
 

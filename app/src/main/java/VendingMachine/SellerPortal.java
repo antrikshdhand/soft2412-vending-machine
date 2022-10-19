@@ -1,7 +1,5 @@
 package VendingMachine;
 
-import javafx.application.Application; // check
-import javafx.scene.layout.Pane;
 import javafx.scene.Scene; // check
 import javafx.scene.control.Label; // check
 import javafx.scene.control.Button;
@@ -61,7 +59,7 @@ public class SellerPortal extends Page {
         Button bn4 = new Button("Return to Default Page");
 
 //        bn4.setOnAction(e -> {
-//            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+//            app.switchScenes(app.getSceneManager().getDefaultPageScene());
 //        });
 
 //        scene = new Scene(pane, width, height);
@@ -87,7 +85,7 @@ public class SellerPortal extends Page {
         bn1.setOnMouseClicked(e -> this.sm.switchScenes(manageItems));
         bn2.setOnMouseClicked(e -> this.sm.switchScenes(generateList));
         bn3.setOnMouseClicked(e -> this.sm.switchScenes(generateSummary));
-        bn4.setOnMouseClicked(e -> this.sm.switchScenes(this.sm.getDeafultPageScene())) ;
+        bn4.setOnMouseClicked(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
 
     }
 

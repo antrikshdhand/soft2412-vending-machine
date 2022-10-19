@@ -9,7 +9,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.Side;
 import java.io.IOException;
- 
+import java.util.ArrayList;
+
 public class DefaultPage extends Page {
 
     public DefaultPage(SceneManager sceneManager) {
@@ -21,17 +22,39 @@ public class DefaultPage extends Page {
         tabPane.setSide(Side.LEFT);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
+        ArrayList<String> categories = new ArrayList<>();
+        categories.add("Drinks");
+        categories.add("Chocolate");
+        categories.add("Candies");
+        categories.add("Chips");
+
         VBox tab1VBox = new VBox();
         Tab tab1 = new Tab("Recently Bought", tab1VBox);
         tab1VBox.getChildren().addAll(new Label("Show all Recently Bought available"), new Label("Show all Recently Bought available2"));
+        tabPane.getTabs().add(tab1);
 
-        Tab tab2 = new Tab("Drinks"  , new Label("Show all Drinks available"));
-        Tab tab3 = new Tab("Chocolate", new Label("Show all Chocolate available"));
-        Tab tab4 = new Tab("Candies"  , new Label("Show all Candies available"));
-        Tab tab5 = new Tab("Chips", new Label("Show all Chips available"));
+        for (String category : categories) {
+            VBox vBox = new VBox();
+            Tab tab = new Tab(category, vBox);
 
-        tabPane.getTabs().addAll(tab1, tab2, tab3, tab4, tab5);
-        
+            sceneManager.getDatabase().openConn();
+            ArrayList<String> items = sceneManager.getDatabase().queryCategory(category);
+            sceneManager.getDatabase().closeConn();
+
+            System.out.println(category + items);
+
+            for (String item : items) {
+                vBox.getChildren().add(new Label(item));
+            }
+
+            tabPane.getTabs().add(tab);
+        }
+
+//        Tab tab2 = new Tab("Drinks"  , new Label("Show all Drinks available"));
+//        Tab tab3 = new Tab("Chocolate", new Label("Show all Chocolate available"));
+//        Tab tab4 = new Tab("Candies"  , new Label("Show all Candies available"));
+//        Tab tab5 = new Tab("Chips", new Label("Show all Chips available"));
+
 
         AnchorPane rightAnchorPane = new AnchorPane();
 

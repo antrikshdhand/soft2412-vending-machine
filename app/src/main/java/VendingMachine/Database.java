@@ -1,5 +1,8 @@
 package VendingMachine;
 
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+
 import java.sql.*;
 import java.util.*;
 
@@ -31,7 +34,9 @@ public class Database {
         openConn();
         dropAllTables();
         addDummyItems();
-        queryCategory("Cat1");
+        closeConn();
+        openConn();
+        System.out.println(queryCategory("Drinks"));
         closeConn();
 
     }
@@ -136,8 +141,15 @@ public class Database {
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Item1", "Cat1"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Item2", "Cat2"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Coke", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Water", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Juice", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Dark", "Chocolate"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Light", "Chocolate"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Salt", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Gummy", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Onion", "Chips"));
 
 
         } catch (SQLException e) {
@@ -152,14 +164,17 @@ public class Database {
     }
 
 
-    public void queryCategory(String category) {
+    public ArrayList<String>  queryCategory(String category) {
+
+        ArrayList<String> items = new ArrayList<>();
 
         try{
             ResultSet query = openStatement.executeQuery(String.format("select item_name from items where category_name = '%s'", category));
 
             while(query.next()) {
-                System.out.println(query.getString("item_name"));
+                items.add(query.getString("item_name"));
             }
+
 
         } catch(SQLException e) {
             // if the error message is "out of memory",
@@ -167,6 +182,8 @@ public class Database {
             System.err.println(e.getMessage());
 
         }
+
+        return items;
 
 
     }

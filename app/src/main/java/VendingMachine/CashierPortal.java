@@ -57,7 +57,7 @@
 //         returnButton.setText("Return to Default Page");
 //
 //         returnButton.setOnAction(e -> {
-//             app.switchScenes(app.getSceneManager().getDeafultPageScene());
+//             app.switchScenes(app.getSceneManager().getDefaultPageScene());
 //         });
 //
 //         // Setting the location of the button
