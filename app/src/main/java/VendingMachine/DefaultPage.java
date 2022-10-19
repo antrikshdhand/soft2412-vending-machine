@@ -21,11 +21,12 @@ public class DefaultPage {
 
     private Scene scene;
 
-    public DefaultPage(Scene ownerscene, Stage primaryStage, App app, OwnerPortal owner) {
+    public DefaultPage(App app) {
         proceedToPortalBtn.setText("Proceed to Portal");
 
         proceedToPortalBtn.setOnAction(e -> {
             System.out.println("Hello");
+            app.switchScenes(app.getSceneManager().getOwnerPortalScene());
         });
 
         // proceedToPortalBtn.setOnAction(e -> {

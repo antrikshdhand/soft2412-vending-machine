@@ -21,9 +21,14 @@ public class App extends Application {
     public static final double PREFWIDTH = 190.00;
     public static final int SPACING = 5;
 
-    @Override
-    public void start(Stage primaryStage) {
+    private SceneManager sceneManager = new SceneManager();
 
+    private Stage primaryStage;
+
+    @Override
+    public void start(Stage primaryStage0) {
+
+        primaryStage = primaryStage0;
         // Stage is basically the window, and you are given the name of the window.
         primaryStage.setTitle("Vending Machine");
 
@@ -31,23 +36,25 @@ public class App extends Application {
         primaryStage.setResizable(false);
 
         // Setting the height and the width of the window.
-        primaryStage.setWidth(WIDTH);
-        primaryStage.setHeight(HEIGHT);
+        // primaryStage.setWidth(WIDTH);
+        // primaryStage.setHeight(HEIGHT);
 
         // If you wanna add an icon for the program
         // Image icon = new Image('File path')
         // primaryStage.setIcon(icon);
+
+
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
         // OwnerPortal portal = new OwnerPortal();
         // primaryStage.setScene(portal.getScene());
 
-        // DefaultPage defaultPage = new DefaultPage();
-        // primaryStage.setScene(defaultPage.getScene());
+        DefaultPage defaultPage = new DefaultPage(this);
+        primaryStage.setScene(defaultPage.getScene());
 
-        CashierPortal portal = new CashierPortal();
-        primaryStage.setScene(portal.getScene());
+        // CashierPortal portal = new CashierPortal();
+        // primaryStage.setScene(portal.getScene());
 
         primaryStage.show();
 
@@ -71,5 +78,13 @@ public class App extends Application {
         /// Example Query ///
 
         launch(args);
+    }
+
+    public void switchScenes(Scene scene) {
+        primaryStage.setScene(scene);
+    }
+
+    public SceneManager getSceneManager() {
+        return this.sceneManager;
     }
 }
