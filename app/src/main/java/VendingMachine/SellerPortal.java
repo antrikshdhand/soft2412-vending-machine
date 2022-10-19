@@ -11,10 +11,11 @@ import javafx.scene.text.FontWeight; // check
 import javafx.stage.Stage; // check
 import javafx.geometry.Pos;
 
-public class SellerPortal {
-
+public class SellerPortal extends Page {
 
     private Scene scene;
+
+    private SceneManager sm;
     private final int width = 1280;
     private final int height = 720;
     private StackPane pane;
@@ -30,8 +31,8 @@ public class SellerPortal {
     private StackPane generateSummaryPane;
 
 
-    public SellerPortal(Stage stage) {
-        this.window = stage;
+    public SellerPortal(SceneManager sm) {
+        this.sm = sm;
         createMainPage();
         createManageItems();
         createGenerateList();
@@ -42,7 +43,7 @@ public class SellerPortal {
     }
 
 
-    public void createMainPage() {
+    private void createMainPage() {
         pane = new StackPane();
         scene = new Scene(pane, width, height);
 
@@ -59,11 +60,11 @@ public class SellerPortal {
         Button bn3 = new Button("Generate Summary");
         Button bn4 = new Button("Return to Default Page");
 
-        bn4.setOnAction(e -> {
-            app.switchScenes(app.getSceneManager().getDeafultPageScene());
-        });
+//        bn4.setOnAction(e -> {
+//            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+//        });
 
-        scene = new Scene(root, WIDTH, HEIGHT);
+//        scene = new Scene(pane, width, height);
 
 
         Label lbl = new Label("Seller Portal");
@@ -83,13 +84,15 @@ public class SellerPortal {
         buttons.setAlignment(Pos.CENTER);
         pane.getChildren().add(buttons);
         pane.getChildren().addAll(lbl, bn4);
-        bn1.setOnMouseClicked(e -> this.gotoCreateItems());
-        bn2.setOnMouseClicked(e -> this.gotoGenerateList());
-        bn3.setOnMouseClicked(e -> this.gotoGenerateSummary());
+        bn1.setOnMouseClicked(e -> this.sm.switchScenes(manageItems));
+        bn2.setOnMouseClicked(e -> this.sm.switchScenes(generateList));
+        bn3.setOnMouseClicked(e -> this.sm.switchScenes(generateSummary));
+        bn4.setOnMouseClicked(e -> this.sm.switchScenes(this.sm.getDeafultPageScene())) ;
+
     }
 
 
-    public void createManageItems() {
+    private void createManageItems() {
         manageItemsPane = new StackPane();
         manageItems = new Scene(manageItemsPane, width, height);
 
@@ -108,10 +111,10 @@ public class SellerPortal {
         lbl.relocate(0, 30);
 
         manageItemsPane.getChildren().addAll(lbl, bn);
-        bn.setOnMouseClicked(e -> this.gotoSeller());
+        bn.setOnMouseClicked(e -> this.sm.switchScenes(scene));
     }
 
-    public void createGenerateList() {
+    private void createGenerateList() {
         generateListPane = new StackPane();
         generateList = new Scene(generateListPane, width, height);
 
@@ -130,10 +133,10 @@ public class SellerPortal {
         lbl.relocate(0, 30);
 
         generateListPane.getChildren().addAll(lbl, bn);
-        bn.setOnMouseClicked(e -> this.gotoSeller());
+        bn.setOnMouseClicked(e -> this.sm.switchScenes(scene));
     }
 
-    public void createGenerateSummary() {
+    private void createGenerateSummary() {
         generateSummaryPane = new StackPane();
         generateSummary = new Scene(generateSummaryPane, width, height);
 
@@ -152,38 +155,10 @@ public class SellerPortal {
         lbl.relocate(0, 30);
 
         generateSummaryPane.getChildren().addAll(lbl, bn);
-        bn.setOnMouseClicked(e -> this.gotoSeller());
+        bn.setOnMouseClicked(e -> this.sm.switchScenes(scene));
     }
 
-    public void gotoCreateItems() {
-        window.hide();
-        window.setScene(manageItems);
-        window.show();
-    }
-
-    public void gotoSeller() {
-        window.hide();
-        window.setScene(scene);
-        window.show();
-    }
-
-    public void gotoGenerateList() {
-        window.hide();
-        window.setScene(generateList);
-        window.show();
-    }
-
-    public void gotoGenerateSummary() {
-        window.hide();
-        window.setScene(generateSummary);
-        window.show();
-    }
-
-    public Scene getScene(){
+    public Scene getScene() {
         return this.scene;
-    }
-
-    public void showScene() {
-        this.window.setScene(scene);
     }
 }
