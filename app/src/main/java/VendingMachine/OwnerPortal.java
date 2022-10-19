@@ -34,7 +34,7 @@ public class OwnerPortal extends Page{
     private Button returnToDp;
 
 
-    private Scene manageCSOPage;
+    private scene manageCSOPage;
     private Scene summaryPage;
     private Scene cancelledTransactionPage;
     /**
@@ -66,7 +66,13 @@ public class OwnerPortal extends Page{
         manageSCO.setOnAction(e -> this.createManageCSO());
 
         summary = new Button("Generate Users Summary");
+
+        summary.setOnAction(e -> this.createSummary());
+
         cancelledTransactions = new Button("View unsuccessful transaction");
+
+        cancelledTransactions.setOnAction(e -> createCancelledTransaction());
+
         returnToDp = new Button("Return to default page");
 
         returnToDp.setOnAction(e -> this.retToDefaultPortal());
