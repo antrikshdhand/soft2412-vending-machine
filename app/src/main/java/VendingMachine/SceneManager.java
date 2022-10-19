@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 public class SceneManager {
 
+    private App app;
 
     private OwnerPortal ownerPortal;
     private DefaultPage defaultPage;
@@ -18,10 +19,17 @@ public class SceneManager {
     private SellerPortal sellerPortal;
 
     public SceneManager(App app) {
-        defaultPage = new DefaultPage(app);
-        ownerPortal = new OwnerPortal(app);
-        cashierPortal = new CashierPortal(app);
-        sellerPortal = new SellerPortal(app);
+
+        this.app = app;
+
+        defaultPage = new DefaultPage(this);
+        ownerPortal = new OwnerPortal(this);
+        cashierPortal = new CashierPortal(this);
+        sellerPortal = new SellerPortal(this);
+    }
+
+    public void switchScenes(Scene scene) {
+        app.switchScenes(scene);
     }
     
     public Scene getDeafultPageScene() {

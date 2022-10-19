@@ -162,9 +162,3 @@ Important Information on Linking Jenkins with discord, set up by a fellow team m
 [SQLite-url]: https://www.sqlite.org/index.html
 [Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white
 [Java-url]: https://www.java.com/en/
-
-
-
-
-
-

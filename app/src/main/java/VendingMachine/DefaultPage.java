@@ -4,56 +4,46 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
+import javafx.geometry.Side;
 import java.io.IOException;
-
  
 public class DefaultPage extends Page {
 
-    private BorderPane rootPane = new BorderPane();
-    public Button proceedToPortalBtn = new Button();
+    public DefaultPage(SceneManager sceneManager) {
 
-    public DefaultPage(App app) {
+        SplitPane splitPane = new SplitPane();
+        splitPane.setDividerPosition(0, 0.668);
+
+        TabPane tabPane = new TabPane();
+        tabPane.setSide(Side.LEFT);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        Tab tab1 = new Tab("Recently Bought", new Label("Show all Recently Bought available"));
+        Tab tab2 = new Tab("Drinks"  , new Label("Show all Drinks available"));
+        Tab tab3 = new Tab("Chocolate", new Label("Show all Chocolate available"));
+        Tab tab4 = new Tab("Candies"  , new Label("Show all Candies available"));
+        Tab tab5 = new Tab("Chips", new Label("Show all Chips available"));
+
+        tabPane.getTabs().addAll(tab1, tab2, tab3, tab4, tab5);
+        
+
+        AnchorPane rightAnchorPane = new AnchorPane();
+
+        Button proceedToPortalBtn = new Button();
         proceedToPortalBtn.setText("Proceed to Portal");
-
+        
         proceedToPortalBtn.setOnAction(e -> {
-            app.switchScenes(app.getSceneManager().getOwnerPortalScene());
+            sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
         });
 
-        // proceedToPortalBtn.setOnAction(e -> {
-        //     app.switchScenes(owner.getScene());
-        // });
+        rightAnchorPane.getChildren().add(proceedToPortalBtn);
 
-        // proceedToPortalBtn.setOnAction(e -> {
-        //     SceneController sc = new SceneController();
-        //     try {
-        //         sc.switchToScene1(e);
-        //     } catch (IOException ee) {
-        //         System.out.println("Something went wrong.");
-        //     }
-            
-        // });
-        
-        // StackPane root = new StackPane();
-        // root.getChildren().add(btn);
+        splitPane.getItems().addAll(tabPane, rightAnchorPane);
 
-        // ToolBar toolbar = new ToolBar();
-        HBox statusbar = new HBox();
-        // borderPane.setTop(toolbar);
-        // borderPane.setCenter();
-
-        VBox categoriesVBox = new VBox(8); // spacing = 8
-        categoriesVBox.getChildren().addAll(new Button("Recently bought"), new Button("Drinks"), new Button("Chocolate"), new Button("Candies"), new Button("Chips"));
-        rootPane.setLeft(categoriesVBox);
-
-        VBox defaultPageRightVbox = new VBox(8); // spacing = 8
-        defaultPageRightVbox.getChildren().addAll(new Button("Log Out"), proceedToPortalBtn, new Button("Proceed to Checkout"));
-        rootPane.setRight(defaultPageRightVbox);
-
-        scene = new Scene(rootPane, WIDTH, HEIGHT);
+        scene = new Scene(splitPane, WIDTH, HEIGHT);
 
     }
 
