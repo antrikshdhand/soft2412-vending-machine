@@ -30,7 +30,8 @@ public class OwnerPortal{
     private Button cancelledTransactions;
     private Button returnToDp;
 
-    public OwnerPortal(){
+    public OwnerPortal(App app){
+
         pane = new StackPane();
         scene = new Scene(pane, width, height);
 
@@ -45,6 +46,10 @@ public class OwnerPortal{
         summary = new Button("Generate Users Summary");
         cancelledTransactions = new Button("View unsuccessful transaction");
         returnToDp = new Button("Return to default page");
+
+        returnToDp.setOnAction(e -> {
+            app.switchScenes(app.getSceneManager().getDeafultPageScene());
+        });
 
         cashierPortal.setMinWidth(box.getPrefWidth());
         sellerPortal.setMinWidth(box.getPrefWidth());

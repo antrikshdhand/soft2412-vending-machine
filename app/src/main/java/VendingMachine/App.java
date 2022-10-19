@@ -21,7 +21,7 @@ public class App extends Application {
     public static final double PREFWIDTH = 190.00;
     public static final int SPACING = 5;
 
-    private SceneManager sceneManager = new SceneManager();
+    private SceneManager sceneManager = new SceneManager(this);
 
     private Stage primaryStage;
 
@@ -50,8 +50,7 @@ public class App extends Application {
         // OwnerPortal portal = new OwnerPortal();
         // primaryStage.setScene(portal.getScene());
 
-        DefaultPage defaultPage = new DefaultPage(this);
-        primaryStage.setScene(defaultPage.getScene());
+        primaryStage.setScene(sceneManager.getDeafultPageScene());
 
         // CashierPortal portal = new CashierPortal();
         // primaryStage.setScene(portal.getScene());

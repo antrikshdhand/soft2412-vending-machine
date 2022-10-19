@@ -12,7 +12,17 @@ import javafx.stage.Stage;
 public class SceneManager {
 
 
-    private OwnerPortal ownerPortal = new OwnerPortal();
+    private OwnerPortal ownerPortal;
+    private DefaultPage defaultPage;
+
+    public SceneManager(App app) {
+        defaultPage = new DefaultPage(app);
+        ownerPortal = new OwnerPortal(app);
+    }
+    
+    public Scene getDeafultPageScene() {
+        return defaultPage.getScene();
+    }
 
     public Scene getOwnerPortalScene() {
         return ownerPortal.getScene();
