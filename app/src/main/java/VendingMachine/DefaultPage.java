@@ -21,7 +21,10 @@ public class DefaultPage extends Page {
         tabPane.setSide(Side.LEFT);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab tab1 = new Tab("Recently Bought", new Label("Show all Recently Bought available"));
+        VBox tab1VBox = new VBox();
+        Tab tab1 = new Tab("Recently Bought", tab1VBox);
+        tab1VBox.getChildren().addAll(new Label("Show all Recently Bought available"), new Label("Show all Recently Bought available2"));
+
         Tab tab2 = new Tab("Drinks"  , new Label("Show all Drinks available"));
         Tab tab3 = new Tab("Chocolate", new Label("Show all Chocolate available"));
         Tab tab4 = new Tab("Candies"  , new Label("Show all Candies available"));
