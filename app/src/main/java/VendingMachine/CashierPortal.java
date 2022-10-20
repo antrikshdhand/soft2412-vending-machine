@@ -11,15 +11,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-public class OwnerPortal extends Page{
+public class CashierPortal extends Page{
 
 
     private Pane pane;
 
     private SceneManager sm;
 
-    private Button cashierPortal;
-    private Button sellerPortal;
     private Button manageSCO;
     private Button summary;
     private Button cancelledTransactions;
@@ -30,10 +28,10 @@ public class OwnerPortal extends Page{
     private Scene summaryPage;
     private Scene cancelledTransactionPage;
     /**
-     * The Constructor for the Owner Portal, sets the scene for the seller portal.
+     * The Constructor for the Cashier Portal, sets the scene for the seller portal.
      * @param sceneManager
      */
-    public OwnerPortal(SceneManager sceneManager){
+    public CashierPortal(SceneManager sceneManager) {
 
         sm = sceneManager;
 
@@ -49,17 +47,6 @@ public class OwnerPortal extends Page{
         box.setSpacing(5);
         box.setPrefWidth(190.00);
         box.setAlignment(Pos.CENTER);
-
-        cashierPortal = new Button("Cashier portal");
-
-
-        cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
-
-
-        sellerPortal = new Button("Seller portal");
-
-
-        sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
 
         manageSCO = new Button("Managed privileged users");
 
@@ -80,9 +67,6 @@ public class OwnerPortal extends Page{
 
         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
-
-        cashierPortal.setMinWidth(box.getPrefWidth());
-        sellerPortal.setMinWidth(box.getPrefWidth());
         manageSCO.setMinWidth(box.getPrefWidth());
         summary.setMinWidth(box.getPrefWidth());
         cancelledTransactions.setMinWidth(box.getPrefWidth());
@@ -91,10 +75,10 @@ public class OwnerPortal extends Page{
         returnToDp.setTranslateY(320);
 
         Text title = new Text();
-        title.setText("Owner's Portal");
+        title.setText("Cashier's Portal");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-        box.getChildren().addAll(title, sellerPortal, cashierPortal, manageSCO, summary, cancelledTransactions);
+        box.getChildren().addAll(title, manageSCO, summary, cancelledTransactions);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
@@ -104,7 +88,7 @@ public class OwnerPortal extends Page{
 
 
     /**
-     * Funciton to returns sence.
+     * Function to returns sence.
      * @return
      */
 
@@ -112,7 +96,7 @@ public class OwnerPortal extends Page{
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Owner Portal");
+        Button bn = new Button("Return to Cashier Portal");
 
         Label lbl = new Label("Manage Privileged Users");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -127,7 +111,7 @@ public class OwnerPortal extends Page{
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
 
@@ -135,7 +119,7 @@ public class OwnerPortal extends Page{
         StackPane pane = new StackPane();
         summaryPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Owner Portal");
+        Button bn = new Button("Return to Cashier Portal");
 
         Label lbl = new Label("Generate Summary");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -150,14 +134,14 @@ public class OwnerPortal extends Page{
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
     public void createCancelledTransaction() {
         StackPane pane = new StackPane();
         cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Owner Portal");
+        Button bn = new Button("Return to Cashier Portal");
 
         Label lbl = new Label("CancelledTransaction");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -172,7 +156,7 @@ public class OwnerPortal extends Page{
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
 
