@@ -41,8 +41,6 @@ public class DefaultPage extends Page {
             ArrayList<String> items = sceneManager.getDatabase().queryCategory(category);
             sceneManager.getDatabase().closeConn();
 
-            System.out.println(category + items);
-
             for (String item : items) {
                 vBox.getChildren().add(new Label(item));
             }

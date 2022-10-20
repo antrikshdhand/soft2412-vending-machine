@@ -35,9 +35,6 @@ public class Database {
         dropAllTables();
         addDummyItems();
         closeConn();
-        openConn();
-        System.out.println(queryCategory("Drinks"));
-        closeConn();
 
     }
 
