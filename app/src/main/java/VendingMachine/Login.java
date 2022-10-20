@@ -96,8 +96,9 @@ public class Login extends Page {
             sceneManager.getSession().setLoggedIn(true);
             sceneManager.getSession().setUserName(username);
             sceneManager.getSession().setRole(role);
-
-            sceneManager.switchScenes(sceneManager.createNewDefaultPage());
+            
+            sceneManager.createNewDefaultPage();
+            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
             
         });
 
