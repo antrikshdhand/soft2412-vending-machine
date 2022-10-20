@@ -8,13 +8,14 @@ public class Session {
 
     private boolean startedTransaction;
     private final int tickLimit = 120;
+    private int tick;
     private boolean loggedIn;
 
     /**
      * Returns the user Name of the session
      * @return user Name ( String )
      */
-        public String getUserName() {
+    public String getUserName() {
         return userName;
     }
 
@@ -25,6 +26,8 @@ public class Session {
      */
     public String getRole() {
         return role;
+
+
     }
 
 
@@ -51,6 +54,10 @@ public class Session {
      */
     public void setRole(String role) {
         this.role = role;
+        if (role.equalsIgnoreCase("guest")) {
+            loggedIn = false;
+        }
+        else loggedIn = true;
     }
 
 
@@ -78,5 +85,6 @@ public class Session {
     public void setLoggedIn(boolean b) {
         this.loggedIn = b;
     }
+
 
 }
