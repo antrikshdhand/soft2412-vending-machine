@@ -57,6 +57,8 @@ public class Database {
                     "create table if not exists categories (category_id serial, category_name varchar(20))");
             openStatement.executeUpdate(
                     "create table if not exists items (item_name varchar(20), category_name varchar(20))");
+            openStatement.executeUpdate(
+                    "create table if not exists recent (item_name varchar(20))");
             // There is already guest account in the db when it is created.
             openStatement.executeUpdate("insert into roles values('guest', 'guest', 'G')");
 
@@ -114,7 +116,7 @@ public class Database {
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate("drop table roles; drop table categories; drop table items");
+            statement.executeUpdate("drop table roles; drop table categories; drop table items; drop table recent");
 
             // error handelling
             openConn();
@@ -148,6 +150,10 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Gummy", "Candies"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Onion", "Chips"));
 
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Gummy"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Onion"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Juice"));
+
 
         } catch (SQLException e) {
             // if the error message is "out of memory",
@@ -158,6 +164,30 @@ public class Database {
 
 
         return 0;
+    }
+
+    public ArrayList<String>  queryRecent() {
+
+        ArrayList<String> items = new ArrayList<>();
+
+        try{
+            ResultSet query = openStatement.executeQuery(String.format("select * from recent"));
+
+            while(query.next()) {
+                items.add(query.getString("item_name"));
+            }
+
+
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+
+        }
+
+        return items;
+
+
     }
 
 
