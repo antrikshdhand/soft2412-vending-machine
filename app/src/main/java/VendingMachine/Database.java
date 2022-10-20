@@ -155,9 +155,9 @@ public class Database {
             statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Juice"));
             
             statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "owner", "ownerp", "Owner"));
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user1", "user1p", "R"));
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user2", "user2p", "R"));
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user3", "user3p", "R"));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user1", "user1p", "Registered Customer"));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user2", "user2p", "Registered Customer"));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user3", "user3p", "Registered Customer"));
 
 
         } catch (SQLException e) {
@@ -302,7 +302,7 @@ public class Database {
             ResultSet query = openStatement.executeQuery(String.format(sql, userName));
 
             if (query.next()) {
-                return query.getString(0);
+                return query.getString("role");
             } else {
                 return null;
             }

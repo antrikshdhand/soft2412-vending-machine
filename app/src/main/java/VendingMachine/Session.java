@@ -70,7 +70,7 @@ public class Session {
     /**
      * Function to reset the role and user back to guest.
      */
-    public void resetSession(){
+    public void resetSession() {
         userName = "Guest";
         role = "Guest";
     }

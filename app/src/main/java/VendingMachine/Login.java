@@ -43,11 +43,9 @@ public class Login extends Page {
         grid.add(usernameLabel, 0, 1);
 
         TextField userTextField = new TextField();
-        String username = userTextField.getText();
         grid.add(userTextField, 1, 1);
 
         Label pwLabel = new Label("Password:");
-        String password = pwLabel.getText();
         grid.add(pwLabel, 0, 2);
 
         PasswordField pwBox = new PasswordField();
@@ -59,6 +57,11 @@ public class Login extends Page {
         grid.add(hbBtn, 1, 4);
         signInButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
+
+            // set username and password variables
+            String username = userTextField.getText();
+            String password = pwBox.getText();
+
             int validUsername = sceneManager.getDatabase().validateUsername(username);
             if (validUsername == -1) {                
                 Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
@@ -72,6 +75,7 @@ public class Login extends Page {
             
             int validLogin = sceneManager.getDatabase().login(username, password);
             if (validLogin == -1) {
+                System.out.println(password);
                 Alert incorrectPassAlert = new Alert(AlertType.ERROR);
                 incorrectPassAlert.setTitle("Incorrect Password");
                 incorrectPassAlert.setHeaderText("Your password is incorrect!");
@@ -84,6 +88,8 @@ public class Login extends Page {
             
             System.out.println("Successful login!");
             String role = sceneManager.getDatabase().getRole(username);
+            System.out.println(role);
+
             sceneManager.getDatabase().closeConn();
 
             sceneManager.getSession().resetSession();
@@ -91,7 +97,7 @@ public class Login extends Page {
             sceneManager.getSession().setUserName(username);
             sceneManager.getSession().setRole(role);
 
-            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
+            sceneManager.switchScenes(sceneManager.createNewDefaultPage());
             
         });
 
