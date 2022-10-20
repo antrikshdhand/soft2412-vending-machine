@@ -52,7 +52,7 @@ public class Database {
             openStatement.setQueryTimeout(30); // set timeout to 30 sec.
 
             openStatement.executeUpdate(
-                    "create table if not exists roles (username varchar(15) primary key, password varchar(20), role char(1))");
+                    "create table if not exists roles (username varchar(15) primary key, password varchar(20), role varchar(20))");
             openStatement.executeUpdate(
                     "create table if not exists categories (category_id serial, category_name varchar(20))");
             openStatement.executeUpdate(
@@ -60,7 +60,7 @@ public class Database {
             openStatement.executeUpdate(
                     "create table if not exists recent (item_name varchar(20))");
             // There is already guest account in the db when it is created.
-            openStatement.executeUpdate("insert into roles values('guest', 'guest', 'G')");
+            openStatement.executeUpdate("insert into roles values('guest', 'guest', 'Guest')");
 
             // Owner - O
             // Cashier - C
@@ -154,7 +154,7 @@ public class Database {
             statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Onion"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Juice"));
             
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "owner", "ownerp", "O"));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "owner", "ownerp", "Owner"));
             statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user1", "user1p", "R"));
             statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user2", "user2p", "R"));
             statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user3", "user3p", "R"));

@@ -2,18 +2,19 @@ package VendingMachine;
 
 public class Session {
 
-    private String userName;
-    private String role;
+    private String userName = "Guest";
+
+    private String role = "Guest";
+
     private boolean startedTransaction;
     private final int tickLimit = 120;
     private boolean loggedIn;
-
 
     /**
      * Returns the user Name of the session
      * @return user Name ( String )
      */
-    public String getUserName() {
+        public String getUserName() {
         return userName;
     }
 
@@ -71,10 +72,11 @@ public class Session {
      */
     public void resetSession(){
         userName = "Guest";
-        role = "G";
+        role = "Guest";
     }
 
     public void setLoggedIn(boolean b) {
         this.loggedIn = b;
     }
+
 }
