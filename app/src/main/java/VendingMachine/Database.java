@@ -255,6 +255,8 @@ public class Database {
 
     /// TO DO ADD YOUR FUNCTIONS HERE
 
+    public 
+
     ///////////// EXAMPLES /////////////
     // An example from the previous assignment
     // Have a look at how you insert values

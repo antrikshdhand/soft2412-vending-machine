@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
 
 import VendingMachine.Page;
 import VendingMachine.SceneManager;
@@ -24,11 +26,11 @@ public class Login extends Page {
         this.sceneManager = sceneManager;
 
         GridPane grid = new GridPane();
-        grid.setGridLinesVisible(true);
         
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
+        grid.setAlignment(Pos.CENTER); 
         this.scene = new Scene(grid, WIDTH, HEIGHT);
 
         Text scenetitle = new Text("Welcome");
@@ -47,8 +49,23 @@ public class Login extends Page {
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
+        Button signInButton = new Button("Sign in");
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        grid.add(hbBtn, 1, 4);
+        // signInButton.setOnAction(e -> {
+        //     sceneManager.switchScenes(sceneManager.get());
+        // });
 
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e -> {
+            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
+        });
 
+        // add buttons to Hbox
+        hbBtn.getChildren().add(backButton);
+        hbBtn.getChildren().add(signInButton);
+        
 
         
 
