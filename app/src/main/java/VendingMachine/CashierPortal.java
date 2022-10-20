@@ -27,8 +27,9 @@ public class CashierPortal extends Page{
 
     private Scene summaryPage;
     private Scene cancelledTransactionPage;
+
     /**
-     * The Constructor for the Cashier Portal, sets the scene for the seller portal.
+     * The Constructor for the Cashier Portal, sets the scene for the cashier portal.
      * @param sceneManager
      */
     public CashierPortal(SceneManager sceneManager) {
@@ -86,9 +87,8 @@ public class CashierPortal extends Page{
      }
 
 
-
     /**
-     * Function to returns sence.
+     * Function to return scene.
      * @return
      */
 
@@ -158,6 +158,5 @@ public class CashierPortal extends Page{
         pane.getChildren().addAll(lbl, bn);
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
-
 
 }
