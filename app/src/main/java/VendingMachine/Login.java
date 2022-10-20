@@ -39,14 +39,16 @@ public class Login extends Page {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label userName = new Label("User Name:");
-        grid.add(userName, 0, 1);
+        Label usernameLabel = new Label("User Name:");
+        grid.add(usernameLabel, 0, 1);
 
         TextField userTextField = new TextField();
+        String username = userTextField.getText();
         grid.add(userTextField, 1, 1);
 
-        Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
+        Label pwLabel = new Label("Password:");
+        String password = pwLabel.getText();
+        grid.add(pwLabel, 0, 2);
 
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
@@ -57,18 +59,18 @@ public class Login extends Page {
         grid.add(hbBtn, 1, 4);
         signInButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
-            int validUsername = sceneManager.getDatabase().validateUsername(userTextField.getText());
+            int validUsername = sceneManager.getDatabase().validateUsername(username);
             if (validUsername == -1) {                
                 Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
                 invalidUsernameAlert.setTitle("Invalid username");
-                invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", userTextField.getText()));
+                invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", username));
                 invalidUsernameAlert.setContentText("Please try again.");
                 invalidUsernameAlert.showAndWait();
 
                 return;
             }
             
-            int validLogin = sceneManager.getDatabase().login(userTextField.getText(), pwBox.getText());
+            int validLogin = sceneManager.getDatabase().login(username, password);
             if (validLogin == -1) {
                 Alert incorrectPassAlert = new Alert(AlertType.ERROR);
                 incorrectPassAlert.setTitle("Incorrect Password");
@@ -81,9 +83,16 @@ public class Login extends Page {
             // successful login
             
             System.out.println("Successful login!");
-            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
+            String role = sceneManager.getDatabase().getRole();
+            sceneManager.getDatabase().closeConn();
 
-            this.sceneManager.getDatabase().closeConn();
+            sceneManager.getSession().reset();
+            sceneManager.getSession().setLoggedIn(true);
+            sceneManager.getSession().setUserName(username);
+            sceneManager.getSession().setRole(role);
+
+            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
+            
         });
 
         Button backButton = new Button("Back");

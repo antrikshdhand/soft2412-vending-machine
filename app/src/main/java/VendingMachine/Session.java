@@ -3,12 +3,10 @@ package VendingMachine;
 public class Session {
 
     private String userName;
-
     private String role;
-
     private boolean startedTransaction;
-
     private final int tickLimit = 120;
+    private boolean loggedIn;
 
 
     /**
@@ -19,6 +17,7 @@ public class Session {
         return userName;
     }
 
+
     /**
      * Function to return the role of current session user
      * @return role ( String )
@@ -26,6 +25,7 @@ public class Session {
     public String getRole() {
         return role;
     }
+
 
     /**
      * Function to return the state of the transaction, has it been started or not.
@@ -72,5 +72,9 @@ public class Session {
     public void resetSession(){
         userName = "Guest";
         role = "G";
+    }
+
+    public void setLoggedIn(boolean b) {
+        this.loggedIn = b;
     }
 }

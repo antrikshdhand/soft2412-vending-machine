@@ -286,6 +286,34 @@ public class Database {
     }
 
     /**
+     * Function to return the role of a specified user
+     * 
+     * @param userName
+     * @return
+     */
+    public String getRole(String userName) {
+
+        String sql = """
+                SELECT role
+                FROM Roles
+                WHERE username = '%s';
+                """;
+        try {
+            ResultSet query = openStatement.executeQuery(String.format(sql, userName));
+
+            if (query.next()) {
+                return query.getString(0);
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error while querying for the role :(");
+            return null;
+        }
+    }
+
+    /**
      * Function to validate username
      * 
      * @param userName username of the user
