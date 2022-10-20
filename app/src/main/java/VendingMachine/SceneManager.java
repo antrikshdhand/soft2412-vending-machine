@@ -9,7 +9,7 @@ public class SceneManager {
 
     private OwnerPortal ownerPortal;
     private DefaultPage defaultPage;
-    private SellerPortal cashierPortal;
+    private CashierPortal cashierPortal;
     private SellerPortal sellerPortal;
     private Login login;
 
@@ -31,8 +31,7 @@ public class SceneManager {
 
         defaultPage = new DefaultPage(this);
         ownerPortal = new OwnerPortal(this);
-        cashierPortal = new SellerPortal(this);
-        // cashierPortal = new CashierPortal(this);
+        cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
     }

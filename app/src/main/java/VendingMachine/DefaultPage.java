@@ -30,7 +30,18 @@ public class DefaultPage extends Page {
 
         VBox tab1VBox = new VBox();
         Tab tab1 = new Tab("Recently Bought", tab1VBox);
-        tab1VBox.getChildren().addAll(new Label("Show all Recently Bought available"), new Label("Show all Recently Bought available2"));
+
+        sceneManager.getDatabase().openConn();
+        ArrayList<String> recent = sceneManager.getDatabase().queryRecent();
+        sceneManager.getDatabase().closeConn();
+
+        // System.out.println(recent);
+
+        for (String item : recent) {
+            tab1VBox.getChildren().add(new Label(item));
+        }
+
+//        tab1VBox.getChildren().addAll(new Label("Show all Recently Bought available"), new Label("Show all Recently Bought available2"));
         tabPane.getTabs().add(tab1);
 
         for (String category : categories) {
