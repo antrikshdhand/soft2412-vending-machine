@@ -250,9 +250,7 @@ public class Database {
         return false;
     }
 
-    /// TO DO ADD YOUR FUNCTIONS HERE
-
-    public 
+    /// TO DO ADD YOUR FUNCTIONS HERE 
 
     ///////////// EXAMPLES /////////////
     // An example from the previous assignment
