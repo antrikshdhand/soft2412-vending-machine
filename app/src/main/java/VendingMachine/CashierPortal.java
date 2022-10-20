@@ -1,162 +1,179 @@
 package VendingMachine;
 
-import javafx.scene.Scene; // check
-import javafx.scene.control.Label; // check
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.text.Font; // check
-import javafx.scene.text.FontWeight; // check
-import javafx.stage.Stage; // check
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 
-public class CashierPortal extends Page {
+public class OwnerPortal extends Page{
 
-    private Scene scene;
+
+    private Pane pane;
 
     private SceneManager sm;
-    private final int width = 1280;
-    private final int height = 720;
-    private StackPane pane;
 
-    private Stage window;
+    private Button cashierPortal;
+    private Button sellerPortal;
+    private Button manageSCO;
+    private Button summary;
+    private Button cancelledTransactions;
+    private Button returnToDp;
 
-    public Scene manageItems;
-    private Scene generateList;
-    private Scene generateSummary;
+    private Scene manageCSOPage;
 
-    private StackPane manageItemsPane;
-    private StackPane generateListPane;
-    private StackPane generateSummaryPane;
+    private Scene summaryPage;
+    private Scene cancelledTransactionPage;
+    /**
+     * The Constructor for the Owner Portal, sets the scene for the seller portal.
+     * @param sceneManager
+     */
+    public OwnerPortal(SceneManager sceneManager){
 
+        sm = sceneManager;
 
-    public CashierPortal(SceneManager sm) {
-        this.sm = sm;
-        createMainPage();
-        createManageItems();
-        createGenerateList();
-        createGenerateSummary();
-
-//        window.setScene(manageItems);
-
-    }
-
-
-    private void createMainPage() {
         pane = new StackPane();
-        scene = new Scene(pane, width, height);
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
-        VBox buttons = new VBox(10);
-        buttons.setSpacing(5);
-        buttons.setPrefWidth(190.00);
-        buttons.setAlignment(Pos.CENTER);
-        // var pane = new Pane();
-        // pane.setHgap(10);
-
-        Button bn1 = new Button("Manage Items");
-        // bn1.relocate(0, 50);
-        Button bn2 = new Button("Generate List of Available items");
-        Button bn3 = new Button("Generate Summary");
-        Button bn4 = new Button("Return to Default Page");
-
-//        bn4.setOnAction(e -> {
-//            app.switchScenes(app.getSceneManager().getDefaultPageScene());
-//        });
-
-//        scene = new Scene(pane, width, height);
+        this.createManageCSO();
+        this.createCancelledTransaction();
+        this.createSummary();
 
 
-        Label lbl = new Label("Cashier Portal");
-        lbl.setTranslateY(20);
+        VBox box = new VBox();
+        box.setSpacing(5);
+        box.setPrefWidth(190.00);
+        box.setAlignment(Pos.CENTER);
+
+        cashierPortal = new Button("Cashier portal");
+
+
+        cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+
+
+        sellerPortal = new Button("Seller portal");
+
+
+        sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
+
+        manageSCO = new Button("Managed privileged users");
+
+        manageSCO.setOnAction(e -> {
+        sm.switchScenes(manageCSOPage);});
+
+        summary = new Button("Generate Users Summary");
+
+        summary.setOnAction(e -> {
+        sm.switchScenes(summaryPage);});
+
+        cancelledTransactions = new Button("View unsuccessful transaction");
+
+        cancelledTransactions.setOnAction(e -> {
+        sm.switchScenes(cancelledTransactionPage);});
+
+        returnToDp = new Button("Return to default page");
+
+        returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
+
+
+        cashierPortal.setMinWidth(box.getPrefWidth());
+        sellerPortal.setMinWidth(box.getPrefWidth());
+        manageSCO.setMinWidth(box.getPrefWidth());
+        summary.setMinWidth(box.getPrefWidth());
+        cancelledTransactions.setMinWidth(box.getPrefWidth());
+
+        returnToDp.setTranslateX(-550);
+        returnToDp.setTranslateY(320);
+
+        Text title = new Text();
+        title.setText("Owner's Portal");
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+
+        box.getChildren().addAll(title, sellerPortal, cashierPortal, manageSCO, summary, cancelledTransactions);
+        pane.getChildren().add(box);
+        pane.getChildren().add(returnToDp);
+
+
+     }
+
+
+
+    /**
+     * Funciton to returns sence.
+     * @return
+     */
+
+    public void createManageCSO() {
+        StackPane pane = new StackPane();
+        manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
+
+        Button bn = new Button("Return to Owner Portal");
+
+        Label lbl = new Label("Manage Privileged Users");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
-        pane.setAlignment(bn4, Pos.BOTTOM_LEFT);
-
-//        bn4.setTranslateX(-550);
-//        bn4.setTranslateY(320);
-
-//        lbl.relocate(0, 30);
-
-        buttons.getChildren().addAll(bn1, bn2, bn3);
-        buttons.setAlignment(Pos.CENTER);
-        buttons.setAlignment(Pos.CENTER);
-        pane.getChildren().add(buttons);
-        pane.getChildren().addAll(lbl, bn4);
-        bn1.setOnAction(e -> this.sm.switchScenes(manageItems));
-        bn2.setOnAction(e -> this.sm.switchScenes(generateList));
-        bn3.setOnAction(e -> this.sm.switchScenes(generateSummary));
-        bn4.setOnAction(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
-
-    }
-
-
-    private void createManageItems() {
-        manageItemsPane = new StackPane();
-        manageItems = new Scene(manageItemsPane, width, height);
-
-        Button bn = new Button("Return to Cashier Portal");
-
-        Label lbl = new Label("Manage Items Portal");
-        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-
-        manageItemsPane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-//        generateListPane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
 
         lbl.relocate(0, 30);
 
-        manageItemsPane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.sm.switchScenes(scene));
+        pane.getChildren().addAll(lbl, bn);
+        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
-    private void createGenerateList() {
-        generateListPane = new StackPane();
-        generateList = new Scene(generateListPane, width, height);
 
-        Button bn = new Button("Return to Cashier Portal");
+    public void createSummary() {
+        StackPane pane = new StackPane();
+        summaryPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Label lbl = new Label("Generate List Portal");
+        Button bn = new Button("Return to Owner Portal");
+
+        Label lbl = new Label("Generate Summary");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
-        generateListPane.setAlignment(lbl, Pos.TOP_CENTER);
+        pane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
 
         lbl.relocate(0, 30);
 
-        generateListPane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.sm.switchScenes(scene));
+        pane.getChildren().addAll(lbl, bn);
+        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
-    private void createGenerateSummary() {
-        generateSummaryPane = new StackPane();
-        generateSummary = new Scene(generateSummaryPane, width, height);
+    public void createCancelledTransaction() {
+        StackPane pane = new StackPane();
+        cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Cashier Portal");
+        Button bn = new Button("Return to Owner Portal");
 
-        Label lbl = new Label("Generate Summary Portal");
+        Label lbl = new Label("CancelledTransaction");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
-        generateSummaryPane.setAlignment(lbl, Pos.TOP_CENTER);
+        pane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
 
         lbl.relocate(0, 30);
 
-        generateSummaryPane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.sm.switchScenes(scene));
+        pane.getChildren().addAll(lbl, bn);
+        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
-    public Scene getScene() {
-        return this.scene;
-    }
+
 }
