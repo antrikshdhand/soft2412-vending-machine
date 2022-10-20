@@ -3,6 +3,8 @@ package VendingMachine;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -41,6 +43,8 @@ public class DefaultPage extends Page {
             tab1VBox.getChildren().add(new Label(item));
         }
 
+        tab1VBox.setAlignment(Pos.CENTER);
+
 //        tab1VBox.getChildren().addAll(new Label("Show all Recently Bought available"), new Label("Show all Recently Bought available2"));
         tabPane.getTabs().add(tab1);
 
@@ -56,6 +60,8 @@ public class DefaultPage extends Page {
                 vBox.getChildren().add(new Label(item));
             }
 
+            vBox.setAlignment(Pos.CENTER);
+
             tabPane.getTabs().add(tab);
         }
 
@@ -66,11 +72,13 @@ public class DefaultPage extends Page {
 
 
         AnchorPane rightAnchorPane = new AnchorPane();
+        VBox rightVBox = new VBox();
+        rightAnchorPane.getChildren().add(rightVBox);
 
         VBox sessionDetails = new VBox();
         sessionDetails.getChildren().addAll(new Label("Role: " + sceneManager.getSession().getRole()), new Label("Account: " + sceneManager.getSession().getUserName()));
-
-        rightAnchorPane.getChildren().add(sessionDetails);
+        sessionDetails.setPadding(new Insets(15));
+        rightVBox.getChildren().add(sessionDetails);
 
         Button proceedToPortalBtn = new Button();
         proceedToPortalBtn.setText("Proceed to Portal");
@@ -78,16 +86,16 @@ public class DefaultPage extends Page {
             sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
         });
 
-        rightAnchorPane.setTopAnchor(proceedToPortalBtn, 70.0);
-        rightAnchorPane.getChildren().add(proceedToPortalBtn);
+        proceedToPortalBtn.setPadding(new Insets(15));
+        rightVBox.getChildren().add(proceedToPortalBtn);
 
 
         Button loginBtn = new Button("Login");
         loginBtn.setOnAction(e -> {
             sceneManager.switchScenes(sceneManager.getLoginScene());
         });
-        rightAnchorPane.setTopAnchor(loginBtn, 100.0);
-        rightAnchorPane.getChildren().add(loginBtn);
+        loginBtn.setPadding(new Insets(15));
+        rightVBox.getChildren().add(loginBtn);
 
         splitPane.getItems().addAll(tabPane, rightAnchorPane);
 
