@@ -7,10 +7,12 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     private Stage primaryStage;
-    SceneManager sceneManager = new SceneManager(this);
+    SceneManager sceneManager = new SceneManager();
 
     @Override
-    public void start(Stage primaryStage0) throws Exception {
+    public void start(Stage primaryStage0) {
+
+        sceneManager.setApp(this);
 
         primaryStage = primaryStage0;
         // Stage is basically the window, and you are given the name of the window.

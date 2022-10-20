@@ -15,8 +15,7 @@ public class SceneManager {
 
     private Session session = new Session();
 
-    public SceneManager(App app) {
-        this.app = app;
+    public SceneManager() {
 
         database = new Database();
 
@@ -36,6 +35,10 @@ public class SceneManager {
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
+    }
+
+    public void setApp(App app) {
+        this.app = app;
     }
 
     public void switchScenes(Scene scene) {
