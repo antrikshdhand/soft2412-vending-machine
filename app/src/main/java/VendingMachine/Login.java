@@ -19,6 +19,8 @@ public class Login extends Page {
         this.sceneManager = sceneManager;
 
         GridPane grid = new GridPane();
+        grid.gridLinesVisibleProperty(true);
+        
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
