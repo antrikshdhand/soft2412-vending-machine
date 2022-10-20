@@ -13,6 +13,7 @@ public class App extends Application {
     public void start(Stage primaryStage0) {
 
         sceneManager.setApp(this);
+        sceneManager.setUp();
 
         primaryStage = primaryStage0;
         // Stage is basically the window, and you are given the name of the window.

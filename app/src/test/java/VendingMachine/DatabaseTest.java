@@ -37,10 +37,10 @@ public class DatabaseTest {
         // Simple test to see if it can add a new owner, seller, cashier, and register customer to the db to the database.
         // through the Gui the guest should not be allowed to add in a new guest.
         db.openConn();
-        int owner = db.insertNewUser("Suli", "Hello","O");
-        int seller = db.insertNewUser("Udit", "Hello", "S" );
-        int cashier = db.insertNewUser("Ankit", "Hello", "c" );
-        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "rg" );
+        int owner = db.insertNewUser("Suli", "Hello","Owner");
+        int seller = db.insertNewUser("Udit", "Hello", "Seller" );
+        int cashier = db.insertNewUser("Ankit", "Hello", "Cashier" );
+        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "Registered Customer" );
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
@@ -96,10 +96,10 @@ public class DatabaseTest {
 
 
         db.openConn();
-        int owner = db.insertNewUser("Suli", "Hello","O");
-        int seller = db.insertNewUser("Udit", "Hello", "S" );
-        int cashier = db.insertNewUser("Ankit", "Hello", "c" );
-        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "rg" );
+        int owner = db.insertNewUser("Suli", "Hello","Owner");
+        int seller = db.insertNewUser("Udit", "Hello", "Seller" );
+        int cashier = db.insertNewUser("Ankit", "Hello", "Cashier" );
+        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "Registered Customer" );
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
@@ -108,10 +108,10 @@ public class DatabaseTest {
         // checking roles of the inserted functions.
 
         db.openConn();
-        boolean ownerCheck = db.checkRole("Suli", "O");
-        boolean sellerCheck = db.checkRole("Udit", "S" );
-        boolean cashierCheck = db.checkRole("Ankit", "c" );
-        boolean registeredCustomerCheck = db.checkRole("Antriksh", "rg" );
+        boolean ownerCheck = db.checkRole("Suli", "Owner");
+        boolean sellerCheck = db.checkRole("Udit", "Seller" );
+        boolean cashierCheck = db.checkRole("Ankit", "Cashier" );
+        boolean registeredCustomerCheck = db.checkRole("Antriksh", "Registered Customer" );
         db.closeConn();
 
         assertTrue(ownerCheck);
@@ -121,9 +121,9 @@ public class DatabaseTest {
 
         // checking if it can return false.
         db.openConn();
-        boolean onwerFalseCheck = db.checkRole("Udit", "O");
-        boolean cashierFalseCheck = db.checkRole("Antriksh", "C");
-        boolean registerFalseCheck = db.checkRole("Ankit", "rg");
+        boolean onwerFalseCheck = db.checkRole("Udit", "Owner");
+        boolean cashierFalseCheck = db.checkRole("Antriksh", "Cashier");
+        boolean registerFalseCheck = db.checkRole("Ankit", "Registered Customer");
         db.closeConn();
 
         assertFalse(onwerFalseCheck);
@@ -133,8 +133,8 @@ public class DatabaseTest {
         // checking fot guest, name user that do no exist.
 
         db.openConn();
-        boolean guestCheck = db.checkRole("guest", "g");
-        boolean unknownUserCheck = db.checkRole("Sam", "rg");
+        boolean guestCheck = db.checkRole("guest", "Guest");
+        boolean unknownUserCheck = db.checkRole("Sam", "Registered Customer");
         db.openConn();
 
         assertTrue(guestCheck);

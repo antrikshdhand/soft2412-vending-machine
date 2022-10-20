@@ -16,20 +16,10 @@ public class SceneManager {
     private Session session = new Session();
 
     public SceneManager() {
+    }
 
+    public void setUp() {
         database = new Database();
-
-        /// Example Query ///
-
-//        database.openConn();
-//        if (database.dropAllTables() == 0) {
-//            System.out.println("App.Java - Dropped All Tables");
-//        }
-//        database.closeConn();
-
-        /// Example Query ///
-
-
         defaultPage = new DefaultPage(this);
         ownerPortal = new OwnerPortal(this);
         cashierPortal = new CashierPortal(this);
