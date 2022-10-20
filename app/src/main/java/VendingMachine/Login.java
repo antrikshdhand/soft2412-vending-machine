@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
@@ -52,6 +53,13 @@ public class Login extends Page {
         grid.add(pwBox, 1, 2);
 
         Button signInButton = new Button("Sign in");
+
+        pwBox.setOnKeyPressed(
+                e -> {
+                    if (e.getCode().equals(KeyCode.ENTER))
+                        signInButton.fire();
+                });
+
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
