@@ -83,10 +83,10 @@ public class Login extends Page {
             // successful login
             
             System.out.println("Successful login!");
-            String role = sceneManager.getDatabase().getRole();
+            String role = sceneManager.getDatabase().getRole(username);
             sceneManager.getDatabase().closeConn();
 
-            sceneManager.getSession().reset();
+            sceneManager.getSession().resetSession();
             sceneManager.getSession().setLoggedIn(true);
             sceneManager.getSession().setUserName(username);
             sceneManager.getSession().setRole(role);
