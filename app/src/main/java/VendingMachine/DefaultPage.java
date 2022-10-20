@@ -60,12 +60,20 @@ public class DefaultPage extends Page {
 
         Button proceedToPortalBtn = new Button();
         proceedToPortalBtn.setText("Proceed to Portal");
-        
         proceedToPortalBtn.setOnAction(e -> {
             sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
         });
 
+        rightAnchorPane.setTopAnchor(proceedToPortalBtn, 10.0);
         rightAnchorPane.getChildren().add(proceedToPortalBtn);
+
+
+        Button loginBtn = new Button("Login");
+        loginBtn.setOnAction(e -> {
+            sceneManager.switchScenes(sceneManager.getLoginScene());
+        });
+        rightAnchorPane.setTopAnchor(loginBtn, 40.0);
+        rightAnchorPane.getChildren().add(loginBtn);
 
         splitPane.getItems().addAll(tabPane, rightAnchorPane);
 

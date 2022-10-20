@@ -11,6 +11,7 @@ public class SceneManager {
     private DefaultPage defaultPage;
     private SellerPortal cashierPortal;
     private SellerPortal sellerPortal;
+    private Login login;
 
     public SceneManager(App app) {
         this.app = app;
@@ -33,6 +34,7 @@ public class SceneManager {
         cashierPortal = new SellerPortal(this);
         // cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
+        login = new Login(this);
     }
 
     public void switchScenes(Scene scene) {
@@ -53,6 +55,10 @@ public class SceneManager {
 
     public Scene getSellerPortalScene() {
         return sellerPortal.getScene();
+    }
+
+    public Scene getLoginScene() {
+        return login.getScene();
     }
 
     public Database getDatabase() {
