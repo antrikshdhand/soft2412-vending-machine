@@ -2,9 +2,9 @@ package VendingMachine;
 
 public class Session {
 
-    private String userName;
+    private String userName = "Guest";
 
-    private String role;
+    private String role = "Guest";
 
     private boolean startedTransaction;
 
@@ -15,7 +15,7 @@ public class Session {
      * Returns the user Name of the session
      * @return user Name ( String )
      */
-    public String getUserName() {
+        public String getUserName() {
         return userName;
     }
 
@@ -71,6 +71,6 @@ public class Session {
      */
     public void resetSession(){
         userName = "Guest";
-        role = "G";
+        role = "Guest";
     }
 }

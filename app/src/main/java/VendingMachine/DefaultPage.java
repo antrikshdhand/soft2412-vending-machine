@@ -67,13 +67,18 @@ public class DefaultPage extends Page {
 
         AnchorPane rightAnchorPane = new AnchorPane();
 
+        VBox sessionDetails = new VBox();
+        sessionDetails.getChildren().addAll(new Label("Role: " + sceneManager.getSession().getRole()), new Label("Account: " + sceneManager.getSession().getUserName()));
+
+        rightAnchorPane.getChildren().add(sessionDetails);
+
         Button proceedToPortalBtn = new Button();
         proceedToPortalBtn.setText("Proceed to Portal");
         proceedToPortalBtn.setOnAction(e -> {
             sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
         });
 
-        rightAnchorPane.setTopAnchor(proceedToPortalBtn, 10.0);
+        rightAnchorPane.setTopAnchor(proceedToPortalBtn, 70.0);
         rightAnchorPane.getChildren().add(proceedToPortalBtn);
 
 
@@ -81,7 +86,7 @@ public class DefaultPage extends Page {
         loginBtn.setOnAction(e -> {
             sceneManager.switchScenes(sceneManager.getLoginScene());
         });
-        rightAnchorPane.setTopAnchor(loginBtn, 40.0);
+        rightAnchorPane.setTopAnchor(loginBtn, 100.0);
         rightAnchorPane.getChildren().add(loginBtn);
 
         splitPane.getItems().addAll(tabPane, rightAnchorPane);
