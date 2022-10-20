@@ -250,7 +250,75 @@ public class Database {
         return false;
     }
 
-    /// TO DO ADD YOUR FUNCTIONS HERE 
+    /**
+     * Function to validate username
+     * 
+     * @param userName username of the user
+     * @return 0 if successful, -1 if unsuccessful
+     */
+    public int validateUsername(String userName) {
+        if (userName.length() > 15) {
+            return -1;
+        }
+
+        String sql = """
+                SELECT *
+                FROM Roles
+                WHERE username = '%s';
+                """;
+
+        try {
+            ResultSet query = openStatement.executeQuery(String.format(sql, userName));
+
+            if (query.next()) {
+                return 0;
+            } else {
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error while querying username :(");
+            return -1;
+        }
+    }
+
+    /**
+     * Login function
+     * 
+     * @param username username of the user
+     * @param password password of the user
+     * @return 0 if successful, -1 if unsuccessful
+     */
+    public int login(String username, String password) {
+        if (password.length() > 20) {
+            return -1;
+        }
+
+        String sql = """
+                SELECT *
+                FROM Roles
+                WHERE username = '%s' AND password = '%s';
+                """;
+        try {
+            ResultSet query = openStatement.executeQuery(String.format(sql, username, password));
+            
+            if (query.next()) {
+                return 0;
+            } else {
+                return -1;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error while querying for user :(");
+            return -1;
+        }
+    }
+
+
+
+    /// TO DO ADD YOUR FUNCTIONS HERE
+    
+    
 
     ///////////// EXAMPLES /////////////
     // An example from the previous assignment

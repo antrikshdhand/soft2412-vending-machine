@@ -53,9 +53,26 @@ public class Login extends Page {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
-        // signInButton.setOnAction(e -> {
-        //     sceneManager.switchScenes(sceneManager.get());
-        // });
+        signInButton.setOnAction(e -> {
+            this.sceneManager.getDatabase().openConn();
+            int validUsername = sceneManager.getDatabase().validateUsername(userTextField.getText());
+            if (validUsername == -1) {
+                System.out.println(String.format("A user with username %s does not exist!", userTextField.getText()));
+                return;
+            }
+            
+            int validLogin = sceneManager.getDatabase().login(userTextField.getText(), pwBox.getText());
+            if (validLogin == -1) {
+                System.out.println("Your password is incorrect!");
+                return;
+            }
+
+            // successful login
+            
+            System.out.println("Successful login!");
+
+            this.sceneManager.getDatabase().closeConn();
+        });
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> {
