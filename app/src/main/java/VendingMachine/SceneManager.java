@@ -1,16 +1,11 @@
 package VendingMachine;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
 public class SceneManager {
 
     private App app;
+    private Database database;
 
     private OwnerPortal ownerPortal;
     private DefaultPage defaultPage;
@@ -18,8 +13,20 @@ public class SceneManager {
     private SellerPortal sellerPortal;
 
     public SceneManager(App app) {
-
         this.app = app;
+
+        database = new Database();
+
+        /// Example Query ///
+
+//        database.openConn();
+//        if (database.dropAllTables() == 0) {
+//            System.out.println("App.Java - Dropped All Tables");
+//        }
+//        database.closeConn();
+
+        /// Example Query ///
+
 
         defaultPage = new DefaultPage(this);
         ownerPortal = new OwnerPortal(this);
@@ -32,7 +39,7 @@ public class SceneManager {
         app.switchScenes(scene);
     }
     
-    public Scene getDeafultPageScene() {
+    public Scene getDefaultPageScene() {
         return defaultPage.getScene();
     }
 
@@ -47,5 +54,9 @@ public class SceneManager {
     public Scene getSellerPortalScene() {
         return sellerPortal.getScene();
     }
-    
+
+    public Database getDatabase() {
+        return database;
+    }
+
 }
