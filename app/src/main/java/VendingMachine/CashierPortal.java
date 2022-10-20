@@ -48,17 +48,17 @@ public class CashierPortal extends Page{
         box.setPrefWidth(190.00);
         box.setAlignment(Pos.CENTER);
 
-        manageSCO = new Button("Managed privileged users");
+        manageSCO = new Button("Modify Available Cash");
 
         manageSCO.setOnAction(e -> {
         sm.switchScenes(manageCSOPage);});
 
-        summary = new Button("Generate Users Summary");
+        summary = new Button("Generate Summary of Change");
 
         summary.setOnAction(e -> {
         sm.switchScenes(summaryPage);});
 
-        cancelledTransactions = new Button("View unsuccessful transaction");
+        cancelledTransactions = new Button("Generate Summary of Transaction");
 
         cancelledTransactions.setOnAction(e -> {
         sm.switchScenes(cancelledTransactionPage);});
@@ -98,7 +98,7 @@ public class CashierPortal extends Page{
 
         Button bn = new Button("Return to Cashier Portal");
 
-        Label lbl = new Label("Manage Privileged Users");
+        Label lbl = new Label("Modify Available Cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
@@ -121,7 +121,7 @@ public class CashierPortal extends Page{
 
         Button bn = new Button("Return to Cashier Portal");
 
-        Label lbl = new Label("Generate Summary");
+        Label lbl = new Label("Generate Summary of Change");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
@@ -143,7 +143,7 @@ public class CashierPortal extends Page{
 
         Button bn = new Button("Return to Cashier Portal");
 
-        Label lbl = new Label("CancelledTransaction");
+        Label lbl = new Label("Generate Summary of Transaction");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
