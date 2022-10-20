@@ -55,9 +55,9 @@ public class Session {
     public void setRole(String role) {
         this.role = role;
         if (role.equalsIgnoreCase("guest")) {
-            loggedIn = false;
+            this.setLoggedIn( false);
         }
-        else loggedIn = true;
+        else this.setLoggedIn(true);
     }
 
 
@@ -84,6 +84,14 @@ public class Session {
 
     public void setLoggedIn(boolean b) {
         this.loggedIn = b;
+    }
+
+    /**
+     * Returns the logged in value
+     * @return
+     */
+    public boolean isLoggedIn(){
+        return loggedIn;
     }
 
 
