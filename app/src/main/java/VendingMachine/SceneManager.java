@@ -16,6 +16,9 @@ public class SceneManager {
     private Session session = new Session();
 
     public SceneManager() {
+        database = new Database();
+        cashierPortal = new CashierPortal(this);
+
     }
 
     public void setUp() {

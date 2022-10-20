@@ -54,11 +54,11 @@ public class Database {
             openStatement.executeUpdate(
                     "create table if not exists roles (username varchar(15) primary key, password varchar(20), role varchar(20))");
             openStatement.executeUpdate(
-                    "create table if not exists categories (category_id serial, category_name varchar(20))");
+                    "create table if not exists categories (category_id serial primary key, category_name varchar(20))");
             openStatement.executeUpdate(
-                    "create table if not exists items (item_name varchar(20), category_name varchar(20))");
+                    "create table if not exists items (item_name varchar(20) primary key, category_name varchar(20))");
             openStatement.executeUpdate(
-                    "create table if not exists recent (item_name varchar(20))");
+                    "create table if not exists recent (item_name varchar(20) primary key)");
             // There is already guest account in the db when it is created.
             openStatement.executeUpdate("insert into roles values('guest', 'guest', 'Guest')");
 
@@ -134,7 +134,7 @@ public class Database {
 
 
     /**/
-
+    //  This is dummy data that was put in to test some the code and to see if the gui is function well.
     public int addDummyItems() {
 
         try {
@@ -150,9 +150,9 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Gummy", "Candies"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Onion", "Chips"));
 
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Gummy"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Onion"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Juice"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Gummy"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Onion"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Juice"));
             
             statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "owner", "ownerp", "Owner"));
             statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user1", "user1p", "Registered Customer"));
@@ -309,7 +309,7 @@ public class Database {
 
         } catch (SQLException e) {
             System.out.println("Error while querying for the role :(");
-            return null;
+            return "Error";
         }
     }
 
@@ -353,9 +353,9 @@ public class Database {
      * @return 0 if successful, -1 if unsuccessful
      */
     public int login(String username, String password) {
-        if (password.length() > 20) {
-            return -1;
-        }
+//        if (password.length() > 20) {
+//            return -1;
+//        }
 
         String sql = """
                 SELECT *
