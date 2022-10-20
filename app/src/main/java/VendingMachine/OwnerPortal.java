@@ -78,7 +78,7 @@ public class OwnerPortal extends Page{
 
         returnToDp = new Button("Return to default page");
 
-        returnToDp.setOnAction(e -> sm.getDeafultPageScene());
+        returnToDp.setOnAction(e -> sm.getDefaultPageScene());
 
 
          cashierPortal.setMinWidth(box.getPrefWidth());
@@ -155,7 +155,7 @@ public class OwnerPortal extends Page{
 
     public void createCancelledTransaction() {
         StackPane pane = new StackPane();
-        manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
+        cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);
 
         Button bn = new Button("Return to Owner Portal");
 
@@ -165,7 +165,7 @@ public class OwnerPortal extends Page{
         pane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
 //        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
-s
+
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
 
