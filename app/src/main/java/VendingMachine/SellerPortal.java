@@ -82,10 +82,10 @@ public class SellerPortal extends Page {
         buttons.setAlignment(Pos.CENTER);
         pane.getChildren().add(buttons);
         pane.getChildren().addAll(lbl, bn4);
-        bn1.setOnMouseClicked(e -> this.sm.switchScenes(manageItems));
-        bn2.setOnMouseClicked(e -> this.sm.switchScenes(generateList));
-        bn3.setOnMouseClicked(e -> this.sm.switchScenes(generateSummary));
-        bn4.setOnMouseClicked(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
+        bn1.setOnAction(e -> this.sm.switchScenes(manageItems));
+        bn2.setOnAction(e -> this.sm.switchScenes(generateList));
+        bn3.setOnAction(e -> this.sm.switchScenes(generateSummary));
+        bn4.setOnAction(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
 
     }
 
@@ -109,7 +109,7 @@ public class SellerPortal extends Page {
         lbl.relocate(0, 30);
 
         manageItemsPane.getChildren().addAll(lbl, bn);
-        bn.setOnMouseClicked(e -> this.sm.switchScenes(scene));
+        bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
     private void createGenerateList() {
@@ -131,7 +131,7 @@ public class SellerPortal extends Page {
         lbl.relocate(0, 30);
 
         generateListPane.getChildren().addAll(lbl, bn);
-        bn.setOnMouseClicked(e -> this.sm.switchScenes(scene));
+        bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
     private void createGenerateSummary() {
@@ -153,7 +153,7 @@ public class SellerPortal extends Page {
         lbl.relocate(0, 30);
 
         generateSummaryPane.getChildren().addAll(lbl, bn);
-        bn.setOnMouseClicked(e -> this.sm.switchScenes(scene));
+        bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
     public Scene getScene() {
