@@ -1,83 +1,162 @@
 package VendingMachine;
 
-import java.util.ArrayList;
-
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.scene.Scene; // check
+import javafx.scene.control.Label; // check
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.geometry.Insets;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font; // check
+import javafx.scene.text.FontWeight; // check
+import javafx.stage.Stage; // check
 import javafx.geometry.Pos;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
 
 public class CashierPortal extends Page {
 
-    ArrayList<Button> buttons = new ArrayList<Button>();
+    private Scene scene;
 
-    private Pane pane;
+    private SceneManager sm;
+    private final int width = 1280;
+    private final int height = 720;
+    private StackPane pane;
 
-    public CashierPortal(SceneManager sceneManager) {
+    private Stage window;
 
-        pane = new StackPane();
-        scene = new Scene(pane, WIDTH, HEIGHT);
+    public Scene manageItems;
+    private Scene generateList;
+    private Scene generateSummary;
 
-        VBox box = new VBox();
-        box.setSpacing(SPACING);
-        box.setPrefWidth(PREFWIDTH);
-        box.setAlignment(Pos.CENTER);
+    private StackPane manageItemsPane;
+    private StackPane generateListPane;
+    private StackPane generateSummaryPane;
 
-        // Create Buttons
-        Button modifyAvailableCash = new Button();
-        Button generateSummaryOfChange = new Button();
-        Button generateSummaryOfTransaction = new Button();
-        Button returnButton = new Button();
 
-        // Add to button array
-        buttons.add(modifyAvailableCash);
-        buttons.add(generateSummaryOfChange);
-        buttons.add(generateSummaryOfTransaction);
-        buttons.add(returnButton);
+    public CashierPortal(SceneManager sm) {
+        this.sm = sm;
+        createMainPage();
+        createManageItems();
+        createGenerateList();
+        createGenerateSummary();
 
-        // Set universal values
-        for (Button button : buttons) {
-            button.setMinWidth(box.getPrefWidth());
-        }
-
-        // Setting text to the button
-        modifyAvailableCash.setText("Modify Available Cash");
-        generateSummaryOfChange.setText("Generate Summary of Change");
-        generateSummaryOfTransaction.setText("Generate Summary of Transaction");
-        returnButton.setText("Return to Default Page");
-
-        returnButton.setOnAction(e -> {
-            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
-        });
-
-        // Setting the location of the button
-       modifyAvailableCash.setTranslateY(100);
-       //modifyAvailableCash.setTranslateY(HEIGHT*1/6);
-
-       generateSummaryOfChange.setTranslateY(200);
-       //generateSummaryOfChange.setTranslateY(HEIGHT*2/6);
-
-       generateSummaryOfTransaction.setTranslateY(300);
-       //generateSummaryOfTransaction.setTranslateY(HEIGHT*4/6);
-
-       returnButton.setTranslateY(0);
-       //returnButton.setTranslateY(0);
-
-        // Add objects to pane
-        for (Button button : buttons) {
-            pane.getChildren().add(button);
-        }
+//        window.setScene(manageItems);
 
     }
 
+
+    private void createMainPage() {
+        pane = new StackPane();
+        scene = new Scene(pane, width, height);
+
+        VBox buttons = new VBox(10);
+        buttons.setSpacing(5);
+        buttons.setPrefWidth(190.00);
+        buttons.setAlignment(Pos.CENTER);
+        // var pane = new Pane();
+        // pane.setHgap(10);
+
+        Button bn1 = new Button("Manage Items");
+        // bn1.relocate(0, 50);
+        Button bn2 = new Button("Generate List of Available items");
+        Button bn3 = new Button("Generate Summary");
+        Button bn4 = new Button("Return to Default Page");
+
+//        bn4.setOnAction(e -> {
+//            app.switchScenes(app.getSceneManager().getDefaultPageScene());
+//        });
+
+//        scene = new Scene(pane, width, height);
+
+
+        Label lbl = new Label("Cashier Portal");
+        lbl.setTranslateY(20);
+        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+        pane.setAlignment(lbl, Pos.TOP_CENTER);
+        pane.setAlignment(bn4, Pos.BOTTOM_LEFT);
+
+//        bn4.setTranslateX(-550);
+//        bn4.setTranslateY(320);
+
+//        lbl.relocate(0, 30);
+
+        buttons.getChildren().addAll(bn1, bn2, bn3);
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setAlignment(Pos.CENTER);
+        pane.getChildren().add(buttons);
+        pane.getChildren().addAll(lbl, bn4);
+        bn1.setOnAction(e -> this.sm.switchScenes(manageItems));
+        bn2.setOnAction(e -> this.sm.switchScenes(generateList));
+        bn3.setOnAction(e -> this.sm.switchScenes(generateSummary));
+        bn4.setOnAction(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
+
+    }
+
+
+    private void createManageItems() {
+        manageItemsPane = new StackPane();
+        manageItems = new Scene(manageItemsPane, width, height);
+
+        Button bn = new Button("Return to Cashier Portal");
+
+        Label lbl = new Label("Manage Items Portal");
+        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+        manageItemsPane.setAlignment(lbl, Pos.TOP_CENTER);
+        lbl.setTranslateY(20);
+//        generateListPane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+        bn.setTranslateX(-550);
+        bn.setTranslateY(320);
+
+        lbl.relocate(0, 30);
+
+        manageItemsPane.getChildren().addAll(lbl, bn);
+        bn.setOnAction(e -> this.sm.switchScenes(scene));
+    }
+
+    private void createGenerateList() {
+        generateListPane = new StackPane();
+        generateList = new Scene(generateListPane, width, height);
+
+        Button bn = new Button("Return to Cashier Portal");
+
+        Label lbl = new Label("Generate List Portal");
+        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+        generateListPane.setAlignment(lbl, Pos.TOP_CENTER);
+        lbl.setTranslateY(20);
+//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+        bn.setTranslateX(-550);
+        bn.setTranslateY(320);
+
+        lbl.relocate(0, 30);
+
+        generateListPane.getChildren().addAll(lbl, bn);
+        bn.setOnAction(e -> this.sm.switchScenes(scene));
+    }
+
+    private void createGenerateSummary() {
+        generateSummaryPane = new StackPane();
+        generateSummary = new Scene(generateSummaryPane, width, height);
+
+        Button bn = new Button("Return to Cashier Portal");
+
+        Label lbl = new Label("Generate Summary Portal");
+        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+        generateSummaryPane.setAlignment(lbl, Pos.TOP_CENTER);
+        lbl.setTranslateY(20);
+//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+        bn.setTranslateX(-550);
+        bn.setTranslateY(320);
+
+        lbl.relocate(0, 30);
+
+        generateSummaryPane.getChildren().addAll(lbl, bn);
+        bn.setOnAction(e -> this.sm.switchScenes(scene));
+    }
+
+    public Scene getScene() {
+        return this.scene;
+    }
 }

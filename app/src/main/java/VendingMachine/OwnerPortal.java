@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 public class OwnerPortal extends Page{
 
 
-     private Pane pane;
+    private Pane pane;
 
     private SceneManager sm;
 
@@ -37,26 +37,26 @@ public class OwnerPortal extends Page{
 
         sm = sceneManager;
 
-         pane = new StackPane();
-         scene = new Scene(pane, WIDTH, HEIGHT);
+        pane = new StackPane();
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
         this.createManageCSO();
         this.createCancelledTransaction();
         this.createSummary();
 
 
-         VBox box = new VBox();
-         box.setSpacing(5);
-         box.setPrefWidth(190.00);
-         box.setAlignment(Pos.CENTER);
+        VBox box = new VBox();
+        box.setSpacing(5);
+        box.setPrefWidth(190.00);
+        box.setAlignment(Pos.CENTER);
 
-         cashierPortal = new Button("Cashier portal");
+        cashierPortal = new Button("Cashier portal");
 
 
         cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
 
 
-         sellerPortal = new Button("Seller portal");
+        sellerPortal = new Button("Seller portal");
 
 
         sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
@@ -81,22 +81,22 @@ public class OwnerPortal extends Page{
         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
 
-         cashierPortal.setMinWidth(box.getPrefWidth());
-         sellerPortal.setMinWidth(box.getPrefWidth());
-         manageSCO.setMinWidth(box.getPrefWidth());
-         summary.setMinWidth(box.getPrefWidth());
-         cancelledTransactions.setMinWidth(box.getPrefWidth());
+        cashierPortal.setMinWidth(box.getPrefWidth());
+        sellerPortal.setMinWidth(box.getPrefWidth());
+        manageSCO.setMinWidth(box.getPrefWidth());
+        summary.setMinWidth(box.getPrefWidth());
+        cancelledTransactions.setMinWidth(box.getPrefWidth());
 
-         returnToDp.setTranslateX(-550);
-         returnToDp.setTranslateY(320);
+        returnToDp.setTranslateX(-550);
+        returnToDp.setTranslateY(320);
 
-         Text title = new Text();
-         title.setText("Owner's Portal");
-         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+        Text title = new Text();
+        title.setText("Owner's Portal");
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-         box.getChildren().addAll(title, sellerPortal, cashierPortal, manageSCO, summary, cancelledTransactions);
-         pane.getChildren().add(box);
-         pane.getChildren().add(returnToDp);
+        box.getChildren().addAll(title, sellerPortal, cashierPortal, manageSCO, summary, cancelledTransactions);
+        pane.getChildren().add(box);
+        pane.getChildren().add(returnToDp);
 
 
      }
