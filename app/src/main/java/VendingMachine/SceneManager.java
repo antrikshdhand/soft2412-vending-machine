@@ -70,4 +70,8 @@ public class SceneManager {
         return session;
     }
 
+    public void createNewDefaultPage() {
+        defaultPage = new DefaultPage(this);
+    }
+
 }
