@@ -13,6 +13,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import VendingMachine.Page;
 import VendingMachine.SceneManager;
@@ -56,20 +58,30 @@ public class Login extends Page {
         signInButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
             int validUsername = sceneManager.getDatabase().validateUsername(userTextField.getText());
-            if (validUsername == -1) {
-                System.out.println(String.format("A user with username %s does not exist!", userTextField.getText()));
+            if (validUsername == -1) {                
+                Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
+                invalidUsernameAlert.setTitle("Invalid username");
+                invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", userTextField.getText()));
+                invalidUsernameAlert.setContentText("Please try again.");
+                invalidUsernameAlert.showAndWait();
+
                 return;
             }
             
             int validLogin = sceneManager.getDatabase().login(userTextField.getText(), pwBox.getText());
             if (validLogin == -1) {
-                System.out.println("Your password is incorrect!");
+                Alert incorrectPassAlert = new Alert(AlertType.ERROR);
+                incorrectPassAlert.setTitle("Incorrect Password");
+                incorrectPassAlert.setHeaderText("Your password is incorrect!");
+                incorrectPassAlert.setContentText("Please try again.");
+                incorrectPassAlert.showAndWait();
                 return;
             }
 
             // successful login
             
             System.out.println("Successful login!");
+            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
 
             this.sceneManager.getDatabase().closeConn();
         });

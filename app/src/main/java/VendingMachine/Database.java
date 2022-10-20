@@ -153,6 +153,11 @@ public class Database {
             statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Gummy"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Onion"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Recent: Juice"));
+            
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "owner", "ownerp", "O"));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user1", "user1p", "R"));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user2", "user2p", "R"));
+            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user3", "user3p", "R"));
 
 
         } catch (SQLException e) {
