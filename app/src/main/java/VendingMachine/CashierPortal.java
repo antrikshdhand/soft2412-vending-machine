@@ -61,17 +61,17 @@ public class CashierPortal extends Page {
         });
 
         // Setting the location of the button
-//        modifyAvailableCash.setTranslateX(WIDTH/2);
-//        modifyAvailableCash.setTranslateY(HEIGHT*1/6);
-//
-//        generateSummaryOfChange.setTranslateX(WIDTH/2);
-//        generateSummaryOfChange.setTranslateY(HEIGHT*2/6);
-//
-//        generateSummaryOfTransaction.setTranslateX(WIDTH/2);
-//        generateSummaryOfTransaction.setTranslateY(HEIGHT*4/6);
-//
-//        returnButton.setTranslateX(150);
-//        returnButton.setTranslateY(60);
+       modifyAvailableCash.setTranslateY(100);
+       //modifyAvailableCash.setTranslateY(HEIGHT*1/6);
+
+       generateSummaryOfChange.setTranslateY(200);
+       //generateSummaryOfChange.setTranslateY(HEIGHT*2/6);
+
+       generateSummaryOfTransaction.setTranslateY(300);
+       //generateSummaryOfTransaction.setTranslateY(HEIGHT*4/6);
+
+       returnButton.setTranslateY(0);
+       //returnButton.setTranslateY(0);
 
         // Add objects to pane
         for (Button button : buttons) {
