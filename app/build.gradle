@@ -87,8 +87,13 @@ javadoc {
 jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: "build/classes/java/main/CurrencyConverter",
-                    exclude: ['WelcomeScreen.class'])
+            fileTree(dir: "build/classes/java/main/VendingMachine",
+                    exclude: ['App.class',
+                              'CashierPortal.class',
+                              'DefaultPage.class',
+                              'OwnerPortal.class',
+                              'Page.class',
+                              'SellerPortal.class'])
         }))
     }
 }
