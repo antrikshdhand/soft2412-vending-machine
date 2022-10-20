@@ -13,6 +13,8 @@ public class SceneManager {
     private SellerPortal sellerPortal;
     private Login login;
 
+    private Session session = new Session();
+
     public SceneManager(App app) {
         this.app = app;
 
@@ -62,6 +64,10 @@ public class SceneManager {
 
     public Database getDatabase() {
         return database;
+    }
+
+    public Session getSession() {
+        return session;
     }
 
 }
