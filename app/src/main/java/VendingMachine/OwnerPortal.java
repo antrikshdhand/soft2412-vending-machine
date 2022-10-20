@@ -48,6 +48,11 @@ import java.util.Stack;
          pane = new StackPane();
          scene = new Scene(pane, WIDTH, HEIGHT);
 
+        this.createManageCSO();
+        this.createCancelledTransaction();
+        this.createSummary();
+
+
          VBox box = new VBox();
          box.setSpacing(5);
          box.setPrefWidth(190.00);
@@ -56,29 +61,32 @@ import java.util.Stack;
          cashierPortal = new Button("Cashier portal");
 
 
-        cashierPortal.setOnAction(e -> this.goToCashierPortal());
+        cashierPortal.setOnAction(e -> sm.getCashierPortalScene());
 
 
          sellerPortal = new Button("Seller portal");
 
 
-        sellerPortal.setOnAction(e ->  this.goToSellerPortal());
+        sellerPortal.setOnAction(e ->  sm.getSellerPortalScene());
 
         manageSCO = new Button("Managed privileged users");
 
-        manageSCO.setOnAction(e -> this.createManageCSO());
+        manageSCO.setOnAction(e -> {
+        sm.switchScenes(manageCSOPage);});
 
         summary = new Button("Generate Users Summary");
 
-        summary.setOnAction(e -> this.createSummary());
+        summary.setOnAction(e -> {
+        sm.switchScenes(summaryPage);});
 
         cancelledTransactions = new Button("View unsuccessful transaction");
 
-        cancelledTransactions.setOnAction(e -> createCancelledTransaction());
+        cancelledTransactions.setOnAction(e -> {
+        sm.switchScenes(cancelledTransactionPage);});
 
         returnToDp = new Button("Return to default page");
 
-        returnToDp.setOnAction(e -> this.retToDefaultPortal());
+        returnToDp.setOnAction(e -> sm.getDeafultPageScene());
 
 
          cashierPortal.setMinWidth(box.getPrefWidth());
@@ -101,35 +109,9 @@ import java.util.Stack;
 
      }
 
-    /**
-     * Funciton to switch scenes to the cashier portal
-     */
-    public void goToCashierPortal(){
-        sm.switchScenes(sm.getCashierPortalScene());
-    }
 
-    /**
-     * Funciton to switch scenes to the seller portal
-     */
 
-    public void goToSellerPortal(){
-        sm.switchScenes(sm.getSellerPortalScene());
-    }
 
-    /**
-     * Funciton to switch scenes to the default page portal
-     */
-
-    public void retToDefaultPortal(){
-        sm.switchScenes(sm.getDeafultPageScene());
-    }
-
-    /**
-     * Funciton to switch scenes to the default page portal
-     */
-    public  void goToOwnerPortal(){
-        sm.switchScenes(sm.getOwnerPortalScene());
-    }
 
     /**
      * Funciton to returns sence.
@@ -155,7 +137,7 @@ import java.util.Stack;
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.goToOwnerPortal());
+        bn.setOnAction(e -> sm.getOwnerPortalScene());
     }
 
 
@@ -178,7 +160,7 @@ import java.util.Stack;
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.goToOwnerPortal());
+        bn.setOnAction(e -> sm.getOwnerPortalScene());
     }
 
     public void createCancelledTransaction() {
@@ -200,7 +182,7 @@ import java.util.Stack;
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.goToOwnerPortal());
+        bn.setOnAction(e -> sm.getOwnerPortalScene());
     }
 
 
