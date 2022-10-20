@@ -53,13 +53,13 @@ public class OwnerPortal extends Page{
          cashierPortal = new Button("Cashier portal");
 
 
-        cashierPortal.setOnAction(e -> sm.getCashierPortalScene());
+        cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
 
 
          sellerPortal = new Button("Seller portal");
 
 
-        sellerPortal.setOnAction(e ->  sm.getSellerPortalScene());
+        sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
 
         manageSCO = new Button("Managed privileged users");
 
@@ -78,7 +78,7 @@ public class OwnerPortal extends Page{
 
         returnToDp = new Button("Return to default page");
 
-        returnToDp.setOnAction(e -> sm.getDefaultPageScene());
+        returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
 
          cashierPortal.setMinWidth(box.getPrefWidth());
@@ -127,7 +127,7 @@ public class OwnerPortal extends Page{
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.getOwnerPortalScene());
+        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
 
@@ -150,7 +150,7 @@ public class OwnerPortal extends Page{
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.getOwnerPortalScene());
+        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
     public void createCancelledTransaction() {
@@ -172,7 +172,7 @@ public class OwnerPortal extends Page{
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.getOwnerPortalScene());
+        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
 
