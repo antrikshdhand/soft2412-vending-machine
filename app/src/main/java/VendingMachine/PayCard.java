@@ -127,6 +127,30 @@ public class PayCard extends Page {
             return false;
         }
 
+        // If all conditions are met
+        return true;
+    }
+
+    /**
+     * Checks if CVV is valid.
+     * @param CVV
+     */
+    public boolean checkCVV(String CVV) {
+
+        int number;
+
+        // Checks if integer
+        try {
+            number = Integer.parseInt(CVV);
+        } catch (Exception e) {
+            return false;
+        }
+
+        // Checks if 16 digits long
+        int numDigits = String.valueOf(number).length();
+        if (numDigits != 3) {
+            return false;
+        }
 
         // If all conditions are met
         return true;
