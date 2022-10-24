@@ -21,7 +21,7 @@ public class CheckoutPage extends Page {
     private Button payCash;
     private Button returnToDp;
 
-    private Scene manageCSOPage;
+    private Scene payCardPage;
     private Scene payCashPage;
 
     /**
@@ -44,12 +44,12 @@ public class CheckoutPage extends Page {
         box.setPrefWidth(190.00);
         box.setAlignment(Pos.CENTER);
 
-        payCard = new Button("Pay by card");
+        payCard = new Button("Pay by Card");
 
         payCard.setOnAction(e -> {
-        sm.switchScenes(manageCSOPage);});
+        sm.switchScenes(payCardPage);});
 
-        payCash = new Button("Pay by cash");
+        payCash = new Button("Pay by Cash");
 
         payCash.setOnAction(e -> {
             sm.switchScenes(payCashPage);
@@ -83,7 +83,7 @@ public class CheckoutPage extends Page {
 
     public void createPayCard() {
         StackPane pane = new StackPane();
-        manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
+        payCardPage = new Scene(pane, WIDTH, HEIGHT);
 
         Button bn = new Button("Return to checkout page");
 
