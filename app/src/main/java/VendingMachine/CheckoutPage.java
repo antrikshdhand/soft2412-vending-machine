@@ -111,7 +111,7 @@ public class CheckoutPage extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
 
@@ -134,7 +134,7 @@ public class CheckoutPage extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
     public void createCancelledTransaction() {
@@ -156,7 +156,7 @@ public class CheckoutPage extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
 }
