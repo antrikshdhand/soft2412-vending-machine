@@ -28,7 +28,7 @@ public class CheckoutPage extends Page {
     private Scene cancelledTransactionPage;
 
     /**
-     * The Constructor for the Cashier Portal, sets the scene for the cashier portal.
+     * The Constructor for the Checkout Page, sets the scene for the checkout page.
      * @param sceneManager
      */
     public CheckoutPage(SceneManager sceneManager) {
@@ -75,13 +75,12 @@ public class CheckoutPage extends Page {
         returnToDp.setTranslateY(320);
 
         Text title = new Text();
-        title.setText("Cashier's Portal");
+        title.setText("Checkout");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
         box.getChildren().addAll(title, manageSCO, summary, cancelledTransactions);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
-
 
      }
 

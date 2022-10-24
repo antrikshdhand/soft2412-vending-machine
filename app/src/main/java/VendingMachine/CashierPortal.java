@@ -18,15 +18,14 @@ public class CashierPortal extends Page {
 
     private SceneManager sm;
 
-    private Button manageSCO;
-    private Button summary;
-    private Button cancelledTransactions;
+    private Button modifyCash;
+    private Button summaryChange;
+    private Button summaryTransaction;
     private Button returnToDp;
 
-    private Scene manageCSOPage;
-
-    private Scene summaryPage;
-    private Scene cancelledTransactionPage;
+    private Scene modifyCashPage;
+    private Scene summaryChangePage;
+    private Scene summaryTransactionPage;
 
     /**
      * The Constructor for the Cashier Portal, sets the scene for the cashier portal.
@@ -49,28 +48,28 @@ public class CashierPortal extends Page {
         box.setPrefWidth(190.00);
         box.setAlignment(Pos.CENTER);
 
-        manageSCO = new Button("Modify Available Cash");
+        modifyCash = new Button("Modify Available Cash");
 
-        manageSCO.setOnAction(e -> {
-        sm.switchScenes(manageCSOPage);});
+        modifyCash.setOnAction(e -> {
+        sm.switchScenes(modifyCashPage);});
 
-        summary = new Button("Generate Summary of Change");
+        summaryChange = new Button("Generate Summary of Change");
 
-        summary.setOnAction(e -> {
-        sm.switchScenes(summaryPage);});
+        summaryChange.setOnAction(e -> {
+        sm.switchScenes(summaryChangePage);});
 
-        cancelledTransactions = new Button("Generate Summary of Transaction");
+        summaryTransaction = new Button("Generate Summary of Transactions");
 
-        cancelledTransactions.setOnAction(e -> {
-        sm.switchScenes(cancelledTransactionPage);});
+        summaryTransaction.setOnAction(e -> {
+        sm.switchScenes(summaryTransactionPage);});
 
         returnToDp = new Button("Return to default page");
 
         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
-        manageSCO.setMinWidth(box.getPrefWidth());
-        summary.setMinWidth(box.getPrefWidth());
-        cancelledTransactions.setMinWidth(box.getPrefWidth());
+        modifyCash.setMinWidth(box.getPrefWidth());
+        summaryChange.setMinWidth(box.getPrefWidth());
+        summaryTransaction.setMinWidth(box.getPrefWidth());
 
         returnToDp.setTranslateX(-550);
         returnToDp.setTranslateY(320);
@@ -79,7 +78,7 @@ public class CashierPortal extends Page {
         title.setText("Cashier's Portal");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-        box.getChildren().addAll(title, manageSCO, summary, cancelledTransactions);
+        box.getChildren().addAll(title, modifyCash, summaryChange, summaryTransaction);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
@@ -94,7 +93,7 @@ public class CashierPortal extends Page {
 
     public void createManageCSO() {
         StackPane pane = new StackPane();
-        manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
+        modifyCashPage = new Scene(pane, WIDTH, HEIGHT);
 
         Button bn = new Button("Return to Cashier Portal");
 
@@ -117,7 +116,7 @@ public class CashierPortal extends Page {
 
     public void createSummary() {
         StackPane pane = new StackPane();
-        summaryPage = new Scene(pane, WIDTH, HEIGHT);
+        summaryChangePage = new Scene(pane, WIDTH, HEIGHT);
 
         Button bn = new Button("Return to Cashier Portal");
 
@@ -139,7 +138,7 @@ public class CashierPortal extends Page {
 
     public void createCancelledTransaction() {
         StackPane pane = new StackPane();
-        cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);
+        summaryTransactionPage = new Scene(pane, WIDTH, HEIGHT);
 
         Button bn = new Button("Return to Cashier Portal");
 
