@@ -87,8 +87,7 @@ public class PayCard extends Page {
                 return;
             }
 
-            // successful login
-            
+            // Successful payment
             System.out.println("Payment successful!");
             
             // TODO: Save to txt file, print receipt
