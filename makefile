@@ -9,7 +9,6 @@ git $(m):
 	git push
 
 full_commit:
-	rm .DS_Store
 	gradle clean build
 	gradle test
 	gradle test jacocoTestReport

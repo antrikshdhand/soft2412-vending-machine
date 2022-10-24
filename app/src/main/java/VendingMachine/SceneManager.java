@@ -12,13 +12,12 @@ public class SceneManager {
     private CashierPortal cashierPortal;
     private SellerPortal sellerPortal;
     private Login login;
+    private CheckoutPage checkoutPage;
 
     private Session session = new Session();
 
     public SceneManager() {
         database = new Database();
-        defaultPage = new DefaultPage(this);
-
     }
 
     public void setUp() {
@@ -28,6 +27,7 @@ public class SceneManager {
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
+        checkoutPage = new CheckoutPage(this);
     }
 
     public void setApp(App app) {
@@ -56,6 +56,10 @@ public class SceneManager {
 
     public Scene getLoginScene() {
         return login.getScene();
+    }
+
+    public Scene getCheckoutPageScene() {
+        return checkoutPage.getScene();
     }
 
     public Database getDatabase() {

@@ -22,7 +22,7 @@ public class App extends Application {
         // we do not want the window to be resizable/
         primaryStage.setResizable(false);
 
-        // If you wanna add an icon for the program
+        // If you want to add an icon for the program
         // Image icon = new Image('File path')
         // primaryStage.setIcon(icon);
 
