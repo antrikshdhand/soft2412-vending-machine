@@ -82,13 +82,7 @@ public class CashierPortal extends Page {
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
-     }
-
-
-    /**
-     * Function to return scene.
-     * @return
-     */
+    }
 
     public void createModifyCash() {
         StackPane pane = new StackPane();
@@ -157,6 +151,10 @@ public class CashierPortal extends Page {
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
+    /**
+     * Function to return scene.
+     * @return
+     */
     public Scene getScene() {
         return scene;
     }
