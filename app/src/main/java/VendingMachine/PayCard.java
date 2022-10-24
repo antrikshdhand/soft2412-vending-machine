@@ -81,7 +81,7 @@ public class PayCard extends Page {
                 System.out.println(password);
                 Alert incorrectPassAlert = new Alert(AlertType.ERROR);
                 incorrectPassAlert.setTitle("Incorrect CVV");
-                incorrectPassAlert.setHeaderText("The CVV inputted does not match the card number.");
+                incorrectPassAlert.setHeaderText("The CVV inputted was invalid.");
                 incorrectPassAlert.setContentText("Please try again.");
                 incorrectPassAlert.showAndWait();
                 return;
