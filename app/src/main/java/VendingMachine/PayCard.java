@@ -37,19 +37,19 @@ public class PayCard extends Page {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label usernameLabel = new Label("User Name:");
+        Label usernameLabel = new Label("Card No:");
         grid.add(usernameLabel, 0, 1);
 
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
 
-        Label pwLabel = new Label("Password:");
+        Label pwLabel = new Label("CVV:");
         grid.add(pwLabel, 0, 2);
 
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
-        Button signInButton = new Button("Sign in");
+        Button signInButton = new Button("Pay");
 
         pwBox.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER))
@@ -73,7 +73,6 @@ public class PayCard extends Page {
                 invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", username));
                 invalidUsernameAlert.setContentText("Please try again.");
                 invalidUsernameAlert.showAndWait();
-
                 return;
             }
             
@@ -90,19 +89,9 @@ public class PayCard extends Page {
 
             // successful login
             
-            System.out.println("Successful login!");
-            String role = sceneManager.getDatabase().getRole(username);
-            System.out.println(role);
-
-            sceneManager.getDatabase().closeConn();
-
-            sceneManager.getSession().resetSession();
-            sceneManager.getSession().setLoggedIn(true);
-            sceneManager.getSession().setUserName(username);
-            sceneManager.getSession().setRole(role);
+            System.out.println("Payment successful!");
             
-            sceneManager.createNewDefaultPage();
-            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
+            // TODO: Save to txt file, print receipt
             
         });
 
