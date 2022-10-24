@@ -19,13 +19,10 @@ public class CheckoutPage extends Page {
 
     private Button manageSCO;
     private Button summary;
-    private Button cancelledTransactions;
     private Button returnToDp;
 
     private Scene manageCSOPage;
-
     private Scene summaryPage;
-    private Scene cancelledTransactionPage;
 
     /**
      * The Constructor for the Checkout Page, sets the scene for the checkout page.
@@ -39,7 +36,6 @@ public class CheckoutPage extends Page {
         scene = new Scene(pane, WIDTH, HEIGHT);
 
         this.createManageCSO();
-        this.createCancelledTransaction();
         this.createSummary();
 
 
@@ -58,18 +54,12 @@ public class CheckoutPage extends Page {
         summary.setOnAction(e -> {
         sm.switchScenes(summaryPage);});
 
-        cancelledTransactions = new Button("Generate Summary of Transaction");
-
-        cancelledTransactions.setOnAction(e -> {
-        sm.switchScenes(cancelledTransactionPage);});
-
         returnToDp = new Button("Return to default page");
 
         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
         manageSCO.setMinWidth(box.getPrefWidth());
         summary.setMinWidth(box.getPrefWidth());
-        cancelledTransactions.setMinWidth(box.getPrefWidth());
 
         returnToDp.setTranslateX(-550);
         returnToDp.setTranslateY(320);
@@ -78,7 +68,7 @@ public class CheckoutPage extends Page {
         title.setText("Checkout");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-        box.getChildren().addAll(title, manageSCO, summary, cancelledTransactions);
+        box.getChildren().addAll(title, manageSCO, summary);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
@@ -94,7 +84,7 @@ public class CheckoutPage extends Page {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Checkout Page");
+        Button bn = new Button("Return to checkout Page");
 
         Label lbl = new Label("Modify Available Cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -120,28 +110,6 @@ public class CheckoutPage extends Page {
         Button bn = new Button("Return to Checkout Page");
 
         Label lbl = new Label("Generate Summary of Change");
-        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-
-        pane.setAlignment(lbl, Pos.TOP_CENTER);
-        lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
-
-        bn.setTranslateX(-550);
-        bn.setTranslateY(320);
-
-        lbl.relocate(0, 30);
-
-        pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
-    }
-
-    public void createCancelledTransaction() {
-        StackPane pane = new StackPane();
-        cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);
-
-        Button bn = new Button("Return to Checkout Page");
-
-        Label lbl = new Label("Generate Summary of Transaction");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
