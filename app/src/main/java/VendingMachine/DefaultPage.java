@@ -94,9 +94,9 @@ public class DefaultPage extends Page {
          */
         Button checkoutBtn = new Button();
         checkoutBtn.setText("Checkout");
-        // checkoutBtn.setOnAction(e -> {
-        //     sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
-        // });
+        checkoutBtn.setOnAction(e -> {
+            sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
+        });
 
         proceedToPortalBtn.setPadding(new Insets(15));
         rightVBox.getChildren().add(proceedToPortalBtn);
