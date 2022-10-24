@@ -109,6 +109,7 @@ public class CheckoutPage extends Page {
         boolean paid = false;
 
         pay.setOnAction(e -> {
+            // Check if payment went through, card is valid, etc.
             System.out.println("Paid: " + paid);
         });
 
