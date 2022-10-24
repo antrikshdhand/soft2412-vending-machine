@@ -12,13 +12,12 @@ public class SceneManager {
     private CashierPortal cashierPortal;
     private SellerPortal sellerPortal;
     private Login login;
+    private CheckoutPage checkoutPage;
 
     private Session session = new Session();
 
     public SceneManager() {
         database = new Database();
-        cashierPortal = new CashierPortal(this);
-
     }
 
     public void setUp() {
