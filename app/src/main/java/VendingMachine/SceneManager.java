@@ -17,7 +17,7 @@ public class SceneManager {
 
     public SceneManager() {
         database = new Database();
-        cashierPortal = new CashierPortal(this);
+        defaultPage = new DefaultPage(this);
 
     }
 
