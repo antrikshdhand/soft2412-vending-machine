@@ -94,7 +94,7 @@ public class CheckoutPage extends Page {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Cashier Portal");
+        Button bn = new Button("Return to Checkout Page");
 
         Label lbl = new Label("Modify Available Cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -109,7 +109,7 @@ public class CheckoutPage extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
     }
 
 
@@ -117,7 +117,7 @@ public class CheckoutPage extends Page {
         StackPane pane = new StackPane();
         summaryPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Cashier Portal");
+        Button bn = new Button("Return to Checkout Page");
 
         Label lbl = new Label("Generate Summary of Change");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -132,14 +132,14 @@ public class CheckoutPage extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
     }
 
     public void createCancelledTransaction() {
         StackPane pane = new StackPane();
         cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Cashier Portal");
+        Button bn = new Button("Return to Checkout Page");
 
         Label lbl = new Label("Generate Summary of Transaction");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -154,7 +154,7 @@ public class CheckoutPage extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
     }
 
 }
