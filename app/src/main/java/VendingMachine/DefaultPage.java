@@ -45,7 +45,7 @@ public class DefaultPage extends Page {
 
         tab1VBox.setAlignment(Pos.CENTER);
 
-//        tab1VBox.getChildren().addAll(new Label("Show all Recently Bought available"), new Label("Show all Recently Bought available2"));
+        // tab1VBox.getChildren().addAll(new Label("Show all Recently Bought available"), new Label("Show all Recently Bought available2"));
         tabPane.getTabs().add(tab1);
 
         for (String category : categories) {
@@ -80,11 +80,23 @@ public class DefaultPage extends Page {
         sessionDetails.setPadding(new Insets(15));
         rightVBox.getChildren().add(sessionDetails);
 
+        /**
+         * Proceed to portal button
+         */
         Button proceedToPortalBtn = new Button();
         proceedToPortalBtn.setText("Proceed to Portal");
         proceedToPortalBtn.setOnAction(e -> {
             sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
         });
+
+        /**
+         * Checkout button
+         */
+        Button checkoutBtn = new Button();
+        checkoutBtn.setText("Checkout");
+        // checkoutBtn.setOnAction(e -> {
+        //     sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
+        // });
 
         proceedToPortalBtn.setPadding(new Insets(15));
         rightVBox.getChildren().add(proceedToPortalBtn);
@@ -100,6 +112,10 @@ public class DefaultPage extends Page {
         splitPane.getItems().addAll(tabPane, rightAnchorPane);
 
         scene = new Scene(splitPane, WIDTH, HEIGHT);
+
+
+        // Add button to pane with padding
+        rightVBox.getChildren().add(checkoutBtn);
 
     }
 

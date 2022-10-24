@@ -11,7 +11,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-public class CashierPortal extends Page {
+public class CheckoutPage extends Page {
 
 
     private Pane pane;
@@ -32,7 +32,7 @@ public class CashierPortal extends Page {
      * The Constructor for the Cashier Portal, sets the scene for the cashier portal.
      * @param sceneManager
      */
-    public CashierPortal(SceneManager sceneManager) {
+    public CheckoutPage(SceneManager sceneManager) {
 
         sm = sceneManager;
 
@@ -111,7 +111,7 @@ public class CashierPortal extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
     }
 
 
@@ -134,7 +134,7 @@ public class CashierPortal extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
     }
 
     public void createCancelledTransaction() {
@@ -156,7 +156,7 @@ public class CashierPortal extends Page {
         lbl.relocate(0, 30);
 
         pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
     }
 
 }
