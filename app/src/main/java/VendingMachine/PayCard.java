@@ -106,6 +106,32 @@ public class PayCard extends Page {
 
     }
 
+    /**
+     * Checks if card number is valid.
+     * @param cardNumber
+     */
+    public boolean checkCardNumber(String cardNumber) {
+
+        int number;
+
+        // Checks if integer
+        try {
+            number = Integer.parseInt(cardNumber);
+        } catch (Exception e) {
+            return false;
+        }
+
+        // Checks if 16 digits long
+        int numDigits = String.valueOf(number).length();
+        if (numDigits != 16) {
+            return false;
+        }
+
+
+        // If all conditions are met
+        return true;
+    }
+
     public Scene getScene() {
         return this.scene;
     }
