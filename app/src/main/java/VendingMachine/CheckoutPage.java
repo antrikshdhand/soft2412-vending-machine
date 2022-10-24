@@ -44,8 +44,6 @@ public class CheckoutPage extends Page {
 
         payCard = new Button("Pay by Card");
 
-        payCard.setOnAction(e -> {sm.switchScenes(payCardPage);});
-
         payCash = new Button("Pay by Cash");
 
         payCash.setOnAction(e -> {
@@ -70,7 +68,9 @@ public class CheckoutPage extends Page {
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
-        //bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
+        PayCard payCard = new PayCard();
+
+        // payCard.setOnAction(e -> {sm.switchScenes(payCardPage.getScene());});
 
      }
 

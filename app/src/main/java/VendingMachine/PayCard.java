@@ -1,17 +1,18 @@
-// package VendingMachine;
+package VendingMachine;
 
-// import javafx.geometry.Pos;
-// import javafx.scene.Scene;
-// import javafx.scene.control.Button;
-// import javafx.scene.control.Label;
-// import javafx.scene.layout.Pane;
-// import javafx.scene.layout.StackPane;
-// import javafx.scene.layout.VBox;
-// import javafx.scene.text.FontWeight;
-// import javafx.scene.text.Text;
-// import javafx.scene.text.Font;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 
-// public class PayCard extends Page {
+public class PayCard extends Page {
+}
 
 
 //     private Pane pane;
