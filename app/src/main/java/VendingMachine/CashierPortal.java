@@ -82,7 +82,6 @@ public class CashierPortal extends Page {
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
-
      }
 
 
@@ -156,6 +155,10 @@ public class CashierPortal extends Page {
 
         pane.getChildren().addAll(lbl, bn);
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 
 }

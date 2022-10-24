@@ -118,10 +118,6 @@ public class Login extends Page {
         // add buttons to Hbox
         hbBtn.getChildren().add(backButton);
         hbBtn.getChildren().add(signInButton);
-        
-
-        
-
 
     }
 
