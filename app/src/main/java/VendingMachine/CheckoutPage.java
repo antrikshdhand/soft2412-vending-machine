@@ -35,8 +35,8 @@ public class CheckoutPage extends Page {
         pane = new StackPane();
         scene = new Scene(pane, WIDTH, HEIGHT);
 
-        this.createManageCSO();
-        this.createSummary();
+        this.createPayCard();
+        this.createPayCash();
 
 
         VBox box = new VBox();
@@ -80,11 +80,11 @@ public class CheckoutPage extends Page {
      * @return
      */
 
-    public void createManageCSO() {
+    public void createPayCard() {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to checkout Page");
+        Button bn = new Button("Return to checkout page");
 
         Label lbl = new Label("Pay by card");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -103,11 +103,11 @@ public class CheckoutPage extends Page {
     }
 
 
-    public void createSummary() {
+    public void createPayCash() {
         StackPane pane = new StackPane();
         payCashPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to checkout Page");
+        Button bn = new Button("Return to checkout page");
 
         Label lbl = new Label("Pay by cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
