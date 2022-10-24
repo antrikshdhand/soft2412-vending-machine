@@ -106,10 +106,10 @@ public class CheckoutPage extends Page {
         // Elements for Pay by Card
         Button pay = new Button("Pay");
 
-        //boolean paid = false;
+        boolean paid = false;
 
         pay.setOnAction(e -> {
-            System.out.println("Paid");
+            System.out.println("Paid: " + paid);
         });
 
         Text title = new Text();
