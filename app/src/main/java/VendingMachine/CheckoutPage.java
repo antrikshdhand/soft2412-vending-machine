@@ -101,6 +101,26 @@ public class CheckoutPage extends Page {
 
         pane.getChildren().addAll(lbl, bn);
         bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
+
+
+        // Elements for Pay by Card
+        Button pay = new Button("Pay");
+
+        //boolean paid = false;
+
+        pay.setOnAction(e -> {
+            System.out.println("Paid");
+        });
+
+        Text title = new Text();
+        title.setText("Checkout");
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+
+        pane.getChildren().addAll(title, pay);
+    }
+
+    public void payByCard(StackPane pane) {
+
     }
 
 
