@@ -68,9 +68,9 @@ public class CheckoutPage extends Page {
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
-        PayCard payCard = new PayCard();
+        PayCard payCardPage = new PayCard(sm);
 
-        // payCard.setOnAction(e -> {sm.switchScenes(payCardPage.getScene());});
+        payCard.setOnAction(e -> {sm.switchScenes(payCardPage.getScene());});
 
      }
 
