@@ -69,8 +69,8 @@ public class PayCard extends Page {
             int validUsername = sceneManager.getDatabase().validateUsername(username);
             if (validUsername == -1) {                
                 Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
-                invalidUsernameAlert.setTitle("Invalid username");
-                invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", username));
+                invalidUsernameAlert.setTitle("Invalid card number.");
+                invalidUsernameAlert.setHeaderText(String.format("The card number inputted is invalid.", username));
                 invalidUsernameAlert.setContentText("Please try again.");
                 invalidUsernameAlert.showAndWait();
                 return;
@@ -80,8 +80,8 @@ public class PayCard extends Page {
             if (validPayCard == -1) {
                 System.out.println(password);
                 Alert incorrectPassAlert = new Alert(AlertType.ERROR);
-                incorrectPassAlert.setTitle("Incorrect Password");
-                incorrectPassAlert.setHeaderText("Your password is incorrect!");
+                incorrectPassAlert.setTitle("Incorrect CVV");
+                incorrectPassAlert.setHeaderText("The CVV inputted does not match the card number.");
                 incorrectPassAlert.setContentText("Please try again.");
                 incorrectPassAlert.showAndWait();
                 return;
@@ -97,7 +97,7 @@ public class PayCard extends Page {
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> {
-            sceneManager.switchScenes(sceneManager.getDefaultPageScene());
+            sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
         });
 
         // add buttons to Hbox
