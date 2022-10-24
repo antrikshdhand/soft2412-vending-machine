@@ -38,9 +38,9 @@ public class CashierPortal extends Page {
         pane = new StackPane();
         scene = new Scene(pane, WIDTH, HEIGHT);
 
-        this.createManageCSO();
-        this.createCancelledTransaction();
-        this.createSummary();
+        this.createModifyCash();
+        this.createSummaryTransaction();
+        this.createSummaryChange();
 
 
         VBox box = new VBox();
@@ -91,7 +91,7 @@ public class CashierPortal extends Page {
      * @return
      */
 
-    public void createManageCSO() {
+    public void createModifyCash() {
         StackPane pane = new StackPane();
         modifyCashPage = new Scene(pane, WIDTH, HEIGHT);
 
@@ -114,7 +114,7 @@ public class CashierPortal extends Page {
     }
 
 
-    public void createSummary() {
+    public void createSummaryChange() {
         StackPane pane = new StackPane();
         summaryChangePage = new Scene(pane, WIDTH, HEIGHT);
 
@@ -136,7 +136,7 @@ public class CashierPortal extends Page {
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
-    public void createCancelledTransaction() {
+    public void createSummaryTransaction() {
         StackPane pane = new StackPane();
         summaryTransactionPage = new Scene(pane, WIDTH, HEIGHT);
 
