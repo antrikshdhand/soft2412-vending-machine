@@ -35,9 +35,7 @@ public class CheckoutPage extends Page {
         pane = new StackPane();
         scene = new Scene(pane, WIDTH, HEIGHT);
 
-        this.createPayCard();
         this.createPayCash();
-
 
         VBox box = new VBox();
         box.setSpacing(5);
@@ -46,8 +44,7 @@ public class CheckoutPage extends Page {
 
         payCard = new Button("Pay by Card");
 
-        payCard.setOnAction(e -> {
-        sm.switchScenes(payCardPage);});
+        payCard.setOnAction(e -> {sm.switchScenes(payCardPage);});
 
         payCash = new Button("Pay by Cash");
 
@@ -73,36 +70,9 @@ public class CheckoutPage extends Page {
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
+        //bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
+
      }
-
-
-    /**
-     * Function to return scene.
-     * @return
-     */
-
-    public void createPayCard() {
-        StackPane pane = new StackPane();
-        payCardPage = new Scene(pane, WIDTH, HEIGHT);
-
-        Button bn = new Button("Return to checkout page");
-
-        Label lbl = new Label("Pay by card");
-        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-
-        pane.setAlignment(lbl, Pos.TOP_CENTER);
-        lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
-
-        bn.setTranslateX(-550);
-        bn.setTranslateY(320);
-
-        lbl.relocate(0, 30);
-
-        pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCheckoutPageScene()));
-
-    }
 
 
     public void createPayCash() {

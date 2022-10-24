@@ -1,128 +1,162 @@
 // package VendingMachine;
 
-// import javafx.scene.input.KeyCode;
-// import javafx.scene.layout.BorderPane;
-// import javafx.scene.layout.GridPane;
+// import javafx.geometry.Pos;
+// import javafx.scene.Scene;
 // import javafx.scene.control.Button;
 // import javafx.scene.control.Label;
-// import javafx.geometry.Insets;
-// import javafx.scene.Scene;
-// import javafx.scene.control.PasswordField;
-// import javafx.scene.control.TextField;
-// import javafx.scene.text.Font;
+// import javafx.scene.layout.Pane;
+// import javafx.scene.layout.StackPane;
+// import javafx.scene.layout.VBox;
 // import javafx.scene.text.FontWeight;
 // import javafx.scene.text.Text;
-// import javafx.geometry.Pos;
-// import javafx.scene.layout.HBox;
-// import javafx.scene.control.Alert;
-// import javafx.scene.control.Alert.AlertType;
+// import javafx.scene.text.Font;
 
-// import VendingMachine.Page;
-// import VendingMachine.SceneManager;
+// public class PayCard extends Page {
 
-// public class Login extends Page {
 
-//     private SceneManager sceneManager;
+//     private Pane pane;
 
-//     public Login(SceneManager sceneManager) {
-        
-//         this.sceneManager = sceneManager;
+//     private SceneManager sm;
 
-//         GridPane grid = new GridPane();
-        
-//         grid.setHgap(10);
-//         grid.setVgap(10);
-//         grid.setPadding(new Insets(0, 10, 0, 10));
-//         grid.setAlignment(Pos.CENTER); 
-//         this.scene = new Scene(grid, WIDTH, HEIGHT);
+//     private Button modifyCash;
+//     private Button summaryChange;
+//     private Button summaryTransaction;
+//     private Button returnToDp;
 
-//         Text scenetitle = new Text("Welcome");
-//         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-//         grid.add(scenetitle, 0, 0, 2, 1);
+//     private Scene modifyCashPage;
+//     private Scene summaryChangePage;
+//     private Scene summaryTransactionPage;
 
-//         Label usernameLabel = new Label("User Name:");
-//         grid.add(usernameLabel, 0, 1);
+//     /**
+//      * The Constructor for the Cashier Portal, sets the scene for the cashier portal.
+//      * @param sceneManager
+//      */
+//     public PayCard(SceneManager sceneManager) {
 
-//         TextField userTextField = new TextField();
-//         grid.add(userTextField, 1, 1);
+//         sm = sceneManager;
 
-//         Label pwLabel = new Label("Password:");
-//         grid.add(pwLabel, 0, 2);
+//         pane = new StackPane();
+//         scene = new Scene(pane, WIDTH, HEIGHT);
 
-//         PasswordField pwBox = new PasswordField();
-//         grid.add(pwBox, 1, 2);
+//         this.createModifyCash();
+//         this.createSummaryTransaction();
+//         this.createSummaryChange();
 
-//         Button signInButton = new Button("Sign in");
 
-//         pwBox.setOnKeyPressed(
-//                 e -> {
-//                     if (e.getCode().equals(KeyCode.ENTER))
-//                         signInButton.fire();
-//                 });
+//         VBox box = new VBox();
+//         box.setSpacing(5);
+//         box.setPrefWidth(190.00);
+//         box.setAlignment(Pos.CENTER);
 
-//         HBox hbBtn = new HBox(10);
-//         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-//         grid.add(hbBtn, 1, 4);
-//         signInButton.setOnAction(e -> {
-//             this.sceneManager.getDatabase().openConn();
+//         modifyCash = new Button("Modify Available Cash");
 
-//             // set username and password variables
-//             String username = userTextField.getText();
-//             String password = pwBox.getText();
+//         modifyCash.setOnAction(e -> {
+//         sm.switchScenes(modifyCashPage);});
 
-//             int validUsername = sceneManager.getDatabase().validateUsername(username);
-//             if (validUsername == -1) {                
-//                 Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
-//                 invalidUsernameAlert.setTitle("Invalid username");
-//                 invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", username));
-//                 invalidUsernameAlert.setContentText("Please try again.");
-//                 invalidUsernameAlert.showAndWait();
+//         summaryChange = new Button("Generate Summary of Change");
 
-//                 return;
-//             }
-            
-//             int validLogin = sceneManager.getDatabase().login(username, password);
-//             if (validLogin == -1) {
-//                 System.out.println(password);
-//                 Alert incorrectPassAlert = new Alert(AlertType.ERROR);
-//                 incorrectPassAlert.setTitle("Incorrect Password");
-//                 incorrectPassAlert.setHeaderText("Your password is incorrect!");
-//                 incorrectPassAlert.setContentText("Please try again.");
-//                 incorrectPassAlert.showAndWait();
-//                 return;
-//             }
+//         summaryChange.setOnAction(e -> {
+//         sm.switchScenes(summaryChangePage);});
 
-//             // successful login
-            
-//             System.out.println("Successful login!");
-//             String role = sceneManager.getDatabase().getRole(username);
-//             System.out.println(role);
+//         summaryTransaction = new Button("Generate Summary of Transactions");
 
-//             sceneManager.getDatabase().closeConn();
+//         summaryTransaction.setOnAction(e -> {
+//         sm.switchScenes(summaryTransactionPage);});
 
-//             sceneManager.getSession().resetSession();
-//             sceneManager.getSession().setLoggedIn(true);
-//             sceneManager.getSession().setUserName(username);
-//             sceneManager.getSession().setRole(role);
-            
-//             sceneManager.createNewDefaultPage();
-//             sceneManager.switchScenes(sceneManager.getDefaultPageScene());
-            
-//         });
+//         returnToDp = new Button("Return to default page");
 
-//         Button backButton = new Button("Back");
-//         backButton.setOnAction(e -> {
-//             sceneManager.switchScenes(sceneManager.getDefaultPageScene());
-//         });
+//         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
-//         // add buttons to Hbox
-//         hbBtn.getChildren().add(backButton);
-//         hbBtn.getChildren().add(signInButton);
+//         modifyCash.setMinWidth(box.getPrefWidth());
+//         summaryChange.setMinWidth(box.getPrefWidth());
+//         summaryTransaction.setMinWidth(box.getPrefWidth());
+
+//         returnToDp.setTranslateX(-550);
+//         returnToDp.setTranslateY(320);
+
+//         Text title = new Text();
+//         title.setText("Cashier's Portal");
+//         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+
+//         box.getChildren().addAll(title, modifyCash, summaryChange, summaryTransaction);
+//         pane.getChildren().add(box);
+//         pane.getChildren().add(returnToDp);
 
 //     }
 
+//     public void createModifyCash() {
+//         StackPane pane = new StackPane();
+//         modifyCashPage = new Scene(pane, WIDTH, HEIGHT);
+
+//         Button bn = new Button("Return to Cashier Portal");
+
+//         Label lbl = new Label("Modify Available Cash");
+//         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+//         pane.setAlignment(lbl, Pos.TOP_CENTER);
+//         lbl.setTranslateY(20);
+//         // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+//         bn.setTranslateX(-550);
+//         bn.setTranslateY(320);
+
+//         lbl.relocate(0, 30);
+
+//         pane.getChildren().addAll(lbl, bn);
+//         bn.setOnAction(e -> sm.switchScenes(sm.getPayCardScene()));
+//     }
+
+
+//     public void createSummaryChange() {
+//         StackPane pane = new StackPane();
+//         summaryChangePage = new Scene(pane, WIDTH, HEIGHT);
+
+//         Button bn = new Button("Return to Cashier Portal");
+
+//         Label lbl = new Label("Generate Summary of Change");
+//         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+//         pane.setAlignment(lbl, Pos.TOP_CENTER);
+//         lbl.setTranslateY(20);
+//         // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+//         bn.setTranslateX(-550);
+//         bn.setTranslateY(320);
+
+//         lbl.relocate(0, 30);
+
+//         pane.getChildren().addAll(lbl, bn);
+//         bn.setOnAction(e -> sm.switchScenes(sm.getPayCardScene()));
+//     }
+
+//     public void createSummaryTransaction() {
+//         StackPane pane = new StackPane();
+//         summaryTransactionPage = new Scene(pane, WIDTH, HEIGHT);
+
+//         Button bn = new Button("Return to Cashier Portal");
+
+//         Label lbl = new Label("Generate Summary of Transaction");
+//         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+//         pane.setAlignment(lbl, Pos.TOP_CENTER);
+//         lbl.setTranslateY(20);
+//         // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+//         bn.setTranslateX(-550);
+//         bn.setTranslateY(320);
+
+//         lbl.relocate(0, 30);
+
+//         pane.getChildren().addAll(lbl, bn);
+//         bn.setOnAction(e -> sm.switchScenes(sm.getPayCardScene()));
+//     }
+
+//     /**
+//      * Function to return scene.
+//      * @return
+//      */
 //     public Scene getScene() {
-//         return this.scene;
+//         return scene;
 //     }
 
 // }
