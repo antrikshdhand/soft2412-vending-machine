@@ -17,12 +17,12 @@ public class CheckoutPage extends Page {
 
     private SceneManager sm;
 
-    private Button manageSCO;
-    private Button summary;
+    private Button payCard;
+    private Button payCash;
     private Button returnToDp;
 
     private Scene manageCSOPage;
-    private Scene summaryPage;
+    private Scene payCashPage;
 
     /**
      * The Constructor for the Checkout Page, sets the scene for the checkout page.
@@ -44,22 +44,22 @@ public class CheckoutPage extends Page {
         box.setPrefWidth(190.00);
         box.setAlignment(Pos.CENTER);
 
-        manageSCO = new Button("Modify Available Cash");
+        payCard = new Button("Pay by card");
 
-        manageSCO.setOnAction(e -> {
+        payCard.setOnAction(e -> {
         sm.switchScenes(manageCSOPage);});
 
-        summary = new Button("Generate Summary of Change");
+        payCash = new Button("Pay by cash");
 
-        summary.setOnAction(e -> {
-        sm.switchScenes(summaryPage);});
+        payCash.setOnAction(e -> {
+        sm.switchScenes(payCashPage);});
 
         returnToDp = new Button("Return to default page");
 
         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
-        manageSCO.setMinWidth(box.getPrefWidth());
-        summary.setMinWidth(box.getPrefWidth());
+        payCard.setMinWidth(box.getPrefWidth());
+        payCash.setMinWidth(box.getPrefWidth());
 
         returnToDp.setTranslateX(-550);
         returnToDp.setTranslateY(320);
@@ -68,7 +68,7 @@ public class CheckoutPage extends Page {
         title.setText("Checkout");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-        box.getChildren().addAll(title, manageSCO, summary);
+        box.getChildren().addAll(title, payCard, payCash);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
@@ -86,7 +86,7 @@ public class CheckoutPage extends Page {
 
         Button bn = new Button("Return to checkout Page");
 
-        Label lbl = new Label("Modify Available Cash");
+        Label lbl = new Label("Pay by card");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
@@ -105,11 +105,11 @@ public class CheckoutPage extends Page {
 
     public void createSummary() {
         StackPane pane = new StackPane();
-        summaryPage = new Scene(pane, WIDTH, HEIGHT);
+        payCashPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Checkout Page");
+        Button bn = new Button("Return to checkout Page");
 
-        Label lbl = new Label("Generate Summary of Change");
+        Label lbl = new Label("Pay by cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
