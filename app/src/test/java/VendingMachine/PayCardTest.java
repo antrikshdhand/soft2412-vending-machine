@@ -15,18 +15,13 @@ public class PayCardTest {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    // // Test for valid card number
+    // Test for valid card number
     // @Test
     // void testCardNumber() {
-
     //     for (int i = 0; i <= 1000; i++) {
-
     //         int cardNumber = getRandomNumber(10000000, 99999999);
-
     //         assertTrue(PayCard.checkCardNumber(Integer.toString(cardNumber)));
-
     //     }
-
     // }
 
     // Test for valid CVV
