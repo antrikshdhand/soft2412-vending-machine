@@ -16,15 +16,15 @@ public class PayCardTest {
 
     // Test for valid card number
     @Test
-    void testCardNUmber(){
+    void testCardNumber(){
 
-        // Random rnd = new Random();
+        Random rnd = new Random();
 
-        // for (int i = 0; i <= 100; i++) {
-        //     int number = 10000000 + rnd.nextInt(90000000);
-        //
-        //     assertTrue(payCard.checkCardNumber(Integer.toString(number)));
-        // }
+        for (int i = 0; i <= 100; i++) {
+            int number = 10000000 + rnd.nextInt(90000000);
+        
+            assertTrue(payCard.checkCardNumber(Integer.toString(number)));
+        }
 
     }
 
