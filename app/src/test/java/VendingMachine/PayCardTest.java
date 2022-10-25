@@ -15,14 +15,21 @@ public class PayCardTest {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
+    public long getRandomLong() {
+        long leftLimit = 1000000000000000L;
+        long rightLimit = 9999999999999999L;
+        long generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+        return generatedLong;
+    }
+
     // Test for valid card number
-    // @Test
-    // void testCardNumber() {
-    //     for (int i = 0; i <= 1000; i++) {
-    //         int cardNumber = getRandomNumber(10000000, 99999999);
-    //         assertTrue(PayCard.checkCardNumber(Integer.toString(cardNumber)));
-    //     }
-    // }
+    @Test
+    void testCardNumber() {
+        for (int i = 0; i <= 100000; i++) {
+            long cardNumber = getRandomLong();
+            assertTrue(PayCard.checkCardNumber(Long.toString(cardNumber)));
+        }
+    }
 
     // Test for valid CVV
     @Test

@@ -111,11 +111,11 @@ public class PayCard extends Page {
      */
     public static boolean checkCardNumber(String cardNumber) {
 
-        int number;
+        long number;
 
         // Checks if integer
         try {
-            number = Integer.parseInt(cardNumber);
+            number = Long.parseLong(cardNumber);
         } catch (Exception e) {
             return false;
         }
