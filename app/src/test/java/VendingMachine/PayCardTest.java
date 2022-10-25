@@ -19,6 +19,9 @@ import javafx.scene.control.Alert.AlertType;
 
 public class PayCardTest {
 
+    private SceneManager sceneManager = new SceneManager();
+    private PayCard payCard = new PayCard(sceneManager);
+
     // simple test for openConn()
     @Test
     void simpleTest(){
