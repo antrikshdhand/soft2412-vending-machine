@@ -11,21 +11,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PayCardTest {
 
-    // private SceneManager sceneManager = new SceneManager();
-    // private PayCard payCard = new PayCard(sceneManager);
+    public int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
 
     // Test for valid card number
+    // @Test
+    // void testCardNumber() {
+    //     for (int i = 0; i <= 1000; i++) {
+    //         int cardNumber = getRandomNumber(10000000, 99999999);
+    //         assertTrue(PayCard.checkCardNumber(Integer.toString(cardNumber)));
+    //     }
+    // }
+
+    // Test for valid CVV
     @Test
-    void testCardNumber() {
-
-        Random rnd = new Random();
-
-        // for (int i = 0; i <= 100; i++) {
-        //     int number = 10000000 + rnd.nextInt(90000000);
-        
-        //     assertTrue(payCard.checkCardNumber(Integer.toString(number)));
-        // }
-
+    void testCVV() {
+        for (int i = 0; i <= 100; i++) {
+            int CVV = getRandomNumber(100, 999);
+            assertTrue(PayCard.checkCVV(Integer.toString(CVV)));
+        }
     }
 
 }
