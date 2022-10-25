@@ -109,7 +109,7 @@ public class PayCard extends Page {
      * Checks if card number is valid.
      * @param cardNumber
      */
-    public boolean checkCardNumber(String cardNumber) {
+    public static boolean checkCardNumber(String cardNumber) {
 
         int number;
 
@@ -134,7 +134,7 @@ public class PayCard extends Page {
      * Checks if CVV is valid.
      * @param CVV
      */
-    public boolean checkCVV(String CVV) {
+    public static boolean checkCVV(String CVV) {
 
         int number;
 
