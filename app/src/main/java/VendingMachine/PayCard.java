@@ -81,14 +81,13 @@ public class PayCard extends Page {
                 System.out.println(password);
                 Alert incorrectPassAlert = new Alert(AlertType.ERROR);
                 incorrectPassAlert.setTitle("Incorrect CVV");
-                incorrectPassAlert.setHeaderText("The CVV inputted does not match the card number.");
+                incorrectPassAlert.setHeaderText("The CVV inputted was invalid.");
                 incorrectPassAlert.setContentText("Please try again.");
                 incorrectPassAlert.showAndWait();
                 return;
             }
 
-            // successful login
-            
+            // Successful payment
             System.out.println("Payment successful!");
             
             // TODO: Save to txt file, print receipt
@@ -104,6 +103,56 @@ public class PayCard extends Page {
         hbBtn.getChildren().add(backButton);
         hbBtn.getChildren().add(signInButton);
 
+    }
+
+    /**
+     * Checks if card number is valid.
+     * @param cardNumber
+     */
+    public boolean checkCardNumber(String cardNumber) {
+
+        int number;
+
+        // Checks if integer
+        try {
+            number = Integer.parseInt(cardNumber);
+        } catch (Exception e) {
+            return false;
+        }
+
+        // Checks if 16 digits long
+        int numDigits = String.valueOf(number).length();
+        if (numDigits != 16) {
+            return false;
+        }
+
+        // If all conditions are met
+        return true;
+    }
+
+    /**
+     * Checks if CVV is valid.
+     * @param CVV
+     */
+    public boolean checkCVV(String CVV) {
+
+        int number;
+
+        // Checks if integer
+        try {
+            number = Integer.parseInt(CVV);
+        } catch (Exception e) {
+            return false;
+        }
+
+        // Checks if 16 digits long
+        int numDigits = String.valueOf(number).length();
+        if (numDigits != 3) {
+            return false;
+        }
+
+        // If all conditions are met
+        return true;
     }
 
     public Scene getScene() {

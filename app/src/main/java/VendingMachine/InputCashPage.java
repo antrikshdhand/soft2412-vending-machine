@@ -12,6 +12,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 
+/**
+ * This is the page for when a users want to pay by cash, they can select the amount by clicking the appropriate buttons.
+ */
+
 public class InputCashPage extends Page {
 
     private SceneManager sm;
