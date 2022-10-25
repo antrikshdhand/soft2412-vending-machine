@@ -114,7 +114,7 @@ public class PayCard extends Page {
 
         long number;
 
-        // Checks if integer
+        // Checks if long
         try {
             number = Long.parseLong(cardNumber);
         } catch (Exception e) {
