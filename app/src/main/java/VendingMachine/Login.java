@@ -118,6 +118,7 @@ public class Login extends Page {
 
     }
 
+
     public Scene getScene() {
         return this.scene;
     }

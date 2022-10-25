@@ -12,12 +12,12 @@ import javafx.geometry.Pos;
 public class SellerPortal extends Page {
 
     private Scene scene;
-
     private SceneManager sm;
+    
     private final int width = 1280;
     private final int height = 720;
+    
     private StackPane pane;
-
     private Stage window;
 
     public Scene manageItems;
@@ -27,7 +27,6 @@ public class SellerPortal extends Page {
     private StackPane manageItemsPane;
     private StackPane generateListPane;
     private StackPane generateSummaryPane;
-
 
     public SellerPortal(SceneManager sm) {
         this.sm = sm;
@@ -112,6 +111,7 @@ public class SellerPortal extends Page {
         bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
+
     private void createGenerateList() {
         generateListPane = new StackPane();
         generateList = new Scene(generateListPane, width, height);
@@ -133,6 +133,7 @@ public class SellerPortal extends Page {
         generateListPane.getChildren().addAll(lbl, bn);
         bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
+
 
     private void createGenerateSummary() {
         generateSummaryPane = new StackPane();
@@ -156,7 +157,9 @@ public class SellerPortal extends Page {
         bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
+
     public Scene getScene() {
         return this.scene;
     }
+
 }

@@ -20,6 +20,7 @@ public class SceneManager {
         database = new Database();
     }
 
+
     public void setUp() {
         database = new Database();
         defaultPage = new DefaultPage(this);
@@ -30,45 +31,56 @@ public class SceneManager {
         checkoutPage = new CheckoutPage(this);
     }
 
+
     public void setApp(App app) {
         this.app = app;
     }
+
 
     public void switchScenes(Scene scene) {
         app.switchScenes(scene);
     }
     
+
     public Scene getDefaultPageScene() {
         return defaultPage.getScene();
     }
+
 
     public Scene getOwnerPortalScene() {
         return ownerPortal.getScene();
     }
 
+
     public Scene getCashierPortalScene() {
         return cashierPortal.getScene();
     }
+
 
     public Scene getSellerPortalScene() {
         return sellerPortal.getScene();
     }
 
+
     public Scene getLoginScene() {
         return login.getScene();
     }
+
 
     public Scene getCheckoutPageScene() {
         return checkoutPage.getScene();
     }
 
+
     public Database getDatabase() {
         return database;
     }
 
+
     public Session getSession() {
         return session;
     }
+
 
     public void createNewDefaultPage() {
         defaultPage = new DefaultPage(this);
