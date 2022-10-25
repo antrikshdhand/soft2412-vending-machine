@@ -19,7 +19,7 @@ public class PayCardTest {
     // @Test
     // void testCardNumber() {
 
-    //     for (int i = 0; i <= 1; i++) {
+    //     for (int i = 0; i <= 1000; i++) {
 
     //         int cardNumber = getRandomNumber(10000000, 99999999);
 
@@ -32,15 +32,10 @@ public class PayCardTest {
     // Test for valid CVV
     @Test
     void testCVV() {
-
         for (int i = 0; i <= 100; i++) {
-
             int CVV = getRandomNumber(100, 999);
-
             assertTrue(PayCard.checkCVV(Integer.toString(CVV)));
-
         }
-
     }
 
 }
