@@ -105,6 +105,7 @@ public class PayCard extends Page {
 
     }
 
+
     /**
      * Checks if card number is valid.
      * @param cardNumber
@@ -130,6 +131,7 @@ public class PayCard extends Page {
         return true;
     }
 
+
     /**
      * Checks if CVV is valid.
      * @param CVV
@@ -154,6 +156,7 @@ public class PayCard extends Page {
         // If all conditions are met
         return true;
     }
+
 
     public Scene getScene() {
         return this.scene;

@@ -13,7 +13,6 @@ import javafx.scene.text.Font;
 
 public class CashierPortal extends Page {
 
-
     private Pane pane;
 
     private SceneManager sm;
@@ -41,7 +40,6 @@ public class CashierPortal extends Page {
         this.createModifyCash();
         this.createSummaryTransaction();
         this.createSummaryChange();
-
 
         VBox box = new VBox();
         box.setSpacing(5);
@@ -83,6 +81,7 @@ public class CashierPortal extends Page {
         pane.getChildren().add(returnToDp);
 
     }
+
 
     public void createModifyCash() {
         StackPane pane = new StackPane();
@@ -129,6 +128,7 @@ public class CashierPortal extends Page {
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
+
     public void createSummaryTransaction() {
         StackPane pane = new StackPane();
         summaryTransactionPage = new Scene(pane, WIDTH, HEIGHT);
@@ -150,6 +150,7 @@ public class CashierPortal extends Page {
         pane.getChildren().addAll(lbl, bn);
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
+
 
     /**
      * Function to return scene.

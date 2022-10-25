@@ -13,7 +13,6 @@ import javafx.scene.text.Font;
 
 public class OwnerPortal extends Page{
 
-
     private Pane pane;
 
     private SceneManager sm;
@@ -26,14 +25,14 @@ public class OwnerPortal extends Page{
     private Button returnToDp;
 
     private Scene manageCSOPage;
-
     private Scene summaryPage;
     private Scene cancelledTransactionPage;
+
     /**
      * The Constructor for the Owner Portal, sets the scene for the seller portal.
      * @param sceneManager
      */
-    public OwnerPortal(SceneManager sceneManager){
+    public OwnerPortal(SceneManager sceneManager) {
 
         sm = sceneManager;
 
@@ -102,12 +101,10 @@ public class OwnerPortal extends Page{
      }
 
 
-
     /**
      * Funciton to returns sence.
      * @return
      */
-
     public void createManageCSO() {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
@@ -153,6 +150,7 @@ public class OwnerPortal extends Page{
         bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
+
     public void createCancelledTransaction() {
         StackPane pane = new StackPane();
         cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);
@@ -174,6 +172,5 @@ public class OwnerPortal extends Page{
         pane.getChildren().addAll(lbl, bn);
         bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
-
 
 }

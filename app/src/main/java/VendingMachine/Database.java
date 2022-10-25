@@ -38,6 +38,7 @@ public class Database {
 
     }
 
+
     /**
      * Opens connection with a database.
      * To be called before any other function by calling class.
@@ -80,6 +81,7 @@ public class Database {
 
     }
 
+
     /**
      * Closes the connection with the database.
      * To be called after you are done with database.
@@ -102,6 +104,7 @@ public class Database {
             return -1;
         }
     }
+
 
     /**
      * Deletes all table data from the database (that we will be using).
@@ -171,7 +174,8 @@ public class Database {
         return 0;
     }
 
-    public ArrayList<String>  queryRecent() {
+
+    public ArrayList<String> queryRecent() {
 
         ArrayList<String> items = new ArrayList<>();
 
@@ -192,11 +196,10 @@ public class Database {
 
         return items;
 
-
     }
 
 
-    public ArrayList<String>  queryCategory(String category) {
+    public ArrayList<String> queryCategory(String category) {
 
         ArrayList<String> items = new ArrayList<>();
 
@@ -229,7 +232,6 @@ public class Database {
      * @param role role of the new user
      * @return
      */
-
     public int insertNewUser(String userName, String password, String role) {
 
         // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
@@ -257,6 +259,7 @@ public class Database {
 
     }
 
+
     /**
      * Funciton to check if a certain user has the wanted role, of not. Returns true
      * if the user has the wanted role, false if it doesn't.
@@ -265,7 +268,6 @@ public class Database {
      * @param role     the role you want to check the username has
      * @return true if successful, false if not successful
      */
-
     public boolean checkRole(String userName, String role) {
 
         try {
@@ -284,6 +286,7 @@ public class Database {
 
         return false;
     }
+
 
     /**
      * Function to return the role of a specified user
@@ -312,6 +315,7 @@ public class Database {
             return "Error";
         }
     }
+
 
     /**
      * Function to validate username
@@ -345,6 +349,7 @@ public class Database {
         }
     }
 
+
     /**
      * Login function
      * 
@@ -353,10 +358,6 @@ public class Database {
      * @return 0 if successful, -1 if unsuccessful
      */
     public int login(String username, String password) {
-//        if (password.length() > 20) {
-//            return -1;
-//        }
-
         String sql = """
                 SELECT *
                 FROM Roles
@@ -370,143 +371,10 @@ public class Database {
             } else {
                 return -1;
             }
-
         } catch (SQLException e) {
             System.out.println("Error while querying for user :(");
             return -1;
         }
     }
 
-
-
-    /// TO DO ADD YOUR FUNCTIONS HERE
-    
-    
-
-    ///////////// EXAMPLES /////////////
-    // An example from the previous assignment
-    // Have a look at how you insert values
-
-    /**
-     * Adds a currency to the currency table.
-     * Need to call openConn before this function.
-     *
-     * @param exchCode the currency code for the currency as a string: e.g. "AUD"
-     * @param currName the currency name of the code: e.g. "Australian Dollar"
-     * @return 0 if successful and -1 if unsuccessful
-     */
-    // public int addItem(String exchCode, String currName) {
-
-    // // Add error handling
-    // try {
-
-    // Statement statement = dbConn.createStatement();
-    // statement.setQueryTimeout(30); // set timeout to 30 sec.
-    // statement.executeUpdate(String.format("insert into currency values('%s',
-    // '%s')", exchCode, currName));
-
-    // } catch(SQLException e) {
-    // // if the error message is "out of memory",
-    // // it probably means no database file is found
-    // System.err.println(e.getMessage());
-    // return -1;
-    // }
-    // return 0;
-
-    // }
-
-    // An example from the previous assignment
-    // Have a look at how you search values
-
-    /**
-     * Given a currency code returns the currency name see
-     * {@link #addCurrency(String, String) addCurrency}.
-     *
-     * @param exchCode the currency code of a currency to be queried
-     * @return the currency name
-     */
-    // public String getCurrName(String exchCode) {
-
-    // try{
-    // ResultSet query = openStatement.executeQuery(String.format("select
-    // currency_name from currency where currency_code = '%s'", exchCode));
-
-    // if(query.next()) {
-    // return query.getString("currency_name");
-
-    // } else {
-    // return null;
-
-    // }
-
-    // } catch(SQLException e) {
-    // // if the error message is "out of memory",
-    // // it probably means no database file is found
-    // System.err.println(e.getMessage());
-
-    // }
-
-    // return null;
-
-    // }
-
-    /**
-     * Gets Average, Minimum , Maximum, and Varience of the conversion values for a
-     * particular exchange between 2 dates.
-     *
-     * @param currOne currency from
-     * @param currTwo currency to
-     * @param dayOne  date one wants the exchange rate after, in format "YYYY-MM-DD"
-     *                inclusive
-     * @param dayTwo  date one wants the exchange rate before, in format
-     *                "YYYY-MM-DD" inclusive
-     * @return HashMap<String, Double> containing the full the Summaries of a
-     *         particular exchange rate, in format {Summary Name e.g Average, double
-     *         value}.
-     */
-    // public HashMap<String, Double> getSummaries(String currOne, String currTwo,
-    // String dayOne, String dayTwo) {
-
-    // HashMap<String, Double> map = new HashMap<String, Double>();
-
-    // String avgQuery = String.format("select avg(conv_val) as \"Average\" from
-    // exchange where currency_ex_code = '%s' and time_added >= '%s 00.00.00' and
-    // time_added <= '%s 23.59.59' order by time_added DESC", currOne + currTwo,
-    // dayOne, dayTwo);
-    // String minQuery = String.format("select min(conv_val) as \"Min\" from
-    // exchange where currency_ex_code = '%s' and time_added >= '%s 00.00.00' and
-    // time_added <= '%s 23.59.59' order by time_added DESC", currOne + currTwo,
-    // dayOne, dayTwo);
-    // String maxQuery = String.format("select max(conv_val) as \"Max\" from
-    // exchange where currency_ex_code = '%s' and time_added >= '%s 00.00.00' and
-    // time_added <= '%s 23.59.59' order by time_added DESC", currOne + currTwo,
-    // dayOne, dayTwo);
-    // //String varQuery = String.format("Select avg((t.conv_val - SUB.mean) *
-    // (t.conv_val - SUB.mean)) as \"Var\" from exchange t,(SELECT AVG(conv_val) AS
-    // mean FROM exchange) AS SUB) where currency_ex_code = '%s' and time_added >=
-    // '%s 00.00.00' and time_added <= '%s 23.59.59' order by time_added DESC",
-    // currOne + currTwo, dayOne, dayTwo);
-
-    // try {
-
-    // ResultSet query1 = openStatement.executeQuery(avgQuery);
-    // map.put("Average", query1.getDouble("Average"));
-
-    // ResultSet query2 = openStatement.executeQuery(minQuery);
-    // map.put("Min", query2.getDouble("Min"));
-
-    // ResultSet query3 = openStatement.executeQuery(maxQuery);
-    // map.put("Max", query3.getDouble("Max"));
-
-    // // ResultSet query4 = openStatement.executeQuery(varQuery);
-    // // map.put("Var",query4.getDouble("Var"));
-    // }
-    // catch (SQLException e){
-    // System.err.println(e.getMessage());
-    // }
-
-    // return map;
-    // }
-
-    //////////////////////
 }

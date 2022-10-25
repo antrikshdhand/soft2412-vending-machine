@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 public abstract class Page {
 
     // Set constants
-    
     public final int WIDTH = 1280;
     public final int HEIGHT = 720;
 
