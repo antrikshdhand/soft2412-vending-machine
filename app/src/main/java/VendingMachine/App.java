@@ -1,19 +1,23 @@
 package VendingMachine;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.net.URL;
 
 public class App extends Application {
 
     private Stage primaryStage;
-    SceneManager sceneManager = new SceneManager();
+//    SceneManager sceneManager = new SceneManager();
 
     @Override
-    public void start(Stage primaryStage0) {
-
-        sceneManager.setApp(this);
-        sceneManager.setUp();
+    public void start(Stage primaryStage0) throws Exception{
+//
+//        sceneManager.setApp(this);
+//        sceneManager.setUp();
 
         primaryStage = primaryStage0;
         // Stage is basically the window, and you are given the name of the window.
@@ -28,9 +32,13 @@ public class App extends Application {
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
-        primaryStage.setScene(sceneManager.getDefaultPageScene());
-        primaryStage.show();
+        URL url = new File("src/main/java/VendingMachine/fxml/Main.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
 
+//        primaryStage.setScene(sceneManager.getDefaultPageScene());
+
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
     }
 
 

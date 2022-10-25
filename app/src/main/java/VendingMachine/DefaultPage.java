@@ -21,7 +21,7 @@ public class DefaultPage extends Page {
         splitPane.setDividerPosition(0, 0.668);
 
         TabPane tabPane = new TabPane();
-        tabPane.setSide(Side.LEFT);
+//        tabPane.setSide(Side.LEFT);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         ArrayList<String> categories = new ArrayList<>();
