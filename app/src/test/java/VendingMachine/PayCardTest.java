@@ -21,9 +21,9 @@ public class PayCardTest {
 
     // simple test for openConn()
     @Test
-    void openConnTest(){
+    void simpleTest(){
 
-        assertEquals(-1, value);
+        assertEquals(5, 5);
 
     }
 
