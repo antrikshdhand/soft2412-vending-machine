@@ -16,7 +16,7 @@ public class PayCardTest {
 
     // Test for valid card number
     @Test
-    void testCardNumber(){
+    void testCardNumber() {
 
         Random rnd = new Random();
 
