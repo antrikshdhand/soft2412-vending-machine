@@ -19,6 +19,7 @@ public class App extends Application {
 //        sceneManager.setApp(this);
 //        sceneManager.setUp();
 
+
         primaryStage = primaryStage0;
         // Stage is basically the window, and you are given the name of the window.
         primaryStage.setTitle("Vending Machine");
