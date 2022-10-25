@@ -14,6 +14,8 @@ public class SceneManager {
     private Login login;
     private CheckoutPage checkoutPage;
 
+    private InputCashPage inputCashPage;
+
     private Session session = new Session();
 
     public SceneManager() {
@@ -28,6 +30,7 @@ public class SceneManager {
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         checkoutPage = new CheckoutPage(this);
+        inputCashPage = new InputCashPage(this);
     }
 
     public void setApp(App app) {
@@ -60,6 +63,10 @@ public class SceneManager {
 
     public Scene getCheckoutPageScene() {
         return checkoutPage.getScene();
+    }
+
+    public Scene getInputCashPageScene() {
+        return inputCashPage.getScene();
     }
 
     public Database getDatabase() {

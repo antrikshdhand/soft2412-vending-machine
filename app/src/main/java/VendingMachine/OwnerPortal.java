@@ -111,13 +111,6 @@ public class OwnerPortal extends Page{
 
      }
 
-
-
-    /**
-     * Funciton to returns sence.
-     * @return
-     */
-
     public void createManageCSO() {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);

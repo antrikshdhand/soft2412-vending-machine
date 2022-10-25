@@ -28,7 +28,7 @@ public class App extends Application {
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
-        primaryStage.setScene(sceneManager.getDefaultPageScene());
+        primaryStage.setScene(sceneManager.getInputCashPageScene());
         primaryStage.show();
 
     }
