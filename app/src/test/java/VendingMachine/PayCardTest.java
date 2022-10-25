@@ -1,32 +1,29 @@
 package VendingMachine;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.geometry.Pos;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import java.util.Random;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PayCardTest {
 
-    private SceneManager sceneManager = new SceneManager();
-    private PayCard payCard = new PayCard(sceneManager);
+    // private SceneManager sceneManager = new SceneManager();
+    // private PayCard payCard = new PayCard(sceneManager);
 
-    // simple test for openConn()
+    // Test for valid card number
     @Test
-    void simpleTest(){
+    void testCardNUmber(){
 
-        assertEquals(5, 5);
+        // Random rnd = new Random();
+
+        // for (int i = 0; i <= 100; i++) {
+        //     int number = 10000000 + rnd.nextInt(90000000);
+        //     assertTrue(payCard.checkCardNumber(Integer.toString(number)));
+        // }
 
     }
 
