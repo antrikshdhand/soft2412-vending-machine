@@ -2,8 +2,7 @@ plugins {
     // Apply the java plugin to add basic functionality for Java Code.
     id 'java'
 
-//
-//    id("java-library")
+    // id("java-library")
 
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
@@ -43,6 +42,18 @@ repositories {
     mavenCentral()
 }
 
+// Set directory locations
+sourceSets {
+    main {
+        java {
+                srcDirs= ["src/main/java"]
+        }
+        resources {
+                srcDirs= ["src/main/resources"]
+        }
+    }
+}
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -56,8 +67,11 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
 
-    // Adds sqlite3, and the java driver
+    // This dependecy adds SQLite3, and the Java driver
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.36.0.3'
+
+    // This dependency adds OpenCSV to the application.
+    implementation 'com.opencsv:opencsv:5.3'
 }
 
 application {

@@ -14,7 +14,6 @@ import javafx.scene.text.Font;
 public class CheckoutPage extends Page {
 
     private Pane pane;
-
     private SceneManager sm;
 
     private Button payCard;

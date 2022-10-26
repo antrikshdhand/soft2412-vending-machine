@@ -1,14 +1,26 @@
 package VendingMachine;
 
-import javafx.scene.Scene;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class SceneManager {
 
     private App app;
     private Database database;
+    private Stage stage;
 
     private OwnerPortal ownerPortal;
-    private DefaultPage defaultPage;
+    private Scene defaultPage;
     private CashierPortal cashierPortal;
     private SellerPortal sellerPortal;
     private Login login;
@@ -18,13 +30,24 @@ public class SceneManager {
 
     private Session session = new Session();
 
+    @FXML
+    Label roleLabel;
+
+    @FXML
+    Label accountLabel;
+
+    @FXML
+    ScrollPane scrollPane;
+
     public SceneManager() {
         database = new Database();
+        setUp();
     }
+
 
     public void setUp() {
         database = new Database();
-        defaultPage = new DefaultPage(this);
+        // defaultPage = new DefaultPage(this);
         ownerPortal = new OwnerPortal(this);
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
@@ -33,33 +56,42 @@ public class SceneManager {
         inputCashPage = new InputCashPage(this);
     }
 
+
     public void setApp(App app) {
         this.app = app;
     }
 
+
     public void switchScenes(Scene scene) {
-        app.switchScenes(scene);
+        // app.switchScenes(scene);
+        stage.setScene(scene);
     }
     
+
     public Scene getDefaultPageScene() {
-        return defaultPage.getScene();
+        return defaultPage;
     }
+
 
     public Scene getOwnerPortalScene() {
         return ownerPortal.getScene();
     }
 
+
     public Scene getCashierPortalScene() {
         return cashierPortal.getScene();
     }
+
 
     public Scene getSellerPortalScene() {
         return sellerPortal.getScene();
     }
 
+
     public Scene getLoginScene() {
         return login.getScene();
     }
+
 
     public Scene getCheckoutPageScene() {
         return checkoutPage.getScene();
@@ -73,12 +105,66 @@ public class SceneManager {
         return database;
     }
 
+
     public Session getSession() {
         return session;
     }
 
+
     public void createNewDefaultPage() {
-        defaultPage = new DefaultPage(this);
+        // defaultPage = new DefaultPage(this);
+        roleLabel.setText("Role: " + session.getRole());
+        accountLabel.setText("Account: " + session.getUserName());
+        // leftVBox.getChildren().add(new Label("Hello label"));
     }
+
+    public void proceedToPortal(ActionEvent event) {
+        defaultPage = ((Node)event.getSource()).getScene();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        switchScenes(ownerPortal.getScene());
+    }
+
+    public void proceedToCheckout(ActionEvent event) {
+        defaultPage = ((Node)event.getSource()).getScene();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        switchScenes(checkoutPage.getScene());
+    }
+
+    public void login(ActionEvent event) {
+        defaultPage = ((Node)event.getSource()).getScene();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        switchScenes(login.getScene());
+    }
+
+    public void showRecentlyBought(ActionEvent event) {
+
+        database.openConn();
+        ArrayList<String> recent = database.queryRecent();
+        database.closeConn();
+
+        VBox items = new VBox();
+        items.setSpacing(30);
+        scrollPane.setContent(items);
+
+        for (String r : recent) {
+            HBox item = new HBox();
+            item.setPadding(new Insets(10));
+            HBox.setMargin(item, new Insets(50));
+            item.setPrefSize(500, 100);
+
+            Button button = new Button("Add to Cart");
+
+            Region region1 = new Region();
+            HBox.setHgrow(region1, Priority.ALWAYS);
+
+            item.getChildren().addAll(new Label(r), region1, button);
+
+            item.setStyle("-fx-background-color:#98aded");
+            items.getChildren().add(item);
+
+        }
+
+    }
+
 
 }

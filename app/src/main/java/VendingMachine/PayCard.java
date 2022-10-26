@@ -17,8 +17,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class PayCard extends Page {
+import java.io.*;
+import com.opencsv.*;
 
+public class PayCard extends Page {
+    
     private SceneManager sceneManager;
 
     public PayCard(SceneManager sceneManager) {
@@ -33,64 +36,71 @@ public class PayCard extends Page {
         grid.setAlignment(Pos.CENTER); 
         this.scene = new Scene(grid, WIDTH, HEIGHT);
 
-        Text scenetitle = new Text("Welcome");
+        Text scenetitle = new Text("Card Payment");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label usernameLabel = new Label("Card No:");
-        grid.add(usernameLabel, 0, 1);
+        Label cardNumberLabel = new Label("Card No:");
+        grid.add(cardNumberLabel, 0, 1);
 
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
+        TextField cardNumberTextField = new TextField();
+        grid.add(cardNumberTextField, 1, 1);
 
-        Label pwLabel = new Label("CVV:");
-        grid.add(pwLabel, 0, 2);
+        Label cvvLabel = new Label("CVV:");
+        grid.add(cvvLabel, 0, 2);
 
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
+        PasswordField cvvBox = new PasswordField();
+        grid.add(cvvBox, 1, 2);
 
-        Button signInButton = new Button("Pay");
+        Button payButton = new Button("Pay");
 
-        pwBox.setOnKeyPressed(e -> {
+        cvvBox.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER))
-                signInButton.fire();
+                payButton.fire();
         });
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
-        signInButton.setOnAction(e -> {
+        payButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
 
-            // set username and password variables
-            String username = userTextField.getText();
-            String password = pwBox.getText();
+            // Set variables
+            String username = sceneManager.session.getUserName();
+            String cardNumber = cardNumberTextField.getText();
+            String cvv = cvvBox.getText();
 
-            int validUsername = sceneManager.getDatabase().validateUsername(username);
-            if (validUsername == -1) {                
-                Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
-                invalidUsernameAlert.setTitle("Invalid card number.");
-                invalidUsernameAlert.setHeaderText(String.format("The card number inputted is invalid.", username));
-                invalidUsernameAlert.setContentText("Please try again.");
-                invalidUsernameAlert.showAndWait();
+            boolean checkedCardNumber = checkCardNumber(cardNumber);
+            boolean checkedCVV = checkCVV(cvv);
+
+            // Write to transactions.csv if valid
+            if (checkedCardNumber == false) {
+                Alert invalidCardNumberAlert = new Alert(AlertType.ERROR);
+                invalidCardNumberAlert.setTitle("Invalid card number.");
+                invalidCardNumberAlert.setHeaderText(String.format("The card number inputted is invalid.", cardNumber));
+                invalidCardNumberAlert.setContentText("Please try again.");
+                invalidCardNumberAlert.showAndWait();
                 return;
             }
-            
-            int validPayCard = sceneManager.getDatabase().login(username, password);
-            if (validPayCard == -1) {
-                System.out.println(password);
-                Alert incorrectPassAlert = new Alert(AlertType.ERROR);
-                incorrectPassAlert.setTitle("Incorrect CVV");
-                incorrectPassAlert.setHeaderText("The CVV inputted was invalid.");
-                incorrectPassAlert.setContentText("Please try again.");
-                incorrectPassAlert.showAndWait();
+            else if (checkedCVV == false) {
+                Alert incorrectCVVAlert = new Alert(AlertType.ERROR);
+                incorrectCVVAlert.setTitle("Incorrect CVV");
+                incorrectCVVAlert.setHeaderText("The CVV inputted was invalid.");
+                incorrectCVVAlert.setContentText("Please try again.");
+                incorrectCVVAlert.showAndWait();
                 return;
+            }
+            else if (checkedCardNumber == true && checkedCVV == true) {
+                writeTransaction(username, cardNumber, cvv, 420.69);
+                Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
+                paymentSuccessfulAlert.setTitle("Success!");
+                paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
+                paymentSuccessfulAlert.setContentText("Have a great day!");
+                paymentSuccessfulAlert.showAndWait();
             }
 
             // Successful payment
             System.out.println("Payment successful!");
-            
-            // TODO: Save to txt file, print receipt
             
         });
 
@@ -99,42 +109,85 @@ public class PayCard extends Page {
             sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
         });
 
-        // add buttons to Hbox
+        // Add buttons to Hbox
         hbBtn.getChildren().add(backButton);
-        hbBtn.getChildren().add(signInButton);
+        hbBtn.getChildren().add(payButton);
 
     }
+
+    /**
+     * Writes transaction details to transactions.csv file
+     * (found in resources directory)
+     * @param username
+     * @param cardNumber
+     * @param CVV
+     * @param amount
+     */
+    public void writeTransaction(String username, String cardNumber, String cvv, double amount) {
+
+        File file = new File("transactions.csv");
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(file, true);
+    
+            // Create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile);
+    
+            // Add header to transactions.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"USERNAME", "CARD_NUMBER", "CVV", "TRANSACTION_AMOUNT"};
+                writer.writeNext(header);
+            }
+    
+            // Add data to transactions.csv
+            String[] data = {
+                username, 
+                cardNumber, 
+                cvv,
+                Double.toString(amount)
+            };
+            
+            writer.writeNext(data);
+    
+            // Closing writer connection
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Checks if card number is valid.
      * @param cardNumber
      */
-    public boolean checkCardNumber(String cardNumber) {
+    public static boolean checkCardNumber(String cardNumber) {
 
-        int number;
+        long number;
 
-        // Checks if integer
+        // Checks if long
         try {
-            number = Integer.parseInt(cardNumber);
+            number = Long.parseLong(cardNumber);
         } catch (Exception e) {
             return false;
         }
 
         // Checks if 16 digits long
         int numDigits = String.valueOf(number).length();
-        if (numDigits != 16) {
+        if (numDigits != 16)
             return false;
-        }
 
         // If all conditions are met
         return true;
     }
 
+
     /**
      * Checks if CVV is valid.
      * @param CVV
      */
-    public boolean checkCVV(String CVV) {
+    public static boolean checkCVV(String CVV) {
 
         int number;
 
@@ -147,14 +200,16 @@ public class PayCard extends Page {
 
         // Checks if 16 digits long
         int numDigits = String.valueOf(number).length();
-        if (numDigits != 3) {
+        if (numDigits != 3)
             return false;
-        }
 
         // If all conditions are met
         return true;
     }
 
+    /**
+     * Returns the PayCard scene.
+     */
     public Scene getScene() {
         return this.scene;
     }
