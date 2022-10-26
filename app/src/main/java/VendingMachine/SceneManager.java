@@ -34,7 +34,6 @@ public class SceneManager {
     @FXML
     Label accountLabel;
 
-
     @FXML
     ScrollPane scrollPane;
 
@@ -46,7 +45,7 @@ public class SceneManager {
 
     public void setUp() {
         database = new Database();
-//        defaultPage = new DefaultPage(this);
+        // defaultPage = new DefaultPage(this);
         ownerPortal = new OwnerPortal(this);
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
@@ -62,7 +61,7 @@ public class SceneManager {
 
 
     public void switchScenes(Scene scene) {
-//        app.switchScenes(scene);
+        // app.switchScenes(scene);
         stage.setScene(scene);
     }
     
@@ -108,10 +107,10 @@ public class SceneManager {
 
 
     public void createNewDefaultPage() {
-//        defaultPage = new DefaultPage(this);
+        // defaultPage = new DefaultPage(this);
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
-//        leftVBox.getChildren().add(new Label("Hello label"));
+        // leftVBox.getChildren().add(new Label("Hello label"));
     }
 
     public void proceedToPortal(ActionEvent event) {
