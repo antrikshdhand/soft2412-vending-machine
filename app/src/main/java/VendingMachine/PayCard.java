@@ -17,12 +17,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+import java.io.*;
+
 public class PayCard extends Page {
 
     private SceneManager sceneManager;
-
-    // // Transaction storage elements for OpenCSV
-    // FileReader filereader = new FileReader(transa)
 
     public PayCard(SceneManager sceneManager) {
         
@@ -105,6 +104,16 @@ public class PayCard extends Page {
         // add buttons to Hbox
         hbBtn.getChildren().add(backButton);
         hbBtn.getChildren().add(payButton);
+
+    }
+
+    /**
+     * Writes transaction details to transactions.csv file
+     * (found in resources directory)
+     * @param cardNumber
+     * @param CVV
+     */
+    public static void writeTransaction(long cardNumber, int CVV) {
 
     }
 
