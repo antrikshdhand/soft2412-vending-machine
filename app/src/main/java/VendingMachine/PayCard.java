@@ -123,7 +123,6 @@ public class PayCard extends Page {
         String username = "Stub";
         Double amount = 420.69;
 
-
         File file = new File("transactions.csv");
         try {
             // Create FileWriter object with file as parameter
