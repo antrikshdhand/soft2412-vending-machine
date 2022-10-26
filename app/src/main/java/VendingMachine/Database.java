@@ -115,6 +115,9 @@ public class Database {
         try {
             // create a database connection
             dbConn = DriverManager.getConnection("jdbc:sqlite:vending_machine.db");
+            openStatement = dbConn.createStatement();
+            openStatement.setQueryTimeout(30); // set timeout to 30 sec.
+
             System.out.println("Connection to the database has been established.");
         } catch (SQLException e) {
             // if the error message is "out of memory",
@@ -258,7 +261,7 @@ public class Database {
     /**
      * Function to add a new User into the database.
      * 
-     * @param userName  username of the new user
+     * @param username  username of the new user
      * @param password  password of the new user
      * @param role      role of the new user
      * @return
@@ -311,7 +314,7 @@ public class Database {
     /**
      * Function to return the role of a specified user
      * 
-     * @param userName
+     * @param username
      * @return
      */
     public String getRole(String username) {
@@ -338,7 +341,7 @@ public class Database {
     /**
      * Function to validate a username
      * 
-     * @param userName username of the user
+     * @param username username of the user
      * @return 0 if successful, -1 if unsuccessful
      */
     public int validateUsername(String username) {

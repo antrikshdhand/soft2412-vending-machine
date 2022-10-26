@@ -148,14 +148,18 @@ public class Login extends Page {
         }
 
         // otherwise check if the username is valid
+        sceneManager.getDatabase().openConn();
         int validUsername = sceneManager.getDatabase().validateUsername(loginUsername);
+        sceneManager.getDatabase().closeConn();
         if (validUsername == -1) {                
             showUsernameError();
             return;
         }
         
         // if username is valid, try and log in
+        sceneManager.getDatabase().openConn();
         int validLogin = sceneManager.getDatabase().login(loginUsername, loginPassword);
+        sceneManager.getDatabase().closeConn();
         if (validLogin == -1) {
             showIncorrectPasswordError(); 
             return;           
@@ -164,8 +168,10 @@ public class Login extends Page {
         /* SUCCESSFUL LOGIN */
         
         // update session
+        sceneManager.getDatabase().openConn();
         String role = sceneManager.getDatabase().getRole(loginUsername);
-        
+        sceneManager.getDatabase().closeConn();
+
         sceneManager.getSession().resetSession();
         sceneManager.getSession().setLoggedIn(true);
         sceneManager.getSession().setUserName(loginUsername);
@@ -175,7 +181,7 @@ public class Login extends Page {
         sceneManager.createNewDefaultPage();
         sceneManager.switchScenes(sceneManager.getDefaultPageScene()); 
         
-        sceneManager.getDatabase().closeConn();
+//        sceneManager.getDatabase().closeConn();
     }
 
 

@@ -18,7 +18,6 @@ public class OwnerPortal extends Page {
     private Pane pane;
 
     private SceneManager sm;
-
     private Button cashierPortal;
     private Button sellerPortal;
     private Button manageSCO;
