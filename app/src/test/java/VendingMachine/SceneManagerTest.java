@@ -15,7 +15,7 @@ public class SceneManagerTest {
     // and drop all tables so you are working with a empty relations for each test.
     @BeforeEach
     void setUp(){
-        sceneManager = new SceneManager();
+        //sceneManager = new SceneManager();
     }
 
 
