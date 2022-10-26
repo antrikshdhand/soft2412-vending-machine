@@ -51,7 +51,6 @@ public class SceneManager {
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         checkoutPage = new CheckoutPage(this);
-
     }
 
 
