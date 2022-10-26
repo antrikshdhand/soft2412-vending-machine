@@ -11,7 +11,7 @@ import java.net.URL;
 public class App extends Application {
 
     private Stage primaryStage;
-    // SceneManager sceneManager = new SceneManager();
+     SceneManager sceneManager = new SceneManager();
 
     @Override
     public void start(Stage primaryStage0) throws Exception {
@@ -33,6 +33,8 @@ public class App extends Application {
 
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
+        primaryStage.setScene(sceneManager.getInputCashPageScene());
+        primaryStage.show();
         URL url = new File("src/main/java/VendingMachine/fxml/Main.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
 

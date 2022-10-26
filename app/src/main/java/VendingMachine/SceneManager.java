@@ -26,6 +26,8 @@ public class SceneManager {
     private Login login;
     private CheckoutPage checkoutPage;
 
+    private InputCashPage inputCashPage;
+
     protected Session session = new Session();
 
     @FXML
@@ -50,6 +52,7 @@ public class SceneManager {
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         checkoutPage = new CheckoutPage(this);
+        inputCashPage = new InputCashPage(this);
     }
 
 
@@ -93,6 +96,9 @@ public class SceneManager {
         return checkoutPage.getScene();
     }
 
+    public Scene getInputCashPageScene() {
+        return inputCashPage.getScene();
+    }
 
     public Database getDatabase() {
         return database;
