@@ -38,6 +38,17 @@ public class InputCashPage extends Page {
     private Button fiveCents;
     private Button cancel;
 
+
+    // Label required on screen
+    private Text totalAmount;
+    private Text dueAmount;
+    private Text changeAmount;
+
+    // Amount of each label
+    private Text totalAmountDouble;
+    private Text dueAmountDouble;
+    private Text changeAmountDouble;
+
     public InputCashPage(SceneManager sceneManager){
 
         sm = sceneManager;
@@ -163,6 +174,16 @@ public class InputCashPage extends Page {
         pane.add(cancel,1,2);
 
     }
+
+
+    public void setUpTextAndAmount(){
+        totalAmount = new Text("Total Amount:");
+        dueAmount = new Text("Amount Due: ");
+        changeAmount = new Text("Change required: ");
+
+
+    }
+
 
 
 }
