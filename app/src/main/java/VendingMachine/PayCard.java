@@ -70,30 +70,34 @@ public class PayCard extends Page {
             String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
 
-            // Write to transactions.csv if valid
-            if (checkCardNumber(cardNumber) == true && checkCVV(cvv) == true)
-                writeTransaction(username, cardNumber, cvv, 420.69);
+            boolean checkedCardNumber = checkCardNumber(cardNumber);
+            boolean checkedCVV = checkCVV(cvv);
 
-            // int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
-            // if (validUsername == -1) {                
-            //     Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
-            //     invalidUsernameAlert.setTitle("Invalid card number.");
-            //     invalidUsernameAlert.setHeaderText(String.format("The card number inputted is invalid.", cardNumber));
-            //     invalidUsernameAlert.setContentText("Please try again.");
-            //     invalidUsernameAlert.showAndWait();
-            //     return;
-            // }   
-            
-            // int validPayCard = sceneManager.getDatabase().login(cardNumber, cvv);
-            // if (validPayCard == -1) {
-            //     System.out.println(cvv);
-            //     Alert incorrectPassAlert = new Alert(AlertType.ERROR);
-            //     incorrectPassAlert.setTitle("Incorrect CVV");
-            //     incorrectPassAlert.setHeaderText("The CVV inputted was invalid.");
-            //     incorrectPassAlert.setContentText("Please try again.");
-            //     incorrectPassAlert.showAndWait();
-            //     return;
-            // }
+            // Write to transactions.csv if valid
+            if (checkedCardNumber == false) {
+                Alert invalidCardNumberAlert = new Alert(AlertType.ERROR);
+                invalidCardNumberAlert.setTitle("Invalid card number.");
+                invalidCardNumberAlert.setHeaderText(String.format("The card number inputted is invalid.", cardNumber));
+                invalidCardNumberAlert.setContentText("Please try again.");
+                invalidCardNumberAlert.showAndWait();
+                return;
+            }
+            else if (checkedCVV == false) {
+                Alert incorrectCVVAlert = new Alert(AlertType.ERROR);
+                incorrectCVVAlert.setTitle("Incorrect CVV");
+                incorrectCVVAlert.setHeaderText("The CVV inputted was invalid.");
+                incorrectCVVAlert.setContentText("Please try again.");
+                incorrectCVVAlert.showAndWait();
+                return;
+            }
+            else if (checkedCardNumber == true && checkedCVV == true) {
+                writeTransaction(username, cardNumber, cvv, 420.69);
+                Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
+                paymentSuccessfulAlert.setTitle("Success!");
+                paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
+                paymentSuccessfulAlert.setContentText("Have a great day!");
+                paymentSuccessfulAlert.showAndWait();
+            }
 
             // Successful payment
             System.out.println("Payment successful!");
@@ -105,7 +109,7 @@ public class PayCard extends Page {
             sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
         });
 
-        // add buttons to Hbox
+        // Add buttons to Hbox
         hbBtn.getChildren().add(backButton);
         hbBtn.getChildren().add(payButton);
 
