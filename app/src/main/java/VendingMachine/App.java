@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.controllers.DefaultPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -11,13 +12,13 @@ import java.net.URL;
 public class App extends Application {
 
     private Stage primaryStage;
-    // SceneManager sceneManager = new SceneManager();
+//     SceneManager sceneManager = new SceneManager();
 
     @Override
     public void start(Stage primaryStage0) throws Exception {
 
-        // sceneManager.setApp(this);
-        // sceneManager.setUp();
+//         sceneManager.setApp(this);
+//         sceneManager.setUp();
 
 
         primaryStage = primaryStage0;
@@ -34,7 +35,11 @@ public class App extends Application {
         // with javafx, by default with window will appear in the middle. Unlike Swing so no changes needed.
 
         URL url = new File("src/main/java/VendingMachine/fxml/Main.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = loader.load(url);
+//        DefaultPageController defaultPageController = loader.getController();
+//        defaultPageController.setSceneManager(sceneManager);
+        
 
 //        primaryStage.setScene(sceneManager.getDefaultPageScene());
 

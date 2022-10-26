@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.controllers.DefaultPageController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -12,6 +13,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.zip.Deflater;
 
 public class SceneManager {
 
@@ -28,14 +33,9 @@ public class SceneManager {
 
     protected Session session = new Session();
 
-    @FXML
-    Label roleLabel;
+    private DefaultPageController defaultPageController;
 
-    @FXML
-    Label accountLabel;
-
-    @FXML
-    ScrollPane scrollPane;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public SceneManager() {
         database = new Database();
@@ -51,6 +51,7 @@ public class SceneManager {
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         checkoutPage = new CheckoutPage(this);
+
     }
 
 
@@ -62,6 +63,14 @@ public class SceneManager {
     public void switchScenes(Scene scene) {
         // app.switchScenes(scene);
         stage.setScene(scene);
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void setDefaultPage(Scene defaultPage) {
+        this.defaultPage = defaultPage;
     }
     
 
@@ -104,61 +113,11 @@ public class SceneManager {
         return session;
     }
 
-
     public void createNewDefaultPage() {
-        // defaultPage = new DefaultPage(this);
-        roleLabel.setText("Role: " + session.getRole());
-        accountLabel.setText("Account: " + session.getUserName());
-        // leftVBox.getChildren().add(new Label("Hello label"));
+        defaultPageController.updateSessionBox();
     }
 
-    public void proceedToPortal(ActionEvent event) {
-        defaultPage = ((Node)event.getSource()).getScene();
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        switchScenes(ownerPortal.getScene());
+    public void setDefaultPageController(DefaultPageController defaultPageController) {
+        this.defaultPageController = defaultPageController;
     }
-
-    public void proceedToCheckout(ActionEvent event) {
-        defaultPage = ((Node)event.getSource()).getScene();
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        switchScenes(checkoutPage.getScene());
-    }
-
-    public void login(ActionEvent event) {
-        defaultPage = ((Node)event.getSource()).getScene();
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        switchScenes(login.getScene());
-    }
-
-    public void showRecentlyBought(ActionEvent event) {
-
-        database.openConn();
-        ArrayList<String> recent = database.queryRecent();
-        database.closeConn();
-
-        VBox items = new VBox();
-        items.setSpacing(30);
-        scrollPane.setContent(items);
-
-        for (String r : recent) {
-            HBox item = new HBox();
-            item.setPadding(new Insets(10));
-            HBox.setMargin(item, new Insets(50));
-            item.setPrefSize(500, 100);
-
-            Button button = new Button("Add to Cart");
-
-            Region region1 = new Region();
-            HBox.setHgrow(region1, Priority.ALWAYS);
-
-            item.getChildren().addAll(new Label(r), region1, button);
-
-            item.setStyle("-fx-background-color:#98aded");
-            items.getChildren().add(item);
-
-        }
-
-    }
-
-
 }

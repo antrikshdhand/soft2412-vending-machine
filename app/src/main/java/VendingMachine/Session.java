@@ -8,6 +8,7 @@ public class Session {
     private final int TICK_LIMIT = 120;
     private int tick;
     private boolean loggedIn;
+    private Transaction transaction = new Transaction();
 
     /**
      * Returns the user Name of the session
@@ -92,4 +93,10 @@ public class Session {
     }
 
 
+    /**
+     * @return
+     */
+    public Transaction getTransaction() {
+        return transaction;
+    }
 }
