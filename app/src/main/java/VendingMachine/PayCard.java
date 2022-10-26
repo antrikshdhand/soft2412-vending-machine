@@ -66,14 +66,13 @@ public class PayCard extends Page {
             this.sceneManager.getDatabase().openConn();
 
             // Set variables
-            String username = session.getUserName();
+            String username = sceneManager.session.getUserName();
             String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
 
             // Write to transactions.csv if valid
-            if (checkCardNumber(cardNumber) == true && checkCVV(cvv) == true) {
+            if (checkCardNumber(cardNumber) == true && checkCVV(cvv) == true)
                 writeTransaction(username, cardNumber, cvv, 420.69);
-            }
 
             // int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
             // if (validUsername == -1) {                
@@ -83,7 +82,7 @@ public class PayCard extends Page {
             //     invalidUsernameAlert.setContentText("Please try again.");
             //     invalidUsernameAlert.showAndWait();
             //     return;
-            // }
+            // }   
             
             // int validPayCard = sceneManager.getDatabase().login(cardNumber, cvv);
             // if (validPayCard == -1) {
@@ -115,15 +114,12 @@ public class PayCard extends Page {
     /**
      * Writes transaction details to transactions.csv file
      * (found in resources directory)
+     * @param username
      * @param cardNumber
      * @param CVV
+     * @param amount
      */
-    public void writeTransaction(String cardNumber, String cvv) {
-
-        // Stub values for username and cost
-        String username = "Stub";
-        Double amount = 420.69;
-
+    public void writeTransaction(String username, String cardNumber, String cvv, double amount) {
 
         File file = new File("transactions.csv");
         try {
@@ -175,9 +171,8 @@ public class PayCard extends Page {
 
         // Checks if 16 digits long
         int numDigits = String.valueOf(number).length();
-        if (numDigits != 16) {
+        if (numDigits != 16)
             return false;
-        }
 
         // If all conditions are met
         return true;
@@ -201,9 +196,8 @@ public class PayCard extends Page {
 
         // Checks if 16 digits long
         int numDigits = String.valueOf(number).length();
-        if (numDigits != 3) {
+        if (numDigits != 3)
             return false;
-        }
 
         // If all conditions are met
         return true;
