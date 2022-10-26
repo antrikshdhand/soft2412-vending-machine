@@ -21,6 +21,9 @@ public class PayCard extends Page {
 
     private SceneManager sceneManager;
 
+    // // Transaction storage elements for OpenCSV
+    // FileReader filereader = new FileReader(transa)
+
     public PayCard(SceneManager sceneManager) {
         
         this.sceneManager = sceneManager;
