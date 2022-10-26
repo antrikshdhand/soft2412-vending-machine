@@ -29,7 +29,9 @@ public class Database {
      * Constructor for this class.
      */
     public Database() {
+        System.out.println("Attempting to connect to the database for the first time...");
         int successfulConn = openConn();
+        System.out.println();
         if (successfulConn == 0) {
             dropAllTables();
             initialiseSchema();
@@ -113,6 +115,7 @@ public class Database {
         try {
             // create a database connection
             dbConn = DriverManager.getConnection("jdbc:sqlite:vending_machine.db");
+            System.out.println("Connection to the database has been established.");
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -263,13 +266,13 @@ public class Database {
     public int insertNewUser(String username, String password, String role) {
         try {
             // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
-            if( userName.length() > 15 || password.length() > 20){
+            if( username.length() > 15 || password.length() > 20){
                 throw new SQLException("userName or password too long");
             }
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", userName, password,role.toUpperCase()));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", username, password,role.toUpperCase()));
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -290,7 +293,7 @@ public class Database {
     public boolean checkRole(String username, String role) {
 
         try {
-            String sql = String.format("select role from users where username  = '%s'", userName)
+            String sql = String.format("select role from users where username  = '%s'", username);
             ResultSet query = openStatement.executeQuery(sql);
             if (query.getString("role").equalsIgnoreCase(role)) {
                 return true;
@@ -311,7 +314,7 @@ public class Database {
      * @param userName
      * @return
      */
-    public String getRole(String userName) {
+    public String getRole(String username) {
 
         String sql = """
                 SELECT role
@@ -319,7 +322,7 @@ public class Database {
                 WHERE username = '%s';
                 """;
         try {
-            ResultSet query = openStatement.executeQuery(String.format(sql, userName));
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
             if (query.next()) {
                 return query.getString("role");
             } else {
@@ -338,8 +341,8 @@ public class Database {
      * @param userName username of the user
      * @return 0 if successful, -1 if unsuccessful
      */
-    public int validateUsername(String userName) {
-        if (userName.length() > 15) {
+    public int validateUsername(String username) {
+        if (username.length() > 15) {
             return -1;
         }
 
@@ -350,7 +353,7 @@ public class Database {
                 """;
 
         try {
-            ResultSet query = openStatement.executeQuery(String.format(sql, userName));
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
 
             if (query.next()) {
                 return 0;

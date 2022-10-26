@@ -148,7 +148,6 @@ public class Login extends Page {
         }
 
         // otherwise check if the username is valid
-        this.sceneManager.getDatabase().openConn();
         int validUsername = sceneManager.getDatabase().validateUsername(loginUsername);
         if (validUsername == -1) {                
             showUsernameError();
