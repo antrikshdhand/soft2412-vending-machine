@@ -28,7 +28,7 @@ public class SceneManager {
 
     private InputCashPage inputCashPage;
 
-    private Session session = new Session();
+    protected Session session = new Session();
 
     @FXML
     Label roleLabel;
@@ -40,7 +40,6 @@ public class SceneManager {
     ScrollPane scrollPane;
 
     public SceneManager() {
-        database = new Database();
         setUp();
     }
 
