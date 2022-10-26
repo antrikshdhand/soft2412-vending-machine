@@ -33,7 +33,7 @@ public class PayCard extends Page {
         grid.setAlignment(Pos.CENTER); 
         this.scene = new Scene(grid, WIDTH, HEIGHT);
 
-        Text scenetitle = new Text("Checkout");
+        Text scenetitle = new Text("Card Payment");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
