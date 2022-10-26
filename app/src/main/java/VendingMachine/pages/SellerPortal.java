@@ -1,5 +1,7 @@
-package VendingMachine;
+package VendingMachine.pages;
 
+import VendingMachine.SceneManager;
+import VendingMachine.pages.Page;
 import javafx.scene.Scene; // check
 import javafx.scene.control.Label; // check
 import javafx.scene.control.Button;

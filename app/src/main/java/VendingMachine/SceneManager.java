@@ -1,6 +1,7 @@
 package VendingMachine;
 
 import VendingMachine.controllers.DefaultPageController;
+import VendingMachine.pages.*;
 import javafx.scene.*;
 import javafx.stage.Stage;
 
