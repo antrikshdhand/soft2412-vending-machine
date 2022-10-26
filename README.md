@@ -67,9 +67,9 @@ We recommend using the [`sdkman`](https://sdkman.io) package manager to install 
 
 1. Clone the repo to your local machine
 
-   ```sh
-   git clone https://github.sydney.edu.au/adha5655/currency-converter.git
-   ```
+    ```sh
+    git clone https://github.sydney.edu.au/adha5655/currency-converter.git
+    ```
    
 2. Navigate to the `/currency_convert/app` directory
 3. Run using `gradle`
