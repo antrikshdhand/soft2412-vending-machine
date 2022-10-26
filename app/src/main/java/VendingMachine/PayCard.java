@@ -69,8 +69,10 @@ public class PayCard extends Page {
             String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
 
-            // Write to transactions.csv
-            writeTransaction(cardNumber, cvv);
+            // Write to transactions.csv if valid
+            //if (checkCardNumber(cardNumber) == true && checkCVV(cvv) == true) {
+                writeTransaction(cardNumber, cvv);
+            //}
 
             int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
             if (validUsername == -1) {                
@@ -124,7 +126,7 @@ public class PayCard extends Page {
         Double amount = 420.69;
 
 
-        File file = new File(this.getClass().getResource("transactions.csv").getPath());
+        File file = new File("transactions.csv");
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputfile = new FileWriter(file);
@@ -132,19 +134,21 @@ public class PayCard extends Page {
             // Create CSVWriter object filewriter object as parameter
             CSVWriter writer = new CSVWriter(outputfile);
     
-            // Add header to transactions.csv
-            String[] header = {"USERNAME", "CARD_NUMBER", "CVV", "TRANSACTION_AMOUNT"};
-            writer.writeNext(header);
+            // Add header to transactions.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"USERNAME", "CARD_NUMBER", "CVV", "TRANSACTION_AMOUNT"};
+                writer.writeNext(header);
+            }
     
             // Add data to transactions.csv
-            String[] data1 = {
+            String[] data = {
                 username, 
                 cardNumber, 
                 cvv,
                 Double.toString(amount)
             };
             
-            writer.writeNext(data1);
+            writer.writeNext(data);
     
             // closing writer connection
             writer.close();
