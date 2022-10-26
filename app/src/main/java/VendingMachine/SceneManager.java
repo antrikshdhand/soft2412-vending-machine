@@ -2,6 +2,7 @@ package VendingMachine;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -138,12 +139,25 @@ public class SceneManager {
         database.closeConn();
 
         VBox items = new VBox();
+        items.setSpacing(30);
         scrollPane.setContent(items);
 
         for (String r : recent) {
             HBox item = new HBox();
-            item.getChildren().addAll(new Label(r), new Button("Add to Cart"));
+            item.setPadding(new Insets(10));
+            HBox.setMargin(item, new Insets(50));
+            item.setPrefSize(500, 100);
+
+            Button button = new Button("Add to Cart");
+
+            Region region1 = new Region();
+            HBox.setHgrow(region1, Priority.ALWAYS);
+
+            item.getChildren().addAll(new Label(r), region1, button);
+
+            item.setStyle("-fx-background-color:#98aded");
             items.getChildren().add(item);
+
         }
 
     }

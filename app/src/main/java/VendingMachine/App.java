@@ -38,7 +38,12 @@ public class App extends Application {
 
 //        primaryStage.setScene(sceneManager.getDefaultPageScene());
 
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        String css = new File("src/main/java/VendingMachine/css/style.css").toURI().toURL().toExternalForm();
+
+        scene.getStylesheets().add(css);
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

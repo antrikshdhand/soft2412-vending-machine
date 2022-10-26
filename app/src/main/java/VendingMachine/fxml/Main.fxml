@@ -36,6 +36,22 @@
                   <Font size="16.0" />
                </font>
             </Button>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="164.0" text="Candies">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="164.0" text="Chips">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
       <VBox layoutX="952.0" prefHeight="720.0" prefWidth="328.0" style="-fx-background-color: #b6b6b8;">
