@@ -21,7 +21,7 @@ import java.io.*;
 import com.opencsv.*;
 
 public class PayCard extends Page {
-
+    
     private SceneManager sceneManager;
 
     public PayCard(SceneManager sceneManager) {
