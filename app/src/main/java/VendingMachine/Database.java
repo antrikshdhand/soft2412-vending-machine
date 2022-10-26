@@ -27,15 +27,81 @@ public class Database {
 
     /**
      * Constructor for this class.
-     * Attempts to access the database.
      */
     public Database() {
+        System.out.println("Attempting to connect to the database for the first time...");
+        int successfulConn = openConn();
+        System.out.println();
+        if (successfulConn == 0) {
+            dropAllTables();
+            initialiseSchema();
+            addDummyItems();
+            closeConn();
+        }
+    }
 
-        openConn();
-        dropAllTables();
-        addDummyItems();
-        closeConn();
 
+    /**
+     * Sets up the database with all tables.
+     * See UML diagram for schema details.
+     * 
+     * Note: this function is only to be called
+     * if openConn() is successful.
+     * 
+     * @return 0 on success, -1 on error
+     */
+    public int initialiseSchema() {
+        try {
+            openStatement = dbConn.createStatement();
+            openStatement.setQueryTimeout(30); // set timeout to 30 sec.
+            
+            openStatement.executeUpdate(
+                    """
+                    CREATE TABLE IF NOT EXISTS users (
+                        username VARCHAR(15) PRIMARY KEY, 
+                        password VARCHAR(20), 
+                        role VARCHAR(20),
+                        CHECK (role IN ('OWNER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
+                    );
+                    """);
+
+            openStatement.executeUpdate(
+                    """
+                    CREATE TABLE IF NOT EXISTS categories (
+                        category_id SERIAL PRIMARY KEY,
+                        category_name VARCHAR(20)
+                    );
+                    """);
+
+            openStatement.executeUpdate(
+                    """
+                    CREATE TABLE IF NOT EXISTS items (
+                        item_name VARCHAR(20) PRIMARY KEY,
+                        category_name VARCHAR(20)
+                    );
+                    """);
+
+            openStatement.executeUpdate(
+                    """
+                        CREATE TABLE IF NOT EXISTS recent (
+                            item_name VARCHAR(20) PRIMARY KEY
+                        )
+                    """);
+            
+            // Initialise db with a guest account
+            openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
+
+            // OWNER - O
+            // CASHIER - C
+            // GUEST - G
+            // REGISTERED CUSTOMER - R
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
     }
 
 
@@ -49,36 +115,14 @@ public class Database {
         try {
             // create a database connection
             dbConn = DriverManager.getConnection("jdbc:sqlite:vending_machine.db");
-            openStatement = dbConn.createStatement();
-            openStatement.setQueryTimeout(30); // set timeout to 30 sec.
-
-            openStatement.executeUpdate(
-                    "create table if not exists roles (username varchar(15) primary key, password varchar(20), role varchar(20))");
-            openStatement.executeUpdate(
-                    "create table if not exists categories (category_id serial primary key, category_name varchar(20))");
-            openStatement.executeUpdate(
-                    "create table if not exists items (item_name varchar(20) primary key, category_name varchar(20))");
-            openStatement.executeUpdate(
-                    "create table if not exists recent (item_name varchar(20) primary key)");
-            // There is already guest account in the db when it is created.
-            openStatement.executeUpdate("insert into roles values('guest', 'guest', 'Guest')");
-
-            // Owner - O
-            // Cashier - C
-            // Guest - G
-            // Registered Customer - R
-            //
-
-            return 0;
-
+            System.out.println("Connection to the database has been established.");
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return -1;
-
         }
-
+        return 0;
     }
 
 
@@ -89,20 +133,20 @@ public class Database {
      * @return 0 if successful and -1 if unsuccessful
      */
     public int closeConn() {
-
         try {
-            if (dbConn != null)
+            if (dbConn != null) {
                 dbConn.close();
+            }
+
             this.dbConn = null;
             this.openStatement = null;
-            return 0;
-
         } catch (SQLException e) {
             // connection close failed.
             System.err.println(e.getMessage());
             // this.dbConn = null;
             return -1;
         }
+        return 0;
     }
 
 
@@ -113,33 +157,32 @@ public class Database {
      * @return 0 if successful and -1 if unsuccessful
      */
     public int dropAllTables() {
-
-        // Add error handling
         try {
-
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate("drop table roles; drop table categories; drop table items; drop table recent");
-
-            // error handelling
-            openConn();
-
+            statement.executeUpdate(
+                """
+                DROP TABLE IF EXISTS users; 
+                DROP TABLE IF EXISTS categories;
+                DROP TABLE IF EXISTS items;
+                DROP TABLE IF EXISTS recent;
+                """);
             return 0;
-
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return -1;
         }
-
     }
 
 
-    /**/
-    //  This is dummy data that was put in to test some the code and to see if the gui is function well.
+    /**
+     * FOR TESTING PURPOSES ONLY:
+     * Add a bit of dummy data to test the GUI.
+     * @return
+     */
     public int addDummyItems() {
-
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
@@ -157,43 +200,35 @@ public class Database {
             statement.executeUpdate(String.format("insert into recent values('%s')", "Onion"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Juice"));
             
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "owner", "ownerp", "Owner"));
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user1", "user1p", "Registered Customer"));
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user2", "user2p", "Registered Customer"));
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", "user3", "user3p", "Registered Customer"));
-
-
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user2", "user2p", "REGISTERED CUSTOMER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return -1;
         }
-
-
         return 0;
     }
 
 
     public ArrayList<String> queryRecent() {
-
+        
         ArrayList<String> items = new ArrayList<>();
-
-        try{
-            ResultSet query = openStatement.executeQuery(String.format("select * from recent"));
-
-            while(query.next()) {
+        
+        try {
+            ResultSet query = openStatement.executeQuery(String.format("SELECT * FROM recent"));
+            while (query.next()) {
                 items.add(query.getString("item_name"));
             }
-
-
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
-
         }
-
+        
         return items;
 
     }
@@ -203,23 +238,19 @@ public class Database {
 
         ArrayList<String> items = new ArrayList<>();
 
-        try{
-            ResultSet query = openStatement.executeQuery(String.format("select item_name from items where category_name = '%s'", category));
-
-            while(query.next()) {
+        try {
+            String sql = String.format("SELECT item_name FROM items WHERE category_name = '%s'", category);
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
                 items.add(query.getString("item_name"));
             }
-
-
         } catch(SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
-
         }
 
         return items;
-
 
     }
 
@@ -227,63 +258,52 @@ public class Database {
     /**
      * Function to add a new User into the database.
      * 
-     * @param userName userName of the new user
-     * @param password password of the new user
-     * @param role role of the new user
+     * @param userName  username of the new user
+     * @param password  password of the new user
+     * @param role      role of the new user
      * @return
      */
-    public int insertNewUser(String userName, String password, String role) {
-
-        // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
-
-        // Add error handling
+    public int insertNewUser(String username, String password, String role) {
         try {
-
             // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
-            if( userName.length() > 15 || password.length() > 20){
+            if( username.length() > 15 || password.length() > 20){
                 throw new SQLException("userName or password too long");
             }
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into roles values('%s', '%s', '%s')", userName, password,role.toUpperCase()));
-
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", username, password,role.toUpperCase()));
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
-            System.out.println(userName);
             return -1;
         }
         return 0;
-
     }
 
 
     /**
-     * Funciton to check if a certain user has the wanted role, of not. Returns true
-     * if the user has the wanted role, false if it doesn't.
+     * Function to check if a certain user has the inputted role or not.
      * 
-     * @param userName Username one wants to check the role of
-     * @param role     the role you want to check the username has
-     * @return true if successful, false if not successful
+     * @param username  username one wants to check the role of
+     * @param role      the role you want to check the username has
+     * @return          true if user has the role, false if not 
      */
-    public boolean checkRole(String userName, String role) {
+    public boolean checkRole(String username, String role) {
 
         try {
-            ResultSet query = openStatement
-                    .executeQuery(String.format("select role from roles where username  = '%s'", userName));
+            String sql = String.format("select role from users where username  = '%s'", username);
+            ResultSet query = openStatement.executeQuery(sql);
             if (query.getString("role").equalsIgnoreCase(role)) {
                 return true;
             }
-
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return false;
         }
-
         return false;
     }
 
@@ -294,22 +314,20 @@ public class Database {
      * @param userName
      * @return
      */
-    public String getRole(String userName) {
+    public String getRole(String username) {
 
         String sql = """
                 SELECT role
-                FROM Roles
+                FROM Users
                 WHERE username = '%s';
                 """;
         try {
-            ResultSet query = openStatement.executeQuery(String.format(sql, userName));
-
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
             if (query.next()) {
                 return query.getString("role");
             } else {
                 return null;
             }
-
         } catch (SQLException e) {
             System.out.println("Error while querying for the role :(");
             return "Error";
@@ -318,24 +336,24 @@ public class Database {
 
 
     /**
-     * Function to validate username
+     * Function to validate a username
      * 
      * @param userName username of the user
      * @return 0 if successful, -1 if unsuccessful
      */
-    public int validateUsername(String userName) {
-        if (userName.length() > 15) {
+    public int validateUsername(String username) {
+        if (username.length() > 15) {
             return -1;
         }
 
         String sql = """
                 SELECT *
-                FROM Roles
+                FROM Users
                 WHERE username = '%s';
                 """;
 
         try {
-            ResultSet query = openStatement.executeQuery(String.format(sql, userName));
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
 
             if (query.next()) {
                 return 0;
@@ -360,7 +378,7 @@ public class Database {
     public int login(String username, String password) {
         String sql = """
                 SELECT *
-                FROM Roles
+                FROM Users
                 WHERE username = '%s' AND password = '%s';
                 """;
         try {

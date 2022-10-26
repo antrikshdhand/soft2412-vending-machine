@@ -49,45 +49,7 @@ public class OwnerPortal extends Page{
         box.setPrefWidth(190.00);
         box.setAlignment(Pos.CENTER);
 
-        cashierPortal = new Button("Cashier portal");
-
-
-        cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
-
-
-        sellerPortal = new Button("Seller portal");
-
-
-        sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
-
-        manageSCO = new Button("Managed privileged users");
-
-        manageSCO.setOnAction(e -> {
-        sm.switchScenes(manageCSOPage);});
-
-        summary = new Button("Generate Users Summary");
-
-        summary.setOnAction(e -> {
-        sm.switchScenes(summaryPage);});
-
-        cancelledTransactions = new Button("View unsuccessful transaction");
-
-        cancelledTransactions.setOnAction(e -> {
-        sm.switchScenes(cancelledTransactionPage);});
-
-        returnToDp = new Button("Return to default page");
-
-        returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
-
-
-        cashierPortal.setMinWidth(box.getPrefWidth());
-        sellerPortal.setMinWidth(box.getPrefWidth());
-        manageSCO.setMinWidth(box.getPrefWidth());
-        summary.setMinWidth(box.getPrefWidth());
-        cancelledTransactions.setMinWidth(box.getPrefWidth());
-
-        returnToDp.setTranslateX(-550);
-        returnToDp.setTranslateY(320);
+        this.setButtons(box);// sets up all the buttons.
 
         Text title = new Text();
         title.setText("Owner's Portal");
@@ -102,9 +64,54 @@ public class OwnerPortal extends Page{
 
 
     /**
-     * Funciton to returns sence.
-     * @return
+     * Function to set up all the buttons required on the owner's page.
      */
+
+    public void setButtons( VBox box){
+
+         cashierPortal = new Button("Cashier portal");
+
+
+         cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+
+
+         sellerPortal = new Button("Seller portal");
+
+
+         sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
+
+         manageSCO = new Button("Managed privileged users");
+
+         manageSCO.setOnAction(e -> {
+             sm.switchScenes(manageCSOPage);});
+
+         summary = new Button("Generate Users Summary");
+
+         summary.setOnAction(e -> {
+             sm.switchScenes(summaryPage);});
+
+         cancelledTransactions = new Button("View unsuccessful transaction");
+
+         cancelledTransactions.setOnAction(e -> {
+             sm.switchScenes(cancelledTransactionPage);});
+
+         returnToDp = new Button("Return to default page");
+
+         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
+
+
+         cashierPortal.setMinWidth(box.getPrefWidth());
+         sellerPortal.setMinWidth(box.getPrefWidth());
+         manageSCO.setMinWidth(box.getPrefWidth());
+         summary.setMinWidth(box.getPrefWidth());
+         cancelledTransactions.setMinWidth(box.getPrefWidth());
+
+         returnToDp.setTranslateX(-550);
+         returnToDp.setTranslateY(320);
+
+
+     }
+
     public void createManageCSO() {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);

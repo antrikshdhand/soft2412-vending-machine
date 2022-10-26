@@ -12,14 +12,9 @@ import java.net.URL;
 public class App extends Application {
 
     private Stage primaryStage;
-//     SceneManager sceneManager = new SceneManager();
 
     @Override
     public void start(Stage primaryStage0) throws Exception {
-
-//         sceneManager.setApp(this);
-//         sceneManager.setUp();
-
 
         primaryStage = primaryStage0;
         // Stage is basically the window, and you are given the name of the window.
@@ -37,10 +32,9 @@ public class App extends Application {
         URL url = new File("src/main/java/VendingMachine/fxml/Main.fxml").toURI().toURL();
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(url);
+
 //        DefaultPageController defaultPageController = loader.getController();
 //        defaultPageController.setSceneManager(sceneManager);
-        
-
 //        primaryStage.setScene(sceneManager.getDefaultPageScene());
 
         Scene scene = new Scene(root);
