@@ -127,13 +127,13 @@ Created for SOFT2412: Agile Software Development Practices in Semester 2, 2022.
 Group: CC_06_Thu_14_Rasim_Group-2
 
 ```bash
-| name           | unikey   | sid       |
-|----------------|----------|-----------|
-| Antriksh Dhand | adha5655 | 510415022 |
-| Nemo Gage      | ngag3129 | 500496851 |
-| Udit Samant    | usam6049 | 500700976 |
-| Sulav Malla    | smal8154 | 500495980 |
-| Ankit Kapoor   | akap2114 | 510470180 |
+| name           | unikey   | sid       | role         |
+|----------------|----------|-----------|--------------|
+| Sulav Malla    | smal8154 | 500495980 | Team Leader  |
+| Udit Samant    | usam6049 | 500700976 | Scrum Master |
+| Antriksh Dhand | adha5655 | 510415022 | Developer    |
+| Nemo Gage      | ngag3129 | 500496851 | Developer    |
+| Ankit Kapoor   | akap2114 | 510470180 | Developer    |
 ```
 
 Project Link: [https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine](https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine)
