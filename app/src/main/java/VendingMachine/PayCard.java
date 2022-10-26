@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
+import com.opencsv.*;
 
 public class PayCard extends Page {
 
@@ -64,9 +65,12 @@ public class PayCard extends Page {
         payButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
 
-            // set cardNumber and cvv variables
+            // Set cardNumber and cvv variables
             String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
+
+            // Write to transactions.csv
+            writeTransaction(cardNumber, cvv);
 
             int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
             if (validUsername == -1) {                
@@ -113,8 +117,41 @@ public class PayCard extends Page {
      * @param cardNumber
      * @param CVV
      */
-    public static void writeTransaction(long cardNumber, int CVV) {
+    public void writeTransaction(String cardNumber, String cvv) {
 
+        // Stub values for username and cost
+        String username = "Stub";
+        Double amount = 420.69;
+
+
+        File file = new File(this.getClass().getResource("transactions.csv").getPath());
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(file);
+    
+            // Create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile);
+    
+            // Add header to transactions.csv
+            String[] header = {"USERNAME", "CARD_NUMBER", "CVV", "TRANSACTION_AMOUNT"};
+            writer.writeNext(header);
+    
+            // Add data to transactions.csv
+            String[] data1 = {
+                username, 
+                cardNumber, 
+                cvv,
+                Double.toString(amount)
+            };
+            
+            writer.writeNext(data1);
+    
+            // closing writer connection
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
