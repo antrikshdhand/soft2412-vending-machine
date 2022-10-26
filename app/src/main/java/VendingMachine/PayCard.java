@@ -40,8 +40,8 @@ public class PayCard extends Page {
         Label cardNumberLabel = new Label("Card No:");
         grid.add(cardNumberLabel, 0, 1);
 
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
+        TextField cardNumberTextField = new TextField();
+        grid.add(cardNumberTextField, 1, 1);
 
         Label cvvLabel = new Label("CVV:");
         grid.add(cvvLabel, 0, 2);
@@ -63,7 +63,7 @@ public class PayCard extends Page {
             this.sceneManager.getDatabase().openConn();
 
             // set cardNumber and cvv variables
-            String cardNumber = userTextField.getText();
+            String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
 
             int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
@@ -90,7 +90,7 @@ public class PayCard extends Page {
             // Successful payment
             System.out.println("Payment successful!");
             
-            // TODO: Save to txt file, print receipt
+            // TODO: Save transaction to csv file, print receipt
             
         });
 
