@@ -39,8 +39,16 @@ public class Login extends Page {
     private Label pwLabel;
     private PasswordField pwBox;
 
-    private String username;
-    private String password;
+    private String loginUsername;
+    private String loginPassword;
+
+    private Label registerUsernameLabel;
+    private Label registerPasswordLabel;
+    private TextField registerUsernameText;
+    private PasswordField registerPasswordText;
+
+    private String registerUsername;
+    private String registerPassword;
 
     public Login(SceneManager sceneManager) {
         
@@ -57,7 +65,7 @@ public class Login extends Page {
 
     private void setupScene() {
         grid = new GridPane();
-        grid.setGridLinesVisible(true);
+        grid.setGridLinesVisible(false);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
@@ -89,14 +97,14 @@ public class Login extends Page {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
 
-        signInButton = new Button("Sign In");
-        hbBtn.getChildren().add(signInButton);
-
-        registerButton = new Button("Register");
-        hbBtn.getChildren().add(registerButton);
-
         backButton = new Button("Back");
         hbBtn.getChildren().add(backButton);
+        
+        registerButton = new Button("Register");
+        hbBtn.getChildren().add(registerButton);
+        
+        signInButton = new Button("Sign In");
+        hbBtn.getChildren().add(signInButton);
     }
 
 
@@ -127,37 +135,41 @@ public class Login extends Page {
 
     }
 
+    
     private void attemptLogin() {
         // set username and password variables
-        username = userTextField.getText();
-        password = pwBox.getText();
+        loginUsername = userTextField.getText();
+        loginPassword = pwBox.getText();
 
         // if user has inputted nothing, return error immediately
-        if (username == null || password == null) {
+        if (loginUsername == null || loginPassword == null) {
             showNullEntryError();
+            return;
         }
 
         // otherwise check if the username is valid
         this.sceneManager.getDatabase().openConn();
-        int validUsername = sceneManager.getDatabase().validateUsername(username);
+        int validUsername = sceneManager.getDatabase().validateUsername(loginUsername);
         if (validUsername == -1) {                
             showUsernameError();
+            return;
         }
         
         // if username is valid, try and log in
-        int validLogin = sceneManager.getDatabase().login(username, password);
+        int validLogin = sceneManager.getDatabase().login(loginUsername, loginPassword);
         if (validLogin == -1) {
-            showIncorrectPasswordError();            
+            showIncorrectPasswordError(); 
+            return;           
         }
 
         /* SUCCESSFUL LOGIN */
         
         // update session
-        String role = sceneManager.getDatabase().getRole(username);
+        String role = sceneManager.getDatabase().getRole(loginUsername);
         
         sceneManager.getSession().resetSession();
         sceneManager.getSession().setLoggedIn(true);
-        sceneManager.getSession().setUserName(username);
+        sceneManager.getSession().setUserName(loginUsername);
         sceneManager.getSession().setRole(role);
 
         // change back to the defualt page, but this time its logged in
@@ -182,7 +194,7 @@ public class Login extends Page {
     private void showUsernameError() {
         Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
         invalidUsernameAlert.setTitle("Invalid username");
-        invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", username));
+        invalidUsernameAlert.setHeaderText(String.format("A user with username '%s' does not exist!", loginUsername));
         invalidUsernameAlert.setContentText("Please try again.");
         invalidUsernameAlert.showAndWait();
 
@@ -202,37 +214,82 @@ public class Login extends Page {
     
     private void displayRegisterDialog() {
         // initialise dialog pane
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Register new user");
-        dialog.setHeaderText("Eshays lad");
-        dialog.setResizable(true);
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Register");
+        dialog.setHeaderText("Register a Customer Account");
+        dialog.setResizable(false);
         
         // widgets
-        Label label1 = new Label("Name: ");
-        Label label2 = new Label("Phone: ");
-        TextField text1 = new TextField();
-        TextField text2 = new TextField();
+        registerUsernameLabel = new Label("Username: ");
+        registerPasswordLabel = new Label("Password: ");
+        registerUsernameText = new TextField();
+        registerPasswordText = new PasswordField();
                 
         // create layout and add to dialog
         GridPane gridRegister = new GridPane();
-        gridRegister.add(label1, 1, 1);
-        gridRegister.add(text1, 2, 1);
-        gridRegister.add(label2, 1, 2);
-        gridRegister.add(text2, 2, 2);
+        gridRegister.setHgap(10);
+        gridRegister.setVgap(10);
+        gridRegister.setPadding(new Insets(0, 10, 0, 10));
+
+        gridRegister.add(registerUsernameLabel, 1, 1);
+        gridRegister.add(registerUsernameText, 2, 1);
+        gridRegister.add(registerPasswordLabel, 1, 2);
+        gridRegister.add(registerPasswordText, 2, 2);
         dialog.getDialogPane().setContent(gridRegister);
         
         // add button to dialog
-        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        ButtonType buttonTypeOk = new ButtonType("Register", ButtonData.APPLY);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeCancel);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         
         // show dialog
-        Optional<String> result = dialog.showAndWait();
+        Optional<ButtonType> result = dialog.showAndWait();
 
+        // if either CANCEL or REGISTER button is pressed
         if (result.isPresent()) {
-            System.out.println(result.get());
+            ButtonType btResult = result.get();
+            if (btResult.getText() == "Cancel") {
+                return;
+            } else if (btResult.getText() == "Register") {
+                this.registerUsername = registerUsernameText.getText();
+                this.registerPassword = registerPasswordText.getText();
+
+                // attempt to register user
+                this.sceneManager.getDatabase().openConn();
+                int validRegister = this.sceneManager.getDatabase().insertNewUser(registerUsername, registerPassword, "REGISTERED CUSTOMER");
+                
+                if (validRegister == -1) {
+                    showRegisterError();
+                } else {
+                    showRegisterSuccess();
+                }
+                
+                this.sceneManager.getDatabase().closeConn();
+                return;
+            }
         }
     }
 
+    private void showRegisterError() {
+        Alert invalidRegisterError = new Alert(AlertType.ERROR);
+        invalidRegisterError.setTitle("Registration failed");
+        invalidRegisterError.setHeaderText(String.format("An error occured during registration."));
+        invalidRegisterError.setContentText("Please try again. Check if your username and password are <= 15 characters.");
+        invalidRegisterError.showAndWait();
+
+        return;
+    }
+
+    private void showRegisterSuccess() {
+        Alert successfulRegisterAlert = new Alert(AlertType.INFORMATION);
+        successfulRegisterAlert.setTitle("Success");
+        successfulRegisterAlert.setHeaderText(String.format("Registration successful!"));
+        successfulRegisterAlert.setContentText("You may now log in as a customer.");
+        successfulRegisterAlert.showAndWait();
+
+        return;
+    }
 
     public Scene getScene() {
         return this.scene;

@@ -78,8 +78,8 @@ public class Session {
     }
 
 
-    public void setLoggedIn(boolean b) {
-        this.loggedIn = b;
+    public void setLoggedIn(boolean bool) {
+        this.loggedIn = bool;
     }
 
 

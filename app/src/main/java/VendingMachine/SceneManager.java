@@ -38,7 +38,6 @@ public class SceneManager {
     ScrollPane scrollPane;
 
     public SceneManager() {
-        database = new Database();
         setUp();
     }
 
