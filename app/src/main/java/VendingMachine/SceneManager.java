@@ -1,26 +1,11 @@
 package VendingMachine;
 
 import VendingMachine.controllers.DefaultPageController;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.zip.Deflater;
 
 public class SceneManager {
 
-    private App app;
     private Database database;
     private Stage stage;
 
@@ -30,23 +15,18 @@ public class SceneManager {
     private SellerPortal sellerPortal;
     private Login login;
     private CheckoutPage checkoutPage;
-
     private InputCashPage inputCashPage;
 
     protected Session session = new Session();
 
     private DefaultPageController defaultPageController;
 
-    private static final DecimalFormat df = new DecimalFormat("0.00");
-
     public SceneManager() {
         setUp();
     }
 
-
     public void setUp() {
         database = new Database();
-        // defaultPage = new DefaultPage(this);
         ownerPortal = new OwnerPortal(this);
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
@@ -55,14 +35,7 @@ public class SceneManager {
         inputCashPage = new InputCashPage(this);
     }
 
-
-    public void setApp(App app) {
-        this.app = app;
-    }
-
-
     public void switchScenes(Scene scene) {
-        // app.switchScenes(scene);
         stage.setScene(scene);
     }
 
