@@ -11,13 +11,13 @@ import java.net.URL;
 public class App extends Application {
 
     private Stage primaryStage;
-//    SceneManager sceneManager = new SceneManager();
+    // SceneManager sceneManager = new SceneManager();
 
     @Override
-    public void start(Stage primaryStage0) throws Exception{
-//
-//        sceneManager.setApp(this);
-//        sceneManager.setUp();
+    public void start(Stage primaryStage0) throws Exception {
+
+        // sceneManager.setApp(this);
+        // sceneManager.setUp();
 
 
         primaryStage = primaryStage0;
