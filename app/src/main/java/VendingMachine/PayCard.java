@@ -70,9 +70,9 @@ public class PayCard extends Page {
             String cvv = cvvBox.getText();
 
             // Write to transactions.csv if valid
-            //if (checkCardNumber(cardNumber) == true && checkCVV(cvv) == true) {
+            if (checkCardNumber(cardNumber) == true && checkCVV(cvv) == true) {
                 writeTransaction(cardNumber, cvv);
-            //}
+            }
 
             int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
             if (validUsername == -1) {                
@@ -97,8 +97,6 @@ public class PayCard extends Page {
 
             // Successful payment
             System.out.println("Payment successful!");
-            
-            // TODO: Save transaction to csv file, print receipt
             
         });
 
@@ -129,7 +127,7 @@ public class PayCard extends Page {
         File file = new File("transactions.csv");
         try {
             // Create FileWriter object with file as parameter
-            FileWriter outputfile = new FileWriter(file);
+            FileWriter outputfile = new FileWriter(file, true);
     
             // Create CSVWriter object filewriter object as parameter
             CSVWriter writer = new CSVWriter(outputfile);
