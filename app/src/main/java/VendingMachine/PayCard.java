@@ -149,7 +149,7 @@ public class PayCard extends Page {
             
             writer.writeNext(data);
     
-            // closing writer connection
+            // Closing writer connection
             writer.close();
         }
         catch (IOException e) {
