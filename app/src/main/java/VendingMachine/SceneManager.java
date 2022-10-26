@@ -25,7 +25,7 @@ public class SceneManager {
     private Login login;
     private CheckoutPage checkoutPage;
 
-    private Session session = new Session();
+    public Session session = new Session();
 
     @FXML
     Label roleLabel;
