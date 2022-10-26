@@ -119,8 +119,6 @@ public class DatabaseTest {
         db.closeConn();
 
         assertEquals(-1, insertGuest);
-
-
     }
 
     @Test
@@ -213,7 +211,6 @@ public class DatabaseTest {
         assertTrue(value);
     }
 
-
     // Simple test to see if query recent works properly.
     @Test
     void simpleQueryRecent(){
@@ -225,7 +222,6 @@ public class DatabaseTest {
         assertNotNull(q);
     }
 
-
     // more advanced tests for query recent
     @Test
     void advancedQueryRecetn1(){
@@ -233,10 +229,9 @@ public class DatabaseTest {
         ArrayList<String> q = db.queryRecent();
         db.closeConn();
 
-//        System.out.println(q.get(0));
+        // System.out.println(q.get(0));
         assertTrue(q.get(0).equalsIgnoreCase("gummy"));
     }
-
 
     @Test
     void advancedQueryRecetn2(){
@@ -259,9 +254,7 @@ public class DatabaseTest {
         assertNotNull(c);
     }
 
-
     // Advanced Tests to for queryCategory.
-
     @Test
     void advancedQueryCategoryDrinks(){
         db.openConn();
@@ -273,6 +266,7 @@ public class DatabaseTest {
         assertFalse(c.get(1).equalsIgnoreCase("dark"));
 
     }
+
     @Test
     void advancedQueryCategoryChoco() {
         db.openConn();
@@ -282,7 +276,6 @@ public class DatabaseTest {
         assertTrue(c.get(0).equalsIgnoreCase("dark"));
         assertFalse(c.get(1).equalsIgnoreCase("salt"));
     }
-
 
     @Test
     void advancedQueryCategoryCandies(){
@@ -303,8 +296,6 @@ public class DatabaseTest {
         assertTrue(c.get(0).equalsIgnoreCase("salt"));
         assertTrue(c.get(1).equalsIgnoreCase("onion"));
     }
-
-
 
     // Simple test for getRole()
     @Test
@@ -376,8 +367,6 @@ public class DatabaseTest {
         assertEquals( 0, value);
     }
 
-
-
     // simple test login
     @Test
     void simpleLogin(){
@@ -405,7 +394,6 @@ public class DatabaseTest {
         db.closeConn();
 
         assertEquals(0, value);
-
     }
 
 
@@ -416,7 +404,6 @@ public class DatabaseTest {
         db.closeConn();
 
         assertEquals(-1, value);
-
     }
 
     @Test
@@ -426,7 +413,6 @@ public class DatabaseTest {
         db.closeConn();
 
         assertEquals(-1, value);
-
     }
 
 
@@ -437,7 +423,6 @@ public class DatabaseTest {
         db.closeConn();
 
         assertEquals(-1, value);
-
     }
 
 }
