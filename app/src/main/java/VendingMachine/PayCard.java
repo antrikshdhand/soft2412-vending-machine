@@ -37,48 +37,48 @@ public class PayCard extends Page {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label usernameLabel = new Label("Card No:");
-        grid.add(usernameLabel, 0, 1);
+        Label cardNumberLabel = new Label("Card No:");
+        grid.add(cardNumberLabel, 0, 1);
 
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
 
-        Label pwLabel = new Label("CVV:");
-        grid.add(pwLabel, 0, 2);
+        Label cvvLabel = new Label("CVV:");
+        grid.add(cvvLabel, 0, 2);
 
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
+        PasswordField cvvBox = new PasswordField();
+        grid.add(cvvBox, 1, 2);
 
-        Button signInButton = new Button("Pay");
+        Button payButton = new Button("Pay");
 
-        pwBox.setOnKeyPressed(e -> {
+        cvvBox.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER))
-                signInButton.fire();
+                payButton.fire();
         });
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
-        signInButton.setOnAction(e -> {
+        payButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
 
-            // set username and password variables
-            String username = userTextField.getText();
-            String password = pwBox.getText();
+            // set cardNumber and cvv variables
+            String cardNumber = userTextField.getText();
+            String cvv = cvvBox.getText();
 
-            int validUsername = sceneManager.getDatabase().validateUsername(username);
+            int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
             if (validUsername == -1) {                
                 Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
                 invalidUsernameAlert.setTitle("Invalid card number.");
-                invalidUsernameAlert.setHeaderText(String.format("The card number inputted is invalid.", username));
+                invalidUsernameAlert.setHeaderText(String.format("The card number inputted is invalid.", cardNumber));
                 invalidUsernameAlert.setContentText("Please try again.");
                 invalidUsernameAlert.showAndWait();
                 return;
             }
             
-            int validPayCard = sceneManager.getDatabase().login(username, password);
+            int validPayCard = sceneManager.getDatabase().login(cardNumber, cvv);
             if (validPayCard == -1) {
-                System.out.println(password);
+                System.out.println(cvv);
                 Alert incorrectPassAlert = new Alert(AlertType.ERROR);
                 incorrectPassAlert.setTitle("Incorrect CVV");
                 incorrectPassAlert.setHeaderText("The CVV inputted was invalid.");
@@ -101,7 +101,7 @@ public class PayCard extends Page {
 
         // add buttons to Hbox
         hbBtn.getChildren().add(backButton);
-        hbBtn.getChildren().add(signInButton);
+        hbBtn.getChildren().add(payButton);
 
     }
 
