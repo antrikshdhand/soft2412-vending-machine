@@ -65,35 +65,36 @@ public class PayCard extends Page {
         payButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
 
-            // Set cardNumber and cvv variables
+            // Set variables
+            String username = session.getUserName();
             String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
 
             // Write to transactions.csv if valid
             if (checkCardNumber(cardNumber) == true && checkCVV(cvv) == true) {
-                writeTransaction(cardNumber, cvv);
+                writeTransaction(username, cardNumber, cvv, 420.69);
             }
 
-            int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
-            if (validUsername == -1) {                
-                Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
-                invalidUsernameAlert.setTitle("Invalid card number.");
-                invalidUsernameAlert.setHeaderText(String.format("The card number inputted is invalid.", cardNumber));
-                invalidUsernameAlert.setContentText("Please try again.");
-                invalidUsernameAlert.showAndWait();
-                return;
-            }
+            // int validUsername = sceneManager.getDatabase().validateUsername(cardNumber);
+            // if (validUsername == -1) {                
+            //     Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
+            //     invalidUsernameAlert.setTitle("Invalid card number.");
+            //     invalidUsernameAlert.setHeaderText(String.format("The card number inputted is invalid.", cardNumber));
+            //     invalidUsernameAlert.setContentText("Please try again.");
+            //     invalidUsernameAlert.showAndWait();
+            //     return;
+            // }
             
-            int validPayCard = sceneManager.getDatabase().login(cardNumber, cvv);
-            if (validPayCard == -1) {
-                System.out.println(cvv);
-                Alert incorrectPassAlert = new Alert(AlertType.ERROR);
-                incorrectPassAlert.setTitle("Incorrect CVV");
-                incorrectPassAlert.setHeaderText("The CVV inputted was invalid.");
-                incorrectPassAlert.setContentText("Please try again.");
-                incorrectPassAlert.showAndWait();
-                return;
-            }
+            // int validPayCard = sceneManager.getDatabase().login(cardNumber, cvv);
+            // if (validPayCard == -1) {
+            //     System.out.println(cvv);
+            //     Alert incorrectPassAlert = new Alert(AlertType.ERROR);
+            //     incorrectPassAlert.setTitle("Incorrect CVV");
+            //     incorrectPassAlert.setHeaderText("The CVV inputted was invalid.");
+            //     incorrectPassAlert.setContentText("Please try again.");
+            //     incorrectPassAlert.showAndWait();
+            //     return;
+            // }
 
             // Successful payment
             System.out.println("Payment successful!");
@@ -122,6 +123,7 @@ public class PayCard extends Page {
         // Stub values for username and cost
         String username = "Stub";
         Double amount = 420.69;
+
 
         File file = new File("transactions.csv");
         try {
