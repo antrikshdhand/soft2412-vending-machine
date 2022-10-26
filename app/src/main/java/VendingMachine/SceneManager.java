@@ -3,11 +3,14 @@ package VendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SceneManager {
 
@@ -29,6 +32,10 @@ public class SceneManager {
 
     @FXML
     Label accountLabel;
+
+
+    @FXML
+    ScrollPane scrollPane;
 
     public SceneManager() {
         database = new Database();
@@ -122,6 +129,23 @@ public class SceneManager {
         defaultPage = ((Node)event.getSource()).getScene();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         switchScenes(login.getScene());
+    }
+
+    public void showRecentlyBought(ActionEvent event) {
+
+        database.openConn();
+        ArrayList<String> recent = database.queryRecent();
+        database.closeConn();
+
+        VBox items = new VBox();
+        scrollPane.setContent(items);
+
+        for (String r : recent) {
+            HBox item = new HBox();
+            item.getChildren().addAll(new Label(r), new Button("Add to Cart"));
+            items.getChildren().add(item);
+        }
+
     }
 
 
