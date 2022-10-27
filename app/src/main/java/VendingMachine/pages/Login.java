@@ -166,6 +166,10 @@ public class Login extends Page {
         }
 
         /* SUCCESSFUL LOGIN */
+
+        // clear the text boxes
+        userTextField.clear();
+        pwBox.clear();
         
         // update session
         sceneManager.getDatabase().openConn();
@@ -181,7 +185,6 @@ public class Login extends Page {
         sceneManager.createNewDefaultPage();
         sceneManager.switchScenes(sceneManager.getDefaultPageScene()); 
         
-//        sceneManager.getDatabase().closeConn();
     }
 
 

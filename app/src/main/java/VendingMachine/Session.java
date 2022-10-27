@@ -51,6 +51,7 @@ public class Session {
         this.startedTransaction = startedTransaction;
     }
 
+
     /**
      * Function that returns the total price
      * @return double
@@ -58,6 +59,7 @@ public class Session {
     public double getTotalPrice() {
         return totalPrice;
     }
+
 
     /**
      * Function that sets the totals price.
@@ -68,6 +70,7 @@ public class Session {
         this.totalPrice = totalPrice;
     }
 
+
     /**
      * Function that return the due amount
      * @return dueAmount (double)
@@ -76,6 +79,7 @@ public class Session {
         return dueAmount;
     }
 
+
     /**
      * Function that return the change amount
      * @return changeAmount (double)
@@ -83,6 +87,7 @@ public class Session {
     public double getChangeAmount() {
         return changeAmount;
     }
+
 
     /**
      *  Function that set the due amount
@@ -96,6 +101,7 @@ public class Session {
         this.dueAmount = dueAmount;
     }
 
+
     /**
      * Function that sets the change amount
      * @param changeAmount
@@ -108,6 +114,7 @@ public class Session {
         this.changeAmount = changeAmount;
     }
 
+
     /**
      * Function that resets all the amounts to 0
      */
@@ -117,6 +124,7 @@ public class Session {
         changeAmount = 0;
     }
 
+    
     /**
      * Function to set the role for a session.
      * @param role ( String )

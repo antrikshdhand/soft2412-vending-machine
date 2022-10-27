@@ -17,8 +17,7 @@ public class SceneManager {
     private Login login;
     private CheckoutPage checkoutPage;
     private InputCashPage inputCashPage;
-
-    protected Session session = new Session();
+    private Session session;
 
     private DefaultPageController defaultPageController;
 
@@ -34,6 +33,7 @@ public class SceneManager {
         login = new Login(this);
         checkoutPage = new CheckoutPage(this);
         inputCashPage = new InputCashPage(this);
+        session = new Session();
     }
 
     public void switchScenes(Scene scene) {
@@ -47,32 +47,26 @@ public class SceneManager {
     public void setDefaultPage(Scene defaultPage) {
         this.defaultPage = defaultPage;
     }
-    
 
     public Scene getDefaultPageScene() {
         return defaultPage;
     }
 
-
     public Scene getOwnerPortalScene() {
         return ownerPortal.getScene();
     }
-
 
     public Scene getCashierPortalScene() {
         return cashierPortal.getScene();
     }
 
-
     public Scene getSellerPortalScene() {
         return sellerPortal.getScene();
     }
 
-
     public Scene getLoginScene() {
         return login.getScene();
     }
-
 
     public Scene getCheckoutPageScene() {
         return checkoutPage.getScene();
@@ -85,7 +79,6 @@ public class SceneManager {
     public Database getDatabase() {
         return database;
     }
-
 
     public Session getSession() {
         return session;
