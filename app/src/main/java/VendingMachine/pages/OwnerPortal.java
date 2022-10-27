@@ -6,12 +6,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
 
 public class OwnerPortal extends Page {
 
@@ -116,6 +119,9 @@ public class OwnerPortal extends Page {
     public void createManageCSO() {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
+        HBox buttons = new HBox();
+        VBox menu = new VBox();
+
 
         Button bn = new Button("Return to Owner Portal");
 
@@ -123,6 +129,27 @@ public class OwnerPortal extends Page {
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
+
+        ComboBox<String> users = new ComboBox<String>();
+        users.getItems().addAll("user1", "user2", "user3");
+
+        Button ctu = new Button("Change to Customer");
+
+        Button ctc = new Button("Change to Cashier");
+
+        Button cts = new Button("Change to Seller");
+
+        buttons.getChildren().addAll(ctu, ctc, cts);
+        menu.getChildren().addAll(users, buttons);
+
+        menu.setTranslateY(550);
+        menu.setTranslateX(470);
+
+        ctu.setOnAction(event -> {sm.getDatabase();});
+        ctc.setOnAction(event -> {sm.getDatabase();});
+        cts.setOnAction(event -> {sm.getDatabase();});
+
+
         lbl.setTranslateY(20);
 //        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
@@ -131,7 +158,7 @@ public class OwnerPortal extends Page {
 
         lbl.relocate(0, 30);
 
-        pane.getChildren().addAll(lbl, bn);
+        pane.getChildren().addAll(lbl, bn, menu);
         bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
