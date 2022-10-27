@@ -143,9 +143,11 @@ public class OwnerPortal extends Page {
         Button bn = new Button("Return to Owner Portal");
 
         Label lbl = new Label("Generate Summary");
+//        Button perms = new Button("Change user permissions");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
+//        perms.setTranslateY(100);
         lbl.setTranslateY(20);
 //        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
