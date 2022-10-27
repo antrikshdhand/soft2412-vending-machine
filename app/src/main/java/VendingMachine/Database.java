@@ -33,9 +33,9 @@ public class Database {
         int successfulConn = openConn();
         System.out.println();
         if (successfulConn == 0) {
-            //dropAllTables();
+//            dropAllTables();
             this.initialiseSchema();
-            this.addDummyItems();
+//            this.addDummyItems();
             this.closeConn();
         }
     }
@@ -310,6 +310,7 @@ public class Database {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(sql);
+            System.out.println("Changed " + username + " to " + role);
             return true;
         } catch(SQLException e) {
             // if the error message is "out of memory",
