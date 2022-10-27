@@ -1,6 +1,6 @@
-package VendingMachine;
+package VendingMachine.pages;
 
-import javafx.geometry.Pos;
+import VendingMachine.SceneManager;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;

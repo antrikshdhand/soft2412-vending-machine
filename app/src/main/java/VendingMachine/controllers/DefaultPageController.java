@@ -1,26 +1,191 @@
 package VendingMachine.controllers;
 
-import VendingMachine.OwnerPortal;
-import VendingMachine.SceneManager;
+import VendingMachine.*;
+import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
-import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class DefaultPageController {
 
-    private Stage stage;
-    private Scene scene;
 
-    public void proceedToPortal(ActionEvent event) throws IOException {
+    private SceneManager sceneManager = new SceneManager();
+    private Database database;
+    private Session session;
 
-        OwnerPortal ownerPortal = new OwnerPortal(new SceneManager());
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = ownerPortal.getScene();
-        stage.setScene(scene);
-        stage.show();
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    @FXML
+    Label roleLabel;
+
+    @FXML
+    Label accountLabel;
+
+    @FXML
+    ScrollPane scrollPane;
+
+    @FXML
+    ScrollPane cartScrollPane;
+
+    @FXML
+    Label totalLabel;
+
+    public DefaultPageController() {
+        sceneManager.setDefaultPageController(this);
+        database = sceneManager.getDatabase();
+        session = sceneManager.getSession();
+    }
+
+
+    public void setDefaultPageAndStage(ActionEvent event) {
+        sceneManager.setDefaultPage(((Node)event.getSource()).getScene());
+        sceneManager.setStage((Stage)((Node)event.getSource()).getScene().getWindow());
+    }
+
+    public void proceedToPortal(ActionEvent event) {
+        setDefaultPageAndStage(event);
+        sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
+    }
+
+    public void proceedToCheckout(ActionEvent event) {
+        setDefaultPageAndStage(event);
+        sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
+    }
+
+    public void login(ActionEvent event) {
+        setDefaultPageAndStage(event);
+        sceneManager.switchScenes(sceneManager.getLoginScene());
+    }
+
+    public void updateSessionBox() {
+        roleLabel.setText("Role: " + session.getRole());
+        accountLabel.setText("Account: " + session.getUserName());
+    }
+
+    public void displayItemStrings(ArrayList<String> itemStrings) {
+
+        VBox items = new VBox();
+        items.setSpacing(30);
+        scrollPane.setContent(items);
+
+        for (String i : itemStrings) {
+            HBox item = new HBox();
+            item.setPadding(new Insets(10));
+            HBox.setMargin(item, new Insets(50));
+            item.setPrefSize(500, 100);
+
+            Button button = new Button("Add to Cart");
+
+            button.setOnAction(event -> {
+                session.getTransaction().addItem(i);
+                session.getTransaction().addToTotal(1);
+                updateCart();
+            });
+
+            Region region1 = new Region();
+            HBox.setHgrow(region1, Priority.ALWAYS);
+
+            item.getChildren().addAll(new Label(i), region1, button);
+
+            item.setStyle("-fx-background-color:#98aded");
+            items.getChildren().add(item);
+
+        }
 
     }
+
+    public void displayRecentlyBought(ActionEvent event) {
+
+        database.openConn();
+        ArrayList<String> itemStrings = database.queryRecent();
+        database.closeConn();
+
+        displayItemStrings(itemStrings);
+
+    }
+
+    public void displayCategory(String category) {
+
+        database.openConn();
+        ArrayList<String> itemStrings = database.queryCategory(category);
+        database.closeConn();
+
+        displayItemStrings(itemStrings);
+
+    }
+
+    public void displayDrinks(ActionEvent event) {
+        displayCategory("Drinks");
+    }
+
+    public void displayChocolate(ActionEvent event) {
+        displayCategory("Chocolate");
+    }
+
+    public void displayCandies(ActionEvent event) {
+        displayCategory("Candies");
+    }
+
+    public void displayChips(ActionEvent event) {
+        displayCategory("Chips");
+    }
+
+    public void updateCart(){
+
+        VBox items = new VBox();
+        items.setSpacing(30);
+        cartScrollPane.setContent(items);
+
+        totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
+
+        for (Map.Entry<String,Integer> entry : session.getTransaction().getItems().entrySet()) {
+//            System.out.println("Key = " + entry.getKey() +
+//                    ", Value = " + entry.getValue());
+
+            HBox item = new HBox();
+            item.setPadding(new Insets(10));
+            HBox.setMargin(item, new Insets(20));
+            item.setPrefSize(250, 50);
+
+            Button button = new Button("Remove");
+
+            Label label = new Label(entry.getKey() + " - qty: " + entry.getValue());
+
+            button.setOnAction(event -> {
+                session.getTransaction().removeItem(entry.getKey());
+                label.setText(entry.getKey() + " - qty: " + session.getTransaction().getItems().get(entry.getKey()));
+                if (session.getTransaction().getItems().get(entry.getKey()) == null) {
+                    items.getChildren().remove(item);
+                }
+                session.getTransaction().addToTotal(-1);
+                totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
+            });
+
+            Region region1 = new Region();
+            HBox.setHgrow(region1, Priority.ALWAYS);
+
+            item.getChildren().addAll(label, region1, button);
+
+            item.setStyle("-fx-background-color:#98aded");
+            items.getChildren().add(item);
+
+
+        }
+
+    }
+
+
 }
+

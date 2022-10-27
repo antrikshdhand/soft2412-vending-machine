@@ -1,4 +1,4 @@
-package VendingMachine;
+package VendingMachine.pages;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

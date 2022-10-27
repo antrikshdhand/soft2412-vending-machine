@@ -1,5 +1,7 @@
-package VendingMachine;
+package VendingMachine.pages;
 
+import VendingMachine.SceneManager;
+import VendingMachine.pages.Page;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,12 +13,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-public class OwnerPortal extends Page{
+public class OwnerPortal extends Page {
 
     private Pane pane;
 
     private SceneManager sm;
-
     private Button cashierPortal;
     private Button sellerPortal;
     private Button manageSCO;
@@ -142,9 +143,11 @@ public class OwnerPortal extends Page{
         Button bn = new Button("Return to Owner Portal");
 
         Label lbl = new Label("Generate Summary");
+//        Button perms = new Button("Change user permissions");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
+//        perms.setTranslateY(100);
         lbl.setTranslateY(20);
 //        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 

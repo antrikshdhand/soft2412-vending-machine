@@ -8,6 +8,7 @@ public class Session {
     private final int TICK_LIMIT = 120;
     private int tick;
     private boolean loggedIn;
+    private Transaction transaction = new Transaction();
 
     private double totalPrice;
 
@@ -149,8 +150,8 @@ public class Session {
     }
 
 
-    public void setLoggedIn(boolean b) {
-        this.loggedIn = b;
+    public void setLoggedIn(boolean bool) {
+        this.loggedIn = bool;
     }
 
 
@@ -163,4 +164,10 @@ public class Session {
     }
 
 
+    /**
+     * @return
+     */
+    public Transaction getTransaction() {
+        return transaction;
+    }
 }

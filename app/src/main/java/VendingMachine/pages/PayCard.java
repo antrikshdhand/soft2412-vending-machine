@@ -1,7 +1,8 @@
-package VendingMachine;
+package VendingMachine.pages;
 
+import VendingMachine.SceneManager;
+import VendingMachine.pages.Page;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -66,7 +67,7 @@ public class PayCard extends Page {
             this.sceneManager.getDatabase().openConn();
 
             // Set variables
-            String username = sceneManager.session.getUserName();
+            String username = sceneManager.getSession().getUserName();
             String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
 
