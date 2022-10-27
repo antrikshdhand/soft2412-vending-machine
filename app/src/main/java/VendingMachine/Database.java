@@ -277,7 +277,7 @@ public class Database {
 
     }
 
-    public ArrayList<String> queryUsers() {
+    public ArrayList<String> queryUsername() {
 
         ArrayList<String> list = new ArrayList<>();
 
@@ -285,6 +285,7 @@ public class Database {
             String sql = String.format("SELECT username FROM users");
             ResultSet query = openStatement.executeQuery(sql);
             while (query.next()) {
+
                 String uname = query.getString("username");
                 System.out.println();
                 list.add(uname);
@@ -296,6 +297,25 @@ public class Database {
         }
 
         return list;
+    }
+
+    public boolean changeRole(String username, String role) {
+
+        try {
+            String sql = String.format("UPDATE users" +
+                    "SET role = '%s'" +
+                    "WHERE username = '%s';", role, username);
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(sql);
+            return true;
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return false;
+        }
+
     }
 
 

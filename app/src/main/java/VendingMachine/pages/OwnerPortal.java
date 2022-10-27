@@ -150,9 +150,9 @@ public class OwnerPortal extends Page {
         menu.setTranslateY(550);
         menu.setTranslateX(470);
 
-        ctu.setOnAction(event -> {sm.getDatabase();});
-        ctc.setOnAction(event -> {sm.getDatabase();});
-        cts.setOnAction(event -> {sm.getDatabase();});
+        ctu.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "REGISTERED CUSTOMER");});
+        ctc.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "CASHIER");});
+        cts.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "SELLER");});
 
 
         lbl.setTranslateY(20);
