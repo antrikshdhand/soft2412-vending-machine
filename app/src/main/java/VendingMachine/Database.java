@@ -277,7 +277,26 @@ public class Database {
 
     }
 
-    public ArrayList<String> queryUsers() {
+    public ArrayList<String> queryUsername() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            String sql = String.format("SELECT username FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+                list.add(query.getString("username"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return list;
+    }
+
+    public ArrayList<String> changeRole(String username) {
 
         ArrayList<String> list = new ArrayList<>();
 
