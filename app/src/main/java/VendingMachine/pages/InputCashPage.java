@@ -121,8 +121,6 @@ public class InputCashPage extends Page {
         VBox amountDisplay = new VBox();
         amountDisplay.setSpacing(10);
 
-        amountDisplay.getChildren().addAll(totalAmount,totalAmountDouble,dueAmount,dueAmountDouble,changeAmount,changeAmountDouble, completeTransaction);
-
 
         pane.add(amountDisplay, 5,1);
 
@@ -138,6 +136,8 @@ public class InputCashPage extends Page {
 
 
         });
+
+        amountDisplay.getChildren().addAll(totalAmount,totalAmountDouble,dueAmount,dueAmountDouble,changeAmount,changeAmountDouble, completeTransaction);
 
 
         // Setting Action for the Cancel Button
