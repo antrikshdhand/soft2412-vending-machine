@@ -257,6 +257,45 @@ public class Database {
 
     }
 
+    public HashMap<String, String> queryUsernameAndRole() {
+
+        HashMap<String, String> map = new HashMap<>();
+
+        try {
+            String sql = String.format("SELECT username, role FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+                map.put(query.getString("username"), query.getString("role"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return map;
+
+    }
+
+    public ArrayList<String> queryUsers() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            String sql = String.format("SELECT user FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+                list.add(query.getString("user"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return list;
+    }
+
 
     /**
      * Function to add a new User into the database.
