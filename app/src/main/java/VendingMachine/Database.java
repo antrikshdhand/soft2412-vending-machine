@@ -33,10 +33,10 @@ public class Database {
         int successfulConn = openConn();
         System.out.println();
         if (successfulConn == 0) {
-            //dropAllTables(); // these two methods are commented out as they have already been "done"
-            initialiseSchema();
-            //addDummyItems();
-            closeConn();
+            //dropAllTables();
+            this.initialiseSchema();
+            this.addDummyItems();
+            this.closeConn();
         }
     }
 
@@ -61,7 +61,7 @@ public class Database {
                         username VARCHAR(15) PRIMARY KEY, 
                         password VARCHAR(20), 
                         role VARCHAR(20),
-                        CHECK (role IN ('OWNER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
+                        CHECK (role IN ('OWNER', 'SELLER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
                     );
                     """);
 
@@ -188,19 +188,21 @@ public class Database {
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Coke", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Water", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mineral Water", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sprite", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Coca cola", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pepsi", "Drinks"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Juice", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Dark", "Chocolate"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Light", "Chocolate"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Salt", "Chips"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Gummy", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Onion", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Chocolate"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "M&M", "Chocolate"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mentos", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patch", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
 
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Gummy"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Onion"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Juice"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Sprite"));
             
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
@@ -256,6 +258,67 @@ public class Database {
 
     }
 
+    public HashMap<String, String> queryUsernameAndRole() {
+
+        HashMap<String, String> map = new HashMap<>();
+
+        try {
+            String sql = String.format("SELECT username, role FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+                map.put(query.getString("username"), query.getString("role"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return map;
+
+    }
+
+    public ArrayList<String> queryUsername() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            String sql = String.format("SELECT username FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+
+                String uname = query.getString("username");
+                System.out.println();
+                list.add(uname);
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return list;
+    }
+
+    public boolean changeRole(String username, String role) {
+
+        try {
+            String sql = String.format("UPDATE users" +
+                    "SET role = '%s'" +
+                    "WHERE username = '%s';", role, username);
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(sql);
+            return true;
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return false;
+        }
+
+    }
+
 
     /**
      * Function to add a new User into the database.
@@ -268,12 +331,13 @@ public class Database {
     public int insertNewUser(String username, String password, String role) {
         try {
             // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
-            if( username.length() > 15 || password.length() > 20){
+            if (username.length() > 15 || password.length() > 20) {
                 throw new SQLException("userName or password too long");
             }
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
+            System.out.println(role.toUpperCase());
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", username, password,role.toUpperCase()));
         } catch (SQLException e) {
             // if the error message is "out of memory",

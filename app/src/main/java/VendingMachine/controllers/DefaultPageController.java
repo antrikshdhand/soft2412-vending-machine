@@ -42,6 +42,9 @@ public class DefaultPageController {
     @FXML
     Label totalLabel;
 
+    @FXML
+    Button loginBtn;
+
     public DefaultPageController() {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
@@ -64,13 +67,21 @@ public class DefaultPageController {
     }
 
     public void login(ActionEvent event) {
-        setDefaultPageAndStage(event);
-        sceneManager.switchScenes(sceneManager.getLoginScene());
+        if (!session.isLoggedIn()) {
+            setDefaultPageAndStage(event);
+            sceneManager.switchScenes(sceneManager.getLoginScene());
+        }
+        else {
+            session.resetSession();
+            updateSessionBox();
+            loginBtn.setText("Log In");
+        }
     }
 
     public void updateSessionBox() {
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
+        loginBtn.setText("Log Out");
     }
 
     public void displayItemStrings(ArrayList<String> itemStrings) {
