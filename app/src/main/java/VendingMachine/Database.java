@@ -287,7 +287,10 @@ public class Database {
             String sql = String.format("SELECT username FROM users");
             ResultSet query = openStatement.executeQuery(sql);
             while (query.next()) {
-                list.add(query.getString("username"));
+
+                String uname = query.getString("username");
+                System.out.println();
+                list.add(uname);
             }
         } catch(SQLException e) {
             // if the error message is "out of memory",
