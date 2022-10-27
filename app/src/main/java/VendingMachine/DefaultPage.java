@@ -86,7 +86,12 @@ public class DefaultPage extends Page {
         Button proceedToPortalBtn = new Button();
         proceedToPortalBtn.setText("Proceed to Portal");
         proceedToPortalBtn.setOnAction(e -> {
-            sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
+
+            if( sceneManager.getSession().isLoggedIn()){
+                if ( sceneManager.getDatabase().checkRole(sceneManager.getSession().getUserName(), "None")){
+                    System.out.println(sceneManager.getSession().getUserName());
+                    sceneManager.switchScenes(sceneManager.getOwnerPortalScene());}
+            }
         });
 
         /**
