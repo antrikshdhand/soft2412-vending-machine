@@ -35,7 +35,7 @@ if (JavaVersion.current().isJava8Compatible()) {
         options.addStringOption('Xdoclint:none', '-quiet')
       }
     }
-} // non-ASCII characters make it crash
+} // non-ASCII characters not allowed
 
 repositories {
     // Use Maven Central for resolving dependencies.
