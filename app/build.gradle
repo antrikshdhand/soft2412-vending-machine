@@ -107,7 +107,12 @@ jacocoTestReport {
                               'OwnerPortal.class',
                               'Page.class',
                               'SellerPortal.class',
-                              'Login.class'])
+                              'Login.class',
+                              'InputCashpage.class',
+                              'PayCard.class',
+                              'CheckoutPage.class',
+                              'pages/*.class',
+                              'controllers/*.class'])
         }))
     }
 }
