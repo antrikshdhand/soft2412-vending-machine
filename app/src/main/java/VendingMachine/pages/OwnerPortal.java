@@ -135,7 +135,7 @@ public class OwnerPortal extends Page {
 
         ComboBox<String> users = new ComboBox<String>();
         sm.getDatabase().openConn();
-        users.getItems().addAll(FXCollections.observableArrayList(sm.getDatabase().queryUsers()));
+        users.getItems().addAll(FXCollections.observableArrayList(sm.getDatabase().queryUsername()));
         sm.getDatabase().closeConn();
 
         Button ctu = new Button("Change to Customer");

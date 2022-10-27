@@ -51,7 +51,6 @@ public class DefaultPageController {
         session = sceneManager.getSession();
     }
 
-
     public void setDefaultPageAndStage(ActionEvent event) {
         sceneManager.setDefaultPage(((Node)event.getSource()).getScene());
         sceneManager.setStage((Stage)((Node)event.getSource()).getScene().getWindow());
