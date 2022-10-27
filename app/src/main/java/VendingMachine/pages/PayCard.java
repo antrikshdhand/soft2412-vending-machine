@@ -2,6 +2,7 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 import VendingMachine.pages.Page;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
