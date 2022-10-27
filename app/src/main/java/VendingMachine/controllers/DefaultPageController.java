@@ -52,6 +52,7 @@ public class DefaultPageController {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
         session = sceneManager.getSession();
+        //((VBox) proceedToPortalBtn.getParent()).getChildren().remove(proceedToPortalBtn);
 //        proceedToPortalBtn.setDisable(false);
 //        database.openConn();
 //        ArrayList<String> c = database.queryUsername();
@@ -98,6 +99,7 @@ public class DefaultPageController {
             session.resetSession();
             updateSessionBox();
             loginBtn.setText("Log In");
+            proceedToPortalBtn.setText("Please login first");
 //            proceedToPortalBtn.setDisable(false);
 
         }
@@ -107,6 +109,7 @@ public class DefaultPageController {
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
         loginBtn.setText("Log Out");
+        proceedToPortalBtn.setText("Proceed to Portal");
 //        proceedToPortalBtn.setDisable(true);
     }
 
