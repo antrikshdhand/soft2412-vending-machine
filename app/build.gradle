@@ -35,7 +35,7 @@ if (JavaVersion.current().isJava8Compatible()) {
         options.addStringOption('Xdoclint:none', '-quiet')
       }
     }
-} // non-ASCII characters make it crash
+} // non-ASCII characters not allowed
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -60,7 +60,6 @@ version '1.0-SNAPSHOT'
 dependencies {
     // Use JUnit test framework.
     // testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 

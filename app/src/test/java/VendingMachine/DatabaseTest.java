@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -235,7 +236,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedQueryRecetn2(){
+    void advancedQueryRecent2(){
         db.openConn();
         ArrayList<String> q = db.queryRecent();
         db.closeConn();
@@ -296,6 +297,25 @@ public class DatabaseTest {
 
         assertTrue(c.get(0).equalsIgnoreCase("Smiths"));
         assertTrue(c.get(1).equalsIgnoreCase("Pringles"));
+    }
+
+    @Test
+    void advancedQueryUsername(){
+        db.openConn();
+        ArrayList<String> c = db.queryUsername();
+        db.closeConn();
+        assertTrue(c.get(1).equalsIgnoreCase("guest"));
+        assertTrue(c.get(3).equalsIgnoreCase("seller"));
+    }
+
+    @Test
+    void advancedQueryUsernameAndRole(){
+        db.openConn();
+        HashMap<String, String> map = db.queryUsernameAndRole();
+        db.closeConn();
+
+        assertTrue(map.get("owner").equalsIgnoreCase("OWNER"));
+        assertTrue(map.get("seller").equalsIgnoreCase("SELLER"));
     }
 
     // Simple test for getRole()

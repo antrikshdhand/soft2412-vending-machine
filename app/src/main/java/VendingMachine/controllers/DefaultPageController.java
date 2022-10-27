@@ -45,10 +45,19 @@ public class DefaultPageController {
     @FXML
     Button loginBtn;
 
+    @FXML
+    Button proceedToPortalBtn;
+
     public DefaultPageController() {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
         session = sceneManager.getSession();
+        //((VBox) proceedToPortalBtn.getParent()).getChildren().remove(proceedToPortalBtn);
+//        proceedToPortalBtn.setDisable(false);
+//        database.openConn();
+//        ArrayList<String> c = database.queryUsername();
+//        database.closeConn();
+//        System.out.println(c);
     }
 
     public void setDefaultPageAndStage(ActionEvent event) {
@@ -57,28 +66,23 @@ public class DefaultPageController {
     }
 
     public void proceedToPortal(ActionEvent event) {
-        if( sceneManager.getSession().isLoggedIn()){
+        setDefaultPageAndStage(event);
+        if(session.isLoggedIn()){
 
-            sceneManager.getDatabase().openConn();
-            if(sceneManager.getDatabase().getRole(sceneManager.getSession().getUserName()).equalsIgnoreCase("owner")){
-                setDefaultPageAndStage(event);
+            database.openConn();
+            String role = database.getRole(session.getUserName());
+            database.closeConn();
+
+            if(role.equalsIgnoreCase("owner")) {
                 sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
-                sceneManager.getDatabase().closeConn();}
-
-            else if(sceneManager.getDatabase().checkRole(sceneManager.getSession().getUserName(), "seller")){
-                setDefaultPageAndStage(event);
+            }
+            else if(role.equalsIgnoreCase("seller")) {
                 sceneManager.switchScenes(sceneManager.getSellerPortalScene());
-                sceneManager.getDatabase().closeConn();}
-
-            else if(sceneManager.getDatabase().checkRole(sceneManager.getSession().getUserName(), "cashier")){
-                setDefaultPageAndStage(event);
+            }
+            else if(role.equalsIgnoreCase("cashier")) {
                 sceneManager.switchScenes(sceneManager.getCashierPortalScene());
-                sceneManager.getDatabase().closeConn();}
-
-
-
+            }
         }
-
     }
 
     public void proceedToCheckout(ActionEvent event) {
@@ -95,6 +99,9 @@ public class DefaultPageController {
             session.resetSession();
             updateSessionBox();
             loginBtn.setText("Log In");
+            proceedToPortalBtn.setText("Please login first");
+//            proceedToPortalBtn.setDisable(false);
+
         }
     }
 
@@ -102,6 +109,8 @@ public class DefaultPageController {
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
         loginBtn.setText("Log Out");
+        proceedToPortalBtn.setText("Proceed to Portal");
+//        proceedToPortalBtn.setDisable(true);
     }
 
     public void displayItemStrings(ArrayList<String> itemStrings) {
