@@ -90,7 +90,7 @@ public class Database {
             
             // The two lines below are commented out as they have already been "done"
             // // Initialise db with a guest account
-            // openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
+            openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
 
             // OWNER - O
             // CASHIER - C

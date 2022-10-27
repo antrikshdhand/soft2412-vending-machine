@@ -231,7 +231,7 @@ public class DatabaseTest {
         db.closeConn();
 
         // System.out.println(q.get(0));
-        assertTrue(q.get(0).equalsIgnoreCase("gummy"));
+        assertTrue(q.get(0).equalsIgnoreCase("Pringles"));
     }
 
     @Test
@@ -241,7 +241,7 @@ public class DatabaseTest {
         db.closeConn();
 
 
-        assertTrue(q.get(2).equalsIgnoreCase("juice"));
+        assertTrue(q.get(2).equalsIgnoreCase("Sprite"));
     }
 
     // simple test to see if the queryCategory function is working.
@@ -262,8 +262,8 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Drinks");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("Coke"));
-        assertTrue(c.get(2).equalsIgnoreCase("juice"));
+        assertTrue(c.get(0).equalsIgnoreCase("Mineral Water"));
+        assertTrue(c.get(2).equalsIgnoreCase("Coca cola"));
         assertFalse(c.get(1).equalsIgnoreCase("dark"));
 
     }
@@ -274,8 +274,8 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Chocolate");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("dark"));
-        assertFalse(c.get(1).equalsIgnoreCase("salt"));
+        assertTrue(c.get(0).equalsIgnoreCase("Mars"));
+        assertFalse(c.get(1).equalsIgnoreCase("Nothing"));
     }
 
     @Test
@@ -284,8 +284,8 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Candies");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("mars"));
-        assertFalse(c.get(1).equalsIgnoreCase("Onion"));
+        assertTrue(c.get(0).equalsIgnoreCase("Mentos"));
+        assertFalse(c.get(1).equalsIgnoreCase("Men"));
     }
 
     @Test
@@ -294,8 +294,8 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Chips");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("salt"));
-        assertTrue(c.get(1).equalsIgnoreCase("onion"));
+        assertTrue(c.get(0).equalsIgnoreCase("Smiths"));
+        assertTrue(c.get(1).equalsIgnoreCase("Pringles"));
     }
 
     // Simple test for getRole()
