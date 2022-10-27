@@ -35,7 +35,7 @@ public class Database {
         if (successfulConn == 0) {
 //            dropAllTables();
             this.initialiseSchema();
-//            this.addDummyItems();
+            this.addDummyItems();
             this.closeConn();
         }
     }

@@ -101,6 +101,10 @@ public class InputCashPage extends Page {
 
 
 
+        cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
+
+
+
     }
 
 
@@ -150,7 +154,7 @@ public class InputCashPage extends Page {
         tenDollars.setMinWidth(notes.getPrefWidth());
         fiveDollars.setMinWidth(notes.getPrefWidth());
 
-        notes.getChildren().addAll(selectNotes, fiftyDollars, twentyDollars, tenDollars, fiveDollars);
+        notes.getChildren().addAll(selectNotes,hundredDollars, fiftyDollars, twentyDollars, tenDollars, fiveDollars);
 
 
         pane.add(notes, 1, 1);
