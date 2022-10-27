@@ -88,8 +88,9 @@ public class Database {
                         )
                     """);
             
-            // Initialise db with a guest account
-            openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
+            // The two lines below are commented out as they have already been "done"
+            // // Initialise db with a guest account
+            // openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
 
             // OWNER - O
             // CASHIER - C
@@ -117,8 +118,6 @@ public class Database {
             dbConn = DriverManager.getConnection("jdbc:sqlite:vending_machine.db");
             openStatement = dbConn.createStatement();
             openStatement.setQueryTimeout(30); // set timeout to 30 sec.
-
-            System.out.println("Connection to the database has been established.");
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -461,6 +460,6 @@ public class Database {
             System.out.println("Error while querying for user :(");
             return -1;
         }
-    }
+    }    
 
 }
