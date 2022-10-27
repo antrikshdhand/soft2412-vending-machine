@@ -257,6 +257,67 @@ public class Database {
 
     }
 
+    public HashMap<String, String> queryUsernameAndRole() {
+
+        HashMap<String, String> map = new HashMap<>();
+
+        try {
+            String sql = String.format("SELECT username, role FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+                map.put(query.getString("username"), query.getString("role"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return map;
+
+    }
+
+    public ArrayList<String> queryUsername() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            String sql = String.format("SELECT username FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+
+                String uname = query.getString("username");
+                System.out.println();
+                list.add(uname);
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return list;
+    }
+
+    public boolean changeRole(String username, String role) {
+
+        try {
+            String sql = String.format("UPDATE users" +
+                    "SET role = '%s'" +
+                    "WHERE username = '%s';", role, username);
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(sql);
+            return true;
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return false;
+        }
+
+    }
+
 
     /**
      * Function to add a new User into the database.

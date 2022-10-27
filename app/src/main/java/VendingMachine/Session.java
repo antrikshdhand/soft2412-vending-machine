@@ -145,6 +145,7 @@ public class Session {
      * Function to reset the role and user back to guest.
      */
     public void resetSession() {
+        loggedIn = false;
         userName = "Guest";
         role = "Guest";
     }
