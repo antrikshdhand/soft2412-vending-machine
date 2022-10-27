@@ -15,6 +15,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class OwnerPortal extends Page {
 
@@ -131,7 +134,9 @@ public class OwnerPortal extends Page {
         pane.setAlignment(lbl, Pos.TOP_CENTER);
 
         ComboBox<String> users = new ComboBox<String>();
-        users.getItems().addAll("user1", "user2", "user3");
+        sm.getDatabase().openConn();
+        users.getItems().addAll(FXCollections.observableArrayList(sm.getDatabase().queryUsers()));
+        sm.getDatabase().closeConn();
 
         Button ctu = new Button("Change to Customer");
 
