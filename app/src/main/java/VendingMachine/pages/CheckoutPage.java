@@ -47,7 +47,7 @@ public class CheckoutPage extends Page {
         payCash = new Button("Pay by Cash");
 
         payCash.setOnAction(e -> {
-            sm.switchScenes(payCashPage);
+            sm.switchScenes(sm.getInputCashPageScene());;
         });
 
         returnToDp = new Button("Return to default page");

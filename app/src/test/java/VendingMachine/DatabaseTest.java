@@ -45,8 +45,8 @@ public class DatabaseTest {
         db.closeConn();
         //System.out.println(value);
 
-        // temp giving exception as you are adding guest multiple times.
-       // assertEquals(-1,value);
+        //temp giving exception as you are adding guest multiple times.
+        // assertEquals(-1,value);
 
     }
 
