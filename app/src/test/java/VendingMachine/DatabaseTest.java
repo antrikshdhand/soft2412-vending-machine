@@ -13,7 +13,7 @@ public class DatabaseTest {
     private Database db;
 
     // You want to open a new API to the database
-    // and drop all tables so you are working with a empty relations for each test.
+    // and drop all tables, you are working with a empty relations for each test.
     @BeforeEach
     void setUp(){
         db = new Database();
@@ -21,6 +21,7 @@ public class DatabaseTest {
 
         // adding in temp Dummy Data
         db.dropAllTables();
+        db.initialiseSchema();
         db.addDummyItems();
         db.closeConn();
 
@@ -82,16 +83,16 @@ public class DatabaseTest {
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
-        //System.out.println(owner);
 
         assertEquals(0, owner);
+
+        System.out.println(seller);
         assertEquals( 0, seller);
         assertEquals( 0, cashier);
         assertEquals( 0,registeredCustomer);
         // Test to see what happens when the userName is longer then 15 char.
 
         db.openConn();
-        String userName = "SULAVMALALISAMAZING12345";
         int result1 = db.insertNewUser("SULAVMALALISAMAZING12345", "Hello","0");
         db.closeConn();
 

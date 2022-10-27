@@ -33,10 +33,10 @@ public class Database {
         int successfulConn = openConn();
         System.out.println();
         if (successfulConn == 0) {
-            dropAllTables();
-            initialiseSchema();
-            addDummyItems();
-            closeConn();
+            //dropAllTables();
+            this.initialiseSchema();
+            this.addDummyItems();
+            this.closeConn();
         }
     }
 
@@ -61,7 +61,7 @@ public class Database {
                         username VARCHAR(15) PRIMARY KEY, 
                         password VARCHAR(20), 
                         role VARCHAR(20),
-                        CHECK (role IN ('OWNER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
+                        CHECK (role IN ('OWNER', 'SELLER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
                     );
                     """);
 
@@ -269,12 +269,13 @@ public class Database {
     public int insertNewUser(String username, String password, String role) {
         try {
             // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
-            if( username.length() > 15 || password.length() > 20){
+            if (username.length() > 15 || password.length() > 20) {
                 throw new SQLException("userName or password too long");
             }
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
+            System.out.println(role.toUpperCase());
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", username, password,role.toUpperCase()));
         } catch (SQLException e) {
             // if the error message is "out of memory",

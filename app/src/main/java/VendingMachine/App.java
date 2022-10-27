@@ -23,6 +23,8 @@ public class App extends Application {
         // we do not want the window to be resizable/
         primaryStage.setResizable(false);
 
+
+
         // If you want to add an icon for the program
         // Image icon = new Image('File path')
         // primaryStage.setIcon(icon);
@@ -41,6 +43,7 @@ public class App extends Application {
         String css = new File("src/main/java/VendingMachine/css/style.css").toURI().toURL().toExternalForm();
 
         scene.getStylesheets().add(css);
+
 
         primaryStage.setScene(scene);
         primaryStage.show();
