@@ -93,7 +93,7 @@ public class PayCard extends Page {
             }
             else if (checkedCardNumber == true && checkedCVV == true) {
                 writeTransaction(username, cardNumber, cvv, 420.69);
-                Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
+                Alert paymentSuccessfulAlert = new Alert(AlertType.INFORMATION);
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
                 paymentSuccessfulAlert.setContentText("Have a great day!");

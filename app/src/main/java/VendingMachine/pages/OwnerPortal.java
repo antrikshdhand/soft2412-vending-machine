@@ -19,6 +19,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OwnerPortal extends Page {
 
     private Pane pane;
@@ -123,6 +126,7 @@ public class OwnerPortal extends Page {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
         HBox buttons = new HBox();
+        VBox userList = new VBox();
         VBox menu = new VBox();
 
 
@@ -135,7 +139,7 @@ public class OwnerPortal extends Page {
 
         ComboBox<String> users = new ComboBox<String>();
         sm.getDatabase().openConn();
-        users.getItems().addAll(FXCollections.observableArrayList(sm.getDatabase().queryUsers()));
+        users.getItems().addAll(FXCollections.observableArrayList(sm.getDatabase().queryUsername()));
         sm.getDatabase().closeConn();
 
         Button ctu = new Button("Change to Customer");
@@ -150,9 +154,29 @@ public class OwnerPortal extends Page {
         menu.setTranslateY(550);
         menu.setTranslateX(470);
 
-        ctu.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "REGISTERED CUSTOMER");});
-        ctc.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "CASHIER");});
-        cts.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "SELLER");});
+        sm.getDatabase().openConn();
+        HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
+        for (Map.Entry<String, String> usernameRole : hm.entrySet()) {
+             userList.getChildren().add(new Label(usernameRole.getKey() + " - " + usernameRole.getValue()));
+        }
+
+        sm.getDatabase().closeConn();
+
+        ctu.setOnAction(event -> {
+            sm.getDatabase().openConn();
+            sm.getDatabase().changeRole((String) users.getValue(), "REGISTERED CUSTOMER");
+            sm.getDatabase().closeConn();
+        });
+        ctc.setOnAction(event -> {
+            sm.getDatabase().openConn();
+            sm.getDatabase().changeRole((String) users.getValue(), "CASHIER");
+            sm.getDatabase().closeConn();
+        });
+        cts.setOnAction(event -> {
+            sm.getDatabase().openConn();
+            sm.getDatabase().changeRole((String) users.getValue(), "SELLER");
+            sm.getDatabase().closeConn();
+        });
 
 
         lbl.setTranslateY(20);
@@ -163,7 +187,7 @@ public class OwnerPortal extends Page {
 
         lbl.relocate(0, 30);
 
-        pane.getChildren().addAll(lbl, bn, menu);
+        pane.getChildren().addAll(lbl, bn, userList, menu);
         bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
@@ -175,6 +199,28 @@ public class OwnerPortal extends Page {
         Button bn = new Button("Return to Owner Portal");
 
         Label lbl = new Label("Generate Summary");
+
+        TableView table = new TableView();
+        TableColumn firstNameCol = new TableColumn("Username");
+        TableColumn lastNameCol = new TableColumn("Role");
+
+
+
+        sm.getDatabase().openConn();
+        HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
+
+        for (Map.Entry<String, String> usernameRole : hm.entrySet()) {
+            firstNameCol.setCellValueFactory(
+                    new PropertyValueFactory<>(usernameRole.getKey()));
+
+            lastNameCol.setCellFactory(
+                    new PropertyValueFactory<>(usernameRole.getValue()));
+        }
+
+        sm.getDatabase().closeConn();
+
+        table.getColumns().addAll(firstNameCol, lastNameCol);
+
 //        Button perms = new Button("Change user permissions");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
@@ -188,7 +234,7 @@ public class OwnerPortal extends Page {
 
         lbl.relocate(0, 30);
 
-        pane.getChildren().addAll(lbl, bn);
+        pane.getChildren().addAll(lbl, bn, table);
         bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
     }
 
