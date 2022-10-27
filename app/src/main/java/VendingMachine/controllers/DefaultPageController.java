@@ -45,10 +45,18 @@ public class DefaultPageController {
     @FXML
     Button loginBtn;
 
+    @FXML
+    Button proceedToPortalBtn;
+
     public DefaultPageController() {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
         session = sceneManager.getSession();
+//        proceedToPortalBtn.setDisable(false);
+//        database.openConn();
+//        ArrayList<String> c = database.queryUsername();
+//        database.closeConn();
+//        System.out.println(c);
     }
 
     public void setDefaultPageAndStage(ActionEvent event) {
@@ -90,6 +98,8 @@ public class DefaultPageController {
             session.resetSession();
             updateSessionBox();
             loginBtn.setText("Log In");
+//            proceedToPortalBtn.setDisable(false);
+
         }
     }
 
@@ -97,6 +107,7 @@ public class DefaultPageController {
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
         loginBtn.setText("Log Out");
+//        proceedToPortalBtn.setDisable(true);
     }
 
     public void displayItemStrings(ArrayList<String> itemStrings) {
