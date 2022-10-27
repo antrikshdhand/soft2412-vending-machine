@@ -27,13 +27,13 @@ public class SceneManager {
 
     public void setUp() {
         database = new Database();
+        session = new Session();
         ownerPortal = new OwnerPortal(this);
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         checkoutPage = new CheckoutPage(this);
         inputCashPage = new InputCashPage(this);
-        session = new Session();
     }
 
     public void switchScenes(Scene scene) {

@@ -16,8 +16,13 @@ public class Session {
 
     private double dueAmount;
 
+
+    public Session(){
+          this.resetAmount();
+    }
+
     /**
-     * Returns the user Name of the session
+     * Returns the username of the session
      * @return user Name ( String )
      */
     public String getUserName() {

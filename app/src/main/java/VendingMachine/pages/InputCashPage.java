@@ -1,15 +1,21 @@
 package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
+import com.sun.source.doctree.AttributeTree;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Box;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import org.w3c.dom.css.Rect;
 
 
 /**
@@ -37,6 +43,7 @@ public class InputCashPage extends Page {
     private Button tenCents;
     private Button fiveCents;
     private Button cancel;
+    private Button completeTransaction;
 
 
     // Label required on screen
@@ -48,6 +55,7 @@ public class InputCashPage extends Page {
     private Text totalAmountDouble;
     private Text dueAmountDouble;
     private Text changeAmountDouble;
+
 
     public InputCashPage(SceneManager sceneManager){
 
@@ -73,13 +81,17 @@ public class InputCashPage extends Page {
         // Setting up all the rows and columns of the gridPane.
         ColumnConstraints col1 = new ColumnConstraints(10);
         ColumnConstraints col2 = new ColumnConstraints(notes.getPrefWidth());
-        ColumnConstraints col3 = new ColumnConstraints();
+        ColumnConstraints col3 = new ColumnConstraints(10);
         ColumnConstraints col4 = new ColumnConstraints(coins.getPrefWidth());
+        ColumnConstraints col5 = new ColumnConstraints(700);
+        ColumnConstraints col6 = new ColumnConstraints(200);
 
         pane.getColumnConstraints().add(col1);
         pane.getColumnConstraints().add(col2);
-        pane.getColumnConstraints().add(col1);
         pane.getColumnConstraints().add(col3);
+        pane.getColumnConstraints().add(col4);
+        pane.getColumnConstraints().add(col5);
+        pane.getColumnConstraints().add(col6);
 
         // Setting up row Constraints
 
@@ -99,9 +111,39 @@ public class InputCashPage extends Page {
         // setting the button layOut.
         this.setButtonLayout(notes, coins);
 
+        // Setting up the labels
+        this.setUpTextAndAmount();
+
+        // Setting up the Amount();
+        this.refreshAmounts();
 
 
+        VBox amountDisplay = new VBox();
+        amountDisplay.setSpacing(10);
+
+        amountDisplay.getChildren().addAll(totalAmount,totalAmountDouble,dueAmount,dueAmountDouble,changeAmount,changeAmountDouble, completeTransaction);
+
+
+        pane.add(amountDisplay, 5,1);
+
+
+        // Setting action for the $ 100
+        hundredDollars.setOnAction((e) -> {
+            if(sm.getSession().getDueAmount() < 100){
+                sm.getSession().setChangeAmount(sm.getSession().getChangeAmount() + (100 - sm.getSession().getDueAmount()));
+            }
+            System.out.println(sm.getSession().getChangeAmount());
+            sm.getSession().setDueAmount(sm.getSession().getDueAmount() - 100);
+            this.refreshAmounts();
+
+
+        });
+
+
+        // Setting Action for the Cancel Button
         cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
+
+
 
 
 
@@ -127,6 +169,9 @@ public class InputCashPage extends Page {
         twentyCents = new Button("¢ 20 ");
         tenCents = new Button("¢ 10 ");
         fiveCents = new Button(" ¢ 5 ");
+
+        // Complete Transaction Button
+        completeTransaction = new Button("Finish and Pay");
 
         // Cancel Button
         cancel = new Button("Cancel");
@@ -180,13 +225,35 @@ public class InputCashPage extends Page {
     }
 
 
+    /**
+     * Function to set Up the labels
+     */
     public void setUpTextAndAmount(){
         totalAmount = new Text("Total Amount:");
+        totalAmount.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         dueAmount = new Text("Amount Due: ");
+        dueAmount.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         changeAmount = new Text("Change required: ");
+        changeAmount.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
 
     }
+
+    /**
+     * Function to refresh all the Amounts display on screen.
+     */
+    public void refreshAmounts(){
+        totalAmountDouble = new Text("$ " + sm.getSession().getTotalPrice() + "");
+        totalAmountDouble.setFont(Font.font("Arial",14));
+
+        changeAmountDouble = new Text("$ " + sm.getSession().getChangeAmount() + "");
+        changeAmountDouble.setFont(Font.font("Arial",14));
+
+        dueAmountDouble = new Text("$ " + sm.getSession().getDueAmount() + "");
+        dueAmountDouble.setFont(Font.font("Arial",14));
+    }
+
+
 
 
 
