@@ -17,7 +17,7 @@ public class Transaction {
         return true;
     }
 
-    public void addToTotal(int n) {
+    public void addToTotal(double n) {
         total += n;
     }
 
