@@ -1,6 +1,5 @@
 package VendingMachine;
 
-import VendingMachine.controllers.DefaultPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -52,11 +51,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-
-    public void switchScenes(Scene scene) {
-        primaryStage.setScene(scene);
     }
 
 }
