@@ -57,28 +57,23 @@ public class DefaultPageController {
     }
 
     public void proceedToPortal(ActionEvent event) {
-        if( sceneManager.getSession().isLoggedIn()){
+        setDefaultPageAndStage(event);
+        if(session.isLoggedIn()){
 
-            sceneManager.getDatabase().openConn();
-            if(sceneManager.getDatabase().getRole(sceneManager.getSession().getUserName()).equalsIgnoreCase("owner")){
-                setDefaultPageAndStage(event);
+            database.openConn();
+            String role = database.getRole(session.getUserName());
+            database.closeConn();
+
+            if(role.equalsIgnoreCase("owner")) {
                 sceneManager.switchScenes(sceneManager.getOwnerPortalScene());
-                sceneManager.getDatabase().closeConn();}
-
-            else if(sceneManager.getDatabase().checkRole(sceneManager.getSession().getUserName(), "seller")){
-                setDefaultPageAndStage(event);
+            }
+            else if(role.equalsIgnoreCase("seller")) {
                 sceneManager.switchScenes(sceneManager.getSellerPortalScene());
-                sceneManager.getDatabase().closeConn();}
-
-            else if(sceneManager.getDatabase().checkRole(sceneManager.getSession().getUserName(), "cashier")){
-                setDefaultPageAndStage(event);
+            }
+            else if(role.equalsIgnoreCase("cashier")) {
                 sceneManager.switchScenes(sceneManager.getCashierPortalScene());
-                sceneManager.getDatabase().closeConn();}
-
-
-
+            }
         }
-
     }
 
     public void proceedToCheckout(ActionEvent event) {

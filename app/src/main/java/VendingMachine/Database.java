@@ -33,7 +33,7 @@ public class Database {
         int successfulConn = openConn();
         System.out.println();
         if (successfulConn == 0) {
-//            dropAllTables();
+            dropAllTables();
             this.initialiseSchema();
             this.addDummyItems();
             this.closeConn();
@@ -205,6 +205,9 @@ public class Database {
             statement.executeUpdate(String.format("insert into recent values('%s')", "Sprite"));
             
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
+
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user2", "user2p", "REGISTERED CUSTOMER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
