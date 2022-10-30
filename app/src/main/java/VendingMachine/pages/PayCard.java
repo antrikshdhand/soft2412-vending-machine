@@ -2,7 +2,7 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 import VendingMachine.pages.Page;
-import VendingMachine.Transaction;
+import VendingMachine.Session;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -115,8 +115,14 @@ public class PayCard extends Page {
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
                 paymentSuccessfulAlert.setContentText("Have a great day!");
-                Transaction.reset();
+
+                // Clear cart
+                sceneManager.getSession().getTransaction().reset();
+
                 paymentSuccessfulAlert.showAndWait();
+
+                // Go back to default page
+                sceneManager.switchScenes(sceneManager.getDefaultPageScene());
             }
 
             // Successful payment
