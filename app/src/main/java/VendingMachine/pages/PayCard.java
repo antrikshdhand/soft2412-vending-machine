@@ -33,14 +33,6 @@ public class PayCard extends Page {
 
         this.sceneManager = sceneManager;
 
-        // // Get username
-        // String username = sceneManager.getSession().getUserName();
-
-        // // Get total for transaction
-        // String total = Double.toString(
-        //     this.sceneManager.getSession().getTransaction().getTotal()
-        // );
-
         GridPane grid = new GridPane();
         
         grid.setHgap(10);
@@ -121,6 +113,8 @@ public class PayCard extends Page {
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
                 paymentSuccessfulAlert.setContentText("Have a great day!");
+
+                // Add to database
 
                 // Clear cart
                 this.sceneManager.getSession().getTransaction().reset();

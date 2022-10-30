@@ -196,7 +196,7 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Chocolate"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "M&M", "Chocolate"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mentos", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patch", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patches", "Candies"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
 
