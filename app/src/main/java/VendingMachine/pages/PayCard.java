@@ -59,10 +59,7 @@ public class PayCard extends Page {
         grid.add(cvvBox, 1, 2);
 
         // If card details exist for this user, autofill
-        // String cardNumber = get_from_database
-        // String cvv = get_from_database
-        //
-        // if (cardNumber != null && cvv != null) {
+        // If username in cards {
             // cardNumberTextField = new TextField(cardNumber);
             // cvvBox = new PasswordField();
         // }
@@ -120,7 +117,8 @@ public class PayCard extends Page {
                 String[] persistCard = this.sceneManager.getDatabase().getCard(username);
 
                 if (Arrays.equals(persistCard, errorMessage)) {
-                    // Insert into table
+                    String[] details = {username, cardNumber, cvv};
+                    insertCard(details);
                 }
 
                 // Clear cart
