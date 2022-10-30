@@ -226,7 +226,7 @@ public class PayCard extends Page {
             return false;
         }
 
-        // Checks if 16 digits long
+        // Checks if 3 digits long
         int numDigits = String.valueOf(number).length();
         if (numDigits != 3)
             return false;
