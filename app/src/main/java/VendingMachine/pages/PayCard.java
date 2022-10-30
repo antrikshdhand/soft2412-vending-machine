@@ -38,7 +38,7 @@ public class PayCard extends Page {
 
         // Get total for transaction
         String total = Double.toString(
-            sceneManager.getSession().getTransaction().getTotal()
+            this.sceneManager.getSession().getTransaction().getTotal()
         );
 
         GridPane grid = new GridPane();
