@@ -113,10 +113,7 @@ public class PayCard extends Page {
                 paymentSuccessfulAlert.setContentText("Have a great day!");
 
                 // Add to database
-                String[] errorMessage = {"Error", ""};
-                String[] persistCard = this.sceneManager.getDatabase().getCard(username);
-
-                if (Arrays.equals(persistCard, errorMessage)) {
+                if (! cardExists(username)) {
                     String[] details = {username, cardNumber, cvv};
                     insertCard(details);
                 }
@@ -245,6 +242,21 @@ public class PayCard extends Page {
      */
     public void insertCard(String[] details) {
         return;
+    }
+
+    /**
+     * Check if card details exist in cards table
+     */
+    public boolean cardExists(String username) {
+        String[] errorMessage = {"Error", ""};
+        String[] persistCard = this.sceneManager.getDatabase().getCard(username);
+
+        if (Arrays.equals(persistCard, errorMessage)) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     /**
