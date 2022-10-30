@@ -11,8 +11,8 @@ import java.util.*;
  * This is a basic instruction manual for this Vending-
  * Machine.
  * 
- * Everytime you would like to access any of these function
- * , please openConn(), then after you are done
+ * Everytime you would like to access any of these functions, 
+ * please openConn(), then after you are done
  * closeConn().
  * 
  * Each function has comments explaining all of the
