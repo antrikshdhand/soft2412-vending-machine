@@ -31,13 +31,15 @@ public class PayCard extends Page {
 
     public PayCard(SceneManager sceneManager) {
 
+        this.sceneManager = sceneManager;
+
         // Get username
         String username = sceneManager.getSession().getUserName();
 
         // Get total for transaction
-        String total = "420.69";
-        
-        this.sceneManager = sceneManager;
+        String total = Double.toString(
+            sceneManager.getSession().getTransaction().getTotal()
+        );
 
         GridPane grid = new GridPane();
         
@@ -117,7 +119,7 @@ public class PayCard extends Page {
                 paymentSuccessfulAlert.setContentText("Have a great day!");
 
                 // Clear cart
-                sceneManager.getSession().getTransaction().reset();
+                this.sceneManager.getSession().getTransaction().reset();
 
                 paymentSuccessfulAlert.showAndWait();
 

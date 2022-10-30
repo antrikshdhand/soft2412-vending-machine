@@ -18,8 +18,8 @@ public class Transaction {
 
     private double change;
 
-    // adding doubleProperty for dynamic text on screen.
-    // note you do not need a doubleProperty for the total as it will never change on screen.
+    // Adding doubleProperty for dynamic text on screen.
+    // Note you do not need a doubleProperty for the total as it will never change on screen.
     // You also never need it for paid as the paid amount will never appear on screen.
     private DoubleProperty changeAmount = new SimpleDoubleProperty() ;
     private DoubleProperty dueAmount = new SimpleDoubleProperty();
