@@ -41,7 +41,6 @@ public class PayCard extends Page {
     /**
      * Builds the scene for the PayCard page
      */
-    // @SuppressWarnings("all")
     public void setScene() {
 
         GridPane grid = new GridPane();
@@ -72,10 +71,14 @@ public class PayCard extends Page {
         PasswordField cvvBox = new PasswordField();
         grid.add(cvvBox, 1, 2);
 
+        sceneManager.getDatabase().openConn();
+        String[] details = sceneManager.getDatabase().getCard(username);
+
         // If card details exist for this user, autofill
         if (cardExists(username)) {
-            String[] details = sceneManager.getDatabase().getCard(username);
-            cardNumberTextField = new TextField(details[0]);
+            if (details != null) {
+                cardNumberTextField = new TextField(details[0]);
+            }
             cvvBox = new PasswordField();
         }
 
@@ -90,22 +93,25 @@ public class PayCard extends Page {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
 
-        // Final variables for lambda button event call
-        final TextField cardNumberTextFieldF = cardNumberTextField;
-        final  PasswordField cvvBoxF = cvvBox;
+
+
+        final TextField cardNumberTextFieldAAA = cardNumberTextField;
+        final PasswordField cvvBoxAAA = cvvBox;
 
         payButton.setOnAction(e -> {
             sceneManager.getDatabase().openConn();
 
-            // Set variables
-            String cardNumber = cardNumberTextFieldF.getText();
-            String cvv = cvvBoxF.getText();
+            String cardNumber = cardNumberTextFieldAAA.getText();
+            String cvv = cvvBoxAAA.getText();
 
             boolean checkedCardNumber = checkCardNumber(cardNumber);
             boolean checkedCVV = checkCVV(cvv);
 
             // Write to transactions.csv if valid
             if (checkedCardNumber == false) {
+                System.out.println(cardNumber + " fat");
+                System.out.println(cvv + " fat");
+
                 Alert invalidCardNumberAlert = new Alert(AlertType.ERROR);
                 invalidCardNumberAlert.setTitle("Invalid card number.");
                 invalidCardNumberAlert.setHeaderText("The card number inputted is invalid.");
@@ -130,8 +136,10 @@ public class PayCard extends Page {
 
                 // Add to database
                 if (! cardExists(username)) {
-                    String[] details = {username, cardNumber, cvv};
-                    insertCard(details);
+                    // String[] details = {username, cardNumber, cvv};
+                    if (details != null) {
+                        insertCard(details);
+                    }
                 }
 
                 // Clear cart
@@ -258,7 +266,8 @@ public class PayCard extends Page {
      */
     public void insertCard(String[] details) {
         sceneManager.getDatabase().openConn();
-        
+
+        int returned = sceneManager.getDatabase().insertNewCard(details[0], details[1], details[2]);
     }
 
     /**

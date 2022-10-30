@@ -346,7 +346,7 @@ public class Database {
      */
     public int insertNewUser(String username, String password, String role) {
         try {
-            // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
+            // SQLite does not strictly enforce the varchar limits, so we have to test for ourselves.
             if (username.length() > 15 || password.length() > 20) {
                 throw new SQLException("userName or password too long");
             }
@@ -508,6 +508,33 @@ public class Database {
             String[] errorMessage = {"Error", ""};
             return errorMessage;
         }
+    }
+
+    /**
+     * Function to store user's card details in the database.
+     * 
+     * @param username  username of the user
+     * @param card      card number of the user
+     * @param cvv       cvv of the user
+     * @return
+     */
+    public int insertNewCard(String username, String card, String cvv) {
+        try {
+
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            System.out.println(card);
+            statement.executeUpdate(String.format(
+                "insert into cards values('%s', '%s', '%s')", 
+                username, card, cvv));
+
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
     }
 
 }
