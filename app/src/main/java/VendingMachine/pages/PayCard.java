@@ -2,6 +2,7 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 import VendingMachine.pages.Page;
+import VendingMachine.Transaction;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -114,6 +115,7 @@ public class PayCard extends Page {
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
                 paymentSuccessfulAlert.setContentText("Have a great day!");
+                Transaction.reset();
                 paymentSuccessfulAlert.showAndWait();
             }
 
@@ -127,7 +129,7 @@ public class PayCard extends Page {
             sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
         });
 
-        // Add buttons to Hbox
+        // Add buttons to HBox
         hbBtn.getChildren().add(backButton);
         hbBtn.getChildren().add(payButton);
 
