@@ -52,6 +52,13 @@ public class SceneManager {
         return defaultPage;
     }
 
+
+
+    // This is a way to update the values on screen for the inputCashPage.
+//    public void changeInputCashPage( InputCashPage page){
+//        inputCashPage = page;
+//    }
+
     public Scene getOwnerPortalScene() {
         return ownerPortal.getScene();
     }

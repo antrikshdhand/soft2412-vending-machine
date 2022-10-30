@@ -5,6 +5,7 @@ import com.sun.source.doctree.AttributeTree;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -16,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.w3c.dom.css.Rect;
+import javafx.beans.property.DoubleProperty;
 
 
 /**
@@ -52,9 +54,9 @@ public class InputCashPage extends Page {
     private Text changeAmount;
 
     // Amount of each label
-    private Text totalAmountDouble;
-    private Text dueAmountDouble;
-    private Text changeAmountDouble;
+    private Label totalAmountDouble;
+    private Label dueAmountDouble;
+    private Label changeAmountDouble;
 
 
     public InputCashPage(SceneManager sceneManager){
@@ -125,25 +127,13 @@ public class InputCashPage extends Page {
         pane.add(amountDisplay, 5,1);
 
 
-        // Setting action for the $ 100
-        hundredDollars.setOnAction((e) -> {
-            if(sm.getSession().getDueAmount() < 100){
-                sm.getSession().setChangeAmount(sm.getSession().getChangeAmount() + (100 - sm.getSession().getDueAmount()));
-            }
-            System.out.println(sm.getSession().getChangeAmount());
-            sm.getSession().setDueAmount(sm.getSession().getDueAmount() - 100);
-            this.refreshAmounts();
-
-
-        });
+        this.setUpButtonsAction();
 
         amountDisplay.getChildren().addAll(totalAmount,totalAmountDouble,dueAmount,dueAmountDouble,changeAmount,changeAmountDouble, completeTransaction);
 
 
         // Setting Action for the Cancel Button
         cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
-
-
 
 
 
@@ -236,6 +226,8 @@ public class InputCashPage extends Page {
         changeAmount = new Text("Change required: ");
         changeAmount.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
+        this.refreshAmounts();
+
 
     }
 
@@ -243,16 +235,101 @@ public class InputCashPage extends Page {
      * Function to refresh all the Amounts display on screen.
      */
     public void refreshAmounts(){
-        totalAmountDouble = new Text("$ " + sm.getSession().getTotalPrice() + "");
+        totalAmountDouble = new Label("$ " + sm.getSession().getTransaction().getTotal() + "");
         totalAmountDouble.setFont(Font.font("Arial",14));
 
-        changeAmountDouble = new Text("$ " + sm.getSession().getChangeAmount() + "");
+        changeAmountDouble = new Label();
         changeAmountDouble.setFont(Font.font("Arial",14));
+        changeAmountDouble.textProperty().bind(sm.getSession().getTransaction().getChangeAmount().asString("$ %.2f"));
 
-        dueAmountDouble = new Text("$ " + sm.getSession().getDueAmount() + "");
+        dueAmountDouble = new Label();
         dueAmountDouble.setFont(Font.font("Arial",14));
+        dueAmountDouble.textProperty().bind(sm.getSession().getTransaction().getDueAmount().asString("$ %.2f"));
     }
 
+
+    /**
+     * Function that sets up action for all currency buttons
+     */
+
+    public void setUpButtonsAction(){
+        // Setting action for the $ 100
+        hundredDollars.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 100);
+            this.refreshAmounts();
+
+        });
+
+        // Setting up action for $50
+        fiftyDollars.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 50);
+            this.refreshAmounts();
+
+        });
+
+        // Setting action for the $ 20
+        twentyDollars.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 20);
+            this.refreshAmounts();
+
+        });
+
+        // Setting up action for $10
+        tenDollars.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 10);
+            this.refreshAmounts();
+
+        });
+
+        // Setting action for the $ 5
+        fiveDollars.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 5);
+            this.refreshAmounts();
+
+        });
+
+        // Setting up action for $2
+        twoDollars.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 2);
+            this.refreshAmounts();
+
+        });
+
+        // Setting action for the $ 1
+        oneDollars.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 1);
+            this.refreshAmounts();
+
+        });
+
+        // Setting up action for ¢ 50
+        fiftyCents.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.5);
+            this.refreshAmounts();
+
+        });
+
+        // Setting action for the ¢ 20
+        twentyCents.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.2);
+            this.refreshAmounts();
+
+        });
+
+        // Setting up action for ¢ 10
+        tenCents.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.1);
+            this.refreshAmounts();
+
+        });
+
+        // Setting up action for ¢ 5
+        fiveCents.setOnAction((e) -> {
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.05);
+            this.refreshAmounts();
+        });
+
+    }
 
 
 
