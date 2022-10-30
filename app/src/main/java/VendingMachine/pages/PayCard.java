@@ -31,16 +31,22 @@ public class PayCard extends Page {
     private SceneManager sceneManager;
 
     public PayCard(SceneManager sceneManager) {
-
         this.sceneManager = sceneManager;
+    }
+
+    public void setScene() {
 
         GridPane grid = new GridPane();
+
+        String username = sceneManager.getSession().getUserName();
+
+        String total = Double.toString(sceneManager.getSession().getTransaction().getTotal());
         
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
         grid.setAlignment(Pos.CENTER); 
-        this.scene = new Scene(grid, WIDTH, HEIGHT);
+        scene = new Scene(grid, WIDTH, HEIGHT);
 
         Text scenetitle = new Text("Card Payment");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -75,11 +81,7 @@ public class PayCard extends Page {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
         payButton.setOnAction(e -> {
-            this.sceneManager.getDatabase().openConn();
-
-            String username = this.sceneManager.getSession().getUserName();
-
-            String total = Double.toString(this.sceneManager.getSession().getTransaction().getTotal());
+            sceneManager.getDatabase().openConn();
 
             // Set variables
             String cardNumber = cardNumberTextField.getText();
@@ -119,7 +121,7 @@ public class PayCard extends Page {
                 }
 
                 // Clear cart
-                this.sceneManager.getSession().getTransaction().reset();
+                sceneManager.getSession().getTransaction().reset();
 
                 paymentSuccessfulAlert.showAndWait();
 
@@ -249,7 +251,7 @@ public class PayCard extends Page {
      */
     public boolean cardExists(String username) {
         String[] errorMessage = {"Error", ""};
-        String[] persistCard = this.sceneManager.getDatabase().getCard(username);
+        String[] persistCard = sceneManager.getDatabase().getCard(username);
 
         if (Arrays.equals(persistCard, errorMessage)) {
             return false;
@@ -263,7 +265,7 @@ public class PayCard extends Page {
      * Returns the PayCard scene.
      */
     public Scene getScene() {
-        return this.scene;
+        return scene;
     }
 
 }
