@@ -480,6 +480,7 @@ public class Database {
     /**
      * Function to get card number and cvv
      * 
+     * @param username
      * @return card number and cvv
      */
     public String[] getCard(String username) {

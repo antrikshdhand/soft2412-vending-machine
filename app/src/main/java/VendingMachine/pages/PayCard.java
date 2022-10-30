@@ -162,7 +162,7 @@ public class PayCard extends Page {
 
     /**
      * Writes transaction details to transactions.csv file
-     * (found in resources directory)
+     * 
      * @param username
      * @param cardNumber
      * @param CVV
@@ -257,17 +257,18 @@ public class PayCard extends Page {
      * Insert user and card details in cards table in database
      */
     public void insertCard(String[] details) {
-        return;
+        sceneManager.getDatabase().openConn();
+        
     }
 
     /**
      * Check if card details exist in cards table
      */
     public boolean cardExists(String username) {
-        String[] errorMessage = {"Error", ""};
+        sceneManager.getDatabase().openConn();
         String[] persistCard = sceneManager.getDatabase().getCard(username);
 
-        if (Arrays.equals(persistCard, errorMessage)) {
+        if (persistCard == null) {
             return false;
         }
         else {
