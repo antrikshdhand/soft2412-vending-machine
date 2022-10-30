@@ -83,8 +83,17 @@ public class Database {
 
             openStatement.executeUpdate(
                     """
-                        CREATE TABLE IF NOT EXISTS recent (
-                            item_name VARCHAR(20) PRIMARY KEY
+                    CREATE TABLE IF NOT EXISTS recent (
+                        item_name VARCHAR(20) PRIMARY KEY
+                        )
+                    """);
+
+            openStatement.executeUpdate(
+                    """
+                    CREATE TABLE IF NOT EXISTS cards (
+                        username VARCHAR(20) PRIMARY KEY,
+                        card VARCHAR(16),
+                        cvv VARCHAR(3)
                         )
                     """);
             
@@ -168,6 +177,7 @@ public class Database {
                 DROP TABLE IF EXISTS categories;
                 DROP TABLE IF EXISTS items;
                 DROP TABLE IF EXISTS recent;
+                DROP TABLE IF EXISTS cards
                 """);
             return 0;
         } catch (SQLException e) {
@@ -465,6 +475,33 @@ public class Database {
             System.out.println("Error while querying for user :(");
             return -1;
         }
-    }    
+    }
+
+    /**
+     * Function to get card number and cvv
+     * 
+     * @return card number and cvv
+     */
+    public String[] getCard(String username) {
+
+        String sql = """
+                SELECT card, cvv
+                FROM cards
+                WHERE username = '%s';
+                """;
+        try {
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
+            if (query.next()) {
+                String[] details = {query.getString("card"), query.getString("cvv")};
+                return details;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while querying for the card details :(");
+            String[] errorMessage = {"Error", ""};
+            return errorMessage;
+        }
+    }
 
 }

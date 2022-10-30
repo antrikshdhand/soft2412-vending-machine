@@ -1,8 +1,9 @@
 package VendingMachine.pages;
 
-import VendingMachine.SceneManager;
 import VendingMachine.pages.Page;
+import VendingMachine.SceneManager;
 import VendingMachine.Session;
+import VendingMachine.Database;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -115,6 +116,8 @@ public class PayCard extends Page {
                 paymentSuccessfulAlert.setContentText("Have a great day!");
 
                 // Add to database
+                String[] errorMessage = {"Error", ""};
+                // String[] persistCard = D
 
                 // Clear cart
                 this.sceneManager.getSession().getTransaction().reset();
