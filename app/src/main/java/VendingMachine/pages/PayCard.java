@@ -170,6 +170,7 @@ public class PayCard extends Page {
         }
         catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Transactions file not found!");
         }
     }
 
