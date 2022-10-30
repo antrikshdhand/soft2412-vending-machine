@@ -60,15 +60,13 @@ public class PayCard extends Page {
         grid.add(cvvBox, 1, 2);
 
         // If card details exist for this user, autofill
-        /*
-         * cardNumber = get_from_database
-         * cvv = get_from_database
-         * 
-         * if cardNumber != null && cvv != null:
-         *  set card field text to card number
-         *  set cvv field text to cvv number
-         *  
-         */
+        // cardNumber = get_from_database
+        // cvv = get_from_database
+        //
+        // if (cardNumber != null && cvv != null) {
+            // cardNumberTextField = new TextField(cardNumber);
+            // cvvBox = new PasswordField();
+        // }
 
         Button payButton = new Button("Pay");
 
