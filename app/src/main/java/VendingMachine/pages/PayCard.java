@@ -33,13 +33,13 @@ public class PayCard extends Page {
 
         this.sceneManager = sceneManager;
 
-        // Get username
-        String username = sceneManager.getSession().getUserName();
+        // // Get username
+        // String username = sceneManager.getSession().getUserName();
 
-        // Get total for transaction
-        String total = Double.toString(
-            this.sceneManager.getSession().getTransaction().getTotal()
-        );
+        // // Get total for transaction
+        // String total = Double.toString(
+        //     this.sceneManager.getSession().getTransaction().getTotal()
+        // );
 
         GridPane grid = new GridPane();
         
@@ -86,6 +86,10 @@ public class PayCard extends Page {
         grid.add(hbBtn, 1, 4);
         payButton.setOnAction(e -> {
             this.sceneManager.getDatabase().openConn();
+
+            String username = this.sceneManager.getSession().getUserName();
+
+            String total = Double.toString(this.sceneManager.getSession().getTransaction().getTotal());
 
             // Set variables
             String cardNumber = cardNumberTextField.getText();
