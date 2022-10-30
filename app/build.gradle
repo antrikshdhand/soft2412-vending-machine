@@ -2,8 +2,6 @@ plugins {
     // Apply the java plugin to add basic functionality for Java Code.
     id 'java'
 
-    // id("java-library")
-
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
 
@@ -149,6 +147,4 @@ task fatJar(type: Jar) {
 task(runSeller, dependsOn: 'classes', type: JavaExec) {
     main = 'VendingMachine.SellerPortal'
     classpath = sourceSets.main.runtimeClasspath
-    // args 'mrhaki'
-    // systemProperty 'simple.message', 'Hello '
 }
