@@ -32,7 +32,6 @@ public class SessionTest {
     }
 
     // Checking toggle on logged in
-
     @Test
     void sessionRoleNonGuestTest(){
          sess.setRole("Owner");
