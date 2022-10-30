@@ -29,6 +29,9 @@ public class PayCard extends Page {
     private SceneManager sceneManager;
 
     public PayCard(SceneManager sceneManager) {
+
+        // Get username
+        String username = sceneManager.getSession().getUserName();
         
         this.sceneManager = sceneManager;
 
@@ -56,6 +59,17 @@ public class PayCard extends Page {
         PasswordField cvvBox = new PasswordField();
         grid.add(cvvBox, 1, 2);
 
+        // If card details exist for this user, autofill
+        /*
+         * cardNumber = get_from_database
+         * cvv = get_from_database
+         * 
+         * if cardNumber != null && cvv != null:
+         *  set card field text to card number
+         *  set cvv field text to cvv number
+         *  
+         */
+
         Button payButton = new Button("Pay");
 
         cvvBox.setOnKeyPressed(e -> {
@@ -70,7 +84,6 @@ public class PayCard extends Page {
             this.sceneManager.getDatabase().openConn();
 
             // Set variables
-            String username = sceneManager.getSession().getUserName();
             String cardNumber = cardNumberTextField.getText();
             String cvv = cvvBox.getText();
 
@@ -118,6 +131,7 @@ public class PayCard extends Page {
         hbBtn.getChildren().add(payButton);
 
     }
+
 
     /**
      * Writes transaction details to transactions.csv file
