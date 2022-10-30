@@ -98,7 +98,7 @@ public class Database {
                     """);
             
             // The two lines below are commented out as they have already been "done"
-            // // Initialise db with a guest account
+            // Initialise db with a guest account
             openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
 
             // OWNER - O
@@ -116,7 +116,7 @@ public class Database {
 
 
     /**
-     * Opens connection with a database.
+     * Opens connection with the database.
      * To be called before any other function by calling class.
      *
      * @return 0 if successful and -1 if unsuccessful
@@ -367,6 +367,11 @@ public class Database {
 
     /**
      * Function to check if a certain user has the inputted role or not.
+     * 
+     * OWNER - O
+     * CASHIER - C
+     * GUEST - G
+     * REGISTERED CUSTOMER - R
      * 
      * @param username  username one wants to check the role of
      * @param role      the role you want to check the username has
