@@ -65,4 +65,71 @@ public class TransactionTest {
 
     }
 
+    // Testing if change is initially is 0.
+    @Test
+    void testGetChangeInitial(){
+        double change = t.getChange();
+
+        assertEquals(0, change);
+    }
+
+    // Testing if due amount is initially is 0;\
+    @Test
+    void testGetDueInitial(){
+        double due = t.getDue();
+
+        assertEquals(0, due);
+    }
+
+    // Testing that Paid is 0 initially
+    @Test
+    void testGetPaid(){
+        double paid = t.getPaid();
+
+        assertEquals(0, paid);
+    }
+
+    // Testing setting the paid amount initial.
+    @Test
+    void testSetPaid(){
+        t.setPaid(20);
+        double paid = t.getPaid();
+
+        assertEquals(20, paid);
+    }
+
+    // Testing Calculate change and due simple
+    @Test
+    void testCalculateChangDue(){
+        // the total price is 0 so anything that is paid should be returned as change,
+        // and the due amount should till be 0.
+        t.setPaid(20);
+        double change = t.getChange();
+        double due = t.getDue();
+
+
+        assertEquals(20, change);
+        assertEquals(0,due);
+    }
+
+    // Testing reset simple
+    @Test
+    void testReset(){
+        t.addToTotal(200);
+        t.setPaid(30);
+
+        t.reset();
+
+        double total = t.getTotal();
+        double paid = t.getPaid();
+        double change = t.getChange();
+        double  due = t.getDue();
+
+        assertEquals(0, total);
+        assertEquals(0, paid);
+        assertEquals(0, change);
+        assertEquals(0, due);
+    }
+
+
 }
