@@ -141,7 +141,7 @@ public class Transaction {
     }
 
     /**
-     * Function that sets the amount paid and recalculates thes
+     * Function that sets the amount paid and recalculates due / changes.
      * @param paid
      */
     public void setPaid(double paid){

@@ -98,6 +98,23 @@ public class TransactionTest {
         assertEquals(20, paid);
     }
 
+    //Testing set paid amount advanced
+    @Test
+    void testSetPaidAdvanced(){
+        t.setPaid(20);
+        t.setPaid(30);
+
+        double paid1 = t.getPaid();
+        t.setPaid(40);
+
+        double paid2 = t.getPaid();
+
+        assertEquals(30, paid1);
+        assertEquals(40,paid2);
+        assertNotEquals(40, paid1);
+    }
+
+
     // Testing Calculate change and due simple
     @Test
     void testCalculateChangDue(){
@@ -110,6 +127,71 @@ public class TransactionTest {
 
         assertEquals(20, change);
         assertEquals(0,due);
+    }
+
+    //Testing Calculate change and due advanced
+    @Test
+    void testCalculateChangeDueAdvanced(){
+
+        // Setting the total to 20
+        t.addToTotal(20);
+
+        // Has only paid 10
+        t.setPaid(10);
+        double change1 = t.getChange();
+        double due1 = t.getDue();
+
+        assertEquals(0, change1);
+        assertEquals(10, due1);
+
+        //Has paid 20
+        t.setPaid(20);
+        double change2 = t.getChange();
+        double due2 = t.getDue();
+
+        assertEquals(0, change2);
+        assertEquals(0, due2);
+
+        // Has paid 30
+        t.setPaid( 30);
+        double change3 = t.getChange();
+        double due3 = t.getDue();
+
+        assertEquals( 10, change3);
+        assertEquals(0, due3);
+
+
+        // Setting new total to 30.55
+        t.addToTotal(10.55);
+        t.setPaid(30);
+        double total1 = t.getTotal();
+        double change4 = t.getChange();
+        double due4 = t.getDue();
+
+        assertEquals(30.55 ,total1);
+        assertEquals(30, t.getPaid());
+        assertEquals(0, change4);
+        assertFalse(due4 == 0);
+
+        // Setting paid to 31
+        t.setPaid(31);
+        double change5 = t.getChange();
+        double due5 = t.getDue();
+
+        assertFalse(change5 == 0 );
+        assertEquals(0, due5);
+
+        // Resetting all the figures
+        t.reset();
+        double resetPaid = t.getPaid();
+        double resetDue = t.getDue();
+        double resetTotal = t.getTotal();
+        double resetChange = t.getChange();
+
+        assertEquals(0, resetChange);
+        assertEquals(0, resetDue);
+        assertEquals(0, resetPaid);
+        assertEquals(0, resetTotal);
     }
 
     // Testing reset simple
