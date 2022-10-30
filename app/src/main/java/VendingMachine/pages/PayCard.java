@@ -3,7 +3,6 @@ package VendingMachine.pages;
 import VendingMachine.pages.Page;
 import VendingMachine.SceneManager;
 import VendingMachine.Session;
-import VendingMachine.Database;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -22,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
+import java.util.*;
 
 // OpenCSV import
 import com.opencsv.*;
@@ -117,7 +117,11 @@ public class PayCard extends Page {
 
                 // Add to database
                 String[] errorMessage = {"Error", ""};
-                // String[] persistCard = D
+                String[] persistCard = this.sceneManager.getDatabase().getCard(username);
+
+                if (Arrays.equals(persistCard, errorMessage)) {
+                    // Insert into table
+                }
 
                 // Clear cart
                 this.sceneManager.getSession().getTransaction().reset();
@@ -236,6 +240,13 @@ public class PayCard extends Page {
 
         // If all conditions are met
         return true;
+    }
+
+    /**
+     * Insert user and card details in cards table in database
+     */
+    public void insertCard(String[] details) {
+        return;
     }
 
     /**
