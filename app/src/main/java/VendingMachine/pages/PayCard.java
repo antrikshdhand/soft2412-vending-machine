@@ -76,8 +76,12 @@ public class PayCard extends Page {
 
         // If card details exist for this user, autofill
         if (cardExists(username)) {
+
+            System.out.println(details[0] + " " + details[1]);
+
             if (details != null) {
                 cardNumberTextField = new TextField(details[0]);
+                grid.add(cardNumberTextField, 1, 1);
             }
             cvvBox = new PasswordField();
         }
@@ -137,8 +141,9 @@ public class PayCard extends Page {
                 // Add to database
                 if (! cardExists(username)) {
                     // String[] details = {username, cardNumber, cvv};
-                    if (details != null) {
-                        insertCard(details);
+                    {
+                        String[] tempDetails = {username, cardNumber, cvv};
+                        insertCard(tempDetails);
                     }
                 }
 
@@ -281,6 +286,7 @@ public class PayCard extends Page {
             return false;
         }
         else {
+            System.out.println("Card details found for user: " + username);
             return true;
         }
     }
