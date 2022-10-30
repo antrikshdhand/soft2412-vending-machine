@@ -30,10 +30,18 @@ public class PayCard extends Page {
     
     private SceneManager sceneManager;
 
+    /**
+     * Constructor for PayCard page
+     * @param sceneManager
+     */
     public PayCard(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
 
+    /**
+     * Builds the scene for the PayCard page
+     */
+    // @SuppressWarnings("all")
     public void setScene() {
 
         GridPane grid = new GridPane();
@@ -65,10 +73,11 @@ public class PayCard extends Page {
         grid.add(cvvBox, 1, 2);
 
         // If card details exist for this user, autofill
-        // If username in cards {
-            // cardNumberTextField = new TextField(cardNumber);
-            // cvvBox = new PasswordField();
-        // }
+        if (cardExists(username)) {
+            String[] details = sceneManager.getDatabase().getCard(username);
+            cardNumberTextField = new TextField(details[0]);
+            cvvBox = new PasswordField();
+        }
 
         Button payButton = new Button("Pay");
 
@@ -80,12 +89,17 @@ public class PayCard extends Page {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         grid.add(hbBtn, 1, 4);
+
+        // Final variables for lambda button event call
+        final TextField cardNumberTextFieldF = cardNumberTextField;
+        final  PasswordField cvvBoxF = cvvBox;
+
         payButton.setOnAction(e -> {
             sceneManager.getDatabase().openConn();
 
             // Set variables
-            String cardNumber = cardNumberTextField.getText();
-            String cvv = cvvBox.getText();
+            String cardNumber = cardNumberTextFieldF.getText();
+            String cvv = cvvBoxF.getText();
 
             boolean checkedCardNumber = checkCardNumber(cardNumber);
             boolean checkedCVV = checkCVV(cvv);
