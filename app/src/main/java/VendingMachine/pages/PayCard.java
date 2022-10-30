@@ -32,6 +32,9 @@ public class PayCard extends Page {
 
         // Get username
         String username = sceneManager.getSession().getUserName();
+
+        // Get total for transaction
+        String total = "420.69";
         
         this.sceneManager = sceneManager;
 
@@ -92,7 +95,7 @@ public class PayCard extends Page {
             if (checkedCardNumber == false) {
                 Alert invalidCardNumberAlert = new Alert(AlertType.ERROR);
                 invalidCardNumberAlert.setTitle("Invalid card number.");
-                invalidCardNumberAlert.setHeaderText(String.format("The card number inputted is invalid.", cardNumber));
+                invalidCardNumberAlert.setHeaderText("The card number inputted is invalid.");
                 invalidCardNumberAlert.setContentText("Please try again.");
                 invalidCardNumberAlert.showAndWait();
                 return;
@@ -106,7 +109,7 @@ public class PayCard extends Page {
                 return;
             }
             else if (checkedCardNumber == true && checkedCVV == true) {
-                writeTransaction(username, cardNumber, cvv, 420.69);
+                writeTransaction(username, cardNumber, cvv, total);
                 Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
@@ -139,7 +142,7 @@ public class PayCard extends Page {
      * @param CVV
      * @param amount
      */
-    public void writeTransaction(String username, String cardNumber, String cvv, double amount) {
+    public void writeTransaction(String username, String cardNumber, String cvv, String amount) {
 
         File file = new File("transactions.csv");
         try {
@@ -160,7 +163,7 @@ public class PayCard extends Page {
                 username, 
                 cardNumber, 
                 cvv,
-                Double.toString(amount)
+                amount
             };
             
             writer.writeNext(data);
