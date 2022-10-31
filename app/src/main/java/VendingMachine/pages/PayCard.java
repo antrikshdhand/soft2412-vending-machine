@@ -121,12 +121,12 @@ public class PayCard extends Page {
      * (found in resources directory)
      * @param username
      * @param cardNumber
-     * @param CVV
+     * @param cvv
      * @param amount
      */
     public void writeTransaction(String username, String cardNumber, String cvv, double amount) {
 
-        File file = new File("transactions.csv");
+        File file = new File("reports/transactions.csv");
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputfile = new FileWriter(file, true);
