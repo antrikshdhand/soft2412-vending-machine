@@ -13,7 +13,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.collections.FXCollections;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -126,14 +125,48 @@ public class OwnerPortal extends Page {
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
         HBox buttons = new HBox();
         VBox menu = new VBox();
+        VBox create = new VBox();
 
+        create.setSpacing(10);
 
         Button bn = new Button("Return to Owner Portal");
 
         Label lbl = new Label("Manage Privileged Users");
         AtomicReference<Label> userData = new AtomicReference<>(new Label(""));
-        userData.get().setTranslateY(50);
-        pane.getChildren().add(userData.get());
+
+        Label usernameLabel = new Label("Enter Username");
+        TextField usernameText = new TextField();
+        usernameText.setPrefWidth(180);
+        usernameText.setMaxWidth(180);
+
+        Label roleLabel = new Label("Enter Role");
+        TextField roleText = new TextField();
+        roleText.setPrefWidth(180);
+        roleText.setMaxWidth(180);
+
+        Button submit = new Button("Create User");
+
+        submit.setOnAction(event -> {
+            sm.getDatabase().openConn();
+
+            sm.getDatabase().insertNewUser(usernameText.getText(), "1234", roleText.getText());
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION);
+            success.setTitle("User Created!");
+            success.setHeaderText(String.format("User has been successfully created."));
+            success.setContentText("The default password set is '1234'");
+            success.showAndWait();
+
+
+            sm.getDatabase().closeConn();
+        });
+
+        create.getChildren().addAll(usernameLabel, usernameText, roleLabel, roleText, submit);
+        create.setTranslateY(170);
+        create.setTranslateX(520);
+        pane.getChildren().add(create);
+
+        userData.get().setTranslateY(80);
+        //pane.getChildren().add(userData.get());
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
@@ -149,7 +182,11 @@ public class OwnerPortal extends Page {
 
         Button cts = new Button("Change to Seller");
 
-        buttons.getChildren().addAll(ctu, ctc, cts);
+        Button removeUser = new Button("Remove User");
+
+        buttons.getChildren().addAll(ctu, ctc, cts, removeUser);
+        buttons.setSpacing(2);
+        menu.setSpacing(3);
         menu.getChildren().addAll(users, buttons);
 
         menu.setTranslateY(550);
@@ -171,7 +208,9 @@ public class OwnerPortal extends Page {
             sm.getDatabase().changeRole(users.getValue(), "SELLER");
             sm.getDatabase().closeConn();
         });
+        removeUser.setOnAction(event -> {
 
+        });
 
         lbl.setTranslateY(20);
 //        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
