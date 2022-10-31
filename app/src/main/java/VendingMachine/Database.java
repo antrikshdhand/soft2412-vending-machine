@@ -36,6 +36,7 @@ public class Database {
             dropAllTables();
             this.initialiseSchema();
             this.addDummyItems();
+            this.setUpInitialCashAmounts();
             this.closeConn();
         }
     }
@@ -83,9 +84,19 @@ public class Database {
 
             openStatement.executeUpdate(
                     """
-                        CREATE TABLE IF NOT EXISTS recent (
-                            item_name VARCHAR(20) PRIMARY KEY
-                        )
+                    CREATE TABLE IF NOT EXISTS recent (
+                        item_name VARCHAR(20) PRIMARY KEY
+                    )
+                    """);
+
+            openStatement.executeUpdate(
+                    """
+                    CREATE TABLE IF NOT EXISTS cash(
+                        currency VARCHAR(5) PRIMARY KEY,
+                        quantity INTEGER,
+                        CHECK (currency IN ('100', '50', '20', '10', '5', '2', '1', '0.5', '0.2', '0.1', '0.05'))
+                    );
+
                     """);
             
             // The two lines below are commented out as they have already been "done"
@@ -168,6 +179,7 @@ public class Database {
                 DROP TABLE IF EXISTS categories;
                 DROP TABLE IF EXISTS items;
                 DROP TABLE IF EXISTS recent;
+                DROP TABLE IF EXISTS cash;  
                 """);
             return 0;
         } catch (SQLException e) {
@@ -176,6 +188,35 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+    }
+
+    /**
+     * Function that sets up the initial cash amount for the first run.
+     * @return if successful return 0, else return -1
+     */
+    public int setUpInitialCashAmounts(){
+        try{
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30);
+            statement.executeUpdate(String.format("insert into cash values (100, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (50, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (20, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (10, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (2, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (1, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.5, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.2, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.1, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.05, 5)"));
+
+        }
+        catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
     }
 
 

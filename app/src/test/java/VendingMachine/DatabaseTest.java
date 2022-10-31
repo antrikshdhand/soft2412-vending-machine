@@ -70,7 +70,22 @@ public class DatabaseTest {
         assertEquals(0, value);
     }
 
+    // Testing that setting up the initial cash amount works
+    @Test
+    void testSetUpInitialCashAmount(){
+        db.openConn();
+        db.dropAllTables();
+        db.closeConn();
 
+        db.openConn();
+        db.initialiseSchema();
+        int value = db.setUpInitialCashAmounts();
+        db.closeConn();
+
+        assertEquals(0, value);
+    }
+
+    // testing for insert users.
     @Test
     void testinsertNewUser(){
 
@@ -226,7 +241,7 @@ public class DatabaseTest {
 
     // more advanced tests for query recent
     @Test
-    void advancedQueryRecetn1(){
+    void advancedQueryRecent1(){
         db.openConn();
         ArrayList<String> q = db.queryRecent();
         db.closeConn();
