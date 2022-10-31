@@ -1,11 +1,10 @@
 package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
-import VendingMachine.pages.Page;
+import com.opencsv.CSVWriter;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -14,10 +13,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.collections.FXCollections;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class OwnerPortal extends Page {
 
@@ -48,7 +50,7 @@ public class OwnerPortal extends Page {
 
         this.createManageCSO();
         this.createCancelledTransaction();
-        this.createSummary();
+//        this.createSummary();
 
 
         VBox box = new VBox();
@@ -95,7 +97,7 @@ public class OwnerPortal extends Page {
          summary = new Button("Generate Users Summary");
 
          summary.setOnAction(e -> {
-             sm.switchScenes(summaryPage);});
+             createSummary();});
 
          cancelledTransactions = new Button("View unsuccessful transaction");
 
@@ -129,6 +131,9 @@ public class OwnerPortal extends Page {
         Button bn = new Button("Return to Owner Portal");
 
         Label lbl = new Label("Manage Privileged Users");
+        AtomicReference<Label> userData = new AtomicReference<>(new Label(""));
+        userData.get().setTranslateY(50);
+        pane.getChildren().add(userData.get());
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
@@ -150,9 +155,22 @@ public class OwnerPortal extends Page {
         menu.setTranslateY(550);
         menu.setTranslateX(470);
 
-        ctu.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "REGISTERED CUSTOMER");});
-        ctc.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "CASHIER");});
-        cts.setOnAction(event -> {sm.getDatabase().changeRole((String) users.getValue(), "SELLER");});
+
+        ctu.setOnAction(event -> {
+            sm.getDatabase().openConn();
+            sm.getDatabase().changeRole(users.getValue(), "REGISTERED CUSTOMER");
+            sm.getDatabase().closeConn();
+        });
+        ctc.setOnAction(event -> {
+            sm.getDatabase().openConn();
+            sm.getDatabase().changeRole(users.getValue(), "CASHIER");
+            sm.getDatabase().closeConn();
+        });
+        cts.setOnAction(event -> {
+            sm.getDatabase().openConn();
+            sm.getDatabase().changeRole(users.getValue(), "SELLER");
+            sm.getDatabase().closeConn();
+        });
 
 
         lbl.setTranslateY(20);
@@ -165,31 +183,71 @@ public class OwnerPortal extends Page {
 
         pane.getChildren().addAll(lbl, bn, menu);
         bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
+
+        users.setOnAction(event -> {
+
+//            createManageCSO();
+
+            sm.getDatabase().openConn();
+
+            userData.set(new Label("USERNAME: " + users.getValue() +
+                    ", ROLE:" + sm.getDatabase().getRole(users.getValue())));
+
+
+            pane.getChildren().add(userData.get());
+
+
+            sm.getDatabase().closeConn();
+
+            sm.switchScenes(manageCSOPage);
+
+        });
     }
 
 
     public void createSummary() {
-        StackPane pane = new StackPane();
-        summaryPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Owner Portal");
 
-        Label lbl = new Label("Generate Summary");
-//        Button perms = new Button("Change user permissions");
-        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+        sm.getDatabase().openConn();
+        HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
-        pane.setAlignment(lbl, Pos.TOP_CENTER);
-//        perms.setTranslateY(100);
-        lbl.setTranslateY(20);
-//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        File file = new File("reports/ownerUsersSummary.csv");
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputFile = new FileWriter(file, true);
 
-        bn.setTranslateX(-550);
-        bn.setTranslateY(320);
+            // Create CSVWriter object file writer object as parameter
+            CSVWriter writer = new CSVWriter(outputFile);
 
-        lbl.relocate(0, 30);
+            // Add header to transactions.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"USERNAME", "PASSWORD"};
+                writer.writeNext(header);
+            }
 
-        pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getOwnerPortalScene()));
+            // Add data to transactions.csv
+
+            for(Map.Entry<String, String> usernamePassword : sm.getDatabase().queryUsernameAndRole().entrySet()) {
+                String[] data = {usernamePassword.getKey(), usernamePassword.getValue()};
+                writer.writeNext(data);
+            }
+
+            writer.close();
+            outputFile.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        sm.getDatabase().closeConn();
+
+
+        Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
+        successfulRegisterAlert.setTitle("Success");
+        successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
+        successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
+        successfulRegisterAlert.showAndWait();
+
     }
 
 

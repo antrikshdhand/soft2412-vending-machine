@@ -380,9 +380,7 @@ public class Database {
     public boolean changeRole(String username, String role) {
 
         try {
-            String sql = String.format("UPDATE users" +
-                    "SET role = '%s'" +
-                    "WHERE username = '%s';", role, username);
+            String sql = String.format("UPDATE users SET role = '%s' WHERE username = '%s';", role, username);
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(sql);

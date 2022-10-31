@@ -132,7 +132,7 @@ public class PayCard extends Page {
                 return;
             }
             else if (checkedCardNumber == true && checkedCVV == true) {
-                writeTransaction(username, cardNumber, cvv, total);
+               writeTransaction(username, cardNumber, cvv, total);
                 Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
@@ -178,12 +178,12 @@ public class PayCard extends Page {
      * 
      * @param username
      * @param cardNumber
-     * @param CVV
+     * @param cvv
      * @param amount
      */
     public void writeTransaction(String username, String cardNumber, String cvv, String amount) {
 
-        File file = new File("transactions.csv");
+        File file = new File("reports/transactions.csv");
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputfile = new FileWriter(file, true);

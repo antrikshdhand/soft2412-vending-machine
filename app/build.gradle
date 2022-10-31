@@ -10,6 +10,9 @@ plugins {
 
     // Apply the javafx plugin to add support for GUI development for the project in java. 
     id 'org.openjfx.javafxplugin' version '0.0.13'
+
+    // Create a jar with dependencies
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 javafx {
@@ -131,16 +134,30 @@ version = '1.1'
 
 task fatJar(type: Jar) {
 
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     archiveBaseName = 'Vending-Machine'
 	manifest {
         attributes 'Implementation-Title': 'Vending Machine',  
         	'Implementation-Version': version,
-        	'Main-Class': 'vending-machine.App'
+        	'Main-Class': 'VendingMachine.App'
     }
-    baseName = project.name + '-all'
+    baseName = 'Vending-Machine'
     from { configurations.runtimeClasspath.files.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
+
+shadowJar {
+    archiveBaseName.set('VendingMachineS')
+    archiveClassifier.set('')
+    archiveVersion.set('1.0')
+
+    manifest {
+        inheritFrom project.tasks.fatJar.manifest
+    }
+}
+
+
 
 task(runSeller, dependsOn: 'classes', type: JavaExec) {
     main = 'VendingMachine.SellerPortal'
