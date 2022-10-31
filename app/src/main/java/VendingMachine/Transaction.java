@@ -26,7 +26,6 @@ public class Transaction {
 
     public Transaction(){
         this.reset();
-        addToTotal(10);
 
     }
 

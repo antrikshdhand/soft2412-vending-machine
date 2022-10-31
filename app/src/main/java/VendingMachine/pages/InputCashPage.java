@@ -145,6 +145,10 @@ public class InputCashPage extends Page {
 
     }
 
+
+    /**
+     * Function to display alert when user has tried complete the transaction without paying the full amount.
+     */
     private void notEnoughPaid() {
         Alert nullUsernameAlert = new Alert(Alert.AlertType.ERROR);
         nullUsernameAlert.setTitle("Not enough cash paid");
