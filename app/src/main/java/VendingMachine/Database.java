@@ -273,6 +273,29 @@ public class Database {
     }
 
 
+    /**
+     * Function that returns the currency and quantity for all currencies in a hashmap formatted <currency, quantity>.
+     * @return
+     */
+    public Map<Double, Integer> getCashSummary(){
+
+        Map<Double,Integer> result = new HashMap();
+        try{
+            String query = "select * from cash";
+            ResultSet queryResult = openStatement.executeQuery(query);
+            while(queryResult.next()){
+                result.put(queryResult.getDouble("currency"), queryResult.getInt("quantity"));
+            }
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+
+        }
+        return result;
+
+    }
+
+
     public ArrayList<String> queryRecent() {
         
         ArrayList<String> items = new ArrayList<>();
