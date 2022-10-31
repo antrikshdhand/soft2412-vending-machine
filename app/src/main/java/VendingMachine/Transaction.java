@@ -26,6 +26,7 @@ public class Transaction {
 
     public Transaction(){
         this.reset();
+        addToTotal(10);
 
     }
 
@@ -58,11 +59,14 @@ public class Transaction {
 
     /**
      * function for increasing the total price
-     * @param n
+     * @param
      */
 
     public void addToTotal(double n) {
         total += n;
+        calculateDue();
+        calculateChange();
+
     }
 
     /**

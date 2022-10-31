@@ -5,6 +5,7 @@ import com.sun.source.doctree.AttributeTree;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -135,11 +136,24 @@ public class InputCashPage extends Page {
         // Setting Action for the Cancel Button
         cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
 
-
+        // Setting up Action for the complete Transaction button.
+        completeTransaction.setOnAction(e -> {
+            if(sm.getSession().getTransaction().getDue() > 0){
+               notEnoughPaid();
+            }
+        });
 
     }
 
+    private void notEnoughPaid() {
+        Alert nullUsernameAlert = new Alert(Alert.AlertType.ERROR);
+        nullUsernameAlert.setTitle("Not enough cash paid");
+        nullUsernameAlert.setHeaderText("You haven't paid the full amount");
+        nullUsernameAlert.setContentText("Please try again.");
+        nullUsernameAlert.showAndWait();
 
+        return;
+    }
     /**
      * Function to set up all the buttons.
      */
