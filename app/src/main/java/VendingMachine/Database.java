@@ -92,7 +92,7 @@ public class Database {
             openStatement.executeUpdate(
                     """
                     CREATE TABLE IF NOT EXISTS cash(
-                        currency VARCHAR(5) PRIMARY KEY,
+                        currency VARCHAR(4) PRIMARY KEY,
                         quantity INTEGER,
                         CHECK (currency IN ('100', '50', '20', '10', '5', '2', '1', '0.5', '0.2', '0.1', '0.05'))
                     );
@@ -207,17 +207,17 @@ public class Database {
         try{
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30);
-            statement.executeUpdate(String.format("insert into cash values (100, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (50, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (20, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (10, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (2, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (1, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (0.5, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (0.2, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (0.1, 5)"));
-            statement.executeUpdate(String.format("insert into cash values (0.05, 5)"));
-
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "100", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "50", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "20", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "10", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "5", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "2", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "1", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.5", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.2", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.1", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.05", 5));
         }
         catch (SQLException e) {
             // if the error message is "out of memory",
@@ -277,24 +277,24 @@ public class Database {
      * Function that returns the currency and quantity for all currencies in a hashmap formatted <currency, quantity>.
      * @return
      */
-    public Map<Double, Integer> getCashSummary(){
+    public HashMap<String, Integer> getCashSummary(){
 
-        Map<Double,Integer> result = new HashMap();
-        try{
-            String query = "select * from cash";
-            ResultSet queryResult = openStatement.executeQuery(query);
-            while(queryResult.next()){
-                result.put(queryResult.getDouble("currency"), queryResult.getInt("quantity"));
+        HashMap<String, Integer> items = new HashMap<>();
+
+        try {
+            ResultSet query = openStatement.executeQuery(String.format("SELECT * FROM cash"));
+            while (query.next()) {
+                items.put(query.getString("currency"), query.getInt("quantity"));
             }
-
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
         }
-        return result;
+
+        return items;
 
     }
-
 
     public ArrayList<String> queryRecent() {
         

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,14 +19,6 @@ public class DatabaseTest {
     @BeforeEach
     void setUp(){
         db = new Database();
-        db.openConn();
-
-        // adding in temp Dummy Data
-        db.dropAllTables();
-        db.initialiseSchema();
-        db.addDummyItems();
-        db.closeConn();
-
     }
 
 
@@ -84,6 +77,25 @@ public class DatabaseTest {
 
         assertEquals(0, value);
     }
+
+    // Test for getting all the currency and quantity in the database with the initial values
+
+    @Test
+    void testGetCashSummarySimple(){
+        db.openConn();
+        //
+        // db.setUpInitialCashAmounts();
+        Map<String, Integer> map = db.getCashSummary();
+        db.closeConn();
+
+        assertTrue(map.containsKey("100"));
+        assertTrue(map.containsKey("0.5"));
+        assertTrue(map.containsKey("0.1"));
+
+        assertEquals(5, map.get("100"));
+        assertEquals(5, map.get("0.5"));
+    }
+
 
     // testing for insert users.
     @Test
