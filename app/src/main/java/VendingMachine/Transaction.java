@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Transaction {
 
-    private HashMap<String, Integer> items = new HashMap<>();
+    private HashMap<String, Integer> items;
 
     // Values that need to be tracked.
     private double total;
@@ -18,8 +18,8 @@ public class Transaction {
 
     private double change;
 
-    // adding doubleProperty for dynamic text on screen.
-    // note you do not need a doubleProperty for the total as it will never change on screen.
+    // Adding doubleProperty for dynamic text on screen.
+    // Note you do not need a doubleProperty for the total as it will never change on screen.
     // You also never need it for paid as the paid amount will never appear on screen.
     private DoubleProperty changeAmount = new SimpleDoubleProperty() ;
     private DoubleProperty dueAmount = new SimpleDoubleProperty();
@@ -27,6 +27,17 @@ public class Transaction {
     public Transaction(){
         this.reset();
 
+    }
+
+    /**
+     * Function to reset all the amounts to 0
+     */
+    public void reset(){
+        total = 0;
+        due = 0;
+        change = 0;
+        paid = 0;
+        items = new HashMap<>();
     }
 
 
@@ -104,17 +115,6 @@ public class Transaction {
 
 
     }
-
-    /**
-     * Function to reset all the amounts to 0
-     */
-    void reset(){
-        total = 0;
-        due = 0;
-        change = 0;
-        paid = 0;
-    }
-
 
     /**
      * Function that recalculates the change that should be returned.

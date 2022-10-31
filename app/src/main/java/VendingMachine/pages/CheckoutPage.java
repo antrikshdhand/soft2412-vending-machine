@@ -70,7 +70,10 @@ public class CheckoutPage extends Page {
 
         PayCard payCardPage = new PayCard(sm);
 
-        payCard.setOnAction(e -> {sm.switchScenes(payCardPage.getScene());});
+        payCard.setOnAction(e -> {
+            payCardPage.setScene();
+            sm.switchScenes(payCardPage.getScene());
+        });
 
      }
 

@@ -11,8 +11,8 @@ import java.util.*;
  * This is a basic instruction manual for this Vending-
  * Machine.
  * 
- * Everytime you would like to access any of these function
- * , please openConn(), then after you are done
+ * Everytime you would like to access any of these functions, 
+ * please openConn(), then after you are done
  * closeConn().
  * 
  * Each function has comments explaining all of the
@@ -96,11 +96,19 @@ public class Database {
                         quantity INTEGER,
                         CHECK (currency IN ('100', '50', '20', '10', '5', '2', '1', '0.5', '0.2', '0.1', '0.05'))
                     );
-
                     """);
+
+
+            openStatement.executeUpdate("""
+                        CREATE TABLE IF NOT EXISTS cards (
+                            username VARCHAR(20) PRIMARY KEY,
+                            card VARCHAR(16),
+                            cvv VARCHAR(3)
+                        )
+                            """);
             
             // The two lines below are commented out as they have already been "done"
-            // // Initialise db with a guest account
+            // Initialise db with a guest account
             openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
 
             // OWNER - O
@@ -118,7 +126,7 @@ public class Database {
 
 
     /**
-     * Opens connection with a database.
+     * Opens connection with the database.
      * To be called before any other function by calling class.
      *
      * @return 0 if successful and -1 if unsuccessful
@@ -180,6 +188,7 @@ public class Database {
                 DROP TABLE IF EXISTS items;
                 DROP TABLE IF EXISTS recent;
                 DROP TABLE IF EXISTS cash;  
+                DROP TABLE IF EXISTS cards
                 """);
             return 0;
         } catch (SQLException e) {
@@ -237,7 +246,7 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Chocolate"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "M&M", "Chocolate"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mentos", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patch", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patches", "Candies"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
 
@@ -377,7 +386,7 @@ public class Database {
      */
     public int insertNewUser(String username, String password, String role) {
         try {
-            // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
+            // SQLite does not strictly enforce the varchar limits, so we have to test for ourselves.
             if (username.length() > 15 || password.length() > 20) {
                 throw new SQLException("userName or password too long");
             }
@@ -398,6 +407,11 @@ public class Database {
 
     /**
      * Function to check if a certain user has the inputted role or not.
+     * 
+     * OWNER - O
+     * CASHIER - C
+     * GUEST - G
+     * REGISTERED CUSTOMER - R
      * 
      * @param username  username one wants to check the role of
      * @param role      the role you want to check the username has
@@ -506,6 +520,61 @@ public class Database {
             System.out.println("Error while querying for user :(");
             return -1;
         }
-    }    
+    }
+
+    /**
+     * Function to get card number and cvv
+     * 
+     * @param username
+     * @return card number and cvv in string array format (String[])
+     */
+    public String[] getCard(String username) {
+
+        String sql = """
+                SELECT card, cvv
+                FROM cards
+                WHERE username = '%s';
+                """;
+        try {
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
+            if (query.next()) {
+                String[] details = {query.getString("card"), query.getString("cvv")};
+                return details;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while querying for the card details :(");
+            String[] errorMessage = {"Error", ""};
+            return errorMessage;
+        }
+    }
+
+    /**
+     * Function to store user's card details in the database.
+     * 
+     * @param username  username of the user
+     * @param card      card number of the user
+     * @param cvv       cvv of the user
+     * @return
+     */
+    public int insertNewCard(String username, String card, String cvv) {
+        try {
+
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            System.out.println(card);
+            statement.executeUpdate(String.format(
+                "insert into cards values('%s', '%s', '%s')", 
+                username, card, cvv));
+
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
 
 }
