@@ -10,14 +10,19 @@ public class Session {
     private boolean loggedIn;
     private Transaction transaction = new Transaction();
 
-    private double totalPrice;
+    // Values
+//    private double totalPrice;
+//
+//    private double changeAmount;
+//
+//    private double dueAmount;
 
-    private double changeAmount;
 
-    private double dueAmount;
+    public Session(){
+    }
 
     /**
-     * Returns the user Name of the session
+     * Returns the username of the session
      * @return user Name ( String )
      */
     public String getUserName() {
@@ -51,72 +56,80 @@ public class Session {
         this.startedTransaction = startedTransaction;
     }
 
-    /**
-     * Function that returns the total price
-     * @return double
-     */
-    public double getTotalPrice() {
-        return totalPrice;
-    }
+//
+//    /**
+//     * Function that returns the total price
+//     * @return double
+//     */
+//    public double getTotalPrice() {
+//        return totalPrice;
+//    }
+//
+//
+//    /**
+//     * Function that sets the totals price.
+//     * @param totalPrice
+//     */
+//
+//    public void setTotalPrice(double totalPrice) {
+//        this.totalPrice = totalPrice;
+//    }
+//
+//
+//    /**
+//     * Function that return the due amount
+//     * @return dueAmount (double)
+//     */
+//    public double getDueAmount() {
+//        return dueAmount;
+//    }
+//
+//
+//    /**
+//     * Function that return the change amount
+//     * @return changeAmount (double)
+//     */
+//    public double getChangeAmount() {
+//        return changeAmount;
+//    }
+//
+//
+//    /**
+//     *  Function that set the due amount
+//     * @param dueAmount
+//     */
+//    public void setDueAmount(double dueAmount) {
+//        if( dueAmount < 0 ) {
+//            this.dueAmount = 0;
+//            return;
+//        }
+//        this.dueAmount = dueAmount;
+//    }
+//
+//
+//    /**
+//     * Function that sets the change amount
+//     * @param changeAmount
+//     */
+//    public void setChangeAmount(double changeAmount) {
+//        if( changeAmount < 0 ){
+//            this.changeAmount = 0;
+//            return;
+//        }
+//        this.changeAmount = changeAmount;
+//    }
+//
+//
+//    /**
+//     * Function that resets all the amounts to 0
+//     */
+//    public void resetAmount(){
+//        totalPrice = 0;
+//        dueAmount = 0;
+//        changeAmount = 0;
+//    }
 
-    /**
-     * Function that sets the totals price.
-     * @param totalPrice
-     */
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    /**
-     * Function that return the due amount
-     * @return dueAmount (double)
-     */
-    public double getDueAmount() {
-        return dueAmount;
-    }
-
-    /**
-     * Function that return the change amount
-     * @return changeAmount (double)
-     */
-    public double getChangeAmount() {
-        return changeAmount;
-    }
-
-    /**
-     *  Function that set the due amount
-     * @param dueAmount
-     */
-    public void setDueAmount(double dueAmount) {
-        if( dueAmount < 0 ) {
-            this.dueAmount = 0;
-            return;
-        }
-        this.dueAmount = dueAmount;
-    }
-
-    /**
-     * Function that sets the change amount
-     * @param changeAmount
-     */
-    public void setChangeAmount(double changeAmount) {
-        if( changeAmount < 0 ){
-            this.changeAmount = 0;
-            return;
-        }
-        this.changeAmount = changeAmount;
-    }
-
-    /**
-     * Function that resets all the amounts to 0
-     */
-    public void resetAmount(){
-        totalPrice = 0;
-        dueAmount = 0;
-        changeAmount = 0;
-    }
-
+    
     /**
      * Function to set the role for a session.
      * @param role ( String )

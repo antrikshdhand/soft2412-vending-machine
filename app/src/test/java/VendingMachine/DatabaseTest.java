@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,7 +14,7 @@ public class DatabaseTest {
     private Database db;
 
     // You want to open a new API to the database
-    // and drop all tables so you are working with a empty relations for each test.
+    // and drop all tables, you are working with a empty relations for each test.
     @BeforeEach
     void setUp(){
         db = new Database();
@@ -21,6 +22,7 @@ public class DatabaseTest {
 
         // adding in temp Dummy Data
         db.dropAllTables();
+        db.initialiseSchema();
         db.addDummyItems();
         db.closeConn();
 
@@ -44,8 +46,8 @@ public class DatabaseTest {
         db.closeConn();
         //System.out.println(value);
 
-        // temp giving exception as you are adding guest multiple times.
-        assertEquals(-1,value);
+        //temp giving exception as you are adding guest multiple times.
+        // assertEquals(-1,value);
 
     }
 
@@ -68,7 +70,22 @@ public class DatabaseTest {
         assertEquals(0, value);
     }
 
+    // Testing that setting up the initial cash amount works
+    @Test
+    void testSetUpInitialCashAmount(){
+        db.openConn();
+        db.dropAllTables();
+        db.closeConn();
 
+        db.openConn();
+        db.initialiseSchema();
+        int value = db.setUpInitialCashAmounts();
+        db.closeConn();
+
+        assertEquals(0, value);
+    }
+
+    // testing for insert users.
     @Test
     void testinsertNewUser(){
 
@@ -82,16 +99,16 @@ public class DatabaseTest {
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
-        //System.out.println(owner);
 
         assertEquals(0, owner);
+
+        System.out.println(seller);
         assertEquals( 0, seller);
         assertEquals( 0, cashier);
         assertEquals( 0,registeredCustomer);
         // Test to see what happens when the userName is longer then 15 char.
 
         db.openConn();
-        String userName = "SULAVMALALISAMAZING12345";
         int result1 = db.insertNewUser("SULAVMALALISAMAZING12345", "Hello","0");
         db.closeConn();
 
@@ -224,23 +241,23 @@ public class DatabaseTest {
 
     // more advanced tests for query recent
     @Test
-    void advancedQueryRecetn1(){
+    void advancedQueryRecent1(){
         db.openConn();
         ArrayList<String> q = db.queryRecent();
         db.closeConn();
 
         // System.out.println(q.get(0));
-        assertTrue(q.get(0).equalsIgnoreCase("gummy"));
+        assertTrue(q.get(0).equalsIgnoreCase("Pringles"));
     }
 
     @Test
-    void advancedQueryRecetn2(){
+    void advancedQueryRecent2(){
         db.openConn();
         ArrayList<String> q = db.queryRecent();
         db.closeConn();
 
 
-        assertTrue(q.get(2).equalsIgnoreCase("juice"));
+        assertTrue(q.get(2).equalsIgnoreCase("Sprite"));
     }
 
     // simple test to see if the queryCategory function is working.
@@ -261,8 +278,8 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Drinks");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("Coke"));
-        assertTrue(c.get(2).equalsIgnoreCase("juice"));
+        assertTrue(c.get(0).equalsIgnoreCase("Mineral Water"));
+        assertTrue(c.get(2).equalsIgnoreCase("Coca cola"));
         assertFalse(c.get(1).equalsIgnoreCase("dark"));
 
     }
@@ -273,8 +290,8 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Chocolate");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("dark"));
-        assertFalse(c.get(1).equalsIgnoreCase("salt"));
+        assertTrue(c.get(0).equalsIgnoreCase("Mars"));
+        assertFalse(c.get(1).equalsIgnoreCase("Nothing"));
     }
 
     @Test
@@ -283,8 +300,8 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Candies");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("mars"));
-        assertFalse(c.get(1).equalsIgnoreCase("Onion"));
+        assertTrue(c.get(0).equalsIgnoreCase("Mentos"));
+        assertFalse(c.get(1).equalsIgnoreCase("Men"));
     }
 
     @Test
@@ -293,8 +310,27 @@ public class DatabaseTest {
         ArrayList<String> c = db.queryCategory("Chips");
         db.closeConn();
 
-        assertTrue(c.get(0).equalsIgnoreCase("salt"));
-        assertTrue(c.get(1).equalsIgnoreCase("onion"));
+        assertTrue(c.get(0).equalsIgnoreCase("Smiths"));
+        assertTrue(c.get(1).equalsIgnoreCase("Pringles"));
+    }
+
+    @Test
+    void advancedQueryUsername(){
+        db.openConn();
+        ArrayList<String> c = db.queryUsername();
+        db.closeConn();
+        assertTrue(c.get(1).equalsIgnoreCase("guest"));
+        assertTrue(c.get(3).equalsIgnoreCase("seller"));
+    }
+
+    @Test
+    void advancedQueryUsernameAndRole(){
+        db.openConn();
+        HashMap<String, String> map = db.queryUsernameAndRole();
+        db.closeConn();
+
+        assertTrue(map.get("owner").equalsIgnoreCase("OWNER"));
+        assertTrue(map.get("seller").equalsIgnoreCase("SELLER"));
     }
 
     // Simple test for getRole()

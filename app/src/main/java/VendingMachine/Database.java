@@ -11,8 +11,8 @@ import java.util.*;
  * This is a basic instruction manual for this Vending-
  * Machine.
  * 
- * Everytime you would like to access any of these function
- * , please openConn(), then after you are done
+ * Everytime you would like to access any of these functions, 
+ * please openConn(), then after you are done
  * closeConn().
  * 
  * Each function has comments explaining all of the
@@ -34,9 +34,10 @@ public class Database {
         System.out.println();
         if (successfulConn == 0) {
             dropAllTables();
-            initialiseSchema();
-            addDummyItems();
-            closeConn();
+            this.initialiseSchema();
+            this.addDummyItems();
+            this.setUpInitialCashAmounts();
+            this.closeConn();
         }
     }
 
@@ -61,7 +62,7 @@ public class Database {
                         username VARCHAR(15) PRIMARY KEY, 
                         password VARCHAR(20), 
                         role VARCHAR(20),
-                        CHECK (role IN ('OWNER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
+                        CHECK (role IN ('OWNER', 'SELLER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
                     );
                     """);
 
@@ -83,11 +84,30 @@ public class Database {
 
             openStatement.executeUpdate(
                     """
-                        CREATE TABLE IF NOT EXISTS recent (
-                            item_name VARCHAR(20) PRIMARY KEY
-                        )
+                    CREATE TABLE IF NOT EXISTS recent (
+                        item_name VARCHAR(20) PRIMARY KEY
+                    )
                     """);
+
+            openStatement.executeUpdate(
+                    """
+                    CREATE TABLE IF NOT EXISTS cash(
+                        currency VARCHAR(5) PRIMARY KEY,
+                        quantity INTEGER,
+                        CHECK (currency IN ('100', '50', '20', '10', '5', '2', '1', '0.5', '0.2', '0.1', '0.05'))
+                    );
+                    """);
+
+
+            openStatement.executeUpdate("""
+                        CREATE TABLE IF NOT EXISTS cards (
+                            username VARCHAR(20) PRIMARY KEY,
+                            card VARCHAR(16),
+                            cvv VARCHAR(3)
+                        )
+                            """);
             
+            // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
             openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
 
@@ -106,7 +126,7 @@ public class Database {
 
 
     /**
-     * Opens connection with a database.
+     * Opens connection with the database.
      * To be called before any other function by calling class.
      *
      * @return 0 if successful and -1 if unsuccessful
@@ -117,8 +137,6 @@ public class Database {
             dbConn = DriverManager.getConnection("jdbc:sqlite:vending_machine.db");
             openStatement = dbConn.createStatement();
             openStatement.setQueryTimeout(30); // set timeout to 30 sec.
-
-            System.out.println("Connection to the database has been established.");
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -169,6 +187,8 @@ public class Database {
                 DROP TABLE IF EXISTS categories;
                 DROP TABLE IF EXISTS items;
                 DROP TABLE IF EXISTS recent;
+                DROP TABLE IF EXISTS cash;  
+                DROP TABLE IF EXISTS cards
                 """);
             return 0;
         } catch (SQLException e) {
@@ -177,6 +197,35 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+    }
+
+    /**
+     * Function that sets up the initial cash amount for the first run.
+     * @return if successful return 0, else return -1
+     */
+    public int setUpInitialCashAmounts(){
+        try{
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30);
+            statement.executeUpdate(String.format("insert into cash values (100, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (50, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (20, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (10, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (2, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (1, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.5, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.2, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.1, 5)"));
+            statement.executeUpdate(String.format("insert into cash values (0.05, 5)"));
+
+        }
+        catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
     }
 
 
@@ -189,24 +238,31 @@ public class Database {
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Coke", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Water", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mineral Water", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sprite", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Coca cola", "Drinks"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pepsi", "Drinks"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Juice", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Dark", "Chocolate"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Light", "Chocolate"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Salt", "Chips"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Gummy", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Onion", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Chocolate"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "M&M", "Chocolate"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mentos", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patches", "Candies"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
 
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Gummy"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Onion"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Juice"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "Sprite"));
             
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
+
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user2", "user2p", "REGISTERED CUSTOMER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -306,6 +362,7 @@ public class Database {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(sql);
+            System.out.println("Changed " + username + " to " + role);
             return true;
         } catch(SQLException e) {
             // if the error message is "out of memory",
@@ -327,13 +384,14 @@ public class Database {
      */
     public int insertNewUser(String username, String password, String role) {
         try {
-            // sqllite does not strictly enforce the varchar limits, so we have to test for ourselves.
-            if( username.length() > 15 || password.length() > 20){
+            // SQLite does not strictly enforce the varchar limits, so we have to test for ourselves.
+            if (username.length() > 15 || password.length() > 20) {
                 throw new SQLException("userName or password too long");
             }
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
+            System.out.println(role.toUpperCase());
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", username, password,role.toUpperCase()));
         } catch (SQLException e) {
             // if the error message is "out of memory",
@@ -347,6 +405,11 @@ public class Database {
 
     /**
      * Function to check if a certain user has the inputted role or not.
+     * 
+     * OWNER - O
+     * CASHIER - C
+     * GUEST - G
+     * REGISTERED CUSTOMER - R
      * 
      * @param username  username one wants to check the role of
      * @param role      the role you want to check the username has
@@ -455,6 +518,61 @@ public class Database {
             System.out.println("Error while querying for user :(");
             return -1;
         }
+    }
+
+    /**
+     * Function to get card number and cvv
+     * 
+     * @param username
+     * @return card number and cvv in string array format (String[])
+     */
+    public String[] getCard(String username) {
+
+        String sql = """
+                SELECT card, cvv
+                FROM cards
+                WHERE username = '%s';
+                """;
+        try {
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
+            if (query.next()) {
+                String[] details = {query.getString("card"), query.getString("cvv")};
+                return details;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while querying for the card details :(");
+            String[] errorMessage = {"Error", ""};
+            return errorMessage;
+        }
+    }
+
+    /**
+     * Function to store user's card details in the database.
+     * 
+     * @param username  username of the user
+     * @param card      card number of the user
+     * @param cvv       cvv of the user
+     * @return
+     */
+    public int insertNewCard(String username, String card, String cvv) {
+        try {
+
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            System.out.println(card);
+            statement.executeUpdate(String.format(
+                "insert into cards values('%s', '%s', '%s')", 
+                username, card, cvv));
+
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
     }
 
 }

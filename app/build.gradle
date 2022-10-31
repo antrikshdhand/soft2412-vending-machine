@@ -2,8 +2,6 @@ plugins {
     // Apply the java plugin to add basic functionality for Java Code.
     id 'java'
 
-    // id("java-library")
-
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
 
@@ -17,11 +15,9 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-
-
 javafx {
     version = "19"
-    modules = [ 'javafx.controls', 'javafx.graphics', 'javafx.base', 'javafx.fxml']
+    modules = [ 'javafx.controls', 'javafx.graphics', 'javafx.base', 'javafx.fxml' ]
 }
 
 tasks.withType(JavaCompile) {
@@ -38,7 +34,7 @@ if (JavaVersion.current().isJava8Compatible()) {
         options.addStringOption('Xdoclint:none', '-quiet')
       }
     }
-} // non ascii characters make it crash
+} // non-ASCII characters not allowed
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -63,7 +59,6 @@ version '1.0-SNAPSHOT'
 dependencies {
     // Use JUnit test framework.
     // testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
@@ -75,6 +70,7 @@ dependencies {
 
     // This dependency adds OpenCSV to the application.
     implementation 'com.opencsv:opencsv:5.3'
+
 }
 
 application {
@@ -111,7 +107,12 @@ jacocoTestReport {
                               'OwnerPortal.class',
                               'Page.class',
                               'SellerPortal.class',
-                              'Login.class'])
+                              'Login.class',
+                              'InputCashpage.class',
+                              'PayCard.class',
+                              'CheckoutPage.class',
+                              'pages/*.class',
+                              'controllers/*.class'])
         }))
     }
 }
@@ -161,6 +162,4 @@ shadowJar {
 task(runSeller, dependsOn: 'classes', type: JavaExec) {
     main = 'VendingMachine.SellerPortal'
     classpath = sourceSets.main.runtimeClasspath
-    // args 'mrhaki'
-    // systemProperty 'simple.message', 'Hello '
 }
