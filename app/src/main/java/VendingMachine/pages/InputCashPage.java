@@ -313,7 +313,7 @@ public class InputCashPage extends Page {
 
         // Setting up action for $2
         twoDollars.setOnAction((e) -> {
-            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 2;
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 2);
             sm.getSession().getTransaction().addToCurrencyPaid("2");
             this.refreshAmounts();
 
