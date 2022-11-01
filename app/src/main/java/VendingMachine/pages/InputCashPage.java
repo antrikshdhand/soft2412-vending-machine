@@ -1,7 +1,7 @@
 package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
-import com.sun.source.doctree.AttributeTree;
+
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -17,14 +17,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import org.w3c.dom.css.Rect;
 import javafx.beans.property.DoubleProperty;
+
+import org.w3c.dom.css.Rect;
+
+import com.sun.source.doctree.AttributeTree;
 
 
 /**
- * This is the page for when a users want to pay by cash, they can select the amount by clicking the appropriate buttons.
+ * This is the page for when a users want to pay by cash.
+ * They can select the amount by clicking the appropriate buttons.
  */
-
 public class InputCashPage extends Page {
 
     private SceneManager sm;
@@ -60,6 +63,12 @@ public class InputCashPage extends Page {
     private Label changeAmountDouble;
 
 
+    /**
+     * Constructor for InputCashPage.
+     * Allows for cash payments using various denominations.
+     * 
+     * @param sceneManager
+     */
     public InputCashPage(SceneManager sceneManager){
 
         sm = sceneManager;
@@ -227,12 +236,12 @@ public class InputCashPage extends Page {
 
     }
 
+
     /**
      * Function to set the layout of the buttons on the page.
      * @param notes
      * @param coins
      */
-
     public void setButtonLayout(VBox notes, VBox coins){
 
 
@@ -272,7 +281,7 @@ public class InputCashPage extends Page {
 
 
     /**
-     * Function to set Up the labels
+     * Function to set Up the labels.
      */
     public void setUpTextAndAmount(){
         totalAmount = new Text("Total Amount:");
@@ -283,9 +292,8 @@ public class InputCashPage extends Page {
         changeAmount.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
         this.refreshAmounts();
-
-
     }
+
 
     /**
      * Function to refresh all the Amounts display on screen.
@@ -305,10 +313,10 @@ public class InputCashPage extends Page {
 
 
     /**
-     * Function that sets up action for all currency buttons
+     * Method with lambda functions that set up actions for all currency buttons
      */
-
     public void setUpButtonsAction(){
+
         // Setting action for the $ 100
         hundredDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 100);
@@ -317,7 +325,7 @@ public class InputCashPage extends Page {
 
         });
 
-        // Setting up action for $50
+        // Setting up action for $ 50
         fiftyDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 50);
             sm.getSession().getTransaction().addToCurrencyPaid("50");
@@ -333,7 +341,7 @@ public class InputCashPage extends Page {
 
         });
 
-        // Setting up action for $10
+        // Setting up action for $ 10
         tenDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 10);
             sm.getSession().getTransaction().addToCurrencyPaid("10");
@@ -349,7 +357,7 @@ public class InputCashPage extends Page {
 
         });
 
-        // Setting up action for $2
+        // Setting up action for $ 2
         twoDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 2);
             sm.getSession().getTransaction().addToCurrencyPaid("2");
@@ -397,8 +405,5 @@ public class InputCashPage extends Page {
         });
 
     }
-
-
-
 
 }
