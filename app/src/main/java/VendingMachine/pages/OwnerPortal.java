@@ -91,7 +91,7 @@ public class OwnerPortal extends Page {
         cancelledTransactions = new Button("Generate cancelled transactions");
 
         cancelledTransactions.setOnAction(e -> {
-            createSummary();
+            generateCancelledTransactions();
         });
 
         returnToDp = new Button("Return to default page");
@@ -246,6 +246,48 @@ public class OwnerPortal extends Page {
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
         File file = new File("reports/ownerUsersSummary.csv");
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputFile = new FileWriter(file, true);
+
+            // Create CSVWriter object file writer object as parameter
+            CSVWriter writer = new CSVWriter(outputFile);
+
+            // Add header to ownerUsersSummary.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"USERNAME", "PASSWORD"};
+                writer.writeNext(header);
+            }
+
+            // Add data to transactions.csv
+            for(Map.Entry<String, String> usernamePassword : sm.getDatabase().queryUsernameAndRole().entrySet()) {
+                String[] data = {usernamePassword.getKey(), usernamePassword.getValue()};
+                writer.writeNext(data);
+            }
+
+            writer.close();
+            outputFile.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+        sm.getDatabase().closeConn();
+
+        Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
+        successfulRegisterAlert.setTitle("Success");
+        successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
+        successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
+        successfulRegisterAlert.showAndWait();
+    }
+
+    public void generateCancelledTransactions() {
+
+        sm.getDatabase().openConn();
+        HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
+
+        File file = new File("reports/ownerCancelledTransactionsSummary.csv");
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file, true);

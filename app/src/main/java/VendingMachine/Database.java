@@ -273,6 +273,12 @@ public class Database {
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+
+            insertNewTransaction("Successful", "users1", "");
+            insertNewTransaction("Unsuccessful", "users2", "Timeout");
+
+            System.out.println("Added dummy values");
+
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -440,7 +446,7 @@ public class Database {
 
 
     /**
-     * Function thay allows for the username and role to be queried.
+     * Function that allows for the username and role to be queried.
      * 
      * @return map
      */
@@ -461,6 +467,36 @@ public class Database {
         }
 
         return map;
+
+    }
+
+    /**
+     * Function that allows for the cancelled transactions to be queried.
+     *
+     * @return map
+     */
+    public ArrayList<ArrayList<String>> queryCancelledTransactions() {
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+        //System.out.println("Hello queryCancelledTransactions");
+
+        try {
+            String sql = String.format("SELECT * FROM transactions");
+            ResultSet query = openStatement.executeQuery(sql);
+            table.add(new ArrayList<>());
+//            System.out.println("Hello queryCancelledTransactions2");
+            while (query.next()) {
+//                System.out.println("Hello queryCancelledTransactions3");
+//                System.out.println(query.getString("user"));
+                table.get(0).add(query.getString("user"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return table;
 
     }
 

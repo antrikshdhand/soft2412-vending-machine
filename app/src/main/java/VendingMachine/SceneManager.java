@@ -33,6 +33,10 @@ public class SceneManager {
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         inputCashPage = new InputCashPage(this);
+
+        database.openConn();
+        database.queryCancelledTransactions();
+        database.closeConn();
     }
 
     public void switchScenes(Scene scene) {
