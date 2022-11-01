@@ -117,7 +117,7 @@ public class DatabaseTest {
     @Test
     void testUpdateSpecificQuantity(){
         db.openConn();
-        int value = db.updateCashQuantity("100", 1);;
+        int value = db.increaseCashQuantity("100", 1);;
         db.closeConn();
 
         assertEquals(0, value);
@@ -127,7 +127,7 @@ public class DatabaseTest {
      @Test
      void testUpdateCashQuantity2(){
         db.openConn();
-        db.updateCashQuantity("100",1);
+        db.increaseCashQuantity("100",1);
         HashMap<String, Integer> map = db.getCashSummary();
         db.closeConn();
 
@@ -141,8 +141,8 @@ public class DatabaseTest {
     void testUpdateCashQuantityAdvanced(){
         db.openConn();
         double OgValue = db.getTotalChange();
-        db.updateCashQuantity("100", 2);
-        db.updateCashQuantity("50", 1);
+        db.increaseCashQuantity("100", 2);
+        db.increaseCashQuantity("50", 1);
         HashMap<String, Integer> map = db.getCashSummary();
         double value = db.getTotalChange();
         db.closeConn();
