@@ -75,9 +75,11 @@ public class CheckoutPage extends Page {
             sm.switchScenes(payCardPage.getScene());
         });
 
-     }
+    }
 
-
+    /**
+     * Method to build createPayCash scene for cash payments
+     */
     public void createPayCash() {
         StackPane pane = new StackPane();
         payCashPage = new Scene(pane, WIDTH, HEIGHT);
