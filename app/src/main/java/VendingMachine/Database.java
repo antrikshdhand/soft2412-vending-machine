@@ -241,7 +241,7 @@ public class Database {
 
     /**
      * FOR TESTING PURPOSES ONLY:
-     * Add a bit of dummy data to test the GUI.
+     * Add a bit of dummy data to test the GUI during demonstrations.
      * @return
      */
     public int addDummyItems() {

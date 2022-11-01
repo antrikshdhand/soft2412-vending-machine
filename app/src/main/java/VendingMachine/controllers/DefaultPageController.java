@@ -52,12 +52,12 @@ public class DefaultPageController {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
         session = sceneManager.getSession();
-        //((VBox) proceedToPortalBtn.getParent()).getChildren().remove(proceedToPortalBtn);
-//        proceedToPortalBtn.setDisable(false);
-//        database.openConn();
-//        ArrayList<String> c = database.queryUsername();
-//        database.closeConn();
-//        System.out.println(c);
+        // ((VBox) proceedToPortalBtn.getParent()).getChildren().remove(proceedToPortalBtn);
+        // proceedToPortalBtn.setDisable(false);
+        // database.openConn();
+        // ArrayList<String> c = database.queryUsername();
+        // database.closeConn();
+        // System.out.println(c);
     }
 
     public void setDefaultPageAndStage(ActionEvent event) {
@@ -100,7 +100,7 @@ public class DefaultPageController {
             updateSessionBox();
             loginBtn.setText("Log In");
             proceedToPortalBtn.setText("Please login first");
-//            proceedToPortalBtn.setDisable(false);
+            // proceedToPortalBtn.setDisable(false);
 
         }
     }
@@ -110,7 +110,7 @@ public class DefaultPageController {
         accountLabel.setText("Account: " + session.getUserName());
         loginBtn.setText("Log Out");
         proceedToPortalBtn.setText("Proceed to Portal");
-//        proceedToPortalBtn.setDisable(true);
+            // proceedToPortalBtn.setDisable(true);
     }
 
     public void displayItemStrings(ArrayList<String> itemStrings) {
@@ -190,8 +190,8 @@ public class DefaultPageController {
         totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
 
         for (Map.Entry<String,Integer> entry : session.getTransaction().getItems().entrySet()) {
-//            System.out.println("Key = " + entry.getKey() +
-//                    ", Value = " + entry.getValue());
+            // System.out.println("Key = " + entry.getKey() +
+            //         ", Value = " + entry.getValue());
 
             HBox item = new HBox();
             item.setPadding(new Insets(10));
