@@ -190,8 +190,8 @@ public class DefaultPageController {
         totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
 
         for (Map.Entry<String,Integer> entry : session.getTransaction().getItems().entrySet()) {
-//            System.out.println("Key = " + entry.getKey() +
-//                    ", Value = " + entry.getValue());
+            // System.out.println("Key = " + entry.getKey() +
+            //         ", Value = " + entry.getValue());
 
             HBox item = new HBox();
             item.setPadding(new Insets(10));
