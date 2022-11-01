@@ -259,6 +259,7 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patches", "Candies"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Cocaine", "Chips"));
 
             statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
