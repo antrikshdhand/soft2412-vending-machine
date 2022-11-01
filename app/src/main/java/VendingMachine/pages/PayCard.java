@@ -132,7 +132,7 @@ public class PayCard extends Page {
                 return;
             }
             else if (checkedCardNumber == true && checkedCVV == true) {
-               writeTransaction(username, cardNumber, cvv, total);
+                writeTransaction(username, cardNumber, cvv, total);
                 Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
@@ -140,11 +140,8 @@ public class PayCard extends Page {
 
                 // Add to database
                 if (! cardExists(username)) {
-                    // String[] details = {username, cardNumber, cvv};
-                    {
-                        String[] tempDetails = {username, cardNumber, cvv};
-                        insertCard(tempDetails);
-                    }
+                    String[] tempDetails = {username, cardNumber, cvv};
+                    insertCard(tempDetails);
                 }
 
                 // Clear cart
