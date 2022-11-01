@@ -79,17 +79,19 @@ public class OwnerPortal extends Page {
         manageSCO = new Button("Managed privileged users");
 
         manageSCO.setOnAction(e -> {
-            sm.switchScenes(manageCSOPage);});
+            sm.switchScenes(manageCSOPage);
+        });
 
         summary = new Button("Generate Users Summary");
 
         summary.setOnAction(e -> {
-            createSummary();});
+            createSummary();
+        });
 
-        cancelledTransactions = new Button("View unsuccessful transaction");
+        cancelledTransactions = new Button("Generate cancelled transactions");
 
         cancelledTransactions.setOnAction(e -> {
-            sm.switchScenes(cancelledTransactionPage);
+            createSummary();
         });
 
         returnToDp = new Button("Return to default page");
