@@ -199,6 +199,7 @@ public class Database {
         }
     }
 
+
     /**
      * Function that sets up the initial cash amount for the first run.
      * @return if successful return 0, else return -1
@@ -315,7 +316,7 @@ public class Database {
      * @param currency ( the currency you want to update)
      * @param quantityToUpdate ( quantity you want the cash to update by)
      */
-    public void updateCashQuantity(String currency, Integer quantityToUpdate){
+    public int updateCashQuantity(String currency, Integer quantityToUpdate){
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
         try{
@@ -327,7 +328,9 @@ public class Database {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
+            return -1;
         }
+        return 0;
     }
 
     public ArrayList<String> queryRecent() {

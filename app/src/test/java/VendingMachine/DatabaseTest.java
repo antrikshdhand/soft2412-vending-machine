@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import org.apache.commons.text.io.StringSubstitutorReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -111,6 +112,53 @@ public class DatabaseTest {
         assertTrue(value > 750);
         assertTrue(value < 1000);
     }
+
+    //Testing update currency amount in the vending machine simple test
+    @Test
+    void testUpdateSpecificQuantity(){
+        db.openConn();
+        int value = db.updateCashQuantity("100", 1);;
+        db.closeConn();
+
+        assertEquals(0, value);
+    }
+
+    //Test update currency amount in the vending machine simple 2.
+     @Test
+     void testUpdateCashQuantity2(){
+        db.openConn();
+        db.updateCashQuantity("100",1);
+        HashMap<String, Integer> map = db.getCashSummary();
+        db.closeConn();
+
+        assertEquals(6, map.get("100"));
+
+        assertEquals(5, map.get("50"));
+     }
+
+    //Testing updating currency amount in the vending machine advanced.
+    @Test
+    void testUpdateCashQuantityAdvanced(){
+        db.openConn();
+        double OgValue = db.getTotalChange();
+        db.updateCashQuantity("100", 2);
+        db.updateCashQuantity("50", 1);
+        HashMap<String, Integer> map = db.getCashSummary();
+        double value = db.getTotalChange();
+        db.closeConn();
+
+        // Simple check to see if it has updated correctly.
+        assertEquals(7, map.get("100"));
+        assertEquals( 6, map.get("50"));
+        assertEquals(5, map.get("10"));
+
+        // Testing that the change total has gone up.
+        assertTrue( OgValue < 1000 );
+        assertTrue(value > 1000);
+
+        assertTrue((value - OgValue == 250));
+    }
+
 
     // testing for insert users.
     @Test
