@@ -95,7 +95,7 @@ public class CheckoutPage extends Page {
                 timerText.setText("Time left: " + Integer.toString(time));
 
                 if (time > 0) {
-                    System.out.println(time);
+                    // System.out.println(time);
                 }
                 else {
 
@@ -103,8 +103,9 @@ public class CheckoutPage extends Page {
                     // timeoutAlert.setTitle("Time's up!");
                     // timeoutAlert.setHeaderText("The time limit has passed.");
                     // timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.");
+                    // paymentSuccessfulAlert.showAndWait();
 
-                    // cancelTransaction();
+                    cancelTransaction();
                 }
 
             }
@@ -126,6 +127,9 @@ public class CheckoutPage extends Page {
         pane.getChildren().add(returnToDp);
 
 
+
+
+
         // 'Pay by card' button
 
         PayCard payCardPage = new PayCard(sm);
@@ -142,6 +146,8 @@ public class CheckoutPage extends Page {
      * Method to log user out if transaction is cancelled manually or by timeout
      */
     public void cancelTransaction() {
+
+        sm.switchScenes(sm.getDefaultPageScene());
 
     }
 

@@ -32,7 +32,6 @@ public class SceneManager {
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
-        checkoutPage = new CheckoutPage(this);
         inputCashPage = new InputCashPage(this);
     }
 
@@ -76,6 +75,7 @@ public class SceneManager {
     }
 
     public Scene getCheckoutPageScene() {
+        checkoutPage = new CheckoutPage(this);
         return checkoutPage.getScene();
     }
 
