@@ -56,7 +56,6 @@ public class SceneManager {
     }
 
 
-
     // This is a way to update the values on screen for the inputCashPage.
     //    public void changeInputCashPage( InputCashPage page){
     //        inputCashPage = page;
