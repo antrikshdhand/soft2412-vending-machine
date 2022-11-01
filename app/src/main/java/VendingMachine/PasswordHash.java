@@ -16,6 +16,7 @@ public class PasswordHash {
 
    }
 
+   
    public static byte[] getSaltedHashSHA512(String password, byte[] salt) {
        try {
            MessageDigest md = MessageDigest.getInstance("SHA512");
