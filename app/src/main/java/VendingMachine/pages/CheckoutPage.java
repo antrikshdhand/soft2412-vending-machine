@@ -83,18 +83,23 @@ public class CheckoutPage extends Page {
             sm.switchScenes(payCardPage.getScene());
         });
 
+
+
         // Elements for timer
-        VBox vb = new VBox();
-        int refreshCountdown = 30;
+
+        int refreshCountdown = 5;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
 
         countDown.addListener(new ChangeListener<Number>() {
+
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
                 System.out.println(newValue.intValue());
 
             }
+
         });
+
         final Timeline timeToRefresh = new Timeline();
         timeToRefresh.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(countDown, refreshCountdown)),
                 new KeyFrame(Duration.seconds(refreshCountdown), new KeyValue(countDown, 0)));
