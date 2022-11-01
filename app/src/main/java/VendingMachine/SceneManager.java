@@ -102,4 +102,8 @@ public class SceneManager {
     public void setDefaultPageController(DefaultPageController defaultPageController) {
         this.defaultPageController = defaultPageController;
     }
+
+    public DefaultPageController getDefaultPageController() {
+        return defaultPageController;
+    }
 }

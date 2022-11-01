@@ -105,6 +105,13 @@ public class DefaultPageController {
         }
     }
 
+    public void logout() {
+        session.resetSession();
+        updateSessionBox();
+        loginBtn.setText("Log In");
+        proceedToPortalBtn.setText("Please login first");
+    }
+
     public void updateSessionBox() {
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
