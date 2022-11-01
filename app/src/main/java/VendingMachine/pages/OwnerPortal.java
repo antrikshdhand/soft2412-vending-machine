@@ -106,6 +106,9 @@ public class OwnerPortal extends Page {
         returnToDp.setTranslateY(320);
     }
 
+    /**
+     * Function to create the manage CSO UI
+     */
     public void createManageCSO() {
         StackPane pane = new StackPane();
         manageCSOPage = new Scene(pane, WIDTH, HEIGHT);
@@ -232,6 +235,9 @@ public class OwnerPortal extends Page {
     }
 
 
+    /**
+     * Function to implement the 'create summary' feature
+     */
     public void createSummary() {
 
         sm.getDatabase().openConn();
@@ -274,7 +280,9 @@ public class OwnerPortal extends Page {
         successfulRegisterAlert.showAndWait();
     }
 
-
+    /**
+     * Function to view cancelled transaction
+     */
     public void createCancelledTransaction() {
         StackPane pane = new StackPane();
         cancelledTransactionPage = new Scene(pane, WIDTH, HEIGHT);

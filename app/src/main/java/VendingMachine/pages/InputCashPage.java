@@ -69,7 +69,7 @@ public class InputCashPage extends Page {
      * 
      * @param sceneManager
      */
-    public InputCashPage(SceneManager sceneManager){
+    public InputCashPage(SceneManager sceneManager) {
 
         sm = sceneManager;
 
@@ -106,7 +106,6 @@ public class InputCashPage extends Page {
         pane.getColumnConstraints().add(col6);
 
         // Setting up row Constraints
-
         RowConstraints row1 = new RowConstraints(40);
         RowConstraints row2 = new RowConstraints(640);
         RowConstraints row3 = new RowConstraints( 20 );
@@ -115,27 +114,23 @@ public class InputCashPage extends Page {
         pane.getRowConstraints().addAll(row1,row2,row3, row4);
 
 
-
         // Make all the buttons
         this.initialiseButton();
 
-
-        // setting the button layOut.
+        // Setting up the button layout.
         this.setButtonLayout(notes, coins);
 
-        // Setting up the labels
+        // Setting up the labels.
         this.setUpTextAndAmount();
 
-        // Setting up the Amount();
+        // Setting up the Amount().
         this.refreshAmounts();
 
 
         VBox amountDisplay = new VBox();
         amountDisplay.setSpacing(10);
 
-
         pane.add(amountDisplay, 5,1);
-
 
         this.setUpButtonsAction();
 
@@ -147,7 +142,7 @@ public class InputCashPage extends Page {
 
         // Setting up Action for the complete Transaction button.
         completeTransaction.setOnAction(e -> {
-            if(sm.getSession().getTransaction().getDue() > 0){
+            if (sm.getSession().getTransaction().getDue() > 0) {
                notEnoughPaid();
             }
 
@@ -158,7 +153,7 @@ public class InputCashPage extends Page {
 
 
             // If the change is greater than change in the vending machine, then could be an error
-            if(sm.getSession().getTransaction().getChange() > change) {
+            if (sm.getSession().getTransaction().getChange() > change) {
 
                 // If the transaction was done by guest, insert as anonymous in transaction relation.
                 String name = sm.getSession().getUserName();
@@ -192,7 +187,11 @@ public class InputCashPage extends Page {
         return;
     }
 
-    private void notEnoughChange(){
+    
+    /**
+     * Function to display alert when there is not enough change in the machine.
+     */
+    private void notEnoughChange() {
 
         Alert nullUsernameAlert = new Alert(Alert.AlertType.ERROR);
         nullUsernameAlert.setTitle("Not enough change available");
@@ -205,12 +204,11 @@ public class InputCashPage extends Page {
 
 
     /**
-     *
      * Function to set up all the buttons.
      */
-    public void initialiseButton(){
+    public void initialiseButton() {
 
-        // notes
+        // Notes
         hundredDollars = new Button("$ 100");
         fiftyDollars = new Button("$ 50 ");
         twentyDollars = new  Button("$ 20 ");
@@ -231,9 +229,6 @@ public class InputCashPage extends Page {
         // Cancel Button
         cancel = new Button("Cancel");
 
-
-
-
     }
 
 
@@ -242,8 +237,7 @@ public class InputCashPage extends Page {
      * @param notes
      * @param coins
      */
-    public void setButtonLayout(VBox notes, VBox coins){
-
+    public void setButtonLayout(VBox notes, VBox coins) {
 
         // All the Notes Layout
         Text selectNotes = new Text("Select Note");
@@ -283,7 +277,7 @@ public class InputCashPage extends Page {
     /**
      * Function to set Up the labels.
      */
-    public void setUpTextAndAmount(){
+    public void setUpTextAndAmount() {
         totalAmount = new Text("Total Amount:");
         totalAmount.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         dueAmount = new Text("Amount Due: ");
@@ -298,7 +292,7 @@ public class InputCashPage extends Page {
     /**
      * Function to refresh all the Amounts display on screen.
      */
-    public void refreshAmounts(){
+    public void refreshAmounts() {
         totalAmountDouble = new Label("$ " + sm.getSession().getTransaction().getTotal() + "");
         totalAmountDouble.setFont(Font.font("Arial",14));
 
@@ -315,14 +309,13 @@ public class InputCashPage extends Page {
     /**
      * Method with lambda functions that set up actions for all currency buttons
      */
-    public void setUpButtonsAction(){
+    public void setUpButtonsAction() {
 
         // Setting action for the $ 100
         hundredDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 100);
             sm.getSession().getTransaction().addToCurrencyPaid("100");
             this.refreshAmounts();
-
         });
 
         // Setting up action for $ 50
@@ -330,7 +323,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 50);
             sm.getSession().getTransaction().addToCurrencyPaid("50");
             this.refreshAmounts();
-
         });
 
         // Setting action for the $ 20
@@ -338,7 +330,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 20);
             sm.getSession().getTransaction().addToCurrencyPaid("20");
             this.refreshAmounts();
-
         });
 
         // Setting up action for $ 10
@@ -346,7 +337,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 10);
             sm.getSession().getTransaction().addToCurrencyPaid("10");
             this.refreshAmounts();
-
         });
 
         // Setting action for the $ 5
@@ -354,7 +344,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 5);
             sm.getSession().getTransaction().addToCurrencyPaid("5");
             this.refreshAmounts();
-
         });
 
         // Setting up action for $ 2
@@ -362,7 +351,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 2);
             sm.getSession().getTransaction().addToCurrencyPaid("2");
             this.refreshAmounts();
-
         });
 
         // Setting action for the $ 1
@@ -370,7 +358,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 1);
             sm.getSession().getTransaction().addToCurrencyPaid("1");
             this.refreshAmounts();
-
         });
 
         // Setting up action for ¢ 50
@@ -378,7 +365,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.5);
             sm.getSession().getTransaction().addToCurrencyPaid("0.5");
             this.refreshAmounts();
-
         });
 
         // Setting action for the ¢ 20
@@ -386,7 +372,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.2);
             sm.getSession().getTransaction().addToCurrencyPaid("0.2");
             this.refreshAmounts();
-
         });
 
         // Setting up action for ¢ 10
@@ -394,7 +379,6 @@ public class InputCashPage extends Page {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.1);
             sm.getSession().getTransaction().addToCurrencyPaid("0.1");
             this.refreshAmounts();
-
         });
 
         // Setting up action for ¢ 5

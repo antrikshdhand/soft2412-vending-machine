@@ -321,7 +321,7 @@ public class Database {
     }
 
     /**
-     *  Function to update the number of available change in the vending machine.
+     * Function to update the number of available change in the vending machine.
      * @param currency ( the currency you want to update)
      * @param quantityToUpdate ( quantity you want the cash to update by)
      */
@@ -342,6 +342,10 @@ public class Database {
         return 0;
     }
 
+    /**
+     * Function to query recent items in the store.
+     * @return items
+     */
     public ArrayList<String> queryRecent() {
         
         ArrayList<String> items = new ArrayList<>();

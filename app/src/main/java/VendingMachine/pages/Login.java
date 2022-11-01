@@ -55,9 +55,7 @@ public class Login extends Page {
         this.sceneManager = sceneManager;
 
         setupScene();
-
         setupLoginForm();
-
         setupActions();
 
     }
