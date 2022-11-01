@@ -213,5 +213,41 @@ public class TransactionTest {
         assertEquals(0, due);
     }
 
+    // Testing the Currently paid hashmap is not null
+   @Test
+    void testNotNullCurrentlyPaid(){
 
+        assertNotNull(t.getCurrentlyPaid());
+    }
+
+    // Testing the value in currentlyPaid with the default values.
+    @Test
+    void testCurrentlyPaid(){
+
+        int value1 = t.getQuantityPaid("100");
+        int value2 = t.getQuantityPaid("0.05");
+
+        assertEquals(0, value1);
+        assertEquals( 0,value2);
+
+        assertTrue(t.getCurrentlyPaid().containsKey("50"));
+        assertTrue(t.getCurrentlyPaid().containsKey("0.1"));
+
+
+    }
+
+    // Testing increasing the value in added currentlyPaid
+    @Test
+    void testAddToCurrencyPaid() {
+        t.addToCurrencyPaid("100");
+        t.addToCurrencyPaid("100");
+        t.addToCurrencyPaid("50");
+        t.addToCurrencyPaid("0.5");
+        t.addToCurrencyPaid("22");
+
+        assertEquals(2, t.getQuantityPaid("100"));
+        assertEquals(1, t.getQuantityPaid("50"));
+        assertEquals(0,t.getQuantityPaid("0.2"));
+        assertEquals(1,t.getQuantityPaid("0.5"));
+    }
 }

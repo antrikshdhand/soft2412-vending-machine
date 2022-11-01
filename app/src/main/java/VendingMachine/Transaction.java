@@ -3,6 +3,7 @@ package VendingMachine;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Transaction {
@@ -18,6 +19,8 @@ public class Transaction {
 
     private double change;
 
+    private HashMap<String, Integer> currentlyPaid = new HashMap<>();
+
     // Adding doubleProperty for dynamic text on screen.
     // Note you do not need a doubleProperty for the total as it will never change on screen.
     // You also never need it for paid as the paid amount will never appear on screen.
@@ -26,6 +29,7 @@ public class Transaction {
 
     public Transaction(){
         this.reset();
+        this.initialHashMap();
 
     }
 
@@ -174,5 +178,57 @@ public class Transaction {
      */
     public DoubleProperty getDueAmount(){
         return this.dueAmount;
+    }
+
+    /**
+     * Function for putting the initial setting up the hashmap.
+     */
+    public void initialHashMap(){
+
+        currentlyPaid.put("100", 0);
+        currentlyPaid.put("50",0);
+        currentlyPaid.put("20",0);
+        currentlyPaid.put("10",0);
+        currentlyPaid.put("5",0);
+        currentlyPaid.put("2",0);
+        currentlyPaid.put("1",0);
+        currentlyPaid.put("0.5",0);
+        currentlyPaid.put("0.2",0);
+        currentlyPaid.put("0.1",0);
+        currentlyPaid.put("0.05",0);
+
+    }
+
+    /**
+     *  Function that updates the quantity for the givens quantity for a currency by 1.
+     * @param key (currency you want to update by 1)
+     */
+    public void addToCurrencyPaid(String key){
+
+        // You can only update keys that are already in the hashmap
+        if(!currentlyPaid.containsKey(key)){
+            return;
+        }
+
+        currentlyPaid.put(key, currentlyPaid.get(key) + 1);
+    }
+
+
+    /**
+     * Function that return the currently paid hashMap.
+     * @return
+     */
+    public HashMap<String, Integer> getCurrentlyPaid(){
+        return this.currentlyPaid;
+    }
+
+
+    /**
+     * Function that returns the quantity paid so far for a given currency in currently paid.
+     * @param key
+     * @return
+     */
+    public int getQuantityPaid(String key){
+        return currentlyPaid.get(key);
     }
 }
