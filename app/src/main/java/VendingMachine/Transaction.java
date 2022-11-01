@@ -2,6 +2,7 @@ package VendingMachine;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,9 @@ public class Transaction {
 
     private double change;
 
+
+    private ArrayList<String> changeOrder = new ArrayList<>();
+
     private HashMap<String, Integer> currentlyPaid = new HashMap<>();
 
     // Adding doubleProperty for dynamic text on screen.
@@ -30,6 +34,17 @@ public class Transaction {
     public Transaction(){
         this.reset();
         this.initialHashMap();
+        changeOrder.add("100");
+        changeOrder.add("50");
+        changeOrder.add("20");
+        changeOrder.add("10");
+        changeOrder.add("5");
+        changeOrder.add("2");
+        changeOrder.add("1");
+        changeOrder.add("0.5");
+        changeOrder.add("0.2");
+        changeOrder.add("0.1");
+        changeOrder.add("0.05");
 
     }
 
@@ -145,6 +160,14 @@ public class Transaction {
             due = 0;
         }
         dueAmount.set(due);
+    }
+
+    /**
+     * Function that returns the change order in an ArrayList
+     * @return
+     */
+    public ArrayList<String> getChangeOrder(){
+        return changeOrder;
     }
 
     /**

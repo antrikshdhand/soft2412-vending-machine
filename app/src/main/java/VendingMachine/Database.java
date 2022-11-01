@@ -106,6 +106,15 @@ public class Database {
                             cvv VARCHAR(3)
                         )
                             """);
+
+            openStatement.executeUpdate("""
+                        CREATE TABLE IF NOT EXISTS transactions(
+                            time_added DATETIME DEFAULT (CURRENT_TIMESTAMP) PRIMARY KEY,
+                            status VARCHAR(16), -- Successful or Unsuccessful 
+                            users VARCHAR(20), -- who attempted the transaction, if guest should be anonymous 
+                            reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. ) 
+                            )
+                            """);
             
             // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
@@ -115,13 +124,12 @@ public class Database {
             // CASHIER - C
             // GUEST - G
             // REGISTERED CUSTOMER - R
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return -1;
-        }
-        return 0;
+        } return 0;
     }
 
 
@@ -188,7 +196,8 @@ public class Database {
                 DROP TABLE IF EXISTS items;
                 DROP TABLE IF EXISTS recent;
                 DROP TABLE IF EXISTS cash;  
-                DROP TABLE IF EXISTS cards
+                DROP TABLE IF EXISTS cards;
+                DROP TABLE IF EXISTS transactions;
                 """);
             return 0;
         } catch (SQLException e) {
@@ -350,6 +359,26 @@ public class Database {
         
         return items;
 
+    }
+
+    /**
+     * Function that enters a new transaction into the transaction table.
+     * @param status
+     * @param user
+     * @param reason
+     */
+    public int insertNewTransaction(String status, String user, String reason){
+
+        try {
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(String.format("insert into transactions values(CURRENT_TIMESTAMP ,'%s', '%s', '%s')", status, user, reason));
+
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return 0;
     }
 
 
