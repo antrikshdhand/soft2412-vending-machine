@@ -43,6 +43,10 @@ public class SceneManager {
         stage.setScene(scene);
     }
 
+    public Scene getScene() {
+        return stage.getScene();
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
