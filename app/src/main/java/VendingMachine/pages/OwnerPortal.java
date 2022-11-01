@@ -1,23 +1,17 @@
 package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
+
 import com.opencsv.CSVWriter;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
 import javafx.collections.FXCollections;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class OwnerPortal extends Page {
@@ -49,8 +43,7 @@ public class OwnerPortal extends Page {
 
         this.createManageCSO();
         this.createCancelledTransaction();
-//        this.createSummary();
-
+        // this.createSummary();
 
         VBox box = new VBox();
         box.setSpacing(5);
@@ -66,59 +59,52 @@ public class OwnerPortal extends Page {
         box.getChildren().addAll(title, sellerPortal, cashierPortal, manageSCO, summary, cancelledTransactions);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
-
-
-     }
+    }
 
 
     /**
      * Function to set up all the buttons required on the owner's page.
+     * @param box
      */
+    public void setButtons(VBox box) {
 
-    public void setButtons( VBox box){
+        cashierPortal = new Button("Cashier portal");
 
-         cashierPortal = new Button("Cashier portal");
+        cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
 
+        sellerPortal = new Button("Seller portal");
 
-         cashierPortal.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
 
+        manageSCO = new Button("Managed privileged users");
 
-         sellerPortal = new Button("Seller portal");
+        manageSCO.setOnAction(e -> {
+            sm.switchScenes(manageCSOPage);});
 
+        summary = new Button("Generate Users Summary");
 
-         sellerPortal.setOnAction(e ->  sm.switchScenes(sm.getSellerPortalScene()));
+        summary.setOnAction(e -> {
+            createSummary();});
 
-         manageSCO = new Button("Managed privileged users");
+        cancelledTransactions = new Button("View unsuccessful transaction");
 
-         manageSCO.setOnAction(e -> {
-             sm.switchScenes(manageCSOPage);});
+        cancelledTransactions.setOnAction(e -> {
+            sm.switchScenes(cancelledTransactionPage);
+        });
 
-         summary = new Button("Generate Users Summary");
+        returnToDp = new Button("Return to default page");
 
-         summary.setOnAction(e -> {
-             createSummary();});
+        returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
 
-         cancelledTransactions = new Button("View unsuccessful transaction");
+        cashierPortal.setMinWidth(box.getPrefWidth());
+        sellerPortal.setMinWidth(box.getPrefWidth());
+        manageSCO.setMinWidth(box.getPrefWidth());
+        summary.setMinWidth(box.getPrefWidth());
+        cancelledTransactions.setMinWidth(box.getPrefWidth());
 
-         cancelledTransactions.setOnAction(e -> {
-             sm.switchScenes(cancelledTransactionPage);});
-
-         returnToDp = new Button("Return to default page");
-
-         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
-
-
-         cashierPortal.setMinWidth(box.getPrefWidth());
-         sellerPortal.setMinWidth(box.getPrefWidth());
-         manageSCO.setMinWidth(box.getPrefWidth());
-         summary.setMinWidth(box.getPrefWidth());
-         cancelledTransactions.setMinWidth(box.getPrefWidth());
-
-         returnToDp.setTranslateX(-550);
-         returnToDp.setTranslateY(320);
-
-
-     }
+        returnToDp.setTranslateX(-550);
+        returnToDp.setTranslateY(320);
+    }
 
     public void createManageCSO() {
         StackPane pane = new StackPane();
@@ -156,7 +142,6 @@ public class OwnerPortal extends Page {
             success.setContentText("The default password set is '1234'");
             success.showAndWait();
 
-
             sm.getDatabase().closeConn();
         });
 
@@ -166,7 +151,7 @@ public class OwnerPortal extends Page {
         pane.getChildren().add(create);
 
         userData.get().setTranslateY(80);
-        //pane.getChildren().add(userData.get());
+        // pane.getChildren().add(userData.get());
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
@@ -198,22 +183,25 @@ public class OwnerPortal extends Page {
             sm.getDatabase().changeRole(users.getValue(), "REGISTERED CUSTOMER");
             sm.getDatabase().closeConn();
         });
+
         ctc.setOnAction(event -> {
             sm.getDatabase().openConn();
             sm.getDatabase().changeRole(users.getValue(), "CASHIER");
             sm.getDatabase().closeConn();
         });
+
         cts.setOnAction(event -> {
             sm.getDatabase().openConn();
             sm.getDatabase().changeRole(users.getValue(), "SELLER");
             sm.getDatabase().closeConn();
         });
+
         removeUser.setOnAction(event -> {
 
         });
 
         lbl.setTranslateY(20);
-//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
@@ -225,7 +213,7 @@ public class OwnerPortal extends Page {
 
         users.setOnAction(event -> {
 
-//            createManageCSO();
+            // createManageCSO();
 
             sm.getDatabase().openConn();
 
@@ -246,7 +234,6 @@ public class OwnerPortal extends Page {
 
     public void createSummary() {
 
-
         sm.getDatabase().openConn();
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
@@ -258,14 +245,13 @@ public class OwnerPortal extends Page {
             // Create CSVWriter object file writer object as parameter
             CSVWriter writer = new CSVWriter(outputFile);
 
-            // Add header to transactions.csv if empty
+            // Add header to ownerUsersSummary.csv if empty
             if (file.length() == 0) {
                 String[] header = {"USERNAME", "PASSWORD"};
                 writer.writeNext(header);
             }
 
             // Add data to transactions.csv
-
             for(Map.Entry<String, String> usernamePassword : sm.getDatabase().queryUsernameAndRole().entrySet()) {
                 String[] data = {usernamePassword.getKey(), usernamePassword.getValue()};
                 writer.writeNext(data);
@@ -278,15 +264,14 @@ public class OwnerPortal extends Page {
             e.printStackTrace();
 
         }
-        sm.getDatabase().closeConn();
 
+        sm.getDatabase().closeConn();
 
         Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
         successfulRegisterAlert.setTitle("Success");
         successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
         successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
         successfulRegisterAlert.showAndWait();
-
     }
 
 
@@ -301,7 +286,7 @@ public class OwnerPortal extends Page {
 
         pane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);

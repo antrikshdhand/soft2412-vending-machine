@@ -62,7 +62,9 @@ public class Login extends Page {
 
     }
 
-
+    /**
+     * Setup scene for login page
+     */
     private void setupScene() {
         grid = new GridPane();
         grid.setGridLinesVisible(false);
@@ -75,6 +77,9 @@ public class Login extends Page {
     }
 
 
+    /**
+     * Setup login form
+     */
     private void setupLoginForm() {
         scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -108,6 +113,9 @@ public class Login extends Page {
     }
 
 
+    /**
+     * Setup actions for login page
+     */
     private void setupActions() {
 
         // ACTION 1: if user presses enter key on password box, it fires the sign in button
@@ -135,7 +143,9 @@ public class Login extends Page {
 
     }
 
-    
+    /**
+     * Configure attempts to login
+     */
     private void attemptLogin() {
         // set username and password variables
         loginUsername = userTextField.getText();

@@ -93,7 +93,7 @@ public class CheckoutPage extends Page {
         countDown.addListener(new ChangeListener<Number>() {
 
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
+                // What is done once decremented
                 System.out.println(newValue.intValue());
 
             }
