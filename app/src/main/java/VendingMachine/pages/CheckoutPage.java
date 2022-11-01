@@ -107,6 +107,7 @@ public class CheckoutPage extends Page {
 
     }
 
+    
     /**
      * Method to build createPayCash scene for cash payments
      */
