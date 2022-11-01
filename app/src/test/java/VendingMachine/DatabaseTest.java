@@ -117,7 +117,7 @@ public class DatabaseTest {
     @Test
     void testUpdateSpecificQuantity(){
         db.openConn();
-        int value = db.updateCashQuantity("100", 1);;
+        int value = db.increaseCashQuantity("100", 1);;
         db.closeConn();
 
         assertEquals(0, value);
@@ -127,7 +127,7 @@ public class DatabaseTest {
      @Test
      void testUpdateCashQuantity2(){
         db.openConn();
-        db.updateCashQuantity("100",1);
+        db.increaseCashQuantity("100",1);
         HashMap<String, Integer> map = db.getCashSummary();
         db.closeConn();
 
@@ -141,8 +141,8 @@ public class DatabaseTest {
     void testUpdateCashQuantityAdvanced(){
         db.openConn();
         double OgValue = db.getTotalChange();
-        db.updateCashQuantity("100", 2);
-        db.updateCashQuantity("50", 1);
+        db.increaseCashQuantity("100", 2);
+        db.increaseCashQuantity("50", 1);
         HashMap<String, Integer> map = db.getCashSummary();
         double value = db.getTotalChange();
         db.closeConn();
@@ -158,6 +158,55 @@ public class DatabaseTest {
 
         assertTrue((value - OgValue == 250));
     }
+
+
+    //Testing decrease currency amount in the vending machine simple test
+    @Test
+    void testDecreaseSpecificQuantity(){
+        db.openConn();
+        int value = db.decreaseCashQuantity("100", 1);;
+        db.closeConn();
+
+        assertEquals(0, value);
+    }
+
+    //Test decrease currency amount in the vending machine simple 2.
+    @Test
+    void testDecreaseCashQuantity2(){
+        db.openConn();
+        db.decreaseCashQuantity("100",1);
+        HashMap<String, Integer> map = db.getCashSummary();
+        db.closeConn();
+
+        assertEquals(4, map.get("100"));
+
+        assertEquals(5, map.get("50"));
+    }
+
+    //Testing decreasing currency amount in the vending machine advanced.
+    @Test
+    void testDecreaseiCashQuantityAdvanced(){
+        db.openConn();
+        double OgValue = db.getTotalChange();
+        db.decreaseCashQuantity("100", 2);
+        db.decreaseCashQuantity("50", 1);
+        HashMap<String, Integer> map = db.getCashSummary();
+        double value = db.getTotalChange();
+        db.closeConn();
+
+        // Simple check to see if it has updated correctly.
+        assertEquals(3, map.get("100"));
+        assertEquals( 4, map.get("50"));
+        assertEquals(5, map.get("10"));
+
+        // Testing that the change total has gone down.
+        assertTrue( OgValue < 1000 );
+        assertTrue(value < 800);
+
+        assertTrue(( OgValue - value == 250));
+    }
+
+
 
 
     // testing for insert users.

@@ -325,7 +325,7 @@ public class Database {
      * @param currency ( the currency you want to update)
      * @param quantityToUpdate ( quantity you want the cash to update by)
      */
-    public int updateCashQuantity(String currency, Integer quantityToUpdate){
+    public int increaseCashQuantity(String currency, Integer quantityToUpdate){
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
         try{
@@ -341,6 +341,31 @@ public class Database {
         }
         return 0;
     }
+
+
+    /**
+     * Function to deduct a quantity of a given currency.
+     * @param currency
+     * @param quantityToDeduct
+     * @return
+     */
+    public int decreaseCashQuantity(String currency, Integer quantityToDeduct){
+        HashMap<String,Integer> availableCashMap = this.getCashSummary();
+
+        try{
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", availableCashMap.get(currency) - quantityToDeduct,  currency));
+
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
 
     /**
      * Function to query recent items in the store.
