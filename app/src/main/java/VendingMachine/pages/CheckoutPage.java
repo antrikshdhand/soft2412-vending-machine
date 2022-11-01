@@ -148,6 +148,7 @@ public class CheckoutPage extends Page {
     public void cancelTransaction() {
 
         sm.switchScenes(sm.getDefaultPageScene());
+        sm.getDefaultPageController().logout();
 
     }
 
