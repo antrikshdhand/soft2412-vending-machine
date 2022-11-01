@@ -2,7 +2,7 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -15,9 +15,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.beans.property.*;
 import javafx.beans.value.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.control.Alert.AlertType;
 
 import java.util.concurrent.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
+
 
 public class CheckoutPage extends Page {
 
@@ -87,8 +90,16 @@ public class CheckoutPage extends Page {
 
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 // What is done once decremented
-                System.out.println(newValue.intValue());
-                timerText.setText("Time left: " + Integer.toString(newValue.intValue()));
+
+                int time = newValue.intValue();
+                timerText.setText("Time left: " + Integer.toString(time));
+
+                if (time >= 0) {
+                    System.out.println(time);
+                }
+                else if (time < 0) {
+
+                }
 
             }
 
