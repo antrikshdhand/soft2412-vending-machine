@@ -59,6 +59,12 @@ public class InputCashPage extends Page {
     private Label changeAmountDouble;
 
 
+    /**
+     * Constructor for InputCashPage.
+     * Allows for cash payments using various denominations.
+     * 
+     * @param sceneManager
+     */
     public InputCashPage(SceneManager sceneManager){
 
         sm = sceneManager;
