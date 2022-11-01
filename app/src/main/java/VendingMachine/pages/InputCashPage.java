@@ -111,7 +111,7 @@ public class InputCashPage extends Page {
         RowConstraints row3 = new RowConstraints( 20 );
         RowConstraints row4 = new RowConstraints(20);
 
-        pane.getRowConstraints().addAll(row1,row2,row3, row4);
+        pane.getRowConstraints().addAll(row1, row2, row3, row4);
 
 
         // Make all the buttons
@@ -130,11 +130,11 @@ public class InputCashPage extends Page {
         VBox amountDisplay = new VBox();
         amountDisplay.setSpacing(10);
 
-        pane.add(amountDisplay, 5,1);
+        pane.add(amountDisplay, 5, 1);
 
         this.setUpButtonsAction();
 
-        amountDisplay.getChildren().addAll(totalAmount,totalAmountDouble,dueAmount,dueAmountDouble,changeAmount,changeAmountDouble, completeTransaction);
+        amountDisplay.getChildren().addAll(totalAmount, totalAmountDouble, dueAmount, dueAmountDouble, changeAmount, changeAmountDouble, completeTransaction);
 
 
         // Setting Action for the Cancel Button
@@ -248,7 +248,7 @@ public class InputCashPage extends Page {
         tenDollars.setMinWidth(notes.getPrefWidth());
         fiveDollars.setMinWidth(notes.getPrefWidth());
 
-        notes.getChildren().addAll(selectNotes,hundredDollars, fiftyDollars, twentyDollars, tenDollars, fiveDollars);
+        notes.getChildren().addAll(selectNotes, hundredDollars, fiftyDollars, twentyDollars, tenDollars, fiveDollars);
 
 
         pane.add(notes, 1, 1);
@@ -269,7 +269,7 @@ public class InputCashPage extends Page {
 
         pane.add(coins, 3, 1);
 
-        pane.add(cancel,1,2);
+        pane.add(cancel, 1, 2);
 
     }
 
@@ -294,14 +294,14 @@ public class InputCashPage extends Page {
      */
     public void refreshAmounts() {
         totalAmountDouble = new Label("$ " + sm.getSession().getTransaction().getTotal() + "");
-        totalAmountDouble.setFont(Font.font("Arial",14));
+        totalAmountDouble.setFont(Font.font("Arial", 14));
 
         changeAmountDouble = new Label();
-        changeAmountDouble.setFont(Font.font("Arial",14));
+        changeAmountDouble.setFont(Font.font("Arial", 14));
         changeAmountDouble.textProperty().bind(sm.getSession().getTransaction().getChangeAmount().asString("$ %.2f"));
 
         dueAmountDouble = new Label();
-        dueAmountDouble.setFont(Font.font("Arial",14));
+        dueAmountDouble.setFont(Font.font("Arial", 14));
         dueAmountDouble.textProperty().bind(sm.getSession().getTransaction().getDueAmount().asString("$ %.2f"));
     }
 
