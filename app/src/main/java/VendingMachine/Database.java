@@ -109,11 +109,12 @@ public class Database {
 
             openStatement.executeUpdate("""
                         CREATE TABLE IF NOT EXISTS transactions(
-                            DEFAULT CURRENT_TIMESTAMP PRIMARY KEY,
+                            time_added DATETIME DEFAULT (CURRENT_TIMESTAMP) PRIMARY KEY,
                             status VARCHAR(16), -- Successful or Unsuccessful 
                             users VARCHAR(20), -- who attempted the transaction, if guest should be anonymous 
                             reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. ) 
-                           """);
+                            )
+                            """);
             
             // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
@@ -196,7 +197,7 @@ public class Database {
                 DROP TABLE IF EXISTS recent;
                 DROP TABLE IF EXISTS cash;  
                 DROP TABLE IF EXISTS cards;
-                DROP TABLE IF EXISTS transctions;
+                DROP TABLE IF EXISTS transactions;
                 """);
             return 0;
         } catch (SQLException e) {
@@ -371,7 +372,7 @@ public class Database {
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into items transactions('%s', '%s', '%s')", status, user, reason));
+            statement.executeUpdate(String.format("insert into transactions values(CURRENT_TIMESTAMP ,'%s', '%s', '%s')", status, user, reason));
 
         } catch(SQLException e){
             System.out.println(e.getMessage());

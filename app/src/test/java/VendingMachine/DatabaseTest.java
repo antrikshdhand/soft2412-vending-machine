@@ -213,6 +213,21 @@ public class DatabaseTest {
         assertEquals(-1, insertGuest);
     }
 
+
+
+    // Test insert into Transactions
+    @Test
+    void testInsertNewTransactionSimple(){
+        db.openConn();
+        int value = db.insertNewTransaction("unsuccessful", "anonymous", "timeout" );
+        db.closeConn();
+
+        assertEquals(0, value);
+    }
+
+
+
+    // All tests for check role
     @Test
     void testCheckRole(){
 

@@ -141,6 +141,30 @@ public class InputCashPage extends Page {
             if(sm.getSession().getTransaction().getDue() > 0){
                notEnoughPaid();
             }
+
+            // Getting the total change available in the vending machine
+            sm.getDatabase().openConn();
+            double change = sm.getDatabase().getTotalChange();
+            sm.getDatabase().closeConn();
+
+
+            // If the change is greater than change in the vending machine, then could be an error
+            if(sm.getSession().getTransaction().getChange() > change) {
+
+                // If the transaction was done by guest, insert as anonymous in transaction relation.
+                String name = sm.getSession().getUserName();
+                if (name.equalsIgnoreCase("guest")) {
+                    name = "anonymous";
+                }
+
+
+                sm.getSession().getTransaction().initialHashMap();
+                sm.getDatabase().openConn();
+                sm.getDatabase().insertNewTransaction("unsuccessful", name, "Change not Available");
+                sm.getDatabase().closeConn();
+                notEnoughChange();
+
+            }
         });
 
     }
@@ -158,7 +182,21 @@ public class InputCashPage extends Page {
 
         return;
     }
+
+    private void notEnoughChange(){
+
+        Alert nullUsernameAlert = new Alert(Alert.AlertType.ERROR);
+        nullUsernameAlert.setTitle("Not enough change available");
+        nullUsernameAlert.setHeaderText("There is not enough change in the vending machine for the money you have put in");
+        nullUsernameAlert.setContentText("Continue to default page");
+        nullUsernameAlert.showAndWait();
+        sm.switchScenes(sm.getDefaultPageScene());
+
+    }
+
+
     /**
+     *
      * Function to set up all the buttons.
      */
     public void initialiseButton(){
