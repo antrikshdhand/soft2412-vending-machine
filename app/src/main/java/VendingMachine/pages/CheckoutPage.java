@@ -79,27 +79,6 @@ public class CheckoutPage extends Page {
             sm.switchScenes(payCardPage.getScene());
         });
 
-
-        // Create timer
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-        final Runnable runnable = new Runnable() {
-            int countdownStarter = 120;
-
-            public void run() {
-                // When counter is above limit
-                System.out.println(countdownStarter);
-                countdownStarter--;
-
-                if (countdownStarter < 0) {
-                    // When counter is at or below limit
-                    scheduler.shutdown();
-                }
-            }
-        };
-
-        scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
-
     }
 
     /**
