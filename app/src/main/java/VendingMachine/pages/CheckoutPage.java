@@ -12,6 +12,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
+import java.util.concurrent.*;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 public class CheckoutPage extends Page {
 
     private Pane pane;
@@ -26,6 +29,7 @@ public class CheckoutPage extends Page {
 
     /**
      * The Constructor for the Checkout Page, sets the scene for the checkout page.
+     * 
      * @param sceneManager
      */
     public CheckoutPage(SceneManager sceneManager) {
@@ -74,6 +78,27 @@ public class CheckoutPage extends Page {
             payCardPage.setScene();
             sm.switchScenes(payCardPage.getScene());
         });
+
+
+        // Create timer
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        final Runnable runnable = new Runnable() {
+            int countdownStarter = 120;
+
+            public void run() {
+                // When counter is above limit
+                System.out.println(countdownStarter);
+                countdownStarter--;
+
+                if (countdownStarter < 0) {
+                    // When counter is at or below limit
+                    scheduler.shutdown();
+                }
+            }
+        };
+
+        scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
 
     }
 
