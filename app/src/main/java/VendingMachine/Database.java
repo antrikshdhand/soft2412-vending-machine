@@ -296,6 +296,22 @@ public class Database {
 
     }
 
+    /**
+     * Function tha calculates the total change in the vending machine
+     */
+    public double getTotalChange(){
+        HashMap<String, Integer> changeMap = this.getCashSummary();
+
+        double Total = 0.00;
+        for (Map.Entry<String, Integer> entry : changeMap.entrySet()) {
+            Total += (Double.parseDouble(entry.getKey()) * entry.getValue());
+        }
+        return Total;
+
+    }
+
+
+
     public ArrayList<String> queryRecent() {
         
         ArrayList<String> items = new ArrayList<>();

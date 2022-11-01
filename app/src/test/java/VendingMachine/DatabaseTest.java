@@ -97,9 +97,24 @@ public class DatabaseTest {
     }
 
 
+    //Testing GetTotalChange in the database Simple (with default 0 values)
+    @Test
+    void testGetTotalChangeDefault(){
+        // initially the total change should not be 0.
+        db.openConn();
+        double value = db.getTotalChange();
+        db.closeConn();
+
+
+        assertNotNull(value);
+        assertNotEquals(0, value);
+        assertTrue(value > 750);
+        assertTrue(value < 1000);
+    }
+
     // testing for insert users.
     @Test
-    void testinsertNewUser(){
+    void testInsertNewUser(){
 
         // Simple test to see if it can add a new owner, seller, cashier, and register customer to the db to the database.
         // through the Gui the guest should not be allowed to add in a new guest.

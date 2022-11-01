@@ -201,7 +201,7 @@ public class Transaction {
 
     /**
      *  Function that updates the quantity for the givens quantity for a currency by 1.
-     * @param key (currency you want to update by 1)
+     * @param key (currency you want to update by 1) : String
      */
     public void addToCurrencyPaid(String key){
 
