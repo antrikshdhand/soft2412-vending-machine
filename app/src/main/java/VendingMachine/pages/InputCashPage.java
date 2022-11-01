@@ -274,6 +274,7 @@ public class InputCashPage extends Page {
         // Setting action for the $ 100
         hundredDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 100);
+            sm.getSession().getTransaction().addToCurrencyPaid("100");
             this.refreshAmounts();
 
         });
@@ -281,6 +282,7 @@ public class InputCashPage extends Page {
         // Setting up action for $50
         fiftyDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 50);
+            sm.getSession().getTransaction().addToCurrencyPaid("50");
             this.refreshAmounts();
 
         });
@@ -288,6 +290,7 @@ public class InputCashPage extends Page {
         // Setting action for the $ 20
         twentyDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 20);
+            sm.getSession().getTransaction().addToCurrencyPaid("20");
             this.refreshAmounts();
 
         });
@@ -295,6 +298,7 @@ public class InputCashPage extends Page {
         // Setting up action for $10
         tenDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 10);
+            sm.getSession().getTransaction().addToCurrencyPaid("10");
             this.refreshAmounts();
 
         });
@@ -302,13 +306,15 @@ public class InputCashPage extends Page {
         // Setting action for the $ 5
         fiveDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 5);
+            sm.getSession().getTransaction().addToCurrencyPaid("5");
             this.refreshAmounts();
 
         });
 
         // Setting up action for $2
         twoDollars.setOnAction((e) -> {
-            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 2);
+            sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 2;
+            sm.getSession().getTransaction().addToCurrencyPaid("2");
             this.refreshAmounts();
 
         });
@@ -316,6 +322,7 @@ public class InputCashPage extends Page {
         // Setting action for the $ 1
         oneDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 1);
+            sm.getSession().getTransaction().addToCurrencyPaid("1");
             this.refreshAmounts();
 
         });
@@ -323,6 +330,7 @@ public class InputCashPage extends Page {
         // Setting up action for ¢ 50
         fiftyCents.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.5);
+            sm.getSession().getTransaction().addToCurrencyPaid("0.5");
             this.refreshAmounts();
 
         });
@@ -330,6 +338,7 @@ public class InputCashPage extends Page {
         // Setting action for the ¢ 20
         twentyCents.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.2);
+            sm.getSession().getTransaction().addToCurrencyPaid("0.2");
             this.refreshAmounts();
 
         });
@@ -337,6 +346,7 @@ public class InputCashPage extends Page {
         // Setting up action for ¢ 10
         tenCents.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.1);
+            sm.getSession().getTransaction().addToCurrencyPaid("0.1");
             this.refreshAmounts();
 
         });
@@ -344,6 +354,7 @@ public class InputCashPage extends Page {
         // Setting up action for ¢ 5
         fiveCents.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 0.05);
+            sm.getSession().getTransaction().addToCurrencyPaid("0.05");
             this.refreshAmounts();
         });
 
