@@ -386,6 +386,13 @@ public class Database {
     }
 
 
+    /**
+     * Function thay allows for a category to be queried.
+     * 
+     * @param category
+     * 
+     * @return items
+     */
     public ArrayList<String> queryCategory(String category) {
 
         ArrayList<String> items = new ArrayList<>();
@@ -406,6 +413,12 @@ public class Database {
 
     }
 
+
+    /**
+     * Function thay allows for the username and role to be queried.
+     * 
+     * @return map
+     */
     public HashMap<String, String> queryUsernameAndRole() {
 
         HashMap<String, String> map = new HashMap<>();
@@ -426,6 +439,12 @@ public class Database {
 
     }
 
+
+    /**
+     * Function thay allows for the username to be queried.
+     * 
+     * @return list
+     */
     public ArrayList<String> queryUsername() {
 
         ArrayList<String> list = new ArrayList<>();
@@ -448,6 +467,15 @@ public class Database {
         return list;
     }
 
+
+    /**
+     * Function thay allows for a user's role to be changed.
+     * 
+     * @param username
+     * @param role
+     * 
+     * @return
+     */
     public boolean changeRole(String username, String role) {
 
         try {
@@ -613,6 +641,7 @@ public class Database {
         }
     }
 
+
     /**
      * Function to get card number and cvv
      * 
@@ -641,6 +670,7 @@ public class Database {
         }
     }
 
+    
     /**
      * Function to store user's card details in the database.
      * 

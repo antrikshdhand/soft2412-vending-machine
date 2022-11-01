@@ -179,6 +179,7 @@ public class Session {
 
 
     /**
+     * Returns the transaction
      * @return
      */
     public Transaction getTransaction() {
