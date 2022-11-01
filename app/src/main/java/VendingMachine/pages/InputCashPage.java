@@ -22,7 +22,8 @@ import javafx.beans.property.DoubleProperty;
 
 
 /**
- * This is the page for when a users want to pay by cash, they can select the amount by clicking the appropriate buttons.
+ * This is the page for when a users want to pay by cash.
+ * They can select the amount by clicking the appropriate buttons.
  */
 public class InputCashPage extends Page {
 
