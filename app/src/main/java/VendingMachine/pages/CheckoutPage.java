@@ -72,20 +72,13 @@ public class CheckoutPage extends Page {
         title.setText("Checkout");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-        box.getChildren().addAll(title, payCard, payCash);
-        pane.getChildren().add(box);
-        pane.getChildren().add(returnToDp);
-
-        PayCard payCardPage = new PayCard(sm);
-
-        payCard.setOnAction(e -> {
-            payCardPage.setScene();
-            sm.switchScenes(payCardPage.getScene());
-        });
-
 
 
         // Elements for timer
+
+        Text timerText = new Text();
+        timerText.setTranslateY(-320);
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
         int refreshCountdown = 5;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
@@ -93,8 +86,9 @@ public class CheckoutPage extends Page {
         countDown.addListener(new ChangeListener<Number>() {
 
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
+                // What is done once decremented
                 System.out.println(newValue.intValue());
+                timerText.setText("Time left: " + Integer.toString(newValue.intValue()));
 
             }
 
@@ -105,7 +99,27 @@ public class CheckoutPage extends Page {
                 new KeyFrame(Duration.seconds(refreshCountdown), new KeyValue(countDown, 0)));
         timeToRefresh.playFromStart();
 
+
+
+
+        // Adding child object references to parent objects
+
+        box.getChildren().addAll(title, payCard, payCash, timerText);
+        pane.getChildren().add(box);
+        pane.getChildren().add(returnToDp);
+
+
+        // 'Pay by card' button
+
+        PayCard payCardPage = new PayCard(sm);
+
+        payCard.setOnAction(e -> {
+            payCardPage.setScene();
+            sm.switchScenes(payCardPage.getScene());
+        });
+
     }
+
 
     /**
      * Method to build createPayCash scene for cash payments

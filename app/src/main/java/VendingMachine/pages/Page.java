@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+
 public abstract class Page {
 
     // Set constants
@@ -22,6 +23,9 @@ public abstract class Page {
 
     public Scene scene;
 
+    /**
+     * Return the page scene
+     */
     public Scene getScene() {
         return scene;
     }
