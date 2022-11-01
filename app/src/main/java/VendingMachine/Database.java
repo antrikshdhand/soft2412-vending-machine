@@ -274,10 +274,10 @@ public class Database {
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
 
-            System.out.println("Added dummy values");
+            insertNewTransaction("Successful", "users1", "");
+            insertNewTransaction("Unsuccessful", "users2", "Timeout");
 
-            // insertNewTransaction("Successful", "users1", "");
-            // insertNewTransaction("Unsuccessful", "users2", "Timeout");
+            System.out.println("Added dummy values");
 
         } catch (SQLException e) {
             // if the error message is "out of memory",
