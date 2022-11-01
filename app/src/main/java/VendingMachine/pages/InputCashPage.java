@@ -1,7 +1,6 @@
 package VendingMachine.pages;
-
 import VendingMachine.SceneManager;
-import com.sun.source.doctree.AttributeTree;
+
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -17,8 +16,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import org.w3c.dom.css.Rect;
 import javafx.beans.property.DoubleProperty;
+
+import org.w3c.dom.css.Rect;
+
+import com.sun.source.doctree.AttributeTree;
 
 
 /**
