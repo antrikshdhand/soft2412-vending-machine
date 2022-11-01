@@ -1,4 +1,5 @@
 package VendingMachine.pages;
+
 import VendingMachine.SceneManager;
 
 import javafx.scene.Group;

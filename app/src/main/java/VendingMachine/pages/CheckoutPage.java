@@ -1,16 +1,20 @@
 package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
+
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.animation.*;
+import javafx.application.*;
+import javafx.event.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.beans.property.*;
+import javafx.beans.value.*;
 
 import java.util.concurrent.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -78,6 +82,23 @@ public class CheckoutPage extends Page {
             payCardPage.setScene();
             sm.switchScenes(payCardPage.getScene());
         });
+
+        // Elements for timer
+        VBox vb = new VBox();
+        int refreshCountdown = 30;
+        IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
+
+        countDown.addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+                System.out.println(newValue.intValue());
+
+            }
+        });
+        final Timeline timeToRefresh = new Timeline();
+        timeToRefresh.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(countDown, refreshCountdown)),
+                new KeyFrame(Duration.seconds(refreshCountdown), new KeyValue(countDown, 0)));
+        timeToRefresh.playFromStart();
 
     }
 
