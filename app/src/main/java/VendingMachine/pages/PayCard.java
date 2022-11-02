@@ -160,7 +160,7 @@ public class PayCard extends Page {
                 paymentSuccessfulAlert.showAndWait();
 
                 // Go back to default page
-                sceneManager.switchScenes(sceneManager.getDefaultPageScene());
+                sceneManager.switchScenes(sceneManager.getSuccessfulPageScene());
             }
 
             // Successful payment
@@ -273,7 +273,7 @@ public class PayCard extends Page {
         return true;
     }
 
-    
+
     /**
      * Insert user and card details in cards table in database
      * @param details
@@ -281,7 +281,11 @@ public class PayCard extends Page {
     public void insertCard(String[] details) {
         sceneManager.getDatabase().openConn();
 
-        int returned = sceneManager.getDatabase().insertNewCard(details[0], details[1], details[2]);
+        int returned = sceneManager.getDatabase().insertNewCard(
+            details[0], 
+            details[1], 
+            details[2]
+            );
     }
 
 
