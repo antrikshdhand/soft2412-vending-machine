@@ -266,8 +266,13 @@ public class DatabaseTest {
 
     // Test insert into Transactions
     @Test
-    void testInsertNewTransactionSimple(){
+    void testInsertNewTransactionSimple() {
         db.openConn();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException IE) {
+            IE.printStackTrace();
+        }
         int value = db.insertNewTransaction("unsuccessful", "anonymous", "timeout" );
         db.closeConn();
 
