@@ -480,7 +480,7 @@ public class Database {
     }
 
     /**
-     * Function that allows for a item to be queried.
+     * Function that allows for an item to be queried.
      * @param itemCode
      * @return itemPrice
      */
@@ -496,6 +496,25 @@ public class Database {
             System.err.println(e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Function that allows for an item to be queried.
+     * @param itemCode
+     * @return Quantity
+     */
+    public int queryItemQuantity(String itemCode) {
+
+        try {
+            String sql = String.format("SELECT quantity FROM items WHERE item_code = '%s'", itemCode);
+            ResultSet query = openStatement.executeQuery(sql);
+            return query.getInt("quantity");
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        return -1;
     }
 
 

@@ -135,25 +135,35 @@ public class DefaultPageController {
             HBox.setMargin(item, new Insets(50));
             item.setPrefSize(500, 100);
 
+            Font font = new Font("Arial", 15);
+
             String itemName = database.queryItemName(itemCode);
             Label nameLabel = new Label(itemName);
-            nameLabel.setFont(new Font("Arial", 15));
+            nameLabel.setFont(font);
 
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
 
             Double itemPrice = database.queryItemPrice(itemCode);
             Label priceLabel = new Label("$" + df.format(itemPrice));
-            priceLabel.setFont(new Font("Arial", 15));
+            priceLabel.setFont(font);
 
             Region region2 = new Region();
             HBox.setHgrow(region2, Priority.ALWAYS);
 
+            int itemQuantity = database.queryItemQuantity(itemCode);
+            Label quantityLabel = new Label("Stock: " + itemQuantity);
+            quantityLabel.setFont(font);
+
+            Region region3 = new Region();
+            HBox.setHgrow(region3, Priority.ALWAYS);
+
             Button button = new Button("Add to Cart");
+            button.setFont(font);
 
             button.setOnAction(event -> {
                 session.getTransaction().addItem(itemName);
-                session.getTransaction().addToTotal(1);
+                session.getTransaction().addToTotal(itemPrice);
                 updateCart();
             });
 
@@ -162,6 +172,8 @@ public class DefaultPageController {
                     region1,
                     priceLabel,
                     region2,
+                    quantityLabel,
+                    region3,
                     button
             );
 
