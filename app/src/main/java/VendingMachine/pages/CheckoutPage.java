@@ -114,24 +114,24 @@ public class CheckoutPage extends Page {
 
                 if (time > 0) {
                     // System.out.println(time);
-                    if (time == (int) refreshCountdown/2) {
+                    if (time == (int) refreshCountdown / 2) {
                         System.out.println(Integer.toString(time) + " seconds left before transaction is cancelled.\n");
                         timerText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
                     }
                 }
                 else {
 
-                    Alert timeoutAlert = new Alert(AlertType.ERROR);
-                    timeoutAlert.setTitle("Time's up!");
-                    timeoutAlert.setHeaderText("The time limit has passed.");
-                    timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.\n If you were logged in, you have been logged out.");
-                    Platform.runLater(timeoutAlert::showAndWait);
-
                     Scene currentScene = sm.getScene();
                     Scene thisScene = scene;
 
                     if (currentScene == scene) {
                         cancelTransaction("Timer");
+
+                        Alert timeoutAlert = new Alert(AlertType.ERROR);
+                        timeoutAlert.setTitle("Time's up!");
+                        timeoutAlert.setHeaderText("The time limit has passed.");
+                        timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.\n If you were logged in, you have been logged out.");
+                        Platform.runLater(timeoutAlert::showAndWait);
                     }
 
                 }
@@ -163,6 +163,7 @@ public class CheckoutPage extends Page {
     
     /**
      * Method to log user out if transaction is cancelled manually or by timeout
+     * @param reason
      */
     public void cancelTransaction(String reason) {
 
