@@ -89,6 +89,7 @@ public class CheckoutPage extends Page {
         timerText.setTranslateY(-320);
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
+        // Length of timer in seconds
         int refreshCountdown = 5;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
 
@@ -112,7 +113,12 @@ public class CheckoutPage extends Page {
                     // timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.");
                     // paymentSuccessfulAlert.showAndWait();
 
-                    cancelTransaction();
+                    Scene currentScene = sm.getScene();
+                    Scene thisScene = scene;
+
+                    if (currentScene == scene) {
+                        cancelTransaction();
+                    }
 
                 }
 
