@@ -124,6 +124,7 @@ public class Database {
             // CASHIER - C
             // GUEST - G
             // REGISTERED CUSTOMER - R
+            
             } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -151,6 +152,7 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+
         return 0;
     }
 
@@ -235,6 +237,7 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+
         return 0;
     }
 
@@ -310,7 +313,6 @@ public class Database {
         }
 
         return items;
-
     }
 
     /**
