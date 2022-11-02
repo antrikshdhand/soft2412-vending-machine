@@ -194,9 +194,30 @@ public class InputCashPage extends Page {
                 sm.getDatabase().openConn();
                 sm.getDatabase().insertNewTransaction("unsuccessful", name, "Change not Available");
                 sm.getDatabase().closeConn();
+                sm.getSession().getTransaction().reset();
+                sm.getSession().getTransaction().initialHashMap();
                 notEnoughChange();
+                sm.switchScenes(sm.getDefaultPageScene());
+            }
+
+            if(sm.getSession().getTransaction().getChange() > 0){
+
+                HashMap<String, Integer> temp = checkAvailableChange();
+
+                if( temp == null){
+
+                    sm.getSession().getTransaction().initialHashMap();
+                    sm.getDatabase().openConn();
+                    sm.getDatabase().insertNewTransaction("unsuccessful", name, "Change not Available");
+                    sm.getDatabase().closeConn();
+                    sm.getSession().getTransaction().reset();
+                    sm.getSession().getTransaction().initialHashMap();
+                    notEnoughChange();
+                    sm.switchScenes(sm.getDefaultPageScene());
+                }
 
             }
+
 
         });
 
@@ -232,14 +253,29 @@ public class InputCashPage extends Page {
 
         HashMap<String,Integer> avaCash = updateTempCashAvailable();
 
+        HashMap<String, Integer> result = new HashMap<>();
+
         double temp = 0.00;
         double changeRequired = sm.getSession().getTransaction().getChange();
 
         for(String value : changeOrder){
-//           int div = Math.floor(changeRequired/Double.parseDouble(value));
 
+            if(changeRequired == temp) break;
+
+            double val = changeRequired/Double.parseDouble(value);
+            int valFloor = (int) Math.floor(val);
+
+            if( valFloor == 0) continue;
+
+            if(avaCash.get(value) < valFloor){
+
+                temp += avaCash.get(value) * Double.parseDouble(value);
+                result.put(value, avaCash.get(value));
+            }
         };
-        return avaCash;
+
+        if( changeRequired != temp) return null;
+        return result;
     }
 
 
