@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
@@ -128,12 +129,25 @@ public class DefaultPageController {
 
         database.openConn();
         for (String itemCode : itemStrings) {
-            String itemName = database.queryItemName(itemCode);
 
             HBox item = new HBox();
             item.setPadding(new Insets(10));
             HBox.setMargin(item, new Insets(50));
             item.setPrefSize(500, 100);
+
+            String itemName = database.queryItemName(itemCode);
+            Label nameLabel = new Label(itemName);
+            nameLabel.setFont(new Font("Arial", 15));
+
+            Region region1 = new Region();
+            HBox.setHgrow(region1, Priority.ALWAYS);
+
+            Double itemPrice = database.queryItemPrice(itemCode);
+            Label priceLabel = new Label("$" + df.format(itemPrice));
+            priceLabel.setFont(new Font("Arial", 15));
+
+            Region region2 = new Region();
+            HBox.setHgrow(region2, Priority.ALWAYS);
 
             Button button = new Button("Add to Cart");
 
@@ -143,10 +157,13 @@ public class DefaultPageController {
                 updateCart();
             });
 
-            Region region1 = new Region();
-            HBox.setHgrow(region1, Priority.ALWAYS);
-
-            item.getChildren().addAll(new Label(itemName), region1, button);
+            item.getChildren().addAll(
+                    nameLabel,
+                    region1,
+                    priceLabel,
+                    region2,
+                    button
+            );
 
             item.setStyle("-fx-background-color:#98aded");
             items.getChildren().add(item);

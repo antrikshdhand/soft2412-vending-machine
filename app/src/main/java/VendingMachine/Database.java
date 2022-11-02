@@ -82,7 +82,7 @@ public class Database {
                         item_name VARCHAR(20),
                         category_name VARCHAR(20),
                         quantity int,
-                        price float,
+                        price double,
                         quantity_sold int
                     );
                     """);
@@ -90,7 +90,7 @@ public class Database {
             openStatement.executeUpdate(
                     """
                     CREATE TABLE IF NOT EXISTS recent (
-                        item_name VARCHAR(20) PRIMARY KEY
+                        item_code VARCHAR(20) PRIMARY KEY
                     )
                     """);
 
@@ -273,9 +273,9 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('4003', 'Skittles', 'Candies', 7, 3.8, 0);"));
 
 
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Sprite"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "3002"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "1003"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "4002"));
             
 //            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
 //            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
@@ -402,7 +402,7 @@ public class Database {
         try {
             ResultSet query = openStatement.executeQuery(String.format("SELECT * FROM recent"));
             while (query.next()) {
-                items.add(query.getString("item_name"));
+                items.add(query.getString("item_code"));
             }
         } catch (SQLException e) {
             // if the error message is "out of memory",
@@ -471,6 +471,25 @@ public class Database {
             String sql = String.format("SELECT item_name FROM items WHERE item_code = '%s'", itemCode);
             ResultSet query = openStatement.executeQuery(sql);
             return query.getString("item_name");
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Function that allows for a item to be queried.
+     * @param itemCode
+     * @return itemPrice
+     */
+    public Double queryItemPrice(String itemCode) {
+
+        try {
+            String sql = String.format("SELECT price FROM items WHERE item_code = '%s'", itemCode);
+            ResultSet query = openStatement.executeQuery(sql);
+            return query.getDouble("price");
         } catch(SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
