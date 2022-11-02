@@ -440,15 +440,15 @@ public class Database {
      * @param category
      * @return items
      */
-    public ArrayList<String> queryCategory(String category) {
+    public ArrayList<String> queryAllItemsByCategory(String category) {
 
         ArrayList<String> items = new ArrayList<>();
 
         try {
-            String sql = String.format("SELECT item_name FROM items WHERE category_name = '%s'", category);
+            String sql = String.format("SELECT item_code FROM items WHERE category_name = '%s'", category);
             ResultSet query = openStatement.executeQuery(sql);
             while (query.next()) {
-                items.add(query.getString("item_name"));
+                items.add(query.getString("item_code"));
             }
         } catch(SQLException e) {
             // if the error message is "out of memory",
@@ -458,6 +458,25 @@ public class Database {
 
         return items;
 
+    }
+
+    /**
+     * Function that allows for a item to be queried.
+     * @param itemCode
+     * @return itemsName
+     */
+    public String queryItemName(String itemCode) {
+
+        try {
+            String sql = String.format("SELECT item_name FROM items WHERE item_code = '%s'", itemCode);
+            ResultSet query = openStatement.executeQuery(sql);
+            return query.getString("item_name");
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
 
 

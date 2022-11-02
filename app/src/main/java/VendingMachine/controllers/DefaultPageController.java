@@ -126,7 +126,10 @@ public class DefaultPageController {
         items.setSpacing(30);
         scrollPane.setContent(items);
 
-        for (String i : itemStrings) {
+        database.openConn();
+        for (String itemCode : itemStrings) {
+            String itemName = database.queryItemName(itemCode);
+
             HBox item = new HBox();
             item.setPadding(new Insets(10));
             HBox.setMargin(item, new Insets(50));
@@ -135,7 +138,7 @@ public class DefaultPageController {
             Button button = new Button("Add to Cart");
 
             button.setOnAction(event -> {
-                session.getTransaction().addItem(i);
+                session.getTransaction().addItem(itemName);
                 session.getTransaction().addToTotal(1);
                 updateCart();
             });
@@ -143,12 +146,14 @@ public class DefaultPageController {
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
 
-            item.getChildren().addAll(new Label(i), region1, button);
+            item.getChildren().addAll(new Label(itemName), region1, button);
 
             item.setStyle("-fx-background-color:#98aded");
             items.getChildren().add(item);
 
         }
+        database.closeConn();
+        
 
     }
 
@@ -165,7 +170,7 @@ public class DefaultPageController {
     public void displayCategory(String category) {
 
         database.openConn();
-        ArrayList<String> itemStrings = database.queryCategory(category);
+        ArrayList<String> itemStrings = database.queryAllItemsByCategory(category);
         database.closeConn();
 
         displayItemStrings(itemStrings);
