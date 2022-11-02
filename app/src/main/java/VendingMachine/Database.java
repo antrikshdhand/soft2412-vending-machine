@@ -417,17 +417,6 @@ public class Database {
     public int insertNewTransaction(String status, String user, String reason) {
 
 
-        // We are doing this because otherwise for some reason
-        // Java time doesn't pass and the next time we add an exhange it has the same timestamp
-        try {
-            Thread.sleep(2000);
-
-        } catch(InterruptedException e) {
-            // this part is executed when an exception (in this example InterruptedException) occurs
-
-        }
-
-
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.

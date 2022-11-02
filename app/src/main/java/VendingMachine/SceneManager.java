@@ -16,7 +16,9 @@ public class SceneManager {
     private SellerPortal sellerPortal;
     private Login login;
     private CheckoutPage checkoutPage;
+
     private InputCashPage inputCashPage;
+    private SuccessfulPage successfulPage;
     private Session session;
 
     private DefaultPageController defaultPageController;
@@ -33,6 +35,7 @@ public class SceneManager {
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         inputCashPage = new InputCashPage(this);
+        successfulPage = new SuccessfulPage(this);
 
         database.openConn();
         database.queryCancelledTransactions();
@@ -81,10 +84,13 @@ public class SceneManager {
         return login.getScene();
     }
 
+    public SuccessfulPage getSuccessfulPage(){return successfulPage;}
     public Scene getCheckoutPageScene() {
         checkoutPage = new CheckoutPage(this);
         return checkoutPage.getScene();
     }
+
+    public Scene getSuccessfulPageScene(){return this.successfulPage.getScene();};
 
     public Scene getInputCashPageScene() {
         return inputCashPage.getScene();

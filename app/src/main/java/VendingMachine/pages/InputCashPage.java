@@ -176,7 +176,9 @@ public class InputCashPage extends Page {
                 sm.getSession().getTransaction().reset();
 
                 // This as to be amended so that it goes to a successful transaction page.
-                sm.switchScenes(sm.getDefaultPageScene());
+                sm.getSuccessfulPage().setMessage("No Change Required");
+                sm.switchScenes(sm.getSuccessfulPageScene());
+
             }
 
             if (sm.getSession().getTransaction().getDue() > 0) {

@@ -41,15 +41,32 @@ public class SuccessfulPage extends  Page{
         title.setText("Transaction Successful!");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
+
+        Text message = new Text();
+        message.textProperty().bind(textBind);
+
         continue_Shopping = new Button("Continue Shopping");
         LogOut = new Button("Log Out");
 
 
+        box.getChildren().addAll(title, message, continue_Shopping, LogOut);
+        pane.getChildren().add(box);
+
+        continue_Shopping.setOnAction(event -> {
+            sm.switchScenes(sm.getDefaultPageScene());
+        });
+
+        LogOut.setOnAction(event -> {
+            //Todo
+        });
 
     }
 
 
     // Setting up the so that you can change as required the text page.
-    public void setUp(String text){}
+    public void setMessage(String text){
+        textBind.set(text);
+
+    }
 
 }
