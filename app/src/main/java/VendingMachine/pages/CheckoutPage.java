@@ -100,7 +100,7 @@ public class CheckoutPage extends Page {
         timerText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
         // Length of timer in seconds
-        int refreshCountdown = 35;
+        int refreshCountdown = 10;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
 
         countDown.addListener(new ChangeListener<Number>() {
@@ -114,7 +114,7 @@ public class CheckoutPage extends Page {
 
                 if (time > 0) {
                     // System.out.println(time);
-                    if (time == 30) {
+                    if (time == (int) refreshCountdown/2) {
                         System.out.println(Integer.toString(time) + " seconds left before transaction is cancelled.\n");
                         timerText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
                     }
@@ -145,12 +145,10 @@ public class CheckoutPage extends Page {
                 new KeyFrame(Duration.seconds(refreshCountdown), new KeyValue(countDown, 0)));
         timeToRefresh.playFromStart();
 
-
         // Adding child object references to parent objects
         box.getChildren().addAll(title, payCard, payCash, cancelTransactionButton, timerText);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
-
 
         // 'Pay by card' button
         PayCard payCardPage = new PayCard(sm);
@@ -172,7 +170,7 @@ public class CheckoutPage extends Page {
         sm.getDefaultPageController().logout();
         System.out.println("Transaction cancelled. User logged out.\n");
 
-        File file = new File("reports/cancelledTransactions.csv");
+        File file = new File("reports/ownerCancelledTransactionsSummary.csv");
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputfile = new FileWriter(file, true);
