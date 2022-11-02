@@ -255,22 +255,22 @@ public class Database {
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into items values('1001', 'Mineral Water', 'Drinks', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('1002', 'Sprite', 'Drinks', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('1003', 'Coca cola', 'Drinks', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('1004', 'Pepsi', 'Drinks', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('1005', 'Juice', 'Drinks', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('2001', 'Mars', 'Chocolate', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('2002', 'M&M', 'Chocolate', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('2003', 'Bounty', 'Chocolate', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('2004', 'Snickers', 'Chocolate', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('3001', 'Smiths', 'Chips', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('3002', 'Pringles', 'Chips', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('3003', 'Kettle', 'Chips', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('3004', 'Thins', 'Chips', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('4001', 'Mentos', 'Candies', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('4002', 'Sour Patches', 'Candies', 2, 5.1, 0);"));
-            statement.executeUpdate(String.format("insert into items values('4003', 'Skittles', 'Candies', 2, 5.1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1001', 'Mineral Water', 'Drinks', 7, 1.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1002', 'Sprite', 'Drinks', 7, 2.1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1003', 'Coca cola', 'Drinks', 7, 2.1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1004', 'Pepsi', 'Drinks', 7, 2.1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1005', 'Juice', 'Drinks', 7, 5.3, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2001', 'Mars', 'Chocolate', 7, 1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2002', 'M&M', 'Chocolate', 7, 3.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2003', 'Bounty', 'Chocolate', 7, 1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2004', 'Snickers', 'Chocolate', 7, 1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3001', 'Smiths', 'Chips', 7, 4.3, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3002', 'Pringles', 'Chips', 7, 4, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3003', 'Kettle', 'Chips', 7, 4.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3004', 'Thins', 'Chips', 7, 2.15, 0);"));
+            statement.executeUpdate(String.format("insert into items values('4001', 'Mentos', 'Candies', 7, 1.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('4002', 'Sour Patches', 'Candies', 7, 3, 0);"));
+            statement.executeUpdate(String.format("insert into items values('4003', 'Skittles', 'Candies', 7, 3.8, 0);"));
 
 
             statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
