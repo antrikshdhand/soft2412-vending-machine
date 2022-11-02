@@ -8,16 +8,20 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultPageController {
@@ -26,9 +30,11 @@ public class DefaultPageController {
     private SceneManager sceneManager = new SceneManager();
     private Database database;
     private Session session;
-    Font font = new Font("Arial", 15);
+    Font font = new Font("System", 15);
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    private HashMap<String, Image> images = new HashMap<>();
 
     @FXML
     Label roleLabel;
@@ -52,6 +58,30 @@ public class DefaultPageController {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
         session = sceneManager.getSession();
+        loadImages();
+    }
+
+    public void loadImages() {
+        int requestedWidth = 100;
+        int requestedHeight = 100;
+        boolean preseveRatio = false;
+        boolean smooth = false;
+        images.put("1001", new Image("images/Mineral Water.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1002", new Image("images/Sprite.jpeg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1003", new Image("images/Coca cola.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1004", new Image("images/Pepsi.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1005", new Image("images/Juice.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2001", new Image("images/Mars.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2002", new Image("images/M&M.jpeg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2003", new Image("images/Bounty.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2004", new Image("images/Snickers.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3001", new Image("images/Smiths.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3002", new Image("images/Pringles.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3003", new Image("images/Kettle.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3004", new Image("images/Thins.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("4001", new Image("images/Mentos.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("4002", new Image("images/Sour Patch.jpeg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("4003", new Image("images/Skittles.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
     }
 
     public void setDefaultPageAndStage(ActionEvent event) {
@@ -172,11 +202,14 @@ public class DefaultPageController {
             Label nameLabel = new Label(itemName);
             nameLabel.setFont(font);
 
+            Region region0 = new Region();
+            HBox.setHgrow(region0, Priority.ALWAYS);
+
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
 
             Label priceLabel = new Label("$" + df.format(itemPrice));
-            priceLabel.setFont(font);
+            priceLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
 
             Region region2 = new Region();
             HBox.setHgrow(region2, Priority.ALWAYS);
@@ -195,7 +228,12 @@ public class DefaultPageController {
                 updateCart();
             });
 
+            ImageView imageView = new ImageView();
+            imageView.setImage(images.get(itemCode));
+
             item.getChildren().addAll(
+                    imageView,
+                    region0,
                     nameLabel,
                     region1,
                     priceLabel,
