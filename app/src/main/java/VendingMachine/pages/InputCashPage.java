@@ -2,6 +2,7 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 
+import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ import org.w3c.dom.css.Rect;
 
 import com.sun.source.doctree.AttributeTree;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -76,7 +78,7 @@ public class InputCashPage extends Page {
         sm = sceneManager;
 
         pane = new GridPane();
-        scene = new Scene( pane, WIDTH, HEIGHT);
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
         // Vbox For all the notes.
         VBox notes = new VBox();
@@ -87,9 +89,6 @@ public class InputCashPage extends Page {
         VBox coins = new VBox();
         coins.setSpacing(10);
         coins.setPrefWidth(100);
-
-
-
 
 
         // Setting up all the rows and columns of the gridPane.
@@ -110,7 +109,7 @@ public class InputCashPage extends Page {
         // Setting up row Constraints
         RowConstraints row1 = new RowConstraints(40);
         RowConstraints row2 = new RowConstraints(640);
-        RowConstraints row3 = new RowConstraints( 20 );
+        RowConstraints row3 = new RowConstraints(20);
         RowConstraints row4 = new RowConstraints(20);
 
         pane.getRowConstraints().addAll(row1, row2, row3, row4);
@@ -136,16 +135,21 @@ public class InputCashPage extends Page {
 
         this.setUpButtonsAction();
 
-        amountDisplay.getChildren().addAll(totalAmount, totalAmountDouble, dueAmount, dueAmountDouble, changeAmount, changeAmountDouble, completeTransaction);
-
+        amountDisplay.getChildren().addAll(
+            totalAmount, 
+            totalAmountDouble, 
+            dueAmount, 
+            dueAmountDouble, 
+            changeAmount, 
+            changeAmountDouble, 
+            completeTransaction
+        );
 
         // Setting Action for the Cancel Button
         cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
 
         // Setting up Action for the complete Transaction button.
         completeTransaction.setOnAction(e -> {
-
-
 
             // If the transaction was done by guest, insert as anonymous in transaction relation.
             String name = sm.getSession().getUserName();
@@ -154,11 +158,11 @@ public class InputCashPage extends Page {
             }
 
             // If the transaction is perfect, the right amount is paid and no change required.
-            if ( sm.getSession().getTransaction().getPaid() == sm.getSession().getTransaction().getTotal()){
+            if (sm.getSession().getTransaction().getPaid() == sm.getSession().getTransaction().getTotal()) {
                 sm.getDatabase().openConn();
                 sm.getDatabase().insertNewTransaction("successful", name, "");
                 sm.getDatabase().closeConn();
-                for(Map.Entry<String, Integer> entry : sm.getSession().getTransaction().getCurrentlyPaid().entrySet()){
+                for (Map.Entry<String, Integer> entry : sm.getSession().getTransaction().getCurrentlyPaid().entrySet()) {
                     sm.getDatabase().openConn();
                     sm.getDatabase().increaseCashQuantity(entry.getKey(), entry.getValue());
                     sm.getDatabase().closeConn();
@@ -169,10 +173,6 @@ public class InputCashPage extends Page {
                 // This as to be amended so that it goes to a successful transaction page.
                 sm.switchScenes(sm.getDefaultPageScene());
             }
-
-
-
-
 
             if (sm.getSession().getTransaction().getDue() > 0) {
                notEnoughPaid();
@@ -186,8 +186,6 @@ public class InputCashPage extends Page {
 
             // If the change is greater than change in the vending machine, then could be an error
             if (sm.getSession().getTransaction().getChange() > change) {
-
-
 
                 sm.getSession().getTransaction().initialHashMap();
                 sm.getDatabase().openConn();
@@ -203,7 +201,29 @@ public class InputCashPage extends Page {
 
 
     /**
-     * Function to display alert when user has tried complete the transaction without paying the full amount.
+     * Function that add the change available in the database and the cash, change user has put in so far.
+      * @return currentlyAvailable
+     */
+    public HashMap<String, Integer> updateTempCashAvailable() {
+
+        sm.getDatabase().openConn();
+        HashMap<String, Integer> dbAva = sm.getDatabase().getCashSummary();
+        sm.getDatabase().closeConn();
+
+        HashMap<String, Integer> currentlyAvailable = sm.getSession().getTransaction().getCurrentlyPaid();
+
+        for (Map.Entry<String, Integer> entry : dbAva.entrySet()) {
+
+            currentlyAvailable.put(entry.getKey(), entry.getValue() + currentlyAvailable.get(entry.getKey()));
+
+        }
+
+        return currentlyAvailable;
+    }
+
+
+    /**
+     * Function to display alert when user has tried to complete the transaction without paying the full amount.
      */
     private void notEnoughPaid() {
         Alert nullUsernameAlert = new Alert(Alert.AlertType.ERROR);
@@ -292,7 +312,7 @@ public class InputCashPage extends Page {
         tenCents.setMinWidth(coins.getPrefWidth());
         fiveCents.setMinWidth(coins.getPrefWidth());
 
-        coins.getChildren().addAll(selectCoins, twoDollars, oneDollars, fiftyCents, twentyCents, tenCents, fiveCents );
+        coins.getChildren().addAll(selectCoins, twoDollars, oneDollars, fiftyCents, twentyCents, tenCents, fiveCents);
 
 
         pane.add(coins, 3, 1);

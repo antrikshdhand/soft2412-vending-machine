@@ -6,15 +6,15 @@ test:
 
 clean:
 	gradle clean
-	rm app/reports/transactions.csv
+	rm app/reports/*
 
 clean_run:
 	gradle clean
-	rm app/reports/transactions.csv
+	rm app/reports/*
 	gradle run
 
 full:
 	gradle clean
-	rm app/reports/transactions.csv
+	rm app/reports/*
 	gradle test
 	gradle run
