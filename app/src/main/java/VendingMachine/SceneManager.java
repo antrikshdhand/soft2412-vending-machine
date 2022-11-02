@@ -25,10 +25,17 @@ public class SceneManager {
 
     protected String reportsDirectory = "app/src/resources/reports/";
 
+    /**
+     * Constructor for SceneManager
+     */
     public SceneManager() {
         setUp();
     }
 
+
+    /**
+     * Setup method for SceneManager
+     */
     public void setUp() {
         database = new Database();
         session = new Session();
@@ -44,76 +51,164 @@ public class SceneManager {
         database.closeConn();
     }
 
+
+    /**
+     * Method to switch the current scene
+     * @param scene
+     */
     public void switchScenes(Scene scene) {
         stage.setScene(scene);
     }
 
+
+    /**
+     * Getter method for scene
+     * @return stage.getScene()
+     */
     public Scene getScene() {
         return stage.getScene();
     }
 
+
+    /**
+     * Setter method for stage
+     * @param stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+
+    /**
+     * Setter method for default page
+     * @param defaultPage
+     */
     public void setDefaultPage(Scene defaultPage) {
         this.defaultPage = defaultPage;
     }
 
+
+    /**
+     * Getter method for default page scene
+     * @return defaultPage
+     */
     public Scene getDefaultPageScene() {
         return defaultPage;
     }
 
 
-    // This is a way to update the values on screen for the inputCashPage.
-    //    public void changeInputCashPage( InputCashPage page){
-    //        inputCashPage = page;
-    //    }
-
+    /**
+     * Getter method for owner portal scene
+     * @return ownerPortal.getScene()
+     */
     public Scene getOwnerPortalScene() {
         return ownerPortal.getScene();
     }
 
+
+    /**
+     * Getter method for cashier portal scene
+     * @return cashierPortal.getScene()
+     */
     public Scene getCashierPortalScene() {
         return cashierPortal.getScene();
     }
 
+
+    /**
+     * Getter method for seller portal scene
+     * @return sellerPortal.getScene()
+     */
     public Scene getSellerPortalScene() {
         return sellerPortal.getScene();
     }
 
+
+    /**
+     * Getter method for login scene
+     * @return login.getScene()
+     */
     public Scene getLoginScene() {
         return login.getScene();
     }
 
-    public SuccessfulPage getSuccessfulPage(){return successfulPage;}
+
+    /**
+     * Getter method for successful page
+     * @return successfulPage
+     */
+    public SuccessfulPage getSuccessfulPage() {
+        return successfulPage;
+    }
+
+
+    /**
+     * Getter method and instantiator for checkout scene
+     * @return checkoutPage.getScene()
+     */
     public Scene getCheckoutPageScene() {
         checkoutPage = new CheckoutPage(this);
         return checkoutPage.getScene();
     }
 
-    public Scene getSuccessfulPageScene(){return this.successfulPage.getScene();};
 
+    /**
+     * Getter method for successful page scene
+     * @return successfulPage.getScene()
+     */
+    public Scene getSuccessfulPageScene() {
+        return successfulPage.getScene();
+    };
+
+
+    /**
+     * Getter method for input cash page scene
+     * @return inputCashPage.getScene()
+     */
     public Scene getInputCashPageScene() {
         return inputCashPage.getScene();
     }
 
+
+    /**
+     * Getter method for database
+     * @return database
+     */
     public Database getDatabase() {
         return database;
     }
 
+
+    /**
+     * Getter method for session
+     * @return session
+     */
     public Session getSession() {
         return session;
     }
 
+
+    /**
+     * Method to create new default page
+     */
     public void createNewDefaultPage() {
         defaultPageController.updateSessionBox();
     }
 
+
+    /**
+     * Setter method for default page controller
+     * @param defaultPageController
+     */
     public void setDefaultPageController(DefaultPageController defaultPageController) {
         this.defaultPageController = defaultPageController;
     }
 
+
+    /**
+     * Getter method for default page controller
+     * @return default page controller
+     */
     public DefaultPageController getDefaultPageController() {
         return defaultPageController;
     }
