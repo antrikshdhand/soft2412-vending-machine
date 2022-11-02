@@ -41,13 +41,11 @@ public class SuccessfulPage extends  Page{
         title.setText("Transaction Successful!");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-
         Text message = new Text();
         message.textProperty().bind(textBind);
 
         continue_Shopping = new Button("Continue Shopping");
         LogOut = new Button("Log Out");
-
 
         box.getChildren().addAll(title, message, continue_Shopping, LogOut);
         pane.getChildren().add(box);
