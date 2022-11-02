@@ -1,8 +1,5 @@
 package VendingMachine;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-
 import java.sql.*;
 import java.util.*;
 
@@ -35,7 +32,7 @@ public class Database {
         if (successfulConn == 0) {
             dropAllTables();
             this.initialiseSchema();
-            this.addDummyItems();
+            this.setUpInitialItemsAndUsers();
             this.setUpInitialCashAmounts();
             this.closeConn();
         }
@@ -251,7 +248,7 @@ public class Database {
      * Add a bit of dummy data to test the GUI during demonstrations.
      * @return
      */
-    public int addDummyItems() {
+    public int setUpInitialItemsAndUsers() {
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
@@ -272,21 +269,10 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('4002', 'Sour Patches', 'Candies', 7, 3, 0);"));
             statement.executeUpdate(String.format("insert into items values('4003', 'Skittles', 'Candies', 7, 3.8, 0);"));
 
-
             statement.executeUpdate(String.format("insert into recent values('%s')", "3002"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "1003"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "4002"));
-            
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
-//
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user2", "user2p", "REGISTERED CUSTOMER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
-//
+
             insertNewUser("guest", "guest", "GUEST");
             insertNewUser("owner", "ownerp", "OWNER");
             insertNewUser("cashier", "cashierp", "cashier");
@@ -296,7 +282,7 @@ public class Database {
             insertNewUser("user2", "user2p", "REGISTERED CUSTOMER");
             insertNewUser("user3", "user3p", "REGISTERED CUSTOMER");
 
-            System.out.println("Added dummy values");
+            System.out.println("Finished setUpInitialItemsAndUsers");
 
         } catch (SQLException e) {
             // if the error message is "out of memory",

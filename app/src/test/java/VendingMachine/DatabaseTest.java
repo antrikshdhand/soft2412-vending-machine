@@ -1,6 +1,5 @@
 package VendingMachine;
 
-import org.apache.commons.text.io.StringSubstitutorReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -343,7 +342,7 @@ public class DatabaseTest {
     @Test
     public void simpleDummyTest(){
         db.openConn();
-        int value = db.addDummyItems();
+        int value = db.setUpInitialItemsAndUsers();
         db.closeConn();
 
         assertEquals(-1, value);
