@@ -94,6 +94,19 @@ public class Transaction {
 
 
     /**
+     * function for increasing the total price
+     * @param n
+     */
+
+    public void addToTotal(double n) {
+        total += n;
+        calculateDue();
+        calculateChange();
+
+    }
+
+
+    /**
      * Function that gets the total price of all the items in the cart.
      * @return total
      */
