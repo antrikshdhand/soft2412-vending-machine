@@ -87,9 +87,10 @@ public class CheckoutPage extends Page {
 
         Text timerText = new Text();
         timerText.setTranslateY(-320);
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+        timerText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
-        int refreshCountdown = 5;
+        // Length of timer in seconds
+        int refreshCountdown = 35;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
 
         countDown.addListener(new ChangeListener<Number>() {
@@ -103,16 +104,25 @@ public class CheckoutPage extends Page {
 
                 if (time > 0) {
                     // System.out.println(time);
+                    if (time == 30) {
+                        System.out.println(Integer.toString(time) + " seconds left before transaction is cancelled.\n");
+                        timerText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+                    }
                 }
                 else {
 
-                    // Alert timeoutAlert = new Alert(AlertType.ERROR);
-                    // timeoutAlert.setTitle("Time's up!");
-                    // timeoutAlert.setHeaderText("The time limit has passed.");
-                    // timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.");
-                    // paymentSuccessfulAlert.showAndWait();
+                    Alert timeoutAlert = new Alert(AlertType.ERROR);
+                    timeoutAlert.setTitle("Time's up!");
+                    timeoutAlert.setHeaderText("The time limit has passed.");
+                    timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.\n If you were logged in, you have been logged out.");
+                    Platform.runLater(timeoutAlert::showAndWait);
 
-                    cancelTransaction();
+                    Scene currentScene = sm.getScene();
+                    Scene thisScene = scene;
+
+                    if (currentScene == scene) {
+                        cancelTransaction();
+                    }
 
                 }
 
@@ -127,14 +137,12 @@ public class CheckoutPage extends Page {
 
 
         // Adding child object references to parent objects
-
         box.getChildren().addAll(title, payCard, payCash, cancelTransactionButton, timerText);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
 
         // 'Pay by card' button
-
         PayCard payCardPage = new PayCard(sm);
 
         payCard.setOnAction(e -> {
@@ -149,10 +157,9 @@ public class CheckoutPage extends Page {
      * Method to log user out if transaction is cancelled manually or by timeout
      */
     public void cancelTransaction() {
-
         sm.switchScenes(sm.getDefaultPageScene());
         sm.getDefaultPageController().logout();
-
+        System.out.println("Transaction cancelled. User logged out.\n\n");
     }
 
 
@@ -168,9 +175,7 @@ public class CheckoutPage extends Page {
         Label lbl = new Label("Pay by cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
-        pane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
