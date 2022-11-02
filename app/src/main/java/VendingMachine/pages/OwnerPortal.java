@@ -353,7 +353,7 @@ public class OwnerPortal extends Page {
             }
 
             // Add data to transactions.csv
-            for(Map.Entry<String, String> usernamePassword : sm.getDatabase().queryUsernameAndRole().entrySet()) {
+            for(Map.Entry<String, String> usernamePassword : hm.entrySet()) {
                 String[] data = {usernamePassword.getKey(), usernamePassword.getValue()};
                 writer.writeNext(data);
             }

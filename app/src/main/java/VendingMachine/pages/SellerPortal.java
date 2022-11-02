@@ -35,7 +35,7 @@ public class SellerPortal extends Page {
         this.sm = sm;
         createMainPage();
         createManageItems();
-        createGenerateList();
+        //createGenerateList();
         createGenerateSummary();
 
         // window.setScene(manageItems);
@@ -88,7 +88,7 @@ public class SellerPortal extends Page {
         pane.getChildren().add(buttons);
         pane.getChildren().addAll(lbl, bn4);
         bn1.setOnAction(e -> this.sm.switchScenes(manageItems));
-        bn2.setOnAction(e -> this.sm.switchScenes(generateList));
+        bn2.setOnAction(e -> createItemSummary());
         bn3.setOnAction(e -> this.sm.switchScenes(generateSummary));
         bn4.setOnAction(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
 
@@ -119,30 +119,74 @@ public class SellerPortal extends Page {
         bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
-    /**
-     * Function to create the 'generate list' feature
-     */
-    private void createGenerateList() {
-        generateListPane = new StackPane();
-        generateList = new Scene(generateListPane, width, height);
+    private void createItemSummary() {
 
-        Button bn = new Button("Return to Seller Portal");
+        sm.getDatabase().openConn();
+        sm.getDatabase().getAllItems();
 
-        Label lbl = new Label("Generate List Portal");
-        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+        // File file = new File("./src/main/resources/reports/usersReport.csv");
+        
+        // try {
+        //     // Create FileWriter object with file as parameter
+        //     FileWriter outputFile = new FileWriter(file, true);
 
-        generateListPane.setAlignment(lbl, Pos.TOP_CENTER);
-        lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        //     // Create CSVWriter object file writer object as parameter
+        //     CSVWriter writer = new CSVWriter(outputFile);
 
-        bn.setTranslateX(-550);
-        bn.setTranslateY(320);
+        //     // Add header to ownerUsersSummary.csv if empty
+        //     if (file.length() == 0) {
+        //         String[] header = {"USERNAME", "PASSWORD"};
+        //         writer.writeNext(header);
+        //     }
 
-        lbl.relocate(0, 30);
+        //     // Add data to transactions.csv
+        //     for(Map.Entry<String, String> usernamePassword : sm.getDatabase().queryUsernameAndRole().entrySet()) {
+        //         String[] data = {usernamePassword.getKey(), usernamePassword.getValue()};
+        //         writer.writeNext(data);
+        //     }
 
-        generateListPane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.sm.switchScenes(scene));
+        //     writer.close();
+        //     outputFile.close();
+
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+
+        // }
+
+        // sm.getDatabase().closeConn();
+
+        // Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
+        // successfulRegisterAlert.setTitle("Success");
+        // successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
+        // successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
+        // successfulRegisterAlert.showAndWait();
+
     }
+
+    // /**
+    //  * Function to create the 'generate list' feature
+    //  */
+    // private void createGenerateList() {
+    //     generateListPane = new StackPane();
+    //     generateList = new Scene(generateListPane, width, height);
+
+    //     Button bn = new Button("Return to Seller Portal");
+
+    //     Label lbl = new Label("Generate List Portal");
+    //     lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+
+    //     generateListPane.setAlignment(lbl, Pos.TOP_CENTER);
+    //     lbl.setTranslateY(20);
+    //     // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+
+    //     bn.setTranslateX(-550);
+    //     bn.setTranslateY(320);
+
+    //     lbl.relocate(0, 30);
+
+    //     generateListPane.getChildren().addAll(lbl, bn);
+    //     bn.setOnAction(e -> this.sm.switchScenes(scene));
+    // }
 
     /**
      * Function to create the 'generate summary' feature
