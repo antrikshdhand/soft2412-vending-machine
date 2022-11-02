@@ -184,15 +184,6 @@ public class SceneManager {
         return session;
     }
 
-
-    /**
-     * Method to create new default page
-     */
-    public void createNewDefaultPage() {
-        defaultPageController.updateSessionBox();
-    }
-
-
     /**
      * Setter method for default page controller
      * @param defaultPageController

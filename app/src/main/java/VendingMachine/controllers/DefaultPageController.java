@@ -92,18 +92,13 @@ public class DefaultPageController {
         sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
     }
 
-    public void login(ActionEvent event) {
+    public void loginButtonAction(ActionEvent event) {
         if (!session.isLoggedIn()) {
             setDefaultPageAndStage(event);
             sceneManager.switchScenes(sceneManager.getLoginScene());
         }
         else {
-            session.resetSession();
-            updateSessionBox();
-            loginBtn.setText("Log In");
-            proceedToPortalBtn.setText("Please login first");
-            // proceedToPortalBtn.setDisable(false);
-
+            logout();
         }
     }
 
@@ -112,15 +107,27 @@ public class DefaultPageController {
         updateSessionBox();
         loginBtn.setText("Log In");
         proceedToPortalBtn.setText("Please login first");
+        clearTransaction();
+    }
+
+    public void login() {
+        updateSessionBox();
+        loginBtn.setText("Log Out");
+        proceedToPortalBtn.setText("Proceed to Portal");
+        clearTransaction();
     }
 
     public void updateSessionBox() {
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
-        loginBtn.setText("Log Out");
-        proceedToPortalBtn.setText("Proceed to Portal");
-            // proceedToPortalBtn.setDisable(true);
     }
+
+    public void clearTransaction() {
+        session.getTransaction().reset();
+        displayItemStrings(new ArrayList<>());
+        updateCart();
+    }
+
 
     public void displayItemStrings(ArrayList<String> itemStrings) {
 

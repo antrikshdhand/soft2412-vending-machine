@@ -64,23 +64,23 @@
                <children>
                   <Label fx:id="roleLabel" text="Role: Guest">
                      <VBox.margin>
-                        <Insets left="20.0" right="10.0" top="10.0" />
+                        <Insets left="20.0" right="10.0" top="18.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="accountLabel" text="Account: Guest">
+                  <Label fx:id="accountLabel" prefWidth="107.0" text="Account: Guest">
                      <VBox.margin>
                         <Insets bottom="5.0" left="20.0" right="10.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="16.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#login" prefHeight="46.0" prefWidth="266.0" text="Log In">
+            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="46.0" prefWidth="266.0" text="Log In">
                <VBox.margin>
                   <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
