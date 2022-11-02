@@ -137,14 +137,12 @@ public class CheckoutPage extends Page {
 
 
         // Adding child object references to parent objects
-
         box.getChildren().addAll(title, payCard, payCash, cancelTransactionButton, timerText);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
 
         // 'Pay by card' button
-
         PayCard payCardPage = new PayCard(sm);
 
         payCard.setOnAction(e -> {
