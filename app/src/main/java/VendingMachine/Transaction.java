@@ -52,6 +52,7 @@ public class Transaction {
 
     }
 
+    
     /**
      * Function to reset all the amounts to 0
      */
@@ -81,6 +82,7 @@ public class Transaction {
         return true;
     }
 
+
     /**
      * function for increasing the total price
      * @param n
@@ -92,6 +94,7 @@ public class Transaction {
         calculateChange();
 
     }
+
 
     /**
      * Function that return the HashMap with the number of items.
@@ -110,6 +113,7 @@ public class Transaction {
         return total;
     }
 
+
     /**
      * Function that return the changes the transaction needs to return.
      * @return change
@@ -118,6 +122,7 @@ public class Transaction {
         return change;
     }
 
+
     /**
      * Function that return the amount still due to complete transaction.
      * @return due
@@ -125,6 +130,7 @@ public class Transaction {
     public double getDue() {
         return due;
     }
+
 
     /**
      * Function that removes an item in the cart.
@@ -237,7 +243,7 @@ public class Transaction {
 
     }
 
-    
+
     /**
      *  Function that updates the quantity for the givens quantity for a currency by 1.
      * @param key (currency you want to update by 1) : String
