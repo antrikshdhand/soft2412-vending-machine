@@ -52,12 +52,6 @@ public class DefaultPageController {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
         session = sceneManager.getSession();
-        // ((VBox) proceedToPortalBtn.getParent()).getChildren().remove(proceedToPortalBtn);
-        // proceedToPortalBtn.setDisable(false);
-        // database.openConn();
-        // ArrayList<String> c = database.queryUsername();
-        // database.closeConn();
-        // System.out.println(c);
     }
 
     public void setDefaultPageAndStage(ActionEvent event) {
@@ -97,13 +91,28 @@ public class DefaultPageController {
         alert.setHeaderText("Please login first");
         alert.setContentText("Please try again");
         alert.showAndWait();
+    }
 
-        return;
+    /**
+     * Method to show error
+     */
+    private void alertPleaseAddItemsToCartFirst() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("No items in cart");
+        alert.setHeaderText("Please add items to cart first");
+        alert.setContentText("Please try again");
+        alert.showAndWait();
     }
 
     public void proceedToCheckout(ActionEvent event) {
-        setDefaultPageAndStage(event);
-        sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
+        if (sceneManager.getSession().getTransaction().getItems().size() > 0) {
+            setDefaultPageAndStage(event);
+            sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
+        }
+        else {
+            alertPleaseAddItemsToCartFirst();
+        }
+
     }
 
     public void loginButtonAction(ActionEvent event) {
