@@ -21,11 +21,15 @@ public class SuccessfulPage extends  Page{
 
     private Text change;
     private Button continue_Shopping;
-    private Button LogOut;
+    private Button logOut;
 
     private StringProperty textBind = new SimpleStringProperty();
 
 
+    /**
+     * Constructor for SuccessfulPage screen.
+     * @param sm
+     */
     public SuccessfulPage(SceneManager sm) {
         this.sm = sm;
 
@@ -45,26 +49,30 @@ public class SuccessfulPage extends  Page{
         message.textProperty().bind(textBind);
 
         continue_Shopping = new Button("Continue Shopping");
-        LogOut = new Button("Log Out");
+        logOut = new Button("Log Out");
 
-        box.getChildren().addAll(title, message, continue_Shopping, LogOut);
+        box.getChildren().addAll(title, message, continue_Shopping, logOut);
         pane.getChildren().add(box);
 
         continue_Shopping.setOnAction(event -> {
             sm.switchScenes(sm.getDefaultPageScene());
         });
 
-        LogOut.setOnAction(event -> {
-            //Todo
+        logOut.setOnAction(event -> {
+            sm.switchScenes(sm.getDefaultPageScene());
+            sm.getDefaultPageController().logout();
+            System.out.println("Transaction cancelled. User logged out.\n");
         });
 
     }
 
 
-    // Setting up the so that you can change as required the text page.
+    /**
+     * Setting up the so that you can change as required the text page.
+     * @param text
+     */
     public void setMessage(String text){
         textBind.set(text);
-
     }
 
 }

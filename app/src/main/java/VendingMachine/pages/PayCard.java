@@ -273,6 +273,7 @@ public class PayCard extends Page {
         return true;
     }
 
+    
     /**
      * Insert user and card details in cards table in database
      * @param details
@@ -282,6 +283,7 @@ public class PayCard extends Page {
 
         int returned = sceneManager.getDatabase().insertNewCard(details[0], details[1], details[2]);
     }
+
 
     /**
      * Check if card details exist in cards table
@@ -310,7 +312,7 @@ public class PayCard extends Page {
         return true;
     }
 
-    
+
     /**
      * Returns the PayCard scene.
      * @return scene
