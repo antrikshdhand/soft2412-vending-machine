@@ -23,6 +23,8 @@ public class SceneManager {
 
     private DefaultPageController defaultPageController;
 
+    protected String reportsDirectory = "app/src/resources/reports/";
+
     public SceneManager() {
         setUp();
     }
