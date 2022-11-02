@@ -1,8 +1,7 @@
 package VendingMachine.pages;
 
-import VendingMachine.pages.Page;
-import VendingMachine.SceneManager;
-import VendingMachine.Session;
+import VendingMachine.*;
+import VendingMachine.pages.*;
 
 import javafx.geometry.*;
 import javafx.scene.*;
@@ -34,7 +33,7 @@ public class PayCard extends Page {
     
     private SceneManager sceneManager;
 
-    
+
     /**
      * Constructor for PayCard page
      * @param sceneManager
