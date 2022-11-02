@@ -59,7 +59,7 @@ public class CheckoutPage extends Page {
 
         cancelTransactionButton = new Button("Cancel Transaction");
         cancelTransactionButton.setOnAction(e -> {
-            cancelTransaction();
+            cancelTransaction("Manual");
         });
         cancelTransactionButton.setMinWidth(box.getPrefWidth());
         cancelTransactionButton.setAlignment(Pos.CENTER);
@@ -121,7 +121,7 @@ public class CheckoutPage extends Page {
                     Scene thisScene = scene;
 
                     if (currentScene == scene) {
-                        cancelTransaction();
+                        cancelTransaction("Timer");
                     }
 
                 }
@@ -156,10 +156,10 @@ public class CheckoutPage extends Page {
     /**
      * Method to log user out if transaction is cancelled manually or by timeout
      */
-    public void cancelTransaction() {
+    public void cancelTransaction(String reason) {
         sm.switchScenes(sm.getDefaultPageScene());
         sm.getDefaultPageController().logout();
-        System.out.println("Transaction cancelled. User logged out.\n\n");
+        System.out.println("Transaction cancelled. User logged out.\n");
     }
 
 

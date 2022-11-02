@@ -315,22 +315,22 @@ public class Database {
 
     /**
      * Function tha calculates the total change in the vending machine
+     * @return total
      */
     public double getTotalChange(){
         HashMap<String, Integer> changeMap = this.getCashSummary();
 
-        double Total = 0.00;
+        double total = 0.00;
         for (Map.Entry<String, Integer> entry : changeMap.entrySet()) {
-            Total += (Double.parseDouble(entry.getKey()) * entry.getValue());
+            total += (Double.parseDouble(entry.getKey()) * entry.getValue());
         }
-        return Total;
-
+        return total;
     }
 
     /**
      * Function to update the number of available change in the vending machine.
      * @param currency ( the currency you want to update)
-     * @param quantityToUpdate ( quantity you want the cash to update by)
+     * @param quantityToUpdate (quantity you want the cash to update by)
      */
     public int increaseCashQuantity(String currency, Integer quantityToUpdate){
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
@@ -402,6 +402,7 @@ public class Database {
      * @param status
      * @param user
      * @param reason
+     * @return
      */
     public int insertNewTransaction(String status, String user, String reason){
 
@@ -421,7 +422,6 @@ public class Database {
     /**
      * Function that allows for a category to be queried. *
      * @param category
-     * 
      * @return items
      */
     public ArrayList<String> queryCategory(String category) {

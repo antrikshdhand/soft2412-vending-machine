@@ -78,7 +78,7 @@ public class InputCashPage extends Page {
         sm = sceneManager;
 
         pane = new GridPane();
-        scene = new Scene( pane, WIDTH, HEIGHT);
+        scene = new Scene(pane, WIDTH, HEIGHT);
 
         // Vbox For all the notes.
         VBox notes = new VBox();
@@ -89,9 +89,6 @@ public class InputCashPage extends Page {
         VBox coins = new VBox();
         coins.setSpacing(10);
         coins.setPrefWidth(100);
-
-
-
 
 
         // Setting up all the rows and columns of the gridPane.
@@ -112,7 +109,7 @@ public class InputCashPage extends Page {
         // Setting up row Constraints
         RowConstraints row1 = new RowConstraints(40);
         RowConstraints row2 = new RowConstraints(640);
-        RowConstraints row3 = new RowConstraints( 20 );
+        RowConstraints row3 = new RowConstraints(20);
         RowConstraints row4 = new RowConstraints(20);
 
         pane.getRowConstraints().addAll(row1, row2, row3, row4);
@@ -146,7 +143,7 @@ public class InputCashPage extends Page {
             changeAmount, 
             changeAmountDouble, 
             completeTransaction
-            );
+        );
 
         // Setting Action for the Cancel Button
         cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
@@ -161,11 +158,11 @@ public class InputCashPage extends Page {
             }
 
             // If the transaction is perfect, the right amount is paid and no change required.
-            if ( sm.getSession().getTransaction().getPaid() == sm.getSession().getTransaction().getTotal()){
+            if (sm.getSession().getTransaction().getPaid() == sm.getSession().getTransaction().getTotal()) {
                 sm.getDatabase().openConn();
                 sm.getDatabase().insertNewTransaction("successful", name, "");
                 sm.getDatabase().closeConn();
-                for(Map.Entry<String, Integer> entry : sm.getSession().getTransaction().getCurrentlyPaid().entrySet()){
+                for (Map.Entry<String, Integer> entry : sm.getSession().getTransaction().getCurrentlyPaid().entrySet()) {
                     sm.getDatabase().openConn();
                     sm.getDatabase().increaseCashQuantity(entry.getKey(), entry.getValue());
                     sm.getDatabase().closeConn();
@@ -203,13 +200,11 @@ public class InputCashPage extends Page {
     }
 
 
-   // Function to update the temp cash available.
-
     /**
      * Function that add the change available in the database and the cash, change user has put in so far.
-      * @return
+      * @return currentlyAvailable
      */
-    public HashMap<String, Integer> updateTempCashAvailable(){
+    public HashMap<String, Integer> updateTempCashAvailable() {
 
         sm.getDatabase().openConn();
         HashMap<String, Integer> dbAva = sm.getDatabase().getCashSummary();
@@ -217,16 +212,14 @@ public class InputCashPage extends Page {
 
         HashMap<String, Integer> currentlyAvailable = sm.getSession().getTransaction().getCurrentlyPaid();
 
-        for( Map.Entry<String, Integer> entry : dbAva.entrySet()){
+        for (Map.Entry<String, Integer> entry : dbAva.entrySet()) {
 
             currentlyAvailable.put(entry.getKey(), entry.getValue() + currentlyAvailable.get(entry.getKey()));
 
         }
 
         return currentlyAvailable;
-
     }
-
 
 
     /**
@@ -319,7 +312,7 @@ public class InputCashPage extends Page {
         tenCents.setMinWidth(coins.getPrefWidth());
         fiveCents.setMinWidth(coins.getPrefWidth());
 
-        coins.getChildren().addAll(selectCoins, twoDollars, oneDollars, fiftyCents, twentyCents, tenCents, fiveCents );
+        coins.getChildren().addAll(selectCoins, twoDollars, oneDollars, fiftyCents, twentyCents, tenCents, fiveCents);
 
 
         pane.add(coins, 3, 1);
