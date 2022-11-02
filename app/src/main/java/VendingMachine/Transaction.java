@@ -144,6 +144,7 @@ public class Transaction {
 
     }
 
+
     /**
      * Function that recalculates the change that should be returned.
      */
@@ -155,6 +156,7 @@ public class Transaction {
         changeAmount.set(change);
 
     }
+
 
     /**
      * Function that recalculates the due amount for the transaction.
@@ -168,6 +170,7 @@ public class Transaction {
         dueAmount.set(due);
     }
 
+
     /**
      * Function that returns the change order in an ArrayList
      * @return changeOrder
@@ -176,6 +179,7 @@ public class Transaction {
         return changeOrder;
     }
 
+    
     /**
      * Function that sets the amount paid and recalculates due / changes.
      * @param paid
@@ -186,6 +190,7 @@ public class Transaction {
         calculateDue();
     }
 
+
     /**
      * Function that return the total that has been paid so far.
      * @return paid
@@ -193,6 +198,7 @@ public class Transaction {
     public double getPaid() {
         return this.paid;
     }
+
 
     /**
      * Function that return the change doubleProperty
@@ -202,6 +208,7 @@ public class Transaction {
         return this.changeAmount;
     }
 
+
     /**
      * Function that return the Due doubleProperty.
      * @return dueamount
@@ -209,6 +216,7 @@ public class Transaction {
     public DoubleProperty getDueAmount() {
         return this.dueAmount;
     }
+
 
     /**
      * Function for putting the initial setting up the hashmap.
@@ -229,6 +237,7 @@ public class Transaction {
 
     }
 
+    
     /**
      *  Function that updates the quantity for the givens quantity for a currency by 1.
      * @param key (currency you want to update by 1) : String
