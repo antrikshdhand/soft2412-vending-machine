@@ -223,11 +223,6 @@ public class PayCard extends Page {
         }
     }
 
-    
-    public boolean checkJSON(int cardNumber) {
-        return true;
-    }
-
 
     /**
      * Checks if card number is valid.
@@ -280,6 +275,7 @@ public class PayCard extends Page {
 
     /**
      * Insert user and card details in cards table in database
+     * @param details
      */
     public void insertCard(String[] details) {
         sceneManager.getDatabase().openConn();
@@ -289,6 +285,7 @@ public class PayCard extends Page {
 
     /**
      * Check if card details exist in cards table
+     * @return
      */
     public boolean cardExists(String username) {
         sceneManager.getDatabase().openConn();
@@ -303,8 +300,19 @@ public class PayCard extends Page {
         }
     }
 
+
+    /**
+     * Checks if the card number exists in the credit_cards.json file.
+     * @param cardNumber
+     * @return
+     */
+    public boolean checkJSON(int cardNumber) {
+        return true;
+    }
+
     /**
      * Returns the PayCard scene.
+     * @return scene
      */
     public Scene getScene() {
         return scene;
