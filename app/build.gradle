@@ -75,7 +75,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'VendingMachine.App'
+    mainClass = 'VendingMachine.Main'
 }
 
 test {
@@ -125,7 +125,7 @@ jar {
     manifest {
     attributes(
         'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
-        'Main-Class': 'vending-machine.App'
+        'Main-Class': 'vending-machine.Main'
     )
   }
 }
@@ -140,7 +140,7 @@ task fatJar(type: Jar) {
 	manifest {
         attributes 'Implementation-Title': 'Vending Machine',  
         	'Implementation-Version': version,
-        	'Main-Class': 'VendingMachine.App'
+        	'Main-Class': 'VendingMachine.Main'
     }
     baseName = 'Vending-Machine'
     from { configurations.runtimeClasspath.files.collect { it.isDirectory() ? it : zipTree(it) } }

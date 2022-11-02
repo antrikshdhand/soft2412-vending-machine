@@ -287,9 +287,6 @@ public class Database {
             insertNewUser("user2", "user2p", "REGISTERED CUSTOMER");
             insertNewUser("user3", "user3p", "REGISTERED CUSTOMER");
 
-            insertNewTransaction("Successful", "users1", "");
-            insertNewTransaction("Unsuccessful", "users2", "Timeout");
-
             System.out.println("Added dummy values");
 
         } catch (SQLException e) {
