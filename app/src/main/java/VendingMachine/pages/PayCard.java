@@ -22,8 +22,7 @@ import java.io.*;
 import java.util.*;
 
 // JSON Reader
-import org.json.simple.*;
-import org.json.simple.parser.*;
+
 
 // OpenCSV import
 import com.opencsv.*;
@@ -320,29 +319,10 @@ public class PayCard extends Page {
      */
     public boolean checkJSON(int cardNumber) {
 
-        // JSON parser object to parse read file
-        JSONParser jsonParser = new JSONParser();
-         
-        try (FileReader reader = new FileReader("json/credit_cards.json")) {
-            
-            // Read JSON file
-            Object obj = jsonParser.parse(reader);
- 
-            JSONArray detailsList = (JSONArray) obj;
 
-            // Get card number
-            
- 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        
 
         return false;
-
     }
 
 
