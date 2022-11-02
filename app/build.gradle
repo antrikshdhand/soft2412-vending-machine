@@ -71,6 +71,9 @@ dependencies {
     // This dependency adds OpenCSV to the application.
     implementation 'com.opencsv:opencsv:5.3'
 
+    // This dependency adds the JSON.simple library to the application.
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
 }
 
 application {
