@@ -87,10 +87,10 @@ public class CheckoutPage extends Page {
 
         Text timerText = new Text();
         timerText.setTranslateY(-320);
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+        timerText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
         // Length of timer in seconds
-        int refreshCountdown = 5;
+        int refreshCountdown = 35;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
 
         countDown.addListener(new ChangeListener<Number>() {
@@ -104,6 +104,10 @@ public class CheckoutPage extends Page {
 
                 if (time > 0) {
                     // System.out.println(time);
+                    if (time == 30) {
+                        System.out.println(Integer.toString(time) + " seconds left before transaction is cancelled.");
+                        timerText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+                    }
                 }
                 else {
 
@@ -111,7 +115,6 @@ public class CheckoutPage extends Page {
                     timeoutAlert.setTitle("Time's up!");
                     timeoutAlert.setHeaderText("The time limit has passed.");
                     timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.\n If you were logged in, you have been logged out.");
-                    // timeoutAlert.showAndWait();
                     Platform.runLater(timeoutAlert::showAndWait);
 
                     Scene currentScene = sm.getScene();
@@ -156,10 +159,8 @@ public class CheckoutPage extends Page {
      * Method to log user out if transaction is cancelled manually or by timeout
      */
     public void cancelTransaction() {
-
         sm.switchScenes(sm.getDefaultPageScene());
         sm.getDefaultPageController().logout();
-
     }
 
 
