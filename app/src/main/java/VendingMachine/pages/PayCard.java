@@ -1,7 +1,6 @@
 package VendingMachine.pages;
 
 import VendingMachine.*;
-import VendingMachine.pages.*;
 
 import javafx.geometry.*;
 import javafx.scene.*;
