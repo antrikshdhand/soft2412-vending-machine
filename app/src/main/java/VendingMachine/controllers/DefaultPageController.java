@@ -128,7 +128,6 @@ public class DefaultPageController {
         items.setSpacing(30);
         scrollPane.setContent(items);
 
-        database.openConn();
         for (String itemCode : itemStrings) {
 
             HBox item = new HBox();
@@ -136,21 +135,24 @@ public class DefaultPageController {
             HBox.setMargin(item, new Insets(50));
             item.setPrefSize(500, 100);
 
+            database.openConn();
             String itemName = database.queryItemName(itemCode);
+            Double itemPrice = database.queryItemPrice(itemCode);
+            int itemQuantity = database.queryItemQuantity(itemCode);
+            database.closeConn();
+
             Label nameLabel = new Label(itemName);
             nameLabel.setFont(font);
 
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
 
-            Double itemPrice = database.queryItemPrice(itemCode);
             Label priceLabel = new Label("$" + df.format(itemPrice));
             priceLabel.setFont(font);
 
             Region region2 = new Region();
             HBox.setHgrow(region2, Priority.ALWAYS);
 
-            int itemQuantity = database.queryItemQuantity(itemCode);
             Label quantityLabel = new Label("Stock: " + itemQuantity);
             quantityLabel.setFont(font);
 
@@ -161,9 +163,8 @@ public class DefaultPageController {
             button.setFont(font);
 
             button.setOnAction(event -> {
-                session.getTransaction().addItem(itemName);
-                session.getTransaction().addToTotal(itemPrice);
-                updateCart(itemPrice);
+                session.getTransaction().addItem(itemCode);
+                updateCart();
             });
 
             item.getChildren().addAll(
@@ -180,8 +181,6 @@ public class DefaultPageController {
             items.getChildren().add(item);
 
         }
-        database.closeConn();
-        
 
     }
 
@@ -221,7 +220,7 @@ public class DefaultPageController {
         displayCategory("Chips");
     }
 
-    public void updateCart(double price){
+    public void updateCart(){
 
         VBox items = new VBox();
         items.setSpacing(30);
@@ -237,7 +236,10 @@ public class DefaultPageController {
             item.setPrefSize(250, 50);
             item.setStyle("-fx-background-color:#98aded");
 
-            Label label = new Label(entry.getKey());
+            database.openConn();
+            String itemName = database.queryItemName(entry.getKey());
+            database.closeConn();
+            Label label = new Label(itemName);
             label.setFont(font);
 
             Region region1 = new Region();
@@ -260,7 +262,6 @@ public class DefaultPageController {
                 if (session.getTransaction().getItems().get(entry.getKey()) == null) {
                     items.getChildren().remove(item);
                 }
-                session.getTransaction().addToTotal(-price);
                 totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
             });
 
@@ -269,10 +270,6 @@ public class DefaultPageController {
             addButton.setOnAction(event -> {
                 session.getTransaction().addItem(entry.getKey());
                 quantityLabel.setText("" + session.getTransaction().getItems().get(entry.getKey()));
-                if (session.getTransaction().getItems().get(entry.getKey()) == null) {
-                    items.getChildren().remove(item);
-                }
-                session.getTransaction().addToTotal(price);
                 totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
             });
 
