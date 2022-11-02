@@ -175,9 +175,7 @@ public class CheckoutPage extends Page {
         Label lbl = new Label("Pay by cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
-        pane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
