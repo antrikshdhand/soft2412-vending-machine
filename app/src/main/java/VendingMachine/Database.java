@@ -508,7 +508,8 @@ public class Database {
 
 
     /**
-     * Function thay allows for the username to be queried.
+     * Function that allows for the username to be queried.
+     * 
      * @return list
      */
     public ArrayList<String> queryUsername() {
@@ -799,7 +800,7 @@ public class Database {
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            System.out.println(card);
+
             statement.executeUpdate(String.format(
                 "insert into cards values('%s', '%s', '%s')", 
                 username, card, cvv));
@@ -810,6 +811,30 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+        return 0;
+    }
+
+
+    /**
+     * Function which returns all items currently in the database
+     */
+    public int getAllItems() {
+        String sql = """
+                SELECT *
+                FROM items
+                """;
+        try {
+            ResultSet query = openStatement.executeQuery(sql);
+            if (query.next()) {
+                System.out.println(query.next());
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            String[] errorMessage = null;
+            return -1;
+        }
+
         return 0;
     }
 
