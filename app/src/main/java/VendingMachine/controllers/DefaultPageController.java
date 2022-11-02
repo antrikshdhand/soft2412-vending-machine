@@ -226,6 +226,7 @@ public class DefaultPageController {
         items.setSpacing(30);
         cartScrollPane.setContent(items);
 
+        session.getTransaction().calculateTotal();
         totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
 
         for (Map.Entry<String,Integer> entry : session.getTransaction().getItems().entrySet()) {
@@ -262,6 +263,7 @@ public class DefaultPageController {
                 if (session.getTransaction().getItems().get(entry.getKey()) == null) {
                     items.getChildren().remove(item);
                 }
+                session.getTransaction().calculateTotal();
                 totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
             });
 
@@ -270,6 +272,7 @@ public class DefaultPageController {
             addButton.setOnAction(event -> {
                 session.getTransaction().addItem(entry.getKey());
                 quantityLabel.setText("" + session.getTransaction().getItems().get(entry.getKey()));
+                session.getTransaction().calculateTotal();
                 totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
             });
 

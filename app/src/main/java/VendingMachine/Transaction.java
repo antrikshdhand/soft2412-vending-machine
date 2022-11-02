@@ -111,9 +111,6 @@ public class Transaction {
      * @return total
      */
     public double getTotal() {
-        calculateTotal();
-        calculateDue();
-        calculateChange();
         return total;
     }
 
@@ -121,6 +118,7 @@ public class Transaction {
      * Function that calculateTotal
      */
     public void calculateTotal() {
+
         total = 0;
 
         for (Map.Entry<String,Integer> entry : items.entrySet()) {
@@ -130,6 +128,9 @@ public class Transaction {
 
             total += price * entry.getValue();
         }
+
+        calculateDue();
+        calculateChange();
 
     }
 
