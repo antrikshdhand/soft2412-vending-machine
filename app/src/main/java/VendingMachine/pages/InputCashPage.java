@@ -2,6 +2,7 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 
+import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ import org.w3c.dom.css.Rect;
 
 import com.sun.source.doctree.AttributeTree;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -200,6 +202,32 @@ public class InputCashPage extends Page {
         });
 
     }
+
+
+   // Function to update the temp cash available.
+
+    /**
+     * Function that add the change available in the database and the cash, change user has put in so far.
+      * @return
+     */
+    public HashMap<String, Integer> updateTempCashAvailable(){
+
+        sm.getDatabase().openConn();
+        HashMap<String, Integer> dbAva = sm.getDatabase().getCashSummary();
+        sm.getDatabase().closeConn();
+
+        HashMap<String, Integer> currentlyAvailable = sm.getSession().getTransaction().getCurrentlyPaid();
+
+        for( Map.Entry<String, Integer> entry : dbAva.entrySet()){
+
+            currentlyAvailable.put(entry.getKey(), entry.getValue() + currentlyAvailable.get(entry.getKey()));
+
+        }
+
+        return currentlyAvailable;
+
+    }
+
 
 
     /**
