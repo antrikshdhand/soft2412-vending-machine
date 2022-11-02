@@ -134,7 +134,6 @@ public class OwnerPortal extends Page {
 
 
         Label lbl = new Label("Manage Privileged Users");
-        AtomicReference<Label> userData = new AtomicReference<>(new Label(""));
 
         Label usernameLabel = new Label("Enter Username");
         TextField usernameText = new TextField();
@@ -142,31 +141,15 @@ public class OwnerPortal extends Page {
         usernameText.setMaxWidth(180);
 
         Label roleLabel = new Label("Enter Role");
-        TextField roleText = new TextField();
+        ComboBox<String> roleText = new ComboBox<String>();
         roleText.setPrefWidth(180);
         roleText.setMaxWidth(180);
+        sm.getDatabase().openConn();
+        roleText.getItems().addAll(FXCollections.observableArrayList(sm.getDatabase().queryRoles()));
+        sm.getDatabase().closeConn();
 
         Button submit = new Button("Create User");
 
-        submit.setOnAction(event -> {
-            sm.getDatabase().openConn();
-
-            sm.getDatabase().insertNewUser(usernameText.getText(), "1234", roleText.getText());
-            Alert success = new Alert(Alert.AlertType.CONFIRMATION);
-            success.setTitle("User Created!");
-            success.setHeaderText(String.format("User has been successfully created."));
-            success.setContentText("The default password set is '1234'");
-            success.showAndWait();
-
-            sm.getDatabase().closeConn();
-        });
-
-        create.getChildren().addAll(usernameLabel, usernameText, roleLabel, roleText, submit);
-        create.setTranslateY(170);
-        create.setTranslateX(520);
-        pane.getChildren().add(create);
-
-        userData.get().setTranslateY(80);
         // pane.getChildren().add(userData.get());
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 
@@ -213,9 +196,25 @@ public class OwnerPortal extends Page {
         });
 
         removeUser.setOnAction(event -> {
-            sm.getDatabase().openConn();
-            sm.getDatabase().removeUser(users.getValue());
-            sm.getDatabase().closeConn();
+            if(users.getValue().equals(sm.getSession().getUserName())) {
+                Alert own = new Alert(Alert.AlertType.ERROR);
+                own.setContentText("Delete Error");
+                own.setHeaderText("Cannot your own account");
+                own.setContentText("You cannot delete the account that you are currently logged in as. Please log out and log in to another owner role to delete this accoutn");
+                own.showAndWait();
+
+            } else {
+                System.out.println(sm.getSession().getUserName());
+                sm.getDatabase().openConn();
+                sm.getDatabase().removeUser(users.getValue());
+                users.setItems(FXCollections.observableArrayList(sm.getDatabase().queryUsername()));
+                sm.getDatabase().closeConn();
+                Alert own = new Alert(Alert.AlertType.CONFIRMATION);
+                own.setContentText("Deleted Account");
+                own.setHeaderText("Deleted the account");
+                own.setContentText("The account selected has been successfully deleted");
+                own.showAndWait();
+            }
         });
 
         lbl.setTranslateY(20);
@@ -242,15 +241,40 @@ public class OwnerPortal extends Page {
 
             usernameDisplay.set(name);
 
-
-            pane.getChildren().add(userData.get());
-
-
             sm.getDatabase().closeConn();
 
             sm.switchScenes(manageCSOPage);
 
         });
+
+        submit.setOnAction(event -> {
+            sm.getDatabase().openConn();
+            if(sm.getDatabase().queryUsername().contains(usernameText.getText())) {
+                Alert own = new Alert(Alert.AlertType.ERROR);
+                own.setContentText("Username Already Exists");
+                own.setHeaderText("Username Already Exists");
+                own.setContentText("There is already an acoount with this username. Please try again with another username");
+                own.showAndWait();
+
+            } else {
+                sm.getDatabase().insertNewUser(usernameText.getText(), "1234", roleText.getValue());
+                users.setItems(FXCollections.observableArrayList(sm.getDatabase().queryUsername()));
+                usernameText.clear();
+                roleText.valueProperty().set(null);
+                Alert success = new Alert(Alert.AlertType.CONFIRMATION);
+                success.setTitle("User Created!");
+                success.setHeaderText(String.format("User has been successfully created."));
+                success.setContentText("The default password set is '1234'");
+                success.showAndWait();
+            }
+
+            sm.getDatabase().closeConn();
+        });
+
+        create.getChildren().addAll(usernameLabel, usernameText, roleLabel, roleText, submit);
+        create.setTranslateY(170);
+        create.setTranslateX(520);
+        pane.getChildren().add(create);
     }
 
 
@@ -305,39 +329,13 @@ public class OwnerPortal extends Page {
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
         File file = new File("reports/ownerCancelledTransactionsSummary.csv");
-        try {
-            // Create FileWriter object with file as parameter
-            FileWriter outputFile = new FileWriter(file, true);
-
-            // Create CSVWriter object file writer object as parameter
-            CSVWriter writer = new CSVWriter(outputFile);
-
-            // Add header to ownerUsersSummary.csv if empty
-            if (file.length() == 0) {
-                String[] header = {"USERNAME", "PASSWORD"};
-                writer.writeNext(header);
-            }
-
-            // Add data to transactions.csv
-            for(Map.Entry<String, String> usernamePassword : sm.getDatabase().queryUsernameAndRole().entrySet()) {
-                String[] data = {usernamePassword.getKey(), usernamePassword.getValue()};
-                writer.writeNext(data);
-            }
-
-            writer.close();
-            outputFile.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
 
         sm.getDatabase().closeConn();
 
         Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
         successfulRegisterAlert.setTitle("Success");
         successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
-        successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
+        successfulRegisterAlert.setContentText("You can view the summary of cancelled transactions as a csv.");
         successfulRegisterAlert.showAndWait();
     }
 

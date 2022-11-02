@@ -18,8 +18,19 @@ import javafx.beans.value.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.control.Alert.AlertType;
 
+import java.io.*;
+import java.util.*;
+
+// Imports for timer
 import java.util.concurrent.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
+
+// Imports for time
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
+// OpenCSV import
+import com.opencsv.*;
 
 
 public class CheckoutPage extends Page {
@@ -59,7 +70,7 @@ public class CheckoutPage extends Page {
 
         cancelTransactionButton = new Button("Cancel Transaction");
         cancelTransactionButton.setOnAction(e -> {
-            cancelTransaction();
+            cancelTransaction("Manual");
         });
         cancelTransactionButton.setMinWidth(box.getPrefWidth());
         cancelTransactionButton.setAlignment(Pos.CENTER);
@@ -84,13 +95,12 @@ public class CheckoutPage extends Page {
 
 
         // Elements for timer
-
         Text timerText = new Text();
         timerText.setTranslateY(-320);
         timerText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
         // Length of timer in seconds
-        int refreshCountdown = 35;
+        int refreshCountdown = 10;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
 
         countDown.addListener(new ChangeListener<Number>() {
@@ -104,7 +114,7 @@ public class CheckoutPage extends Page {
 
                 if (time > 0) {
                     // System.out.println(time);
-                    if (time == 30) {
+                    if (time == (int) refreshCountdown/2) {
                         System.out.println(Integer.toString(time) + " seconds left before transaction is cancelled.\n");
                         timerText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
                     }
@@ -121,7 +131,7 @@ public class CheckoutPage extends Page {
                     Scene thisScene = scene;
 
                     if (currentScene == scene) {
-                        cancelTransaction();
+                        cancelTransaction("Timer");
                     }
 
                 }
@@ -135,12 +145,10 @@ public class CheckoutPage extends Page {
                 new KeyFrame(Duration.seconds(refreshCountdown), new KeyValue(countDown, 0)));
         timeToRefresh.playFromStart();
 
-
         // Adding child object references to parent objects
         box.getChildren().addAll(title, payCard, payCash, cancelTransactionButton, timerText);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
-
 
         // 'Pay by card' button
         PayCard payCardPage = new PayCard(sm);
@@ -156,10 +164,54 @@ public class CheckoutPage extends Page {
     /**
      * Method to log user out if transaction is cancelled manually or by timeout
      */
-    public void cancelTransaction() {
+    public void cancelTransaction(String reason) {
+
         sm.switchScenes(sm.getDefaultPageScene());
         sm.getDefaultPageController().logout();
-        System.out.println("Transaction cancelled. User logged out.\n\n");
+        System.out.println("Transaction cancelled. User logged out.\n");
+
+        File file = new File("reports/ownerCancelledTransactionsSummary.csv");
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(file, true);
+    
+            // Create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile);
+    
+            // Add header to transactions.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"DATE & TIME", "USER", "REASON"};
+                writer.writeNext(header);
+            }
+
+            // Get date and time
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+            LocalDateTime now = LocalDateTime.now();  
+            System.out.println(dtf.format(now));
+
+            // Get username
+            String username = sm.getSession().getUserName();
+            if (username.equals("Guest")) {
+                username = "Anonymous";
+            }
+    
+            // Add data to cancelledTransactions.csv
+            String[] data = {
+                dtf.format(now), // Date and time
+                username,
+                reason
+            };
+            
+            writer.writeNext(data);
+    
+            // Closing writer connection
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Cancelled transactions file not found!");
+        }
+
     }
 
 

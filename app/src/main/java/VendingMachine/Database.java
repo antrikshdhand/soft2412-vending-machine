@@ -124,6 +124,7 @@ public class Database {
             // CASHIER - C
             // GUEST - G
             // REGISTERED CUSTOMER - R
+            
             } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -151,6 +152,7 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+
         return 0;
     }
 
@@ -213,8 +215,8 @@ public class Database {
      * Function that sets up the initial cash amount for the first run.
      * @return if successful return 0, else return -1
      */
-    public int setUpInitialCashAmounts(){
-        try{
+    public int setUpInitialCashAmounts() {
+        try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30);
             statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "100", 5));
@@ -235,6 +237,7 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+
         return 0;
     }
 
@@ -294,7 +297,7 @@ public class Database {
      * Function that returns the currency and quantity for all currencies in a hashmap formatted <currency, quantity>.
      * @return
      */
-    public HashMap<String, Integer> getCashSummary(){
+    public HashMap<String, Integer> getCashSummary() {
 
         HashMap<String, Integer> items = new HashMap<>();
 
@@ -310,32 +313,31 @@ public class Database {
         }
 
         return items;
-
     }
 
     /**
      * Function tha calculates the total change in the vending machine
+     * @return total
      */
-    public double getTotalChange(){
+    public double getTotalChange() {
         HashMap<String, Integer> changeMap = this.getCashSummary();
 
-        double Total = 0.00;
+        double total = 0.00;
         for (Map.Entry<String, Integer> entry : changeMap.entrySet()) {
-            Total += (Double.parseDouble(entry.getKey()) * entry.getValue());
+            total += (Double.parseDouble(entry.getKey()) * entry.getValue());
         }
-        return Total;
-
+        return total;
     }
 
     /**
      * Function to update the number of available change in the vending machine.
      * @param currency ( the currency you want to update)
-     * @param quantityToUpdate ( quantity you want the cash to update by)
+     * @param quantityToUpdate (quantity you want the cash to update by)
      */
-    public int increaseCashQuantity(String currency, Integer quantityToUpdate){
+    public int increaseCashQuantity(String currency, Integer quantityToUpdate) {
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
-        try{
+        try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", quantityToUpdate + availableCashMap.get(currency), currency));
@@ -356,10 +358,10 @@ public class Database {
      * @param quantityToDeduct
      * @return
      */
-    public int decreaseCashQuantity(String currency, Integer quantityToDeduct){
+    public int decreaseCashQuantity(String currency, Integer quantityToDeduct) {
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
-        try{
+        try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", availableCashMap.get(currency) - quantityToDeduct,  currency));
@@ -394,7 +396,6 @@ public class Database {
         }
         
         return items;
-
     }
 
     /**
@@ -402,18 +403,19 @@ public class Database {
      * @param status
      * @param user
      * @param reason
+     * @return
      */
-    public int insertNewTransaction(String status, String user, String reason){
+    public int insertNewTransaction(String status, String user, String reason) {
 
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(String.format("insert into transactions values(CURRENT_TIMESTAMP ,'%s', '%s', '%s')", status, user, reason));
-
-        } catch(SQLException e){
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
             return -1;
         }
+
         return 0;
     }
 
@@ -421,7 +423,6 @@ public class Database {
     /**
      * Function that allows for a category to be queried. *
      * @param category
-     * 
      * @return items
      */
     public ArrayList<String> queryCategory(String category) {
@@ -516,7 +517,6 @@ public class Database {
             while (query.next()) {
 
                 String uname = query.getString("username");
-                System.out.println();
                 list.add(uname);
             }
         } catch(SQLException e) {
@@ -528,13 +528,34 @@ public class Database {
         return list;
     }
 
+    public ArrayList<String> queryRoles() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            String sql = String.format("SELECT DISTINCT role FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+
+                String uname = query.getString("role");
+                list.add(uname);
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return list;
+    }
+
+
     public int removeUser(String username) {
         try {
             String sql = String.format("DELETE from users WHERE username = '%s';", username);
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(sql);
-            System.out.println("User has been removed");
             return 0;
 
         } catch(SQLException e) {
