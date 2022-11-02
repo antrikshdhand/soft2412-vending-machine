@@ -295,7 +295,8 @@ public class OwnerPortal extends Page {
         sm.getDatabase().openConn();
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
-        File file = new File("reports/ownerUsersSummary.csv");
+        File file = new File("./src/main/resources/reports/usersReport.csv");
+        
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file, true);
@@ -337,7 +338,7 @@ public class OwnerPortal extends Page {
         sm.getDatabase().openConn();
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
-        File file = new File("reports/ownerCancelledTransactionsSummary.csv");
+        File file = new File("./src/main/resources/reports/cancelledTransactionsReport.csv");
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file, true);
