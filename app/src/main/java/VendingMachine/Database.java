@@ -60,7 +60,8 @@ public class Database {
                     """
                     CREATE TABLE IF NOT EXISTS users (
                         username VARCHAR(15) PRIMARY KEY, 
-                        password VARCHAR(20), 
+                        password VARCHAR(50),
+                        salt VARCHAR(50), 
                         role VARCHAR(20),
                         CHECK (role IN ('OWNER', 'SELLER', 'CASHIER', 'GUEST', 'REGISTERED CUSTOMER'))
                     );
@@ -118,7 +119,6 @@ public class Database {
             
             // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
-            openStatement.executeUpdate("INSERT INTO users VALUES ('guest', 'guest', 'GUEST')");
 
             // OWNER - O
             // CASHIER - C
@@ -268,15 +268,24 @@ public class Database {
             statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Sprite"));
             
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
+//
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user2", "user2p", "REGISTERED CUSTOMER"));
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
+//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+//
+            insertNewUser("guest", "guest", "GUEST");
+            insertNewUser("owner", "ownerp", "OWNER");
+            insertNewUser("cashier", "cashierp", "cashier");
+            insertNewUser("seller", "sellerp", "SELLER");
 
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user2", "user2p", "REGISTERED CUSTOMER"));
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+            insertNewUser("user1", "user1p", "REGISTERED CUSTOMER");
+            insertNewUser("user2", "user2p", "REGISTERED CUSTOMER");
+            insertNewUser("user3", "user3p", "REGISTERED CUSTOMER");
 
             insertNewTransaction("Successful", "users1", "");
             insertNewTransaction("Unsuccessful", "users2", "Timeout");
@@ -501,7 +510,7 @@ public class Database {
             while (query.next()) {
 //                System.out.println("Hello queryCancelledTransactions3");
 //                System.out.println(query.getString("user"));
-                table.get(0).add(query.getString("user"));
+                table.get(0).add(query.getString("users"));
             }
         } catch(SQLException e) {
             // if the error message is "out of memory",
@@ -625,8 +634,8 @@ public class Database {
 
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            System.out.println(role.toUpperCase());
-            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", username, password,role.toUpperCase()));
+            Password pw = PasswordHash.createHashedPassword(password);
+            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s', '%s')", username, pw.hashPassword(), pw.strSalt(), role.toUpperCase()));
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -738,21 +747,24 @@ public class Database {
      */
     public int login(String username, String password) {
         String sql = """
-                SELECT *
+                SELECT salt, password
                 FROM Users
-                WHERE username = '%s' AND password = '%s';
+                WHERE username = '%s';
                 """;
         try {
-            ResultSet query = openStatement.executeQuery(String.format(sql, username, password));
+            ResultSet query = openStatement.executeQuery(String.format(sql, username));
             
             if (query.next()) {
-                return 0;
-            } else {
-                return -1;
+                if(PasswordHash.isValidUser(query.getString("salt"), query.getString("password"), password)) {
+                    return 0;
+                }
             }
+            return -1;
+
         } catch (SQLException e) {
             System.out.println("Error while querying for user :(");
             return -1;
+
         }
     }
 
