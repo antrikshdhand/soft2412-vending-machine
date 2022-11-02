@@ -479,22 +479,22 @@ public class Database {
 
     /**
      * Function that allows for the cancelled transactions to be queried.
-     *
      * @return map
      */
     public ArrayList<ArrayList<String>> queryCancelledTransactions() {
 
         ArrayList<ArrayList<String>> table = new ArrayList<>();
-        //System.out.println("Hello queryCancelledTransactions");
+        // System.out.println("Hello queryCancelledTransactions");
 
         try {
             String sql = String.format("SELECT * FROM transactions");
             ResultSet query = openStatement.executeQuery(sql);
             table.add(new ArrayList<>());
-//            System.out.println("Hello queryCancelledTransactions2");
+            // System.out.println("Hello queryCancelledTransactions2");
+
             while (query.next()) {
-//                System.out.println("Hello queryCancelledTransactions3");
-//                System.out.println(query.getString("user"));
+                // System.out.println("Hello queryCancelledTransactions3");
+                // System.out.println(query.getString("user"));
                 table.get(0).add(query.getString("users"));
             }
         } catch(SQLException e) {
@@ -504,13 +504,11 @@ public class Database {
         }
 
         return table;
-
     }
 
 
     /**
      * Function thay allows for the username to be queried.
-     * 
      * @return list
      */
     public ArrayList<String> queryUsername() {
@@ -556,6 +554,11 @@ public class Database {
     }
 
 
+    /**
+     * Method to remove a user
+     * @param username
+     * @return
+     */
     public int removeUser(String username) {
         try {
             String sql = String.format("DELETE from users WHERE username = '%s';", username);
