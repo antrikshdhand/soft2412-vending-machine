@@ -310,6 +310,7 @@ public class PayCard extends Page {
         return true;
     }
 
+    
     /**
      * Returns the PayCard scene.
      * @return scene
