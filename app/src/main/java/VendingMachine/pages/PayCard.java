@@ -111,6 +111,8 @@ public class PayCard extends Page {
             boolean checkedCardNumber = checkCardNumber(cardNumber);
             boolean checkedCVV = checkCVV(cvv);
 
+            boolean checkExistsCard = checkJSON(Integer.parseInt(cardNumber));
+
             // Write to transactions.csv if valid
             if (checkedCardNumber == false) {
                 System.out.println(cardNumber + " fat");
@@ -128,6 +130,14 @@ public class PayCard extends Page {
                 incorrectCVVAlert.setTitle("Incorrect CVV");
                 incorrectCVVAlert.setHeaderText("The CVV inputted was invalid.");
                 incorrectCVVAlert.setContentText("Please try again.");
+                incorrectCVVAlert.showAndWait();
+                return;
+            }
+            else if (checkExistsCard == false) {
+                Alert incorrectCVVAlert = new Alert(AlertType.ERROR);
+                incorrectCVVAlert.setTitle("Card does not exist");
+                incorrectCVVAlert.setHeaderText("The card number inserted is not in the list of accepted card numbers.");
+                incorrectCVVAlert.setContentText("Please try again with a different card.");
                 incorrectCVVAlert.showAndWait();
                 return;
             }
@@ -229,9 +239,9 @@ public class PayCard extends Page {
             return false;
         }
 
-        // Checks if 16 digits long
+        // Checks if less than 16 digits long
         int numDigits = String.valueOf(number).length();
-        if (numDigits != 16)
+        if (numDigits > 16)
             return false;
 
         // If all conditions are met
@@ -265,6 +275,7 @@ public class PayCard extends Page {
 
     /**
      * Insert user and card details in cards table in database
+     * @param details
      */
     public void insertCard(String[] details) {
         sceneManager.getDatabase().openConn();
@@ -274,6 +285,7 @@ public class PayCard extends Page {
 
     /**
      * Check if card details exist in cards table
+     * @return
      */
     public boolean cardExists(String username) {
         sceneManager.getDatabase().openConn();
@@ -288,8 +300,20 @@ public class PayCard extends Page {
         }
     }
 
+
+    /**
+     * Checks if the card number exists in the credit_cards.json file.
+     * @param cardNumber
+     * @return
+     */
+    public boolean checkJSON(int cardNumber) {
+        return true;
+    }
+
+    
     /**
      * Returns the PayCard scene.
+     * @return scene
      */
     public Scene getScene() {
         return scene;
