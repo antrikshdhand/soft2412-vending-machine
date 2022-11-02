@@ -209,7 +209,9 @@ public class OwnerPortal extends Page {
             sm.getDatabase().closeConn();
         });
         removeUser.setOnAction(event -> {
-
+            sm.getDatabase().openConn();
+            sm.getDatabase().removeUser(users.getValue());
+            sm.getDatabase().closeConn();
         });
 
         lbl.setTranslateY(20);

@@ -415,6 +415,24 @@ public class Database {
         return list;
     }
 
+    public int removeUser(String username) {
+        try {
+            String sql = String.format("DELETE from users WHERE username = '%s';", username);
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(sql);
+            System.out.println("User has been removed");
+            return 0;
+
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return 1;
+
+        }
+    }
+
     public boolean changeRole(String username, String role) {
 
         try {
@@ -424,6 +442,7 @@ public class Database {
             statement.executeUpdate(sql);
             System.out.println("Changed " + username + " to " + role);
             return true;
+
         } catch(SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -458,7 +477,9 @@ public class Database {
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return -1;
+
         }
+
         return 0;
     }
 
