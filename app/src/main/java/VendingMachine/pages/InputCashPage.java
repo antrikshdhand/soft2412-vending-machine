@@ -136,16 +136,21 @@ public class InputCashPage extends Page {
 
         this.setUpButtonsAction();
 
-        amountDisplay.getChildren().addAll(totalAmount, totalAmountDouble, dueAmount, dueAmountDouble, changeAmount, changeAmountDouble, completeTransaction);
-
+        amountDisplay.getChildren().addAll(
+            totalAmount, 
+            totalAmountDouble, 
+            dueAmount, 
+            dueAmountDouble, 
+            changeAmount, 
+            changeAmountDouble, 
+            completeTransaction
+            );
 
         // Setting Action for the Cancel Button
         cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
 
         // Setting up Action for the complete Transaction button.
         completeTransaction.setOnAction(e -> {
-
-
 
             // If the transaction was done by guest, insert as anonymous in transaction relation.
             String name = sm.getSession().getUserName();
@@ -197,7 +202,7 @@ public class InputCashPage extends Page {
 
 
     /**
-     * Function to display alert when user has tried complete the transaction without paying the full amount.
+     * Function to display alert when user has tried to complete the transaction without paying the full amount.
      */
     private void notEnoughPaid() {
         Alert nullUsernameAlert = new Alert(Alert.AlertType.ERROR);
