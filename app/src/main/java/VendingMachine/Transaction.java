@@ -60,6 +60,8 @@ public class Transaction {
         due = 0;
         change = 0;
         paid = 0;
+        changeAmount.set(change);
+        dueAmount.set(due);
         items = new HashMap<>();
     }
 

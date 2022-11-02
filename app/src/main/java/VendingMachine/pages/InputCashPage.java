@@ -162,8 +162,29 @@ public class InputCashPage extends Page {
                 name = "anonymous";
             }
 
+
+            // Transaction where the total is 0;
+            if( sm.getSession().getTransaction().getTotal() == 0){
+
+
+                HashMap<String, Integer> temp = sm.getSession().getTransaction().getCurrentlyPaid();
+                String tempInString = "Change Refunded : \n";
+                for( Map.Entry<String, Integer> entry : temp.entrySet()){
+                    if(entry.getValue() == 0 ) continue;
+                    tempInString += String.format("     $ %s : %d \n", entry.getKey(), entry.getValue());
+                }
+
+                sm.getSuccessfulPage().setMessage(tempInString);
+                sm.switchScenes(sm.getSuccessfulPageScene());
+
+                sm.getSession().getTransaction().reset();
+                sm.getSession().getTransaction().initialHashMap();
+                return;
+
+            }
+
             // If the transaction is perfect, the right amount is paid and no change required.
-            if (sm.getSession().getTransaction().getPaid() == sm.getSession().getTransaction().getTotal()) {
+            if ((sm.getSession().getTransaction().getPaid() == sm.getSession().getTransaction().getTotal()) && (sm.getSession().getTransaction().getChange() == 0 )) {
                 sm.getDatabase().openConn();
                 sm.getDatabase().insertNewTransaction("successful", name, "");
                 sm.getDatabase().closeConn();
@@ -178,11 +199,13 @@ public class InputCashPage extends Page {
                 // This as to be amended so that it goes to a successful transaction page.
                 sm.getSuccessfulPage().setMessage("No Change Required");
                 sm.switchScenes(sm.getSuccessfulPageScene());
+                return;
 
             }
 
             if (sm.getSession().getTransaction().getDue() > 0) {
                notEnoughPaid();
+               return;
             }
 
             // Getting the total change available in the vending machine
@@ -202,6 +225,7 @@ public class InputCashPage extends Page {
                 sm.getSession().getTransaction().initialHashMap();
                 notEnoughChange();
                 sm.switchScenes(sm.getDefaultPageScene());
+                return;
             }
 
             if(sm.getSession().getTransaction().getChange() > 0){
@@ -237,6 +261,13 @@ public class InputCashPage extends Page {
                 sm.getSession().getTransaction().reset();
                 sm.getSession().getTransaction().initialHashMap();
 
+                String tempInString = "Change Refunded : /n";
+                for( Map.Entry<String, Integer> entry : temp.entrySet()){
+                    tempInString += String.format("$ %s : %d /n", entry.getKey(), entry.getValue());
+                }
+
+                sm.getSuccessfulPage().setMessage(tempInString);
+                sm.switchScenes(sm.getSuccessfulPageScene());
 
             }
 
@@ -444,6 +475,7 @@ public class InputCashPage extends Page {
         hundredDollars.setOnAction((e) -> {
             sm.getSession().getTransaction().setPaid(sm.getSession().getTransaction().getPaid() + 100);
             sm.getSession().getTransaction().addToCurrencyPaid("100");
+            System.out.println(sm.getSession().getTransaction().getCurrentlyPaid());
             this.refreshAmounts();
         });
 
