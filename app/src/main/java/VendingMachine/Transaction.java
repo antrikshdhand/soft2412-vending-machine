@@ -49,10 +49,9 @@ public class Transaction {
         changeOrder.add("0.2");
         changeOrder.add("0.1");
         changeOrder.add("0.05");
-
     }
 
-    
+
     /**
      * Function to reset all the amounts to 0
      */

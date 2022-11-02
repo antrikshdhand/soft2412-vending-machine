@@ -47,6 +47,8 @@ public class PayCard extends Page {
      */
     public void setScene() {
 
+        checkJSON(123);
+
         GridPane grid = new GridPane();
 
         String username = sceneManager.getSession().getUserName();
@@ -317,7 +319,30 @@ public class PayCard extends Page {
      * @return
      */
     public boolean checkJSON(int cardNumber) {
-        return true;
+
+        // JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
+         
+        try (FileReader reader = new FileReader("json/credit_cards.json")) {
+            
+            // Read JSON file
+            Object obj = jsonParser.parse(reader);
+ 
+            JSONArray detailsList = (JSONArray) obj;
+
+            // Get card number
+            
+ 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
     }
 
 
