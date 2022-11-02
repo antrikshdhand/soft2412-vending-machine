@@ -170,10 +170,6 @@ public class InputCashPage extends Page {
                 sm.switchScenes(sm.getDefaultPageScene());
             }
 
-
-
-
-
             if (sm.getSession().getTransaction().getDue() > 0) {
                notEnoughPaid();
             }
@@ -186,8 +182,6 @@ public class InputCashPage extends Page {
 
             // If the change is greater than change in the vending machine, then could be an error
             if (sm.getSession().getTransaction().getChange() > change) {
-
-
 
                 sm.getSession().getTransaction().initialHashMap();
                 sm.getDatabase().openConn();
