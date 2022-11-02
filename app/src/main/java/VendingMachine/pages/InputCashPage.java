@@ -2,9 +2,6 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -13,17 +10,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.beans.property.DoubleProperty;
 
-import org.apache.commons.text.io.StringSubstitutorReader;
-import org.w3c.dom.css.Rect;
-
-import com.sun.source.doctree.AttributeTree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,7 +139,19 @@ public class InputCashPage extends Page {
         );
 
         // Setting Action for the Cancel Button
-        cancel.setOnAction((e) -> sceneManager.switchScenes(sceneManager.getCheckoutPageScene()));
+        cancel.setOnAction((e) ->{
+
+
+            String name = sm.getSession().getUserName();
+            if (name.equalsIgnoreCase("guest")) {
+                name = "anonymous";
+            }
+            sm.getDatabase().insertNewTransaction("unsuccessful", name, "user Cancelled");
+            sm.getSession().getTransaction().initialHashMap();
+            sm.getSession().getTransaction().reset();
+            sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
+
+        });
 
         // Setting up Action for the complete Transaction button.
         completeTransaction.setOnAction(e -> {
@@ -214,7 +216,25 @@ public class InputCashPage extends Page {
                     sm.getSession().getTransaction().initialHashMap();
                     notEnoughChange();
                     sm.switchScenes(sm.getDefaultPageScene());
+                    return;
                 }
+                // Adding the currently paid to the database.
+                sm.getDatabase().openConn();
+                for( Map.Entry<String, Integer> entry : sm.getSession().getTransaction().getCurrentlyPaid().entrySet()){
+                    sm.getDatabase().increaseCashQuantity(entry.getKey(), entry.getValue());
+                }
+                sm.getDatabase().closeConn();
+
+                // Successful Transactions Page
+                sm.getDatabase().openConn();
+                for( Map.Entry<String, Integer> entry : temp.entrySet()){
+                    sm.getDatabase().decreaseCashQuantity(entry.getKey(), entry.getValue());
+                }
+                sm.getDatabase().insertNewTransaction("successful", name, "");
+                sm.getDatabase().closeConn();
+                sm.getSession().getTransaction().reset();
+                sm.getSession().getTransaction().initialHashMap();
+
 
             }
 
