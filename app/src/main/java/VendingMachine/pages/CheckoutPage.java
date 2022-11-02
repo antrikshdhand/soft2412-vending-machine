@@ -31,12 +31,13 @@ public class CheckoutPage extends Page {
     private Button payCash;
     private Button returnToDp;
 
+    private Button cancelTransactionButton;
+
     private Scene payCardPage;
     private Scene payCashPage;
 
     /**
      * The Constructor for the Checkout Page, sets the scene for the checkout page.
-     * 
      * @param sceneManager
      */
     public CheckoutPage(SceneManager sceneManager) {
@@ -54,8 +55,14 @@ public class CheckoutPage extends Page {
         box.setAlignment(Pos.CENTER);
 
         payCard = new Button("Pay by Card");
-
         payCash = new Button("Pay by Cash");
+
+        cancelTransactionButton = new Button("Cancel Transaction");
+        cancelTransactionButton.setOnAction(e -> {
+            cancelTransaction();
+        });
+        cancelTransactionButton.setMinWidth(box.getPrefWidth());
+        cancelTransactionButton.setAlignment(Pos.CENTER);
 
         payCash.setOnAction(e -> {
             sm.switchScenes(sm.getInputCashPageScene());;
@@ -76,7 +83,6 @@ public class CheckoutPage extends Page {
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
 
-
         // Elements for timer
 
         Text timerText = new Text();
@@ -89,16 +95,24 @@ public class CheckoutPage extends Page {
         countDown.addListener(new ChangeListener<Number>() {
 
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // What is done once decremented
+                
+                // When timer is decremented
 
                 int time = newValue.intValue();
                 timerText.setText("Time left: " + Integer.toString(time));
 
-                if (time >= 0) {
-                    System.out.println(time);
+                if (time > 0) {
+                    // System.out.println(time);
                 }
-                else if (time < 0) {
+                else {
 
+                    // Alert timeoutAlert = new Alert(AlertType.ERROR);
+                    // timeoutAlert.setTitle("Time's up!");
+                    // timeoutAlert.setHeaderText("The time limit has passed.");
+                    // timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.");
+                    // paymentSuccessfulAlert.showAndWait();
+
+                    cancelTransaction();
                 }
 
             }
@@ -111,11 +125,9 @@ public class CheckoutPage extends Page {
         timeToRefresh.playFromStart();
 
 
-
-
         // Adding child object references to parent objects
 
-        box.getChildren().addAll(title, payCard, payCash, timerText);
+        box.getChildren().addAll(title, payCard, payCash, cancelTransactionButton, timerText);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
 
@@ -128,6 +140,17 @@ public class CheckoutPage extends Page {
             payCardPage.setScene();
             sm.switchScenes(payCardPage.getScene());
         });
+
+    }
+
+    
+    /**
+     * Method to log user out if transaction is cancelled manually or by timeout
+     */
+    public void cancelTransaction() {
+
+        sm.switchScenes(sm.getDefaultPageScene());
+        sm.getDefaultPageController().logout();
 
     }
 

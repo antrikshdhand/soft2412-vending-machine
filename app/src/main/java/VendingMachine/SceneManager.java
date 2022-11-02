@@ -32,12 +32,19 @@ public class SceneManager {
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
-        checkoutPage = new CheckoutPage(this);
         inputCashPage = new InputCashPage(this);
+
+        database.openConn();
+        database.queryCancelledTransactions();
+        database.closeConn();
     }
 
     public void switchScenes(Scene scene) {
         stage.setScene(scene);
+    }
+
+    public Scene getScene() {
+        return stage.getScene();
     }
 
     public void setStage(Stage stage) {
@@ -51,7 +58,6 @@ public class SceneManager {
     public Scene getDefaultPageScene() {
         return defaultPage;
     }
-
 
 
     // This is a way to update the values on screen for the inputCashPage.
@@ -76,6 +82,7 @@ public class SceneManager {
     }
 
     public Scene getCheckoutPageScene() {
+        checkoutPage = new CheckoutPage(this);
         return checkoutPage.getScene();
     }
 
@@ -97,5 +104,9 @@ public class SceneManager {
 
     public void setDefaultPageController(DefaultPageController defaultPageController) {
         this.defaultPageController = defaultPageController;
+    }
+
+    public DefaultPageController getDefaultPageController() {
+        return defaultPageController;
     }
 }

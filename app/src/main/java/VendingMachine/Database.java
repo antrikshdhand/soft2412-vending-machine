@@ -241,7 +241,7 @@ public class Database {
 
     /**
      * FOR TESTING PURPOSES ONLY:
-     * Add a bit of dummy data to test the GUI.
+     * Add a bit of dummy data to test the GUI during demonstrations.
      * @return
      */
     public int addDummyItems() {
@@ -259,6 +259,7 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patches", "Candies"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Cocaine", "Chips"));
 
             statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
@@ -273,6 +274,12 @@ public class Database {
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+
+            insertNewTransaction("Successful", "users1", "");
+            insertNewTransaction("Unsuccessful", "users2", "Timeout");
+
+            System.out.println("Added dummy values");
+
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -463,6 +470,36 @@ public class Database {
 
     }
 
+    /**
+     * Function that allows for the cancelled transactions to be queried.
+     *
+     * @return map
+     */
+    public ArrayList<ArrayList<String>> queryCancelledTransactions() {
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+        //System.out.println("Hello queryCancelledTransactions");
+
+        try {
+            String sql = String.format("SELECT * FROM transactions");
+            ResultSet query = openStatement.executeQuery(sql);
+            table.add(new ArrayList<>());
+//            System.out.println("Hello queryCancelledTransactions2");
+            while (query.next()) {
+//                System.out.println("Hello queryCancelledTransactions3");
+//                System.out.println(query.getString("user"));
+                table.get(0).add(query.getString("user"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return table;
+
+    }
+
 
     /**
      * Function thay allows for the username to be queried.
@@ -491,6 +528,24 @@ public class Database {
         return list;
     }
 
+    public int removeUser(String username) {
+        try {
+            String sql = String.format("DELETE from users WHERE username = '%s';", username);
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(sql);
+            System.out.println("User has been removed");
+            return 0;
+
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return 1;
+
+        }
+    }
+
 
     /**
      * Function thay allows for a user's role to be changed.
@@ -509,6 +564,7 @@ public class Database {
             statement.executeUpdate(sql);
             System.out.println("Changed " + username + " to " + role);
             return true;
+
         } catch(SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -543,7 +599,9 @@ public class Database {
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return -1;
+
         }
+
         return 0;
     }
 

@@ -132,7 +132,7 @@ public class Session {
     
     /**
      * Function to set the role for a session.
-     * @param role ( String )
+     * @param role (String)
      */
     public void setRole(String role) {
         this.role = role;
