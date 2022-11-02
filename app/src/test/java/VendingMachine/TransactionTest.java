@@ -129,6 +129,18 @@ public class TransactionTest {
         assertEquals(0,due);
     }
 
+
+   // Testing teh getter for the change order list
+   @Test
+   void testGetChangeOrder(){
+        ArrayList<String> changeOder = t.getChangeOrder();
+
+        assertNotNull(changeOder);
+        assertTrue(changeOder.get(0).equalsIgnoreCase("100"));
+        assertTrue(changeOder.get(2).equalsIgnoreCase("20"));
+   }
+
+
     //Testing Calculate change and due advanced
     @Test
     void testCalculateChangeDueAdvanced(){

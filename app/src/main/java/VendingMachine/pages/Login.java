@@ -55,14 +55,14 @@ public class Login extends Page {
         this.sceneManager = sceneManager;
 
         setupScene();
-
         setupLoginForm();
-
         setupActions();
 
     }
 
-
+    /**
+     * Setup scene for login page
+     */
     private void setupScene() {
         grid = new GridPane();
         grid.setGridLinesVisible(false);
@@ -75,6 +75,9 @@ public class Login extends Page {
     }
 
 
+    /**
+     * Setup login form
+     */
     private void setupLoginForm() {
         scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -108,6 +111,9 @@ public class Login extends Page {
     }
 
 
+    /**
+     * Setup actions for login page
+     */
     private void setupActions() {
 
         // ACTION 1: if user presses enter key on password box, it fires the sign in button
@@ -135,7 +141,9 @@ public class Login extends Page {
 
     }
 
-    
+    /**
+     * Configure attempts to login
+     */
     private void attemptLogin() {
         // set username and password variables
         loginUsername = userTextField.getText();
@@ -187,7 +195,9 @@ public class Login extends Page {
         
     }
 
-
+    /**
+     * Method to show error when no input is made into a corresponding field
+     */
     private void showNullEntryError() {
         Alert nullUsernameAlert = new Alert(AlertType.ERROR);
         nullUsernameAlert.setTitle("No input entered");
@@ -198,7 +208,9 @@ public class Login extends Page {
         return;
     }
 
-
+    /**
+     * Method to format incorrect username error message
+     */
     private void showUsernameError() {
         Alert invalidUsernameAlert = new Alert(AlertType.ERROR);
         invalidUsernameAlert.setTitle("Invalid username");
@@ -209,7 +221,9 @@ public class Login extends Page {
         return;
     }
 
-
+    /**
+     * Method to format incorrect password error message
+     */
     private void showIncorrectPasswordError() {
         Alert incorrectPassAlert = new Alert(AlertType.ERROR);
         incorrectPassAlert.setTitle("Incorrect Password");
@@ -219,7 +233,9 @@ public class Login extends Page {
         return;
     }
 
-    
+    /**
+     * Method to display register dialog
+     */
     private void displayRegisterDialog() {
         // initialise dialog pane
         Dialog<ButtonType> dialog = new Dialog<>();

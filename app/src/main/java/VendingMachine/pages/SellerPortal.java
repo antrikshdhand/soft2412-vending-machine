@@ -31,17 +31,21 @@ public class SellerPortal extends Page {
     private StackPane generateSummaryPane;
 
     public SellerPortal(SceneManager sm) {
+
         this.sm = sm;
         createMainPage();
         createManageItems();
         createGenerateList();
         createGenerateSummary();
 
-//        window.setScene(manageItems);
+        // window.setScene(manageItems);
 
     }
 
 
+    /**
+     * Constructor for main page
+     */
     private void createMainPage() {
         pane = new StackPane();
         scene = new Scene(pane, width, height);
@@ -59,11 +63,11 @@ public class SellerPortal extends Page {
         Button bn3 = new Button("Generate Summary");
         Button bn4 = new Button("Return to Default Page");
 
-//        bn4.setOnAction(e -> {
-//            app.switchScenes(app.getSceneManager().getDefaultPageScene());
-//        });
-
-//        scene = new Scene(pane, width, height);
+        // bn4.setOnAction(e -> {
+        //     app.switchScenes(app.getSceneManager().getDefaultPageScene());
+        // });
+        //
+        // scene = new Scene(pane, width, height);
 
 
         Label lbl = new Label("Seller Portal");
@@ -73,10 +77,10 @@ public class SellerPortal extends Page {
         pane.setAlignment(lbl, Pos.TOP_CENTER);
         pane.setAlignment(bn4, Pos.BOTTOM_LEFT);
 
-//        bn4.setTranslateX(-550);
-//        bn4.setTranslateY(320);
-
-//        lbl.relocate(0, 30);
+        // bn4.setTranslateX(-550);
+        // bn4.setTranslateY(320);
+        //
+        // lbl.relocate(0, 30);
 
         buttons.getChildren().addAll(bn1, bn2, bn3);
         buttons.setAlignment(Pos.CENTER);
@@ -90,7 +94,9 @@ public class SellerPortal extends Page {
 
     }
 
-
+    /**
+     * Function to create the 'manage items' feature
+     */
     private void createManageItems() {
         manageItemsPane = new StackPane();
         manageItems = new Scene(manageItemsPane, width, height);
@@ -102,7 +108,7 @@ public class SellerPortal extends Page {
 
         manageItemsPane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-//        generateListPane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // generateListPane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
@@ -113,7 +119,9 @@ public class SellerPortal extends Page {
         bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
-
+    /**
+     * Function to create the 'generate list' feature
+     */
     private void createGenerateList() {
         generateListPane = new StackPane();
         generateList = new Scene(generateListPane, width, height);
@@ -125,7 +133,7 @@ public class SellerPortal extends Page {
 
         generateListPane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
@@ -136,7 +144,9 @@ public class SellerPortal extends Page {
         bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
-
+    /**
+     * Function to create the 'generate summary' feature
+     */
     private void createGenerateSummary() {
         generateSummaryPane = new StackPane();
         generateSummary = new Scene(generateSummaryPane, width, height);
@@ -148,7 +158,7 @@ public class SellerPortal extends Page {
 
         generateSummaryPane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-//        pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
 
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
@@ -159,7 +169,9 @@ public class SellerPortal extends Page {
         bn.setOnAction(e -> this.sm.switchScenes(scene));
     }
 
-
+    /**
+     * Function to return the scene
+     */
     public Scene getScene() {
         return this.scene;
     }

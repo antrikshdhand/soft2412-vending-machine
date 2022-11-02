@@ -84,7 +84,9 @@ public class CashierPortal extends Page {
 
     }
 
-
+    /**
+     * Function to create modify cash interface
+     */
     public void createModifyCash() {
         StackPane pane = new StackPane();
         modifyCashPage = new Scene(pane, WIDTH, HEIGHT);
@@ -107,7 +109,9 @@ public class CashierPortal extends Page {
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
-
+    /**
+     * Function to create a summary of change
+     */
     public void createSummaryChange() {
         StackPane pane = new StackPane();
         summaryChangePage = new Scene(pane, WIDTH, HEIGHT);
@@ -130,7 +134,9 @@ public class CashierPortal extends Page {
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 
-
+    /**
+     * Function to create a summary of the transactions
+     */
     public void createSummaryTransaction() {
         StackPane pane = new StackPane();
         summaryTransactionPage = new Scene(pane, WIDTH, HEIGHT);
@@ -156,7 +162,7 @@ public class CashierPortal extends Page {
 
     /**
      * Function to return scene.
-     * @return
+     * @return scene
      */
     public Scene getScene() {
         return scene;

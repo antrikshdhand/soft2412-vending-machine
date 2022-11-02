@@ -106,6 +106,15 @@ public class Database {
                             cvv VARCHAR(3)
                         )
                             """);
+
+            openStatement.executeUpdate("""
+                        CREATE TABLE IF NOT EXISTS transactions(
+                            time_added DATETIME DEFAULT (CURRENT_TIMESTAMP) PRIMARY KEY,
+                            status VARCHAR(16), -- Successful or Unsuccessful 
+                            users VARCHAR(20), -- who attempted the transaction, if guest should be anonymous 
+                            reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. ) 
+                            )
+                            """);
             
             // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
@@ -115,13 +124,12 @@ public class Database {
             // CASHIER - C
             // GUEST - G
             // REGISTERED CUSTOMER - R
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
             return -1;
-        }
-        return 0;
+        } return 0;
     }
 
 
@@ -188,7 +196,8 @@ public class Database {
                 DROP TABLE IF EXISTS items;
                 DROP TABLE IF EXISTS recent;
                 DROP TABLE IF EXISTS cash;  
-                DROP TABLE IF EXISTS cards
+                DROP TABLE IF EXISTS cards;
+                DROP TABLE IF EXISTS transactions;
                 """);
             return 0;
         } catch (SQLException e) {
@@ -232,7 +241,7 @@ public class Database {
 
     /**
      * FOR TESTING PURPOSES ONLY:
-     * Add a bit of dummy data to test the GUI.
+     * Add a bit of dummy data to test the GUI during demonstrations.
      * @return
      */
     public int addDummyItems() {
@@ -250,6 +259,7 @@ public class Database {
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patches", "Candies"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
             statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
+            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Cocaine", "Chips"));
 
             statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
@@ -264,6 +274,12 @@ public class Database {
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
             statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
+
+            insertNewTransaction("Successful", "users1", "");
+            insertNewTransaction("Unsuccessful", "users2", "Timeout");
+
+            System.out.println("Added dummy values");
+
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
@@ -312,11 +328,11 @@ public class Database {
     }
 
     /**
-     *  Function to update the number of available change in the vending machine.
+     * Function to update the number of available change in the vending machine.
      * @param currency ( the currency you want to update)
      * @param quantityToUpdate ( quantity you want the cash to update by)
      */
-    public int updateCashQuantity(String currency, Integer quantityToUpdate){
+    public int increaseCashQuantity(String currency, Integer quantityToUpdate){
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
         try{
@@ -333,6 +349,35 @@ public class Database {
         return 0;
     }
 
+
+    /**
+     * Function to deduct a quantity of a given currency.
+     * @param currency
+     * @param quantityToDeduct
+     * @return
+     */
+    public int decreaseCashQuantity(String currency, Integer quantityToDeduct){
+        HashMap<String,Integer> availableCashMap = this.getCashSummary();
+
+        try{
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", availableCashMap.get(currency) - quantityToDeduct,  currency));
+
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
+
+    /**
+     * Function to query recent items in the store.
+     * @return items
+     */
     public ArrayList<String> queryRecent() {
         
         ArrayList<String> items = new ArrayList<>();
@@ -352,7 +397,34 @@ public class Database {
 
     }
 
+    /**
+     * Function that enters a new transaction into the transaction table.
+     * @param status
+     * @param user
+     * @param reason
+     */
+    public int insertNewTransaction(String status, String user, String reason){
 
+        try {
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(String.format("insert into transactions values(CURRENT_TIMESTAMP ,'%s', '%s', '%s')", status, user, reason));
+
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
+
+    /**
+     * Function thay allows for a category to be queried.
+     * 
+     * @param category
+     * 
+     * @return items
+     */
     public ArrayList<String> queryCategory(String category) {
 
         ArrayList<String> items = new ArrayList<>();
@@ -373,6 +445,12 @@ public class Database {
 
     }
 
+
+    /**
+     * Function that allows for the username and role to be queried.
+     * 
+     * @return map
+     */
     public HashMap<String, String> queryUsernameAndRole() {
 
         HashMap<String, String> map = new HashMap<>();
@@ -393,6 +471,42 @@ public class Database {
 
     }
 
+    /**
+     * Function that allows for the cancelled transactions to be queried.
+     *
+     * @return map
+     */
+    public ArrayList<ArrayList<String>> queryCancelledTransactions() {
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+        //System.out.println("Hello queryCancelledTransactions");
+
+        try {
+            String sql = String.format("SELECT * FROM transactions");
+            ResultSet query = openStatement.executeQuery(sql);
+            table.add(new ArrayList<>());
+//            System.out.println("Hello queryCancelledTransactions2");
+            while (query.next()) {
+//                System.out.println("Hello queryCancelledTransactions3");
+//                System.out.println(query.getString("user"));
+                table.get(0).add(query.getString("user"));
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return table;
+
+    }
+
+
+    /**
+     * Function thay allows for the username to be queried.
+     * 
+     * @return list
+     */
     public ArrayList<String> queryUsername() {
 
         ArrayList<String> list = new ArrayList<>();
@@ -433,6 +547,15 @@ public class Database {
         }
     }
 
+
+    /**
+     * Function thay allows for a user's role to be changed.
+     * 
+     * @param username
+     * @param role
+     * 
+     * @return
+     */
     public boolean changeRole(String username, String role) {
 
         try {
@@ -601,6 +724,7 @@ public class Database {
         }
     }
 
+
     /**
      * Function to get card number and cvv
      * 
@@ -629,6 +753,7 @@ public class Database {
         }
     }
 
+    
     /**
      * Function to store user's card details in the database.
      * 

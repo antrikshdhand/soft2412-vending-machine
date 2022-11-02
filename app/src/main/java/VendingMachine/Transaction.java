@@ -2,6 +2,7 @@ package VendingMachine;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,9 @@ public class Transaction {
 
     private double change;
 
+
+    private ArrayList<String> changeOrder = new ArrayList<>();
+
     private HashMap<String, Integer> currentlyPaid = new HashMap<>();
 
     // Adding doubleProperty for dynamic text on screen.
@@ -27,16 +31,31 @@ public class Transaction {
     private DoubleProperty changeAmount = new SimpleDoubleProperty() ;
     private DoubleProperty dueAmount = new SimpleDoubleProperty();
 
-    public Transaction(){
+
+    /**
+     * Constructor for transaction class
+     */
+    public Transaction() {
         this.reset();
         this.initialHashMap();
+        changeOrder.add("100");
+        changeOrder.add("50");
+        changeOrder.add("20");
+        changeOrder.add("10");
+        changeOrder.add("5");
+        changeOrder.add("2");
+        changeOrder.add("1");
+        changeOrder.add("0.5");
+        changeOrder.add("0.2");
+        changeOrder.add("0.1");
+        changeOrder.add("0.05");
 
     }
 
     /**
      * Function to reset all the amounts to 0
      */
-    public void reset(){
+    public void reset() {
         total = 0;
         due = 0;
         change = 0;
@@ -62,7 +81,7 @@ public class Transaction {
 
     /**
      * function for increasing the total price
-     * @param
+     * @param n
      */
 
     public void addToTotal(double n) {
@@ -83,7 +102,7 @@ public class Transaction {
 
     /**
      * Function that gets the total price of all the items in the cart.
-     * @return
+     * @return total
      */
     public double getTotal() {
         return total;
@@ -91,7 +110,7 @@ public class Transaction {
 
     /**
      * Function that return the changes the transaction needs to return.
-     * @return
+     * @return change
      */
     public double getChange() {
         return change;
@@ -99,7 +118,7 @@ public class Transaction {
 
     /**
      * Function that return the amount still due to complete transaction.
-     * @return
+     * @return due
      */
     public double getDue() {
         return due;
@@ -126,9 +145,9 @@ public class Transaction {
     /**
      * Function that recalculates the change that should be returned.
      */
-    void calculateChange(){
+    void calculateChange() {
         this.change = paid - total;
-        if(this.change < 0){
+        if (this.change < 0) {
             this.change = 0;
         }
         changeAmount.set(change);
@@ -139,7 +158,7 @@ public class Transaction {
      * Function that recalculates the due amount for the transaction.
      */
 
-    void calculateDue(){
+    void calculateDue() {
         this.due = total - paid;
         if (due < 0) {
             due = 0;
@@ -148,10 +167,18 @@ public class Transaction {
     }
 
     /**
+     * Function that returns the change order in an ArrayList
+     * @return changeOrder
+     */
+    public ArrayList<String> getChangeOrder() {
+        return changeOrder;
+    }
+
+    /**
      * Function that sets the amount paid and recalculates due / changes.
      * @param paid
      */
-    public void setPaid(double paid){
+    public void setPaid(double paid) {
         this.paid = paid;
         calculateChange();
         calculateDue();
@@ -159,31 +186,32 @@ public class Transaction {
 
     /**
      * Function that return the total that has been paid so far.
+     * @return paid
      */
-    public double getPaid(){
+    public double getPaid() {
         return this.paid;
     }
 
     /**
      * Function that return the change doubleProperty
-     * @return
+     * @return changeAMount
      */
-    public DoubleProperty getChangeAmount(){
+    public DoubleProperty getChangeAmount() {
         return this.changeAmount;
     }
 
     /**
      * Function that return the Due doubleProperty.
-     * @return
+     * @return dueamount
      */
-    public DoubleProperty getDueAmount(){
+    public DoubleProperty getDueAmount() {
         return this.dueAmount;
     }
 
     /**
      * Function for putting the initial setting up the hashmap.
      */
-    public void initialHashMap(){
+    public void initialHashMap() {
 
         currentlyPaid.put("100", 0);
         currentlyPaid.put("50",0);
@@ -203,10 +231,10 @@ public class Transaction {
      *  Function that updates the quantity for the givens quantity for a currency by 1.
      * @param key (currency you want to update by 1) : String
      */
-    public void addToCurrencyPaid(String key){
+    public void addToCurrencyPaid(String key) {
 
         // You can only update keys that are already in the hashmap
-        if(!currentlyPaid.containsKey(key)){
+        if (!currentlyPaid.containsKey(key)) {
             return;
         }
 
@@ -216,9 +244,9 @@ public class Transaction {
 
     /**
      * Function that return the currently paid hashMap.
-     * @return
+     * @return currentlyPaid
      */
-    public HashMap<String, Integer> getCurrentlyPaid(){
+    public HashMap<String, Integer> getCurrentlyPaid() {
         return this.currentlyPaid;
     }
 
@@ -228,7 +256,7 @@ public class Transaction {
      * @param key
      * @return
      */
-    public int getQuantityPaid(String key){
+    public int getQuantityPaid(String key) {
         return currentlyPaid.get(key);
     }
 }

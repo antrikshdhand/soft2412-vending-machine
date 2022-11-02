@@ -1,16 +1,26 @@
 package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
+
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.animation.*;
+import javafx.application.*;
+import javafx.event.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.beans.property.*;
+import javafx.beans.value.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.control.Alert.AlertType;
+
+import java.util.concurrent.*;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 
 public class CheckoutPage extends Page {
 
@@ -20,6 +30,8 @@ public class CheckoutPage extends Page {
     private Button payCard;
     private Button payCash;
     private Button returnToDp;
+
+    private Button cancelTransactionButton;
 
     private Scene payCardPage;
     private Scene payCashPage;
@@ -43,8 +55,14 @@ public class CheckoutPage extends Page {
         box.setAlignment(Pos.CENTER);
 
         payCard = new Button("Pay by Card");
-
         payCash = new Button("Pay by Cash");
+
+        cancelTransactionButton = new Button("Cancel Transaction");
+        cancelTransactionButton.setOnAction(e -> {
+            cancelTransaction();
+        });
+        cancelTransactionButton.setMinWidth(box.getPrefWidth());
+        cancelTransactionButton.setAlignment(Pos.CENTER);
 
         payCash.setOnAction(e -> {
             sm.switchScenes(sm.getInputCashPageScene());;
@@ -64,9 +82,57 @@ public class CheckoutPage extends Page {
         title.setText("Checkout");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
-        box.getChildren().addAll(title, payCard, payCash);
+
+        // Elements for timer
+
+        Text timerText = new Text();
+        timerText.setTranslateY(-320);
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+
+        int refreshCountdown = 5;
+        IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
+
+        countDown.addListener(new ChangeListener<Number>() {
+
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                
+                // When timer is decremented
+
+                int time = newValue.intValue();
+                timerText.setText("Time left: " + Integer.toString(time));
+
+                if (time > 0) {
+                    // System.out.println(time);
+                }
+                else {
+
+                    // Alert timeoutAlert = new Alert(AlertType.ERROR);
+                    // timeoutAlert.setTitle("Time's up!");
+                    // timeoutAlert.setHeaderText("The time limit has passed.");
+                    // timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.");
+                    // paymentSuccessfulAlert.showAndWait();
+
+                    cancelTransaction();
+                }
+
+            }
+
+        });
+
+        final Timeline timeToRefresh = new Timeline();
+        timeToRefresh.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(countDown, refreshCountdown)),
+                new KeyFrame(Duration.seconds(refreshCountdown), new KeyValue(countDown, 0)));
+        timeToRefresh.playFromStart();
+
+
+        // Adding child object references to parent objects
+
+        box.getChildren().addAll(title, payCard, payCash, cancelTransactionButton, timerText);
         pane.getChildren().add(box);
         pane.getChildren().add(returnToDp);
+
+
+        // 'Pay by card' button
 
         PayCard payCardPage = new PayCard(sm);
 
@@ -75,9 +141,23 @@ public class CheckoutPage extends Page {
             sm.switchScenes(payCardPage.getScene());
         });
 
-     }
+    }
+
+    
+    /**
+     * Method to log user out if transaction is cancelled manually or by timeout
+     */
+    public void cancelTransaction() {
+
+        sm.switchScenes(sm.getDefaultPageScene());
+        sm.getDefaultPageController().logout();
+
+    }
 
 
+    /**
+     * Method to build createPayCash scene for cash payments
+     */
     public void createPayCash() {
         StackPane pane = new StackPane();
         payCashPage = new Scene(pane, WIDTH, HEIGHT);

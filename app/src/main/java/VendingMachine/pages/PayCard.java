@@ -4,20 +4,20 @@ import VendingMachine.pages.Page;
 import VendingMachine.SceneManager;
 import VendingMachine.Session;
 
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.animation.*;
+import javafx.application.*;
+import javafx.event.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.beans.property.*;
+import javafx.beans.value.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.geometry.Pos;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
@@ -132,7 +132,7 @@ public class PayCard extends Page {
                 return;
             }
             else if (checkedCardNumber == true && checkedCVV == true) {
-               writeTransaction(username, cardNumber, cvv, total);
+                writeTransaction(username, cardNumber, cvv, total);
                 Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
                 paymentSuccessfulAlert.setTitle("Success!");
                 paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
@@ -140,11 +140,8 @@ public class PayCard extends Page {
 
                 // Add to database
                 if (! cardExists(username)) {
-                    // String[] details = {username, cardNumber, cvv};
-                    {
-                        String[] tempDetails = {username, cardNumber, cvv};
-                        insertCard(tempDetails);
-                    }
+                    String[] tempDetails = {username, cardNumber, cvv};
+                    insertCard(tempDetails);
                 }
 
                 // Clear cart
