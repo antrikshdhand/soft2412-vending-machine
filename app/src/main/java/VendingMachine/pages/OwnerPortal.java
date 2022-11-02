@@ -4,6 +4,8 @@ import VendingMachine.SceneManager;
 
 import com.opencsv.CSVWriter;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -29,6 +31,9 @@ public class OwnerPortal extends Page {
     private Scene manageCSOPage;
     private Scene summaryPage;
     private Scene cancelledTransactionPage;
+
+    private StringProperty usernameDisplay = new SimpleStringProperty();
+
 
     /**
      * The Constructor for the Owner Portal, sets the scene for the seller portal.
@@ -121,6 +126,12 @@ public class OwnerPortal extends Page {
         create.setSpacing(10);
 
         Button bn = new Button("Return to Owner Portal");
+
+        Label data = new Label();
+        data.textProperty().bind(usernameDisplay);
+        pane.getChildren().add(data);
+        data.setTranslateY(70);
+
 
         Label lbl = new Label("Manage Privileged Users");
         AtomicReference<Label> userData = new AtomicReference<>(new Label(""));
@@ -224,8 +235,12 @@ public class OwnerPortal extends Page {
 
             sm.getDatabase().openConn();
 
-            userData.set(new Label("USERNAME: " + users.getValue() +
-                    ", ROLE:" + sm.getDatabase().getRole(users.getValue())));
+
+
+            String name = "USERNAME: " + users.getValue() +
+                    ", ROLE:" + sm.getDatabase().getRole(users.getValue());
+
+            usernameDisplay.set(name);
 
 
             pane.getChildren().add(userData.get());
