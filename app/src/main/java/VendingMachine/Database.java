@@ -213,8 +213,8 @@ public class Database {
      * Function that sets up the initial cash amount for the first run.
      * @return if successful return 0, else return -1
      */
-    public int setUpInitialCashAmounts(){
-        try{
+    public int setUpInitialCashAmounts() {
+        try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30);
             statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "100", 5));
@@ -294,7 +294,7 @@ public class Database {
      * Function that returns the currency and quantity for all currencies in a hashmap formatted <currency, quantity>.
      * @return
      */
-    public HashMap<String, Integer> getCashSummary(){
+    public HashMap<String, Integer> getCashSummary() {
 
         HashMap<String, Integer> items = new HashMap<>();
 
@@ -317,7 +317,7 @@ public class Database {
      * Function tha calculates the total change in the vending machine
      * @return total
      */
-    public double getTotalChange(){
+    public double getTotalChange() {
         HashMap<String, Integer> changeMap = this.getCashSummary();
 
         double total = 0.00;
@@ -332,10 +332,10 @@ public class Database {
      * @param currency ( the currency you want to update)
      * @param quantityToUpdate (quantity you want the cash to update by)
      */
-    public int increaseCashQuantity(String currency, Integer quantityToUpdate){
+    public int increaseCashQuantity(String currency, Integer quantityToUpdate) {
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
-        try{
+        try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", quantityToUpdate + availableCashMap.get(currency), currency));
@@ -356,10 +356,10 @@ public class Database {
      * @param quantityToDeduct
      * @return
      */
-    public int decreaseCashQuantity(String currency, Integer quantityToDeduct){
+    public int decreaseCashQuantity(String currency, Integer quantityToDeduct) {
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
-        try{
+        try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", availableCashMap.get(currency) - quantityToDeduct,  currency));
@@ -394,7 +394,6 @@ public class Database {
         }
         
         return items;
-
     }
 
     /**
@@ -404,17 +403,17 @@ public class Database {
      * @param reason
      * @return
      */
-    public int insertNewTransaction(String status, String user, String reason){
+    public int insertNewTransaction(String status, String user, String reason) {
 
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(String.format("insert into transactions values(CURRENT_TIMESTAMP ,'%s', '%s', '%s')", status, user, reason));
-
-        } catch(SQLException e){
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
             return -1;
         }
+
         return 0;
     }
 
