@@ -20,10 +20,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.beans.property.DoubleProperty;
 
+import org.apache.commons.text.io.StringSubstitutorReader;
 import org.w3c.dom.css.Rect;
 
 import com.sun.source.doctree.AttributeTree;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +81,7 @@ public class InputCashPage extends Page {
 
         pane = new GridPane();
         scene = new Scene( pane, WIDTH, HEIGHT);
+
 
         // Vbox For all the notes.
         VBox notes = new VBox();
@@ -140,9 +143,9 @@ public class InputCashPage extends Page {
 
         amountDisplay.getChildren().addAll(
             totalAmount, 
-            totalAmountDouble, 
-            dueAmount, 
-            dueAmountDouble, 
+            totalAmountDouble,
+            dueAmount,
+            dueAmountDouble,
             changeAmount, 
             changeAmountDouble, 
             completeTransaction
@@ -217,16 +220,32 @@ public class InputCashPage extends Page {
 
         HashMap<String, Integer> currentlyAvailable = sm.getSession().getTransaction().getCurrentlyPaid();
 
-        for( Map.Entry<String, Integer> entry : dbAva.entrySet()){
+        for( Map.Entry<String, Integer> entry : currentlyAvailable.entrySet()){
 
-            currentlyAvailable.put(entry.getKey(), entry.getValue() + currentlyAvailable.get(entry.getKey()));
+            dbAva.put(entry.getKey(), entry.getValue() + currentlyAvailable.get(entry.getKey()));
 
         }
 
-        return currentlyAvailable;
 
+        return dbAva;
     }
 
+
+    public HashMap<String, Integer> checkAvailableChange(){
+
+        ArrayList<String> changeOrder = sm.getSession().getTransaction().getChangeOrder();
+
+        HashMap<String,Integer> avaCash = updateTempCashAvailable();
+
+        double temp = 0.00;
+        double changeRequired = sm.getSession().getTransaction().getChange();
+
+        for(String value : changeOrder){
+//           int div = Math.floor(changeRequired/Double.parseDouble(value));
+
+        };
+        return avaCash;
+    }
 
 
     /**
