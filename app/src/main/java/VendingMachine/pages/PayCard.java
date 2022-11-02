@@ -34,6 +34,7 @@ public class PayCard extends Page {
     
     private SceneManager sceneManager;
 
+    
     /**
      * Constructor for PayCard page
      * @param sceneManager
@@ -41,6 +42,7 @@ public class PayCard extends Page {
     public PayCard(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
+
 
     /**
      * Builds the scene for the PayCard page
