@@ -105,7 +105,7 @@ public class CheckoutPage extends Page {
                 if (time > 0) {
                     // System.out.println(time);
                     if (time == 30) {
-                        System.out.println(Integer.toString(time) + " seconds left before transaction is cancelled.");
+                        System.out.println(Integer.toString(time) + " seconds left before transaction is cancelled.\n");
                         timerText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
                     }
                 }
@@ -159,6 +159,7 @@ public class CheckoutPage extends Page {
     public void cancelTransaction() {
         sm.switchScenes(sm.getDefaultPageScene());
         sm.getDefaultPageController().logout();
+        System.out.println("Transaction cancelled. User logged out.\n\n");
     }
 
 
