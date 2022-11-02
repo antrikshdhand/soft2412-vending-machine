@@ -30,6 +30,11 @@ public class SellerPortal extends Page {
     private StackPane generateListPane;
     private StackPane generateSummaryPane;
 
+
+    /**
+     * Constructor for Seller Portal page
+     * @param sm
+     */
     public SellerPortal(SceneManager sm) {
 
         this.sm = sm;
