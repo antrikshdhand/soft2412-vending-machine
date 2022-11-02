@@ -25,6 +25,7 @@ public class DefaultPageController {
     private SceneManager sceneManager = new SceneManager();
     private Database database;
     private Session session;
+    Font font = new Font("Arial", 15);
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -135,8 +136,6 @@ public class DefaultPageController {
             HBox.setMargin(item, new Insets(50));
             item.setPrefSize(500, 100);
 
-            Font font = new Font("Arial", 15);
-
             String itemName = database.queryItemName(itemCode);
             Label nameLabel = new Label(itemName);
             nameLabel.setFont(font);
@@ -240,12 +239,14 @@ public class DefaultPageController {
             item.setPrefSize(250, 50);
 
             Button button = new Button("Remove");
+            button.setFont(font);
 
-            Label label = new Label(entry.getKey() + " - qty: " + entry.getValue());
+            Label label = new Label(entry.getKey() + " - Qty: " + entry.getValue());
+            label.setFont(font);
 
             button.setOnAction(event -> {
                 session.getTransaction().removeItem(entry.getKey());
-                label.setText(entry.getKey() + " - qty: " + session.getTransaction().getItems().get(entry.getKey()));
+                label.setText(entry.getKey() + " - Qty: " + session.getTransaction().getItems().get(entry.getKey()));
                 if (session.getTransaction().getItems().get(entry.getKey()) == null) {
                     items.getChildren().remove(item);
                 }
