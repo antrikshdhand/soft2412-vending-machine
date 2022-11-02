@@ -113,6 +113,7 @@ public class CheckoutPage extends Page {
                     // paymentSuccessfulAlert.showAndWait();
 
                     cancelTransaction();
+
                 }
 
             }
