@@ -163,7 +163,7 @@ public class DefaultPageController {
             button.setOnAction(event -> {
                 session.getTransaction().addItem(itemName);
                 session.getTransaction().addToTotal(itemPrice);
-                updateCart();
+                updateCart(itemPrice);
             });
 
             item.getChildren().addAll(
@@ -221,7 +221,7 @@ public class DefaultPageController {
         displayCategory("Chips");
     }
 
-    public void updateCart(){
+    public void updateCart(double price){
 
         VBox items = new VBox();
         items.setSpacing(30);
@@ -230,38 +230,58 @@ public class DefaultPageController {
         totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
 
         for (Map.Entry<String,Integer> entry : session.getTransaction().getItems().entrySet()) {
-            // System.out.println("Key = " + entry.getKey() +
-            //         ", Value = " + entry.getValue());
 
             HBox item = new HBox();
             item.setPadding(new Insets(10));
             HBox.setMargin(item, new Insets(20));
             item.setPrefSize(250, 50);
+            item.setStyle("-fx-background-color:#98aded");
 
-            Button button = new Button("Remove");
-            button.setFont(font);
-
-            Label label = new Label(entry.getKey() + " - Qty: " + entry.getValue());
+            Label label = new Label(entry.getKey());
             label.setFont(font);
-
-            button.setOnAction(event -> {
-                session.getTransaction().removeItem(entry.getKey());
-                label.setText(entry.getKey() + " - Qty: " + session.getTransaction().getItems().get(entry.getKey()));
-                if (session.getTransaction().getItems().get(entry.getKey()) == null) {
-                    items.getChildren().remove(item);
-                }
-                session.getTransaction().addToTotal(-1);
-                totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
-            });
 
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
 
-            item.getChildren().addAll(label, region1, button);
+            Region region2 = new Region();
+            HBox.setHgrow(region2, Priority.ALWAYS);
 
-            item.setStyle("-fx-background-color:#98aded");
+            Region region3 = new Region();
+            HBox.setHgrow(region3, Priority.ALWAYS);
+
+            Label quantityLabel = new Label("" + entry.getValue());
+            quantityLabel.setFont(font);
+
+            Button removeButton = new Button("-");
+            removeButton.setFont(font);
+            removeButton.setOnAction(event -> {
+                session.getTransaction().removeItem(entry.getKey());
+                quantityLabel.setText("" + session.getTransaction().getItems().get(entry.getKey()));
+                if (session.getTransaction().getItems().get(entry.getKey()) == null) {
+                    items.getChildren().remove(item);
+                }
+                session.getTransaction().addToTotal(-price);
+                totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
+            });
+
+            Button addButton = new Button("+");
+            addButton.setFont(font);
+            addButton.setOnAction(event -> {
+                session.getTransaction().addItem(entry.getKey());
+                quantityLabel.setText("" + session.getTransaction().getItems().get(entry.getKey()));
+                if (session.getTransaction().getItems().get(entry.getKey()) == null) {
+                    items.getChildren().remove(item);
+                }
+                session.getTransaction().addToTotal(price);
+                totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
+            });
+
+            HBox cartButtons = new HBox();
+            cartButtons.setPrefSize(90, 50);
+            cartButtons.getChildren().addAll(removeButton, region2, quantityLabel, region3, addButton);
+
+            item.getChildren().addAll(label, region1, cartButtons);
             items.getChildren().add(item);
-
 
         }
 
