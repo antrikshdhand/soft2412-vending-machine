@@ -4,6 +4,7 @@ import VendingMachine.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -47,9 +48,6 @@ public class DefaultPageController {
     @FXML
     Button loginBtn;
 
-    @FXML
-    Button proceedToPortalBtn;
-
     public DefaultPageController() {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
@@ -85,6 +83,22 @@ public class DefaultPageController {
                 sceneManager.switchScenes(sceneManager.getCashierPortalScene());
             }
         }
+        else {
+            alertPleaseLoginFirst();
+        }
+    }
+
+    /**
+     * Method to show error
+     */
+    private void alertPleaseLoginFirst() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Not logged in");
+        alert.setHeaderText("Please login first");
+        alert.setContentText("Please try again");
+        alert.showAndWait();
+
+        return;
     }
 
     public void proceedToCheckout(ActionEvent event) {
@@ -106,14 +120,12 @@ public class DefaultPageController {
         session.resetSession();
         updateSessionBox();
         loginBtn.setText("Log In");
-        proceedToPortalBtn.setText("Please login first");
         clearTransaction();
     }
 
     public void login() {
         updateSessionBox();
         loginBtn.setText("Log Out");
-        proceedToPortalBtn.setText("Proceed to Portal");
         clearTransaction();
     }
 
