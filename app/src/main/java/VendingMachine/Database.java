@@ -412,8 +412,7 @@ public class Database {
 
 
     /**
-     * Function thay allows for a category to be queried.
-     * 
+     * Function that allows for a category to be queried. *
      * @param category
      * 
      * @return items
@@ -440,7 +439,7 @@ public class Database {
 
 
     /**
-     * Function thay allows for the username and role to be queried.
+     * Function that allows for the username and role to be queried.
      * 
      * @return map
      */

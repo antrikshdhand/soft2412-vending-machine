@@ -23,6 +23,8 @@ import org.w3c.dom.css.Rect;
 
 import com.sun.source.doctree.AttributeTree;
 
+import java.util.Map;
+
 
 /**
  * This is the page for when a users want to pay by cash.
@@ -142,6 +144,36 @@ public class InputCashPage extends Page {
 
         // Setting up Action for the complete Transaction button.
         completeTransaction.setOnAction(e -> {
+
+
+
+            // If the transaction was done by guest, insert as anonymous in transaction relation.
+            String name = sm.getSession().getUserName();
+            if (name.equalsIgnoreCase("guest")) {
+                name = "anonymous";
+            }
+
+            // If the transaction is perfect, the right amount is paid and no change required.
+            if ( sm.getSession().getTransaction().getPaid() == sm.getSession().getTransaction().getTotal()){
+                sm.getDatabase().openConn();
+                sm.getDatabase().insertNewTransaction("successful", name, "");
+                sm.getDatabase().closeConn();
+                for(Map.Entry<String, Integer> entry : sm.getSession().getTransaction().getCurrentlyPaid().entrySet()){
+                    sm.getDatabase().openConn();
+                    sm.getDatabase().increaseCashQuantity(entry.getKey(), entry.getValue());
+                    sm.getDatabase().closeConn();
+                }
+                sm.getSession().getTransaction().initialHashMap();
+                sm.getSession().getTransaction().reset();
+
+                // This as to be amended so that it goes to a successful transaction page.
+                sm.switchScenes(sm.getDefaultPageScene());
+            }
+
+
+
+
+
             if (sm.getSession().getTransaction().getDue() > 0) {
                notEnoughPaid();
             }
@@ -155,11 +187,6 @@ public class InputCashPage extends Page {
             // If the change is greater than change in the vending machine, then could be an error
             if (sm.getSession().getTransaction().getChange() > change) {
 
-                // If the transaction was done by guest, insert as anonymous in transaction relation.
-                String name = sm.getSession().getUserName();
-                if (name.equalsIgnoreCase("guest")) {
-                    name = "anonymous";
-                }
 
 
                 sm.getSession().getTransaction().initialHashMap();
@@ -169,6 +196,7 @@ public class InputCashPage extends Page {
                 notEnoughChange();
 
             }
+
         });
 
     }

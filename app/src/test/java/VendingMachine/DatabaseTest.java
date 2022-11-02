@@ -185,7 +185,7 @@ public class DatabaseTest {
 
     //Testing decreasing currency amount in the vending machine advanced.
     @Test
-    void testDecreaseiCashQuantityAdvanced(){
+    void testDecreaseCashQuantityAdvanced(){
         db.openConn();
         double OgValue = db.getTotalChange();
         db.decreaseCashQuantity("100", 2);
