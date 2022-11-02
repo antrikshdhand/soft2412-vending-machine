@@ -281,7 +281,11 @@ public class PayCard extends Page {
     public void insertCard(String[] details) {
         sceneManager.getDatabase().openConn();
 
-        int returned = sceneManager.getDatabase().insertNewCard(details[0], details[1], details[2]);
+        int returned = sceneManager.getDatabase().insertNewCard(
+            details[0], 
+            details[1], 
+            details[2]
+            );
     }
 
 

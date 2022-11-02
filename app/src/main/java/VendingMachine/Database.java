@@ -413,7 +413,6 @@ public class Database {
      */
     public int insertNewTransaction(String status, String user, String reason) {
 
-
         try {
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
@@ -428,7 +427,7 @@ public class Database {
 
 
     /**
-     * Function that allows for a category to be queried. *
+     * Function that allows for a category to be queried.
      * @param category
      * @return items
      */
