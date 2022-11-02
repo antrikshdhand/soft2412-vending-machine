@@ -107,11 +107,12 @@ public class CheckoutPage extends Page {
                 }
                 else {
 
-                    // Alert timeoutAlert = new Alert(AlertType.ERROR);
-                    // timeoutAlert.setTitle("Time's up!");
-                    // timeoutAlert.setHeaderText("The time limit has passed.");
-                    // timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.");
-                    // paymentSuccessfulAlert.showAndWait();
+                    Alert timeoutAlert = new Alert(AlertType.ERROR);
+                    timeoutAlert.setTitle("Time's up!");
+                    timeoutAlert.setHeaderText("The time limit has passed.");
+                    timeoutAlert.setContentText("Your transaction has been cancelled due to exceeding the time limit of 2 minutes.\n If you were logged in, you have been logged out.");
+                    // timeoutAlert.showAndWait();
+                    Platform.runLater(timeoutAlert::showAndWait);
 
                     Scene currentScene = sm.getScene();
                     Scene thisScene = scene;
