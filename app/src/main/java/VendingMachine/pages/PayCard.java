@@ -22,7 +22,8 @@ import java.io.*;
 import java.util.*;
 
 // JSON Reader
-
+import java.io.*;
+import org.json.simple.*;
 
 // OpenCSV import
 import com.opencsv.*;
@@ -315,11 +316,12 @@ public class PayCard extends Page {
     /**
      * Checks if the card number exists in the credit_cards.json file.
      * @param cardNumber
-     * @return
+     * @return true if card is recognised, false if card is not recognised
      */
     public boolean checkJSON(int cardNumber) {
 
-
+        String fileName = "json/credit_cards.json";
+        
         
 
         return false;
