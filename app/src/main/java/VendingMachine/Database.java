@@ -516,7 +516,6 @@ public class Database {
             while (query.next()) {
 
                 String uname = query.getString("username");
-                System.out.println();
                 list.add(uname);
             }
         } catch(SQLException e) {
@@ -528,13 +527,34 @@ public class Database {
         return list;
     }
 
+    public ArrayList<String> queryRoles() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            String sql = String.format("SELECT DISTINCT role FROM users");
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+
+                String uname = query.getString("role");
+                list.add(uname);
+            }
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+
+        return list;
+    }
+
+
     public int removeUser(String username) {
         try {
             String sql = String.format("DELETE from users WHERE username = '%s';", username);
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
             statement.executeUpdate(sql);
-            System.out.println("User has been removed");
             return 0;
 
         } catch(SQLException e) {
