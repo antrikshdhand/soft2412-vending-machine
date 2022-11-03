@@ -30,10 +30,10 @@ public class Database {
         int successfulConn = openConn();
         System.out.println();
         if (successfulConn == 0) {
-//            dropAllTables();
+            dropAllTables();
             this.initialiseSchema();
-//            this.setUpInitialItemsAndUsers();
-//            this.setUpInitialCashAmounts();
+            this.setUpInitialItemsAndUsers();
+            this.setUpInitialCashAmounts();
             this.closeConn();
         }
     }
