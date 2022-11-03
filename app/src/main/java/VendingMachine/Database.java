@@ -110,14 +110,23 @@ public class Database {
                 """);
 
             openStatement.executeUpdate("""
-                CREATE TABLE IF NOT EXISTS transactions (
-                    time_added DATETIME DEFAULT (CURRENT_TIMESTAMP) PRIMARY KEY,
-                    status VARCHAR(16), -- Successful or Unsuccessful 
-                    users VARCHAR(20), -- who attempted the transaction, if guest should be anonymous 
-                    reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. 
-                )
-                    """);
-    
+                        CREATE TABLE IF NOT EXISTS cards (
+                            username VARCHAR(20) PRIMARY KEY,
+                            card VARCHAR(16),
+                            cvv VARCHAR(3)
+                        )
+                            """);
+
+            openStatement.executeUpdate("""
+                        CREATE TABLE IF NOT EXISTS transactions(
+                            time_added DATETIME DEFAULT (CURRENT_TIMESTAMP) PRIMARY KEY,
+                            status VARCHAR(16), -- Successful or Unsuccessful 
+                            users VARCHAR(20), -- who attempted the transaction, if guest should be anonymous 
+                            reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. ) 
+                            )
+                            """);
+
+
             // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
 

@@ -2,8 +2,10 @@ package VendingMachine.pages;
 
 import VendingMachine.SceneManager;
 import VendingMachine.pages.Page;
+import com.opencsv.CSVWriter;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ComboBox;
@@ -19,6 +21,12 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ArrayList;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CashierPortal extends Page {
 
@@ -48,7 +56,6 @@ public class CashierPortal extends Page {
 
         this.createModifyCash();
         this.createSummaryTransaction();
-        this.createSummaryChange();
 
         VBox box = new VBox();
         box.setSpacing(5);
@@ -63,7 +70,7 @@ public class CashierPortal extends Page {
         summaryChange = new Button("Generate Summary of Change");
 
         summaryChange.setOnAction(e -> {
-        sm.switchScenes(summaryChangePage);});
+        createSummaryChange();});
 
         summaryTransaction = new Button("Generate Summary of Transactions");
 
@@ -195,25 +202,47 @@ public class CashierPortal extends Page {
      * Function to create a summary of change
      */
     public void createSummaryChange() {
-        StackPane pane = new StackPane();
-        summaryChangePage = new Scene(pane, WIDTH, HEIGHT);
+        sm.getDatabase().openConn();
+        HashMap<String, Integer> hm = sm.getDatabase().getCashSummary();
 
-        Button bn = new Button("Return to Cashier Portal");
+        File file = new File("./reports/changeSummary.csv");
 
-        Label lbl = new Label("Generate Summary of Change");
-        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputFile = new FileWriter(file);
 
-        pane.setAlignment(lbl, Pos.TOP_CENTER);
-        lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+            // Create CSVWriter object file writer object as parameter
+            CSVWriter writer = new CSVWriter(outputFile);
 
-        bn.setTranslateX(-550);
-        bn.setTranslateY(320);
+            // Add header to ownerUsersSummary.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"Currency", "Quantity"};
+                writer.writeNext(header);
+            }
 
-        lbl.relocate(0, 30);
+            // Add data to transactions.csv
+            for(Map.Entry<String, Integer> entry : hm.entrySet()) {
+                String[] data = {entry.getKey(), entry.getValue() +""};
+                writer.writeNext(data);
+            }
 
-        pane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+            writer.close();
+            outputFile.close();
+
+
+            Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
+            successfulRegisterAlert.setTitle("Success");
+            successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
+            successfulRegisterAlert.setContentText("You can view the summary of change available as a csv.");
+            successfulRegisterAlert.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+        sm.getDatabase().closeConn();
+
     }
 
     /**

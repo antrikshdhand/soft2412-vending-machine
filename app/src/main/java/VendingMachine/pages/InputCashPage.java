@@ -137,7 +137,6 @@ public class InputCashPage extends Page {
 
         // Setting Action for the Cancel Button
         cancel.setOnAction((e) ->{
-            // String name = sm.getSession().getUserName();
             // if (name.equalsIgnoreCase("guest")) {
             //     name = "anonymous";
             // }
@@ -226,6 +225,7 @@ public class InputCashPage extends Page {
             if(sm.getSession().getTransaction().getChange() > 0){
 
                 HashMap<String, Integer> temp = checkAvailableChange();
+                System.out.println(temp);
 
                 if( temp == null){
 
@@ -286,7 +286,7 @@ public class InputCashPage extends Page {
 
         for( Map.Entry<String, Integer> entry : currentlyAvailable.entrySet()){
 
-            dbAva.put(entry.getKey(), entry.getValue() + currentlyAvailable.get(entry.getKey()));
+            dbAva.put(entry.getKey(), entry.getValue() + dbAva.get(entry.getKey()));
 
         }
 
@@ -299,31 +299,50 @@ public class InputCashPage extends Page {
 
         ArrayList<String> changeOrder = sm.getSession().getTransaction().getChangeOrder();
 
+
         HashMap<String,Integer> avaCash = updateTempCashAvailable();
 
+        System.out.println(avaCash);
         HashMap<String, Integer> result = new HashMap<>();
 
         double temp = 0.00;
         double changeRequired = sm.getSession().getTransaction().getChange();
+        double changeRefunded = changeRequired;
+
+        int scale = (int) Math.pow(10, 1);
 
         for(String value : changeOrder){
 
-            if(changeRequired == temp) break;
 
-            double val = changeRequired/Double.parseDouble(value);
+            double val = changeRefunded/Double.parseDouble(value);
             int valFloor = (int) Math.floor(val);
 
             if( valFloor == 0) continue;
 
-            if(avaCash.get(value) < valFloor){
+            if(valFloor <= avaCash.get(value)){
+                System.out.println(value + "here");
 
-                temp += avaCash.get(value) * Double.parseDouble(value);
-                result.put(value, avaCash.get(value));
+                temp += avaCash.get(value) * valFloor;
+                changeRefunded -= avaCash.get(value) * valFloor;
+                result.put(value, avaCash.get(value) - valFloor);
+                System.out.println(result);
+            }
+
+            double changeRefundedRounded = Math.round(changeRefunded * scale) /scale;
+            if(changeRefundedRounded == 0){
+
+                System.out.println(temp);
+                break;
+
             }
         };
+        temp = Math.round(temp *scale) / scale;
 
-        if (changeRequired != temp)
-            return null;
+        System.out.println(result);
+
+        System.out.println(changeRequired);
+        System.out.println(temp);
+        if( changeRequired != temp) return null;
         return result;
     }
 
@@ -343,7 +362,7 @@ public class InputCashPage extends Page {
         return;
     }
 
-    
+
     /**
      * Function to display alert when there is not enough change in the machine.
      */
@@ -449,8 +468,9 @@ public class InputCashPage extends Page {
      * Function to refresh all the Amounts display on screen.
      */
     public void refreshAmounts() {
-        totalAmountDouble = new Label("$ " + sm.getSession().getTransaction().getTotal() + "");
+        totalAmountDouble = new Label();
         totalAmountDouble.setFont(Font.font("Arial", 14));
+        totalAmountDouble.textProperty().bind(sm.getSession().getTransaction().getTotalAmount().asString("$ %.2f"));
 
         changeAmountDouble = new Label();
         changeAmountDouble.setFont(Font.font("Arial", 14));
