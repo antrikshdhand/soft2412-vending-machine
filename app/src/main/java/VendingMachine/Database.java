@@ -117,7 +117,8 @@ public class Database {
                             reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. ) 
                             )
                             """);
-            
+
+
             // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
 

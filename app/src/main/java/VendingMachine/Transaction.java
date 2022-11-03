@@ -32,6 +32,8 @@ public class Transaction {
     // Note you do not need a doubleProperty for the total as it will never change on screen.
     // You also never need it for paid as the paid amount will never appear on screen.
     private DoubleProperty changeAmount = new SimpleDoubleProperty() ;
+
+    private DoubleProperty totalAmount = new SimpleDoubleProperty();
     private DoubleProperty dueAmount = new SimpleDoubleProperty();
 
 
@@ -65,6 +67,7 @@ public class Transaction {
         paid = 0;
         changeAmount.set(change);
         dueAmount.set(due);
+        totalAmount.set(total);
         items = new HashMap<>();
     }
 
@@ -102,6 +105,7 @@ public class Transaction {
         total += n;
         calculateDue();
         calculateChange();
+        totalAmount.set(total);
 
     }
 
@@ -131,6 +135,7 @@ public class Transaction {
 
         calculateDue();
         calculateChange();
+        totalAmount.set(total);
 
     }
 
@@ -245,6 +250,10 @@ public class Transaction {
         return this.dueAmount;
     }
 
+
+    public DoubleProperty getTotalAmount(){
+        return this.totalAmount;
+    }
 
     /**
      * Function for putting the initial setting up the hashmap.
