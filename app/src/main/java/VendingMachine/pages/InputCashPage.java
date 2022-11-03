@@ -324,7 +324,9 @@ public class InputCashPage extends Page {
 
                 temp += avaCash.get(value) * valFloor;
                 changeRefunded -= avaCash.get(value) * valFloor;
-                result.put(value, avaCash.get(value) - valFloor);
+                result.put(value, valFloor);
+                System.out.println(temp);
+                System.out.println(valFloor);
                 System.out.println(result);
             }
 
