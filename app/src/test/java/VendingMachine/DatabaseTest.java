@@ -291,7 +291,15 @@ public class DatabaseTest {
 
 
 
-    // t
+    // Testing getCard simple
+    @Test
+    void testGetCard(){
+        db.openConn();
+        String[] value = db.getCard("owner");
+        db.closeConn();
+
+        assertNull(value);
+    }
 
 
 
