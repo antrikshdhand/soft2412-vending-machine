@@ -338,7 +338,7 @@ public class OwnerPortal extends Page {
         Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
         successfulRegisterAlert.setTitle("Success");
         successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
-        successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
+        successfulRegisterAlert.setContentText("You can now view the summary of users and roles as a csv.");
         successfulRegisterAlert.showAndWait();
     }
 
