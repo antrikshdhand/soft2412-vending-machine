@@ -135,7 +135,14 @@ public class SellerPortal extends Page {
         sm.getDatabase().closeConn();
 
         File file = new File("reports/itemsReport.csv");
-        
+
+        // attempt to delete the file
+        try {
+            file.delete();
+        } catch (Exception e) {
+            System.out.println("Generating new file...");
+        }
+
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file, true);
