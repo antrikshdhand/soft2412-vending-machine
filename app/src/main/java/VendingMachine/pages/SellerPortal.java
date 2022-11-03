@@ -46,7 +46,7 @@ public class SellerPortal extends Page {
         this.sm = sm;
         createMainPage();
         createManageItems();
-        //createGenerateList();
+        // createGenerateList();
         createGenerateSummary();
 
         // window.setScene(manageItems);
@@ -80,7 +80,6 @@ public class SellerPortal extends Page {
         //
         // scene = new Scene(pane, width, height);
 
-
         Label lbl = new Label("Seller Portal");
         lbl.setTranslateY(20);
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
@@ -102,7 +101,6 @@ public class SellerPortal extends Page {
         bn2.setOnAction(e -> createItemSummary());
         bn3.setOnAction(e -> this.sm.switchScenes(generateSummary));
         bn4.setOnAction(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
-
     }
 
     /**

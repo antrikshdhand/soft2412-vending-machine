@@ -6,8 +6,11 @@ import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Transaction {
+
+    private SceneManager sceneManager;
 
     private HashMap<String, Integer> items;
 
@@ -51,7 +54,7 @@ public class Transaction {
         changeOrder.add("0.05");
     }
 
-    
+
     /**
      * Function to reset all the amounts to 0
      */
@@ -81,6 +84,14 @@ public class Transaction {
         return true;
     }
 
+    /**
+     * Function that return the HashMap with the number of items.
+     * @return
+     */
+    public HashMap<String, Integer> getItems() {
+        return items;
+    }
+
 
     /**
      * function for increasing the total price
@@ -96,21 +107,33 @@ public class Transaction {
 
 
     /**
-     * Function that return the HashMap with the number of items.
-     * @return
-     */
-    public HashMap<String, Integer> getItems() {
-        return items;
-    }
-
-
-    /**
      * Function that gets the total price of all the items in the cart.
      * @return total
      */
     public double getTotal() {
         return total;
     }
+
+    /**
+     * Function that calculateTotal
+     */
+    public void calculateTotal() {
+
+        total = 0;
+
+        for (Map.Entry<String,Integer> entry : items.entrySet()) {
+            sceneManager.getDatabase().openConn();
+            double price = sceneManager.getDatabase().queryItemPrice(entry.getKey());
+            sceneManager.getDatabase().closeConn();
+
+            total += price * entry.getValue();
+        }
+
+        calculateDue();
+        calculateChange();
+
+    }
+
 
 
     /**
@@ -274,5 +297,9 @@ public class Transaction {
      */
     public int getQuantityPaid(String key) {
         return currentlyPaid.get(key);
+    }
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
     }
 }

@@ -115,13 +115,20 @@ public class PayCard extends Page {
             boolean checkedCardNumber = checkCardNumber(cardNumber);
             boolean checkedCVV = checkCVV(cvv);
 
-            boolean checkExistsCard = checkJSON(Integer.parseInt(cardNumber));
+            boolean checkExistsCard = false;
+            if (! cardNumber.isEmpty())
+                checkExistsCard = checkJSON(Integer.parseInt(cardNumber));
 
             // Write to transactions.csv if valid
-            if (checkedCardNumber == false) {
-                System.out.println(cardNumber + " fat");
-                System.out.println(cvv + " fat");
-
+            if (checkExistsCard == false) {
+                Alert unrecognisedCardNumberAlert = new Alert(AlertType.ERROR);
+                unrecognisedCardNumberAlert.setTitle("Invalid card number.");
+                unrecognisedCardNumberAlert.setHeaderText("The card number inputted is not in the recognised list of card numbers.");
+                unrecognisedCardNumberAlert.setContentText("Please try again, or contact the operator for assistance.");
+                unrecognisedCardNumberAlert.showAndWait();
+                return;
+            }
+            else if (checkedCardNumber == false) {
                 Alert invalidCardNumberAlert = new Alert(AlertType.ERROR);
                 invalidCardNumberAlert.setTitle("Invalid card number.");
                 invalidCardNumberAlert.setHeaderText("The card number inputted is invalid.");
@@ -145,7 +152,7 @@ public class PayCard extends Page {
                 incorrectCVVAlert.showAndWait();
                 return;
             }
-            else if (checkedCardNumber == true && checkedCVV == true) {
+            else if (checkedCardNumber == true && checkedCVV == true && checkExistsCard == true) {
                 writeTransaction(username, cardNumber, cvv, total);
                 Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
                 paymentSuccessfulAlert.setTitle("Success!");
@@ -245,7 +252,7 @@ public class PayCard extends Page {
 
         // Checks if less than 16 digits long
         int numDigits = String.valueOf(number).length();
-        if (numDigits > 16)
+        if (numDigits > 16 && numDigits > 0)
             return false;
 
         // If all conditions are met
@@ -314,10 +321,55 @@ public class PayCard extends Page {
     /**
      * Checks if the card number exists in the credit_cards.json file.
      * @param cardNumber
-     * @return
+     * @return true if card is recognised, false if card is not recognised
      */
     public boolean checkJSON(int cardNumber) {
-        return true;
+
+        // JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
+         
+        try (FileReader reader = new FileReader("json/credit_cards.json")) {
+
+            String cardNumberString = Integer.toString(cardNumber);
+
+            // Read JSON file
+            Object obj = jsonParser.parse(reader);
+ 
+            JSONArray detailsList = (JSONArray) obj;
+            // System.out.println(detailsList);
+
+            ArrayList<String> numbers = new ArrayList<String>();     
+
+            for (int i = 0; i < detailsList.size(); i++) {
+                JSONObject perf = (JSONObject) detailsList.get(i);
+                String name = (String) perf.get("name");
+                String number = (String) perf.get("number");
+                numbers.add(number);
+            }
+
+            for (String number : numbers) {   
+
+                // System.out.println(numbers.get(i));
+
+                if (cardNumberString.equals(number)) {
+                    return true;
+                }
+
+            }
+
+            return false;
+ 
+        } catch (FileNotFoundException e) {
+            // e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            // e.printStackTrace();
+            return false;
+        } catch (ParseException e) {
+            // e.printStackTrace();
+            return false;
+        }
+
     }
 
 
