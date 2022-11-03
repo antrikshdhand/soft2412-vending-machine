@@ -295,7 +295,7 @@ public class OwnerPortal extends Page {
         sm.getDatabase().openConn();
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
-        File file = new File("./src/main/resources/reports/usersReport.csv");
+        File file = new File("reports/usersReport.csv");
         
         try {
             // Create FileWriter object with file as parameter
@@ -338,7 +338,14 @@ public class OwnerPortal extends Page {
         sm.getDatabase().openConn();
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
-        File file = new File("./src/main/resources/reports/cancelledTransactionsReport.csv");
+        File file = new File("reports/cancelledTransactionsReport.csv");
+        // attempt to delete the file
+        try {
+            file.delete();
+        } catch (Exception e) {
+            System.out.println("Generating new file...");
+        }
+        
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file, true);

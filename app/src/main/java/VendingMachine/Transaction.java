@@ -87,17 +87,9 @@ public class Transaction {
         return true;
     }
 
-    /**
-     * Function that return the HashMap with the number of items.
-     * @return
-     */
-    public HashMap<String, Integer> getItems() {
-        return items;
-    }
-
 
     /**
-     * function for increasing the total price
+     * Function for increasing the total price
      * @param n
      */
 
@@ -116,6 +108,14 @@ public class Transaction {
      */
     public double getTotal() {
         return total;
+    }
+
+    /**
+     * Function that return the HashMap with the number of items.
+     * @return items
+     */
+    public HashMap<String, Integer> getItems() {
+        return items;
     }
 
     /**
@@ -171,10 +171,7 @@ public class Transaction {
             } else {
                 items.put(item, n);
             }
-
         }
-
-
     }
 
 
@@ -187,19 +184,17 @@ public class Transaction {
             this.change = 0;
         }
         changeAmount.set(change);
-
     }
 
 
     /**
      * Function that recalculates the due amount for the transaction.
      */
-
     void calculateDue() {
         this.due = total - paid;
-        if (due < 0) {
+        if (due < 0)
             due = 0;
-        }
+
         dueAmount.set(due);
     }
 

@@ -93,13 +93,21 @@ public class Database {
 
             openStatement.executeUpdate(
                     """
-                    CREATE TABLE IF NOT EXISTS cash(
+                    CREATE TABLE IF NOT EXISTS cash (
                         currency VARCHAR(4) PRIMARY KEY,
                         quantity INTEGER,
                         CHECK (currency IN ('100', '50', '20', '10', '5', '2', '1', '0.5', '0.2', '0.1', '0.05'))
                     );
                     """);
 
+            openStatement.executeUpdate(
+                """
+                CREATE TABLE IF NOT EXISTS cards (
+                    username VARCHAR(20) PRIMARY KEY,
+                    card VARCHAR(16),
+                    cvv VARCHAR(3)
+                )
+                """);
 
             openStatement.executeUpdate("""
                         CREATE TABLE IF NOT EXISTS cards (
@@ -214,37 +222,6 @@ public class Database {
 
 
     /**
-     * Function that sets up the initial cash amount for the first run.
-     * @return if successful return 0, else return -1
-     */
-    public int setUpInitialCashAmounts() {
-        try {
-            Statement statement = dbConn.createStatement();
-            statement.setQueryTimeout(30);
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "100", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "50", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "20", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "10", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "5", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "2", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "1", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.5", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.2", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.1", 5));
-            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.05", 5));
-        }
-        catch (SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println(e.getMessage());
-            return -1;
-        }
-
-        return 0;
-    }
-
-
-    /**
      * FOR TESTING PURPOSES ONLY:
      * Add a bit of dummy data to test the GUI during demonstrations.
      * @return
@@ -291,6 +268,36 @@ public class Database {
             System.err.println(e.getMessage());
             return -1;
         }
+        return 0;
+    }
+
+    /**
+     * Function that sets up the initial cash amount for the first run.
+     * @return if successful return 0, else return -1
+     */
+    public int setUpInitialCashAmounts() {
+        try {
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30);
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "100", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "50", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "20", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "10", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "5", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "2", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "1", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.5", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.2", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.1", 5));
+            statement.executeUpdate(String.format("insert into cash values ('%s', %d)", "0.05", 5));
+        }
+        catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+
         return 0;
     }
 
@@ -364,9 +371,14 @@ public class Database {
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
         try {
+            int newAmount = availableCashMap.get(currency) - quantityToDeduct;
+            if (newAmount < 0) {
+                throw new SQLException();
+            }
+
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", availableCashMap.get(currency) - quantityToDeduct,  currency));
+            statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", newAmount, currency));
 
         } catch (SQLException e) {
             // if the error message is "out of memory",
@@ -871,24 +883,28 @@ public class Database {
     /**
      * Function which returns all items currently in the database
      */
-    public int getAllItems() {
+    public ArrayList<String[]> getAllItems() {
+
+        ArrayList<String[]> itemList = new ArrayList<String[]>();
+
         String sql = """
-                SELECT *
+                SELECT item_name, category_name
                 FROM items
                 """;
         try {
             ResultSet query = openStatement.executeQuery(sql);
-            if (query.next()) {
-                System.out.println(query.next());
-            } else {
-                return 0;
+            while (query.next()) {
+                String[] item = new String[] {
+                    query.getString("item_name"), 
+                    query.getString("category_name")
+                };
+                itemList.add(item);
             }
         } catch (SQLException e) {
-            String[] errorMessage = null;
-            return -1;
+            return null;
         }
 
-        return 0;
+        return itemList;
     }
 
 }
