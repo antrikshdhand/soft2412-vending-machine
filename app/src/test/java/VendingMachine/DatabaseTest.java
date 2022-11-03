@@ -637,4 +637,11 @@ public class DatabaseTest {
         db.closeConn();
     }
 
+    @Test
+    void testQueryItemQuantity() {
+        db.openConn();
+        assertEquals(7, db.queryItemQuantity("1002"));
+        db.closeConn();
+    }
+
 }
