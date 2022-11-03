@@ -140,17 +140,14 @@ public class InputCashPage extends Page {
 
         // Setting Action for the Cancel Button
         cancel.setOnAction((e) ->{
-
-
-            String name = sm.getSession().getUserName();
-            if (name.equalsIgnoreCase("guest")) {
-                name = "anonymous";
-            }
-            sm.getDatabase().insertNewTransaction("unsuccessful", name, "user Cancelled");
-            sm.getSession().getTransaction().initialHashMap();
-            sm.getSession().getTransaction().reset();
+            // String name = sm.getSession().getUserName();
+            // if (name.equalsIgnoreCase("guest")) {
+            //     name = "anonymous";
+            // }
+            // sm.getDatabase().insertNewTransaction("unsuccessful", name, "user Cancelled");
+            // sm.getSession().getTransaction().initialHashMap();
+            // sm.getSession().getTransaction().reset();
             sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
-
         });
 
         // Setting up Action for the complete Transaction button.
@@ -327,7 +324,8 @@ public class InputCashPage extends Page {
             }
         };
 
-        if( changeRequired != temp) return null;
+        if (changeRequired != temp)
+            return null;
         return result;
     }
 
@@ -387,7 +385,7 @@ public class InputCashPage extends Page {
         completeTransaction = new Button("Finish and Pay");
 
         // Cancel Button
-        cancel = new Button("Cancel");
+        cancel = new Button("Back");
 
     }
 

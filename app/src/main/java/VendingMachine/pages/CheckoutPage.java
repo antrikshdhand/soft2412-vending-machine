@@ -100,7 +100,7 @@ public class CheckoutPage extends Page {
         timerText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
         // Length of timer in seconds
-        int refreshCountdown = 10;
+        int refreshCountdown = 120;
         IntegerProperty countDown = new SimpleIntegerProperty(refreshCountdown);
 
         countDown.addListener(new ChangeListener<Number>() {
@@ -168,7 +168,6 @@ public class CheckoutPage extends Page {
     public void cancelTransaction(String reason) {
 
         sm.switchScenes(sm.getDefaultPageScene());
-        sm.getDefaultPageController().logout();
         System.out.println("Transaction cancelled. User logged out.\n");
 
         File file = new File("reports/ownerCancelledTransactionsSummary.csv");
@@ -202,6 +201,8 @@ public class CheckoutPage extends Page {
                 username,
                 reason
             };
+
+            sm.getDefaultPageController().logout();
             
             writer.writeNext(data);
     
