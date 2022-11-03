@@ -910,6 +910,7 @@ public class Database {
 
     /**
      * Function which returns all items currently in the database
+     * @return itemList
      */
     public ArrayList<String[]> getItemSoldHistory() {
 
