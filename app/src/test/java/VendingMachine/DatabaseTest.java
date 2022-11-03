@@ -305,6 +305,18 @@ public class DatabaseTest {
         assertNull(value);
     }
 
+    // Testing getItemSoldHistory
+    @Test
+    void testGetItemSoldHistorySimple(){
+
+       db.openConn();
+       ArrayList<String []> value = db.getItemSoldHistory();
+       db.closeConn();
+
+       assertNotNull(value);
+
+    }
+
 
 
     // All tests for check role
