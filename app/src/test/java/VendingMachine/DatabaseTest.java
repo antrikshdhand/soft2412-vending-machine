@@ -22,7 +22,6 @@ public class DatabaseTest {
         db = new Database();
     }
 
-
     // Get rid of the database
     @AfterEach
     void tearDown() {
