@@ -14,10 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -120,7 +117,7 @@ public class InputCashPage extends Page {
         // Setting up the Amount().
         this.refreshAmounts();
 
-
+        
         VBox amountDisplay = new VBox();
         amountDisplay.setSpacing(10);
 
@@ -221,7 +218,7 @@ public class InputCashPage extends Page {
                 sm.getSession().getTransaction().reset();
                 sm.getSession().getTransaction().initialHashMap();
                 notEnoughChange();
-                sm.switchScenes(sm.getDefaultPageScene());
+                sm.switchScenes(sm.getClearedDefaultPageScene());
                 return;
             }
 
@@ -239,7 +236,7 @@ public class InputCashPage extends Page {
                     sm.getSession().getTransaction().reset();
                     sm.getSession().getTransaction().initialHashMap();
                     notEnoughChange();
-                    sm.switchScenes(sm.getDefaultPageScene());
+                    sm.switchScenes(sm.getClearedDefaultPageScene());
                     return;
                 }
                 // Adding the currently paid to the database.
@@ -376,8 +373,6 @@ public class InputCashPage extends Page {
         nullUsernameAlert.setHeaderText("There is not enough change in the vending machine for the money you have put in");
         nullUsernameAlert.setContentText("Continue to default page");
         nullUsernameAlert.showAndWait();
-        sm.switchScenes(sm.getDefaultPageScene());
-
     }
 
 

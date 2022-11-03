@@ -907,4 +907,36 @@ public class Database {
         return itemList;
     }
 
+    /**
+     * Function which returns all items currently in the database
+     */
+    public ArrayList<String[]> getItemSoldHistory() {
+
+        ArrayList<String[]> itemList = new ArrayList<String[]>();
+
+        String sql = """
+                SELECT item_code, item_name, category_name, quantity, price, quantity_sold
+                FROM items
+                """;
+        try {
+            ResultSet query = openStatement.executeQuery(sql);
+            while (query.next()) {
+                String[] item = new String[] {
+                    query.getString("item_code"), 
+                    query.getString("item_name"), 
+                    query.getString("category_name"),
+                    query.getString("quantity"),
+                    query.getString("price"),
+                    query.getString("quantity_sold"),
+                };
+                itemList.add(item);
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+
+        return itemList;
+    }
+
 }
+

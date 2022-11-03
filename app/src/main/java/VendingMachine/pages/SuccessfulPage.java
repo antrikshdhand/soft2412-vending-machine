@@ -62,7 +62,6 @@ public class SuccessfulPage extends  Page{
         logOut.setOnAction(event -> {
             sm.switchScenes(sm.getDefaultPageScene());
             sm.getDefaultPageController().logout();
-            System.out.println("Transaction cancelled. User logged out.\n");
         });
 
     }

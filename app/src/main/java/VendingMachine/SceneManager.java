@@ -93,6 +93,14 @@ public class SceneManager {
         return defaultPage;
     }
 
+    /**
+     * Getter method for cleared default page scene
+     * @return defaultPage
+     */
+    public Scene getClearedDefaultPageScene() {
+        defaultPageController.logout();
+        return defaultPage;
+    }
 
     /**
      * Getter method for owner portal scene
