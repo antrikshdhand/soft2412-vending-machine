@@ -64,10 +64,4 @@ public class PayCardTest {
         }
     }
 
-    // Test if in JSON
-    @Test
-    void testJSON() {
-        return;
-    }
-
 }

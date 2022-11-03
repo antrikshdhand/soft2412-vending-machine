@@ -161,13 +161,14 @@ public class InputCashPage extends Page {
 
 
             // Transaction where the total is 0;
-            if( sm.getSession().getTransaction().getTotal() == 0){
+            if (sm.getSession().getTransaction().getTotal() == 0) {
 
 
                 HashMap<String, Integer> temp = sm.getSession().getTransaction().getCurrentlyPaid();
                 String tempInString = "Change Refunded : \n";
-                for( Map.Entry<String, Integer> entry : temp.entrySet()){
-                    if(entry.getValue() == 0 ) continue;
+                for (Map.Entry<String, Integer> entry : temp.entrySet()) {
+                    if (entry.getValue() == 0)
+                        continue;
                     tempInString += String.format("     $ %s : %d \n", entry.getKey(), entry.getValue());
                 }
 
