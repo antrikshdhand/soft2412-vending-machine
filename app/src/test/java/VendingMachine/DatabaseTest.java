@@ -17,14 +17,14 @@ public class DatabaseTest {
     // You want to open a new API to the database
     // and drop all tables, you are working with a empty relations for each test.
     @BeforeEach
-    void setUp(){
+    void setUp() {
         db = new Database();
     }
 
 
     // Get rid of the database
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         db.openConn();
         db.dropAllTables();
         db.closeConn();
@@ -32,22 +32,26 @@ public class DatabaseTest {
     }
 
 
-    // simple test for openConn()
+    /**
+     * Simple test for openConn()
+     */
     @Test
-    void openConnTest(){
+    void openConnTest() {
         int value = db.openConn();
         db.closeConn();
-        //System.out.println(value);
-
-        //temp giving exception as you are adding guest multiple times.
+        
+        // System.out.println(value);
+        // temp giving exception as you are adding guest multiple times.
         // assertEquals(-1,value);
 
     }
 
 
-    // simple test for closeConn()
+    /** 
+     * Simple test for closeConn()
+     */
     @Test
-    void closeConnTest(){
+    void closeConnTest() {
          db.openConn();
         int value = db.closeConn();
         assertEquals(0,value);
@@ -55,7 +59,7 @@ public class DatabaseTest {
 
     // simple test for dropAllTables()
     @Test
-    void dropAllTablesTest(){
+    void dropAllTablesTest() {
         db.openConn();
         int value = db.dropAllTables();
         db.closeConn();
@@ -65,7 +69,7 @@ public class DatabaseTest {
 
     // Testing that setting up the initial cash amount works
     @Test
-    void testSetUpInitialCashAmount(){
+    void testSetUpInitialCashAmount() {
         db.openConn();
         db.dropAllTables();
         db.closeConn();
@@ -81,7 +85,7 @@ public class DatabaseTest {
     // Test for getting all the currency and quantity in the database with the initial values
 
     @Test
-    void testGetCashSummarySimple(){
+    void testGetCashSummarySimple() {
         db.openConn();
         //
         // db.setUpInitialCashAmounts();
@@ -99,7 +103,7 @@ public class DatabaseTest {
 
     //Testing GetTotalChange in the database Simple (with default 0 values)
     @Test
-    void testGetTotalChangeDefault(){
+    void testGetTotalChangeDefault() {
         // initially the total change should not be 0.
         db.openConn();
         double value = db.getTotalChange();
@@ -114,7 +118,7 @@ public class DatabaseTest {
 
     //Testing update currency amount in the vending machine simple test
     @Test
-    void testUpdateSpecificQuantity(){
+    void testUpdateSpecificQuantity() {
         db.openConn();
         int value = db.increaseCashQuantity("100", 1);;
         db.closeConn();
@@ -124,7 +128,7 @@ public class DatabaseTest {
 
     //Test update currency amount in the vending machine simple 2.
      @Test
-     void testUpdateCashQuantity2(){
+     void testUpdateCashQuantity2() {
         db.openConn();
         db.increaseCashQuantity("100",1);
         HashMap<String, Integer> map = db.getCashSummary();
@@ -137,7 +141,7 @@ public class DatabaseTest {
 
     //Testing updating currency amount in the vending machine advanced.
     @Test
-    void testUpdateCashQuantityAdvanced(){
+    void testUpdateCashQuantityAdvanced() {
         db.openConn();
         double OgValue = db.getTotalChange();
         db.increaseCashQuantity("100", 2);
@@ -161,7 +165,7 @@ public class DatabaseTest {
 
     //Testing decrease currency amount in the vending machine simple test
     @Test
-    void testDecreaseSpecificQuantity(){
+    void testDecreaseSpecificQuantity() {
         db.openConn();
         int value = db.decreaseCashQuantity("100", 1);;
         db.closeConn();
@@ -171,7 +175,7 @@ public class DatabaseTest {
 
     //Test decrease currency amount in the vending machine simple 2.
     @Test
-    void testDecreaseCashQuantity2(){
+    void testDecreaseCashQuantity2() {
         db.openConn();
         db.decreaseCashQuantity("100",1);
         HashMap<String, Integer> map = db.getCashSummary();
@@ -184,7 +188,7 @@ public class DatabaseTest {
 
     //Testing decreasing currency amount in the vending machine advanced.
     @Test
-    void testDecreaseCashQuantityAdvanced(){
+    void testDecreaseCashQuantityAdvanced() {
         db.openConn();
         double OgValue = db.getTotalChange();
         db.decreaseCashQuantity("100", 2);
@@ -210,7 +214,7 @@ public class DatabaseTest {
 
     // testing for insert users.
     @Test
-    void testInsertNewUser(){
+    void testInsertNewUser() {
 
         // Simple test to see if it can add a new owner, seller, cashier, and register customer to the db to the database.
         // through the Gui the guest should not be allowed to add in a new guest.
@@ -281,7 +285,7 @@ public class DatabaseTest {
 
     // Get all test items test simple, testing not null.
     @Test
-    void testGetAllItems(){
+    void testGetAllItems() {
         db.openConn();
         ArrayList<String []> name = db.getAllItems();
         db.closeConn();
@@ -297,7 +301,7 @@ public class DatabaseTest {
 
     // All tests for check role
     @Test
-    void testCheckRole(){
+    void testCheckRole() {
 
         // This is where you should check role.
 
@@ -355,7 +359,7 @@ public class DatabaseTest {
 
     // Temp test to see if the dummy data works.
     @Test
-    public void simpleDummyTest(){
+    public void simpleDummyTest() {
         db.openConn();
         int value = db.setUpInitialItemsAndUsers();
         db.closeConn();
@@ -365,7 +369,7 @@ public class DatabaseTest {
 
     // Few advanced test for adding the Dummy Data.
     @Test
-    void advancedDummyTest1(){
+    void advancedDummyTest1() {
 
 
         db.openConn();
@@ -376,7 +380,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedDummyTest2(){
+    void advancedDummyTest2() {
 
 
         db.openConn();
@@ -388,7 +392,7 @@ public class DatabaseTest {
 
     // Simple test to see if query recent works properly.
     @Test
-    void simpleQueryRecent(){
+    void simpleQueryRecent() {
 
         db.openConn();
         ArrayList<String> q = db.queryRecent();
@@ -399,7 +403,7 @@ public class DatabaseTest {
 
     // more advanced tests for query recent
     @Test
-    void advancedQueryRecent1(){
+    void advancedQueryRecent1() {
         db.openConn();
         ArrayList<String> q = db.queryRecent();
         db.closeConn();
@@ -409,7 +413,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedQueryRecent2(){
+    void advancedQueryRecent2() {
         db.openConn();
         ArrayList<String> q = db.queryRecent();
         db.closeConn();
@@ -420,7 +424,7 @@ public class DatabaseTest {
 
     // simple test to see if the queryCategory function is working.
     @Test
-    void simpleQueryCategory(){
+    void simpleQueryCategory() {
         db.openConn();
         ArrayList<String> c = db.queryAllItemsByCategory("Drinks");
         db.closeConn();
@@ -431,7 +435,7 @@ public class DatabaseTest {
 
     // Advanced Tests to for queryCategory.
     @Test
-    void advancedQueryCategoryDrinks(){
+    void advancedQueryCategoryDrinks() {
         db.openConn();
         ArrayList<String> c = db.queryAllItemsByCategory("Drinks");
         db.closeConn();
@@ -453,7 +457,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedQueryCategoryCandies(){
+    void advancedQueryCategoryCandies() {
         db.openConn();
         ArrayList<String> c = db.queryAllItemsByCategory("Candies");
         db.closeConn();
@@ -463,7 +467,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedQueryCategoryChips(){
+    void advancedQueryCategoryChips() {
         db.openConn();
         ArrayList<String> c = db.queryAllItemsByCategory("Chips");
         db.closeConn();
@@ -473,7 +477,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedQueryUsername(){
+    void advancedQueryUsername() {
         db.openConn();
         ArrayList<String> c = db.queryUsername();
         db.closeConn();
@@ -482,7 +486,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedQueryUsernameAndRole(){
+    void advancedQueryUsernameAndRole() {
         db.openConn();
         HashMap<String, String> map = db.queryUsernameAndRole();
         db.closeConn();
@@ -493,7 +497,7 @@ public class DatabaseTest {
 
     // Simple test for getRole()
     @Test
-    void simpleGetRole(){
+    void simpleGetRole() {
         db.openConn();
         String user1 = db.getRole("user1");
         db.closeConn();
@@ -504,7 +508,7 @@ public class DatabaseTest {
 
     // Advanced test for getRole()
     @Test
-    void advancedGetRole(){
+    void advancedGetRole() {
         db.openConn();
         String user1 = db.getRole("user1");
         db.closeConn();
@@ -513,7 +517,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedGetRole1(){
+    void advancedGetRole1() {
         db.openConn();
         String user1 = db.getRole("owner");
         db.closeConn();
@@ -522,7 +526,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void advancedGetRole2(){
+    void advancedGetRole2() {
         db.openConn();
         String user1 = db.getRole("NotInDb");
         db.closeConn();
@@ -534,7 +538,7 @@ public class DatabaseTest {
 
     // simple Test for validateUsername()
     @Test
-    void simpleValidateUsername(){
+    void simpleValidateUsername() {
         db.openConn();
         int value = db.validateUsername("Helll00");
         db.closeConn();
@@ -544,7 +548,7 @@ public class DatabaseTest {
 
     // advanced Test for validateUsername()
     @Test
-    void AdvancedValidateUsername(){
+    void AdvancedValidateUsername() {
         db.openConn();
         int value1 = db.validateUsername("HHHHHEEEEEELLLLOOOOOLLLE");
         db.closeConn();
@@ -553,7 +557,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void AdvancedValidateUsername1(){
+    void AdvancedValidateUsername1() {
         db.openConn();
         int value = db.validateUsername("user1");
         db.closeConn();
@@ -563,7 +567,7 @@ public class DatabaseTest {
 
     // simple test login
     @Test
-    void simpleLogin(){
+    void simpleLogin() {
         db.openConn();
         int value = db.login("user1", "user1p");
         db.closeConn();
@@ -573,7 +577,7 @@ public class DatabaseTest {
 
     // advanced testing for login function
     @Test
-    void AdvancedLogin1(){
+    void AdvancedLogin1() {
         db.openConn();
         int value = db.login("user1", "user1p");
         db.closeConn();
@@ -582,7 +586,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void AdvancedLogin2(){
+    void AdvancedLogin2() {
         db.openConn();
         int value = db.login("owner", "ownerp");
         db.closeConn();
@@ -592,7 +596,7 @@ public class DatabaseTest {
 
 
     @Test
-    void AdvancedLogin3(){
+    void AdvancedLogin3() {
         db.openConn();
         int value = db.login("owner", "onwerp1111");
         db.closeConn();
@@ -601,7 +605,7 @@ public class DatabaseTest {
     }
 
     @Test
-    void AdvancedLogin4(){
+    void AdvancedLogin4() {
         db.openConn();
         int value = db.login("owner555", "onwerp1111");
         db.closeConn();
@@ -611,7 +615,7 @@ public class DatabaseTest {
 
 
     @Test
-    void AdvancedLogin5(){
+    void AdvancedLogin5() {
         db.openConn();
         int value = db.login("owner555", "onwerp");
         db.closeConn();
