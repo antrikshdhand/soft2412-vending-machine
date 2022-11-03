@@ -1,5 +1,9 @@
 package VendingMachine.pages;
 
+import java.util.ArrayList;
+
+import com.opencsv.CSVWriter;
+
 import VendingMachine.SceneManager;
 import VendingMachine.pages.Page;
 import javafx.scene.Scene; // check
@@ -10,6 +14,8 @@ import javafx.scene.text.Font; // check
 import javafx.scene.text.FontWeight; // check
 import javafx.stage.Stage; // check
 import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import java.io.*;
 
 public class SellerPortal extends Page {
 
@@ -125,44 +131,41 @@ public class SellerPortal extends Page {
     private void createItemSummary() {
 
         sm.getDatabase().openConn();
-        sm.getDatabase().getAllItems();
+        ArrayList<String[]> items = sm.getDatabase().getAllItems();
+        sm.getDatabase().closeConn();
 
-        // File file = new File("./src/main/resources/reports/usersReport.csv");
+        File file = new File("reports/itemsReport.csv");
         
-        // try {
-        //     // Create FileWriter object with file as parameter
-        //     FileWriter outputFile = new FileWriter(file, true);
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputFile = new FileWriter(file, true);
 
-        //     // Create CSVWriter object file writer object as parameter
-        //     CSVWriter writer = new CSVWriter(outputFile);
+            // Create CSVWriter object file writer object as parameter
+            CSVWriter writer = new CSVWriter(outputFile);
 
-        //     // Add header to ownerUsersSummary.csv if empty
-        //     if (file.length() == 0) {
-        //         String[] header = {"USERNAME", "PASSWORD"};
-        //         writer.writeNext(header);
-        //     }
+            // Add header to ownerUsersSummary.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"ITEM_NAME", "CATEGORY"};
+                writer.writeNext(header);
+            }
 
-        //     // Add data to transactions.csv
-        //     for(Map.Entry<String, String> usernamePassword : sm.getDatabase().queryUsernameAndRole().entrySet()) {
-        //         String[] data = {usernamePassword.getKey(), usernamePassword.getValue()};
-        //         writer.writeNext(data);
-        //     }
+            // Write to .csv
+            for (String[] item : items) {
+                writer.writeNext(item);
+            }
 
-        //     writer.close();
-        //     outputFile.close();
+            writer.close();
+            outputFile.close();
 
-        // } catch (IOException e) {
-        //     e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // }
-
-        // sm.getDatabase().closeConn();
-
-        // Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
-        // successfulRegisterAlert.setTitle("Success");
-        // successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
-        // successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
-        // successfulRegisterAlert.showAndWait();
+        Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
+        successfulRegisterAlert.setTitle("Success");
+        successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
+        successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
+        successfulRegisterAlert.showAndWait();
 
     }
 
