@@ -318,6 +318,24 @@ public class DatabaseTest {
     }
 
 
+    // Testing Query Roles
+    @Test
+    void testQueryRoles() {
+        ArrayList<String> tester = new ArrayList<String>();
+        tester.add("GUEST");
+        tester.add("OWNER");
+        tester.add("CASHIER");
+        tester.add("SELLER");
+
+        tester.add("REGISTERED CUSTOMER");
+
+        db.openConn();
+        assertEquals(tester, db.queryRoles());
+        db.closeConn();
+    }
+
+
+
 
     // All tests for check role
     @Test
