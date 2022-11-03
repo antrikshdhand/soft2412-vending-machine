@@ -256,9 +256,9 @@ public class InputCashPage extends Page {
                 sm.getSession().getTransaction().reset();
                 sm.getSession().getTransaction().initialHashMap();
 
-                String tempInString = "Change Refunded : /n";
+                String tempInString = "Change Refunded : \n";
                 for( Map.Entry<String, Integer> entry : temp.entrySet()){
-                    tempInString += String.format("$ %s : %d /n", entry.getKey(), entry.getValue());
+                    tempInString += String.format("$ %s : %d \n", entry.getKey(), entry.getValue());
                 }
 
                 sm.getSuccessfulPage().setMessage(tempInString);
@@ -319,14 +319,13 @@ public class InputCashPage extends Page {
 
             if( valFloor == 0) continue;
 
-            if(valFloor <= avaCash.get(value)){
+            if(val <= avaCash.get(value)){
                 System.out.println(value + "here");
 
-                temp += avaCash.get(value) * valFloor;
-                changeRefunded -= avaCash.get(value) * valFloor;
+                temp += Double.parseDouble(value) * valFloor;
+                changeRefunded -= Double.parseDouble(value) * valFloor;
                 result.put(value, valFloor);
                 System.out.println(temp);
-                System.out.println(valFloor);
                 System.out.println(result);
             }
 
@@ -338,13 +337,11 @@ public class InputCashPage extends Page {
 
             }
         };
-        temp = Math.round(temp *scale) / scale;
-
         System.out.println(result);
 
         System.out.println(changeRequired);
         System.out.println(temp);
-        if( changeRequired != temp) return null;
+       // if( changeRequired != temp) return null;
         return result;
     }
 
