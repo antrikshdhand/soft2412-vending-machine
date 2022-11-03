@@ -324,14 +324,15 @@ public class InputCashPage extends Page {
 
                 temp += Double.parseDouble(value) * valFloor;
                 changeRefunded -= Double.parseDouble(value) * valFloor;
+                changeRefunded += 0.01;
                 result.put(value, valFloor);
-                System.out.println(temp);
                 System.out.println(result);
             }
 
-            double changeRefundedRounded = Math.round(changeRefunded * scale) /scale;
-            if(changeRefundedRounded == 0){
+            double changeRefundedRounded = Math.round(changeRefunded * scale + 0.01);
 
+            System.out.println(changeRefundedRounded);
+            if(changeRefundedRounded == 0){
                 System.out.println(temp);
                 break;
 
@@ -341,7 +342,7 @@ public class InputCashPage extends Page {
 
         System.out.println(changeRequired);
         System.out.println(temp);
-       // if( changeRequired != temp) return null;
+        if( changeRequired != temp) return null;
         return result;
     }
 
