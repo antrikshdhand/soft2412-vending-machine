@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DatabaseTest {
@@ -39,7 +40,7 @@ public class DatabaseTest {
     void openConnTest() {
         int value = db.openConn();
         db.closeConn();
-        
+
         // System.out.println(value);
         // temp giving exception as you are adding guest multiple times.
         // assertEquals(-1,value);
@@ -57,7 +58,7 @@ public class DatabaseTest {
         assertEquals(0,value);
     }
 
-    // simple test for dropAllTables()
+    // Simple test for dropAllTables()
     @Test
     void dropAllTablesTest() {
         db.openConn();
@@ -101,7 +102,7 @@ public class DatabaseTest {
     }
 
 
-    //Testing GetTotalChange in the database Simple (with default 0 values)
+    // Testing GetTotalChange in the database Simple (with default 0 values)
     @Test
     void testGetTotalChangeDefault() {
         // initially the total change should not be 0.
@@ -116,7 +117,7 @@ public class DatabaseTest {
         assertTrue(value < 1000);
     }
 
-    //Testing update currency amount in the vending machine simple test
+    // Testing update currency amount in the vending machine simple test
     @Test
     void testUpdateSpecificQuantity() {
         db.openConn();
@@ -126,7 +127,7 @@ public class DatabaseTest {
         assertEquals(0, value);
     }
 
-    //Test update currency amount in the vending machine simple 2.
+    // Test update currency amount in the vending machine simple 2.
      @Test
      void testUpdateCashQuantity2() {
         db.openConn();
@@ -137,9 +138,9 @@ public class DatabaseTest {
         assertEquals(6, map.get("100"));
 
         assertEquals(5, map.get("50"));
-     }
+    }
 
-    //Testing updating currency amount in the vending machine advanced.
+    // Testing updating currency amount in the vending machine advanced.
     @Test
     void testUpdateCashQuantityAdvanced() {
         db.openConn();
@@ -163,7 +164,7 @@ public class DatabaseTest {
     }
 
 
-    //Testing decrease currency amount in the vending machine simple test
+    // Testing decrease currency amount in the vending machine simple test
     @Test
     void testDecreaseSpecificQuantity() {
         db.openConn();
@@ -173,7 +174,7 @@ public class DatabaseTest {
         assertEquals(0, value);
     }
 
-    //Test decrease currency amount in the vending machine simple 2.
+    // Test decrease currency amount in the vending machine simple 2.
     @Test
     void testDecreaseCashQuantity2() {
         db.openConn();
@@ -186,7 +187,7 @@ public class DatabaseTest {
         assertEquals(5, map.get("50"));
     }
 
-    //Testing decreasing currency amount in the vending machine advanced.
+    // Testing decreasing currency amount in the vending machine advanced.
     @Test
     void testDecreaseCashQuantityAdvanced() {
         db.openConn();
@@ -203,10 +204,9 @@ public class DatabaseTest {
         assertEquals(5, map.get("10"));
 
         // Testing that the change total has gone down.
-        assertTrue( OgValue < 1000 );
+        assertTrue(OgValue < 1000 );
         assertTrue(value < 800);
-
-        assertTrue(( OgValue - value == 250));
+        assertTrue((OgValue - value == 250));
     }
 
 
@@ -219,10 +219,10 @@ public class DatabaseTest {
         // Simple test to see if it can add a new owner, seller, cashier, and register customer to the db to the database.
         // through the Gui the guest should not be allowed to add in a new guest.
         db.openConn();
-        int owner = db.insertNewUser("Suli", "Hello","Owner");
-        int seller = db.insertNewUser("Udit", "Hello", "Seller" );
-        int cashier = db.insertNewUser("Ankit", "Hello", "Cashier" );
-        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "Registered Customer" );
+        int owner = db.insertNewUser("Suli", "Hellopassord","Owner");
+        int seller = db.insertNewUser("Udit", "Hellopassord", "Seller" );
+        int cashier = db.insertNewUser("Ankit", "Hellopassord", "Cashier" );
+        int registeredCustomer = db.insertNewUser("Antriksh", "Hellopassord", "Registered Customer" );
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
@@ -349,10 +349,10 @@ public class DatabaseTest {
 
 
         db.openConn();
-        int owner = db.insertNewUser("Suli", "Hello","Owner");
-        int seller = db.insertNewUser("Udit", "Hello", "Seller" );
-        int cashier = db.insertNewUser("Ankit", "Hello", "Cashier" );
-        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "Registered Customer" );
+        int owner = db.insertNewUser("Suli", "Hellopassord","Owner");
+        int seller = db.insertNewUser("Udit", "Hellopassord", "Seller" );
+        int cashier = db.insertNewUser("Ankit", "Hellopassord", "Cashier" );
+        int registeredCustomer = db.insertNewUser("Antriksh", "Hellopassord", "Registered Customer" );
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
@@ -617,7 +617,7 @@ public class DatabaseTest {
     @Test
     void AdvancedLogin1() {
         db.openConn();
-        int value = db.login("user1", "user1p");
+        int value = db.login("user1", "user1password");
         db.closeConn();
 
         assertEquals(0, value);
@@ -626,7 +626,7 @@ public class DatabaseTest {
     @Test
     void AdvancedLogin2() {
         db.openConn();
-        int value = db.login("owner", "ownerp");
+        int value = db.login("owner", "ownerpassword");
         db.closeConn();
 
         assertEquals(0, value);
@@ -698,6 +698,14 @@ public class DatabaseTest {
     void testQueryItemQuantity() {
         db.openConn();
         assertEquals(7, db.queryItemQuantity("1002"));
+        db.closeConn();
+    }
+
+    // Test addition of new card to the database.
+    @Test
+    void testInsertNewCard() {
+        db.openConn();
+        assertEquals(0, db.insertNewCard("UserTest", "1234", "123"));
         db.closeConn();
     }
 
