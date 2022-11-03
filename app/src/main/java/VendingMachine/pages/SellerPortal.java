@@ -99,7 +99,7 @@ public class SellerPortal extends Page {
         pane.getChildren().addAll(lbl, bn4);
         bn1.setOnAction(e -> this.sm.switchScenes(manageItems));
         bn2.setOnAction(e -> createItemSummary());
-        bn3.setOnAction(e -> this.sm.switchScenes(generateSummary));
+        bn3.setOnAction(e -> createGenerateSummary());
         bn4.setOnAction(e -> this.sm.switchScenes(this.sm.getDefaultPageScene())) ;
     }
 
@@ -176,54 +176,54 @@ public class SellerPortal extends Page {
 
     }
 
-    // /**
-    //  * Function to create the 'generate list' feature
-    //  */
-    // private void createGenerateList() {
-    //     generateListPane = new StackPane();
-    //     generateList = new Scene(generateListPane, width, height);
-
-    //     Button bn = new Button("Return to Seller Portal");
-
-    //     Label lbl = new Label("Generate List Portal");
-    //     lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-
-    //     generateListPane.setAlignment(lbl, Pos.TOP_CENTER);
-    //     lbl.setTranslateY(20);
-    //     // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
-
-    //     bn.setTranslateX(-550);
-    //     bn.setTranslateY(320);
-
-    //     lbl.relocate(0, 30);
-
-    //     generateListPane.getChildren().addAll(lbl, bn);
-    //     bn.setOnAction(e -> this.sm.switchScenes(scene));
-    // }
-
     /**
      * Function to create the 'generate summary' feature
      */
     private void createGenerateSummary() {
-        generateSummaryPane = new StackPane();
-        generateSummary = new Scene(generateSummaryPane, width, height);
+        sm.getDatabase().openConn();
+        ArrayList<String[]> items = sm.getDatabase().getItemSoldHistory();
+        sm.getDatabase().closeConn();
 
-        Button bn = new Button("Return to Seller Portal");
+        File file = new File("reports/itemSoldHistoryReport.csv");
 
-        Label lbl = new Label("Generate Summary Portal");
-        lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+        // attempt to delete the file
+        try {
+            file.delete();
+        } catch (Exception e) {
+            System.out.println("Generating new file...");
+        }
 
-        generateSummaryPane.setAlignment(lbl, Pos.TOP_CENTER);
-        lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        try {
+            // Create FileWriter object with file as parameter
+            FileWriter outputFile = new FileWriter(file, true);
 
-        bn.setTranslateX(-550);
-        bn.setTranslateY(320);
+            // Create CSVWriter object file writer object as parameter
+            CSVWriter writer = new CSVWriter(outputFile);
 
-        lbl.relocate(0, 30);
+            // Add header to ownerUsersSummary.csv if empty
+            if (file.length() == 0) {
+                String[] header = {"ITEM_CODE", "ITEM_NAME", "CATEGORY_NAME", "QUANTITY", "PRICE", "QUANTITY_SOLD"};
+                writer.writeNext(header);
+            }
 
-        generateSummaryPane.getChildren().addAll(lbl, bn);
-        bn.setOnAction(e -> this.sm.switchScenes(scene));
+            // Write to .csv
+            for (String[] item : items) {
+                writer.writeNext(item);
+            }
+
+            writer.close();
+            outputFile.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Alert successfulRegisterAlert = new Alert(Alert.AlertType.INFORMATION);
+        successfulRegisterAlert.setTitle("Success");
+        successfulRegisterAlert.setHeaderText(String.format("Summary generation successful!"));
+        successfulRegisterAlert.setContentText("You view the summary of users and roles as a csv.");
+        successfulRegisterAlert.showAndWait();
+
     }
 
     /**
