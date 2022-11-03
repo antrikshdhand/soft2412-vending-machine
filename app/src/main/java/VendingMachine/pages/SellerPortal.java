@@ -47,7 +47,7 @@ public class SellerPortal extends Page {
         createMainPage();
         createManageItems();
         // createGenerateList();
-        createGenerateSummary();
+        //createGenerateSummary();
 
         // window.setScene(manageItems);
 
