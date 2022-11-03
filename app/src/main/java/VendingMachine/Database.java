@@ -546,30 +546,30 @@ public class Database {
      * Function that allows for the cancelled transactions to be queried.
      * @return map
      */
-    public ArrayList<ArrayList<String>> queryCancelledTransactions() {
-
-        ArrayList<ArrayList<String>> table = new ArrayList<>();
-        // System.out.println("Hello queryCancelledTransactions");
-
-        try {
-            String sql = String.format("SELECT * FROM transactions");
-            ResultSet query = openStatement.executeQuery(sql);
-            table.add(new ArrayList<>());
-            // System.out.println("Hello queryCancelledTransactions2");
-
-            while (query.next()) {
-                // System.out.println("Hello queryCancelledTransactions3");
-                // System.out.println(query.getString("user"));
-                table.get(0).add(query.getString("users"));
-            }
-        } catch(SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println(e.getMessage());
-        }
-
-        return table;
-    }
+//    public ArrayList<ArrayList<String>> queryCancelledTransactions() {
+//
+//        ArrayList<ArrayList<String>> table = new ArrayList<>();
+//        // System.out.println("Hello queryCancelledTransactions");
+//
+//        try {
+//            String sql = String.format("SELECT * FROM transactions");
+//            ResultSet query = openStatement.executeQuery(sql);
+//            table.add(new ArrayList<>());
+//            // System.out.println("Hello queryCancelledTransactions2");
+//
+//            while (query.next()) {
+//                // System.out.println("Hello queryCancelledTransactions3");
+//                // System.out.println(query.getString("user"));
+//                table.get(0).add(query.getString("users"));
+//            }
+//        } catch(SQLException e) {
+//            // if the error message is "out of memory",
+//            // it probably means no database file is found
+//            System.err.println(e.getMessage());
+//        }
+//
+//        return table;
+//    }
 
 
     /**
