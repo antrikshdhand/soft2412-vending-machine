@@ -75,10 +75,6 @@ public class CheckoutPage extends Page {
         cancelTransactionButton.setMinWidth(box.getPrefWidth());
         cancelTransactionButton.setAlignment(Pos.CENTER);
 
-        payCash.setOnAction(e -> {
-            sm.switchScenes(sm.getInputCashPageScene());;
-        });
-
         returnToDp = new Button("Return to default page");
 
         returnToDp.setOnAction(e -> sm.switchScenes(sm.getDefaultPageScene()));
@@ -156,6 +152,10 @@ public class CheckoutPage extends Page {
         payCard.setOnAction(e -> {
             payCardPage.setScene();
             sm.switchScenes(payCardPage.getScene());
+        });
+
+        payCash.setOnAction(e -> {
+            sm.switchScenes(sm.getInputCashPageScene());;
         });
 
     }
