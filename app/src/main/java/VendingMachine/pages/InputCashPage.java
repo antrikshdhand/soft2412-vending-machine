@@ -14,10 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -120,7 +117,7 @@ public class InputCashPage extends Page {
         // Setting up the Amount().
         this.refreshAmounts();
 
-
+        
         VBox amountDisplay = new VBox();
         amountDisplay.setSpacing(10);
 
