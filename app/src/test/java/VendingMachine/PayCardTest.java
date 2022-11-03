@@ -5,6 +5,34 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import VendingMachine.*;
+
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.animation.*;
+import javafx.application.*;
+import javafx.event.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.beans.property.*;
+import javafx.beans.value.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.control.Alert.AlertType;
+
+import java.io.*;
+import java.util.*;
+
+// JSON Reader
+import org.json.simple.*;
+import org.json.simple.parser.*;
+
+// OpenCSV import
+import com.opencsv.*;
+
 public class PayCardTest {
 
     public int getRandomNumber(int min, int max) {
@@ -34,6 +62,12 @@ public class PayCardTest {
             int CVV = getRandomNumber(100, 999);
             assertTrue(PayCard.checkCVV(Integer.toString(CVV)));
         }
+    }
+
+    // Test if in JSON
+    @Test
+    void testJSON() {
+        return;
     }
 
 }
