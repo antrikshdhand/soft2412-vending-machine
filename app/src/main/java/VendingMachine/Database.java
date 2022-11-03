@@ -251,14 +251,14 @@ public class Database {
             statement.executeUpdate(String.format("insert into recent values('%s')", "1003"));
             statement.executeUpdate(String.format("insert into recent values('%s')", "4002"));
 
-            insertNewUser("guest", "guest", "GUEST");
-            insertNewUser("owner", "ownerp", "OWNER");
-            insertNewUser("cashier", "cashierp", "cashier");
-            insertNewUser("seller", "sellerp", "SELLER");
+            insertNewUser("guest", "guestpassword", "GUEST");
+            insertNewUser("owner", "ownerpassword", "OWNER");
+            insertNewUser("cashier", "cashierpassword", "cashier");
+            insertNewUser("seller", "sellerpassword", "SELLER");
 
-            insertNewUser("user1", "user1p", "REGISTERED CUSTOMER");
-            insertNewUser("user2", "user2p", "REGISTERED CUSTOMER");
-            insertNewUser("user3", "user3p", "REGISTERED CUSTOMER");
+            insertNewUser("user1", "user1password", "REGISTERED CUSTOMER");
+            insertNewUser("user2", "user2password", "REGISTERED CUSTOMER");
+            insertNewUser("user3", "user3password", "REGISTERED CUSTOMER");
 
             System.out.println("Finished setUpInitialItemsAndUsers");
 
@@ -682,8 +682,8 @@ public class Database {
     public int insertNewUser(String username, String password, String role) {
         try {
             // SQLite does not strictly enforce the varchar limits, so we have to test for ourselves.
-            if (username.length() > 15 || password.length() > 20) {
-                throw new SQLException("userName or password too long");
+            if (username.length() > 15 || password.length() > 20 || password.length() < 8) {
+                throw new SQLException("userName or password too short/long");
             }
 
             Statement statement = dbConn.createStatement();

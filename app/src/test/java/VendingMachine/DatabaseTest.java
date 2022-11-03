@@ -215,10 +215,10 @@ public class DatabaseTest {
         // Simple test to see if it can add a new owner, seller, cashier, and register customer to the db to the database.
         // through the Gui the guest should not be allowed to add in a new guest.
         db.openConn();
-        int owner = db.insertNewUser("Suli", "Hello","Owner");
-        int seller = db.insertNewUser("Udit", "Hello", "Seller" );
-        int cashier = db.insertNewUser("Ankit", "Hello", "Cashier" );
-        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "Registered Customer" );
+        int owner = db.insertNewUser("Suli", "Hellopassord","Owner");
+        int seller = db.insertNewUser("Udit", "Hellopassord", "Seller" );
+        int cashier = db.insertNewUser("Ankit", "Hellopassord", "Cashier" );
+        int registeredCustomer = db.insertNewUser("Antriksh", "Hellopassord", "Registered Customer" );
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
@@ -292,10 +292,10 @@ public class DatabaseTest {
 
 
         db.openConn();
-        int owner = db.insertNewUser("Suli", "Hello","Owner");
-        int seller = db.insertNewUser("Udit", "Hello", "Seller" );
-        int cashier = db.insertNewUser("Ankit", "Hello", "Cashier" );
-        int registeredCustomer = db.insertNewUser("Antriksh", "Hello", "Registered Customer" );
+        int owner = db.insertNewUser("Suli", "Hellopassord","Owner");
+        int seller = db.insertNewUser("Udit", "Hellopassord", "Seller" );
+        int cashier = db.insertNewUser("Ankit", "Hellopassord", "Cashier" );
+        int registeredCustomer = db.insertNewUser("Antriksh", "Hellopassord", "Registered Customer" );
         //int guest = db.insertNewUser("Nemo", "Hello", "g");
 
         db.closeConn();
@@ -560,7 +560,7 @@ public class DatabaseTest {
     @Test
     void AdvancedLogin1(){
         db.openConn();
-        int value = db.login("user1", "user1p");
+        int value = db.login("user1", "user1password");
         db.closeConn();
 
         assertEquals(0, value);
@@ -569,7 +569,7 @@ public class DatabaseTest {
     @Test
     void AdvancedLogin2(){
         db.openConn();
-        int value = db.login("owner", "ownerp");
+        int value = db.login("owner", "ownerpassword");
         db.closeConn();
 
         assertEquals(0, value);
