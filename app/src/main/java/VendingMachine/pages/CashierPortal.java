@@ -6,12 +6,19 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.collections.FXCollections;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.ArrayList;
 
 public class CashierPortal extends Page {
 
@@ -88,24 +95,58 @@ public class CashierPortal extends Page {
      * Function to create modify cash interface
      */
     public void createModifyCash() {
+
+        VBox modifyCashBox = new VBox();
+        pane.getChildren().add(modifyCashBox);
+
+        ArrayList<String> denomsArr = new ArrayList<String>();
+        denomsArr.add("100");
+        denomsArr.add("50");
+        denomsArr.add("20");
+        denomsArr.add("10");
+        denomsArr.add("5");
+        denomsArr.add("2");
+        denomsArr.add("1");
+        denomsArr.add("0.5");
+        denomsArr.add("0.2");
+        denomsArr.add("0.1");
+        denomsArr.add("0.05");
+
         StackPane pane = new StackPane();
         modifyCashPage = new Scene(pane, WIDTH, HEIGHT);
 
-        Button bn = new Button("Return to Cashier Portal");
-
         Label lbl = new Label("Modify Available Cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-
+        
         pane.setAlignment(lbl, Pos.TOP_CENTER);
         lbl.setTranslateY(20);
-        // pane.setAlignment(bn, Pos.BOTTOM_LEFT);
+        lbl.relocate(0, 30);
+        
+        sm.getDatabase().openConn();
+        HashMap<String, Integer> current_cash = sm.getDatabase().getCashSummary();
+        sm.getDatabase().closeConn();
 
+        for (Entry<String, Integer> e : current_cash.entrySet()) {
+            System.out.println(e.getKey());
+            System.out.println(e.getValue());
+            System.out.println();
+        }
+
+        ComboBox denominations = new ComboBox();
+        denominations.getItems().addAll(FXCollections.observableArrayList(denomsArr));
+
+        Button checkCurrent = new Button("Check current numbers");
+        checkCurrent.setOnAction(event -> {
+            
+        });
+
+
+        Button bn = new Button("Return to Cashier Portal");
         bn.setTranslateX(-550);
         bn.setTranslateY(320);
 
-        lbl.relocate(0, 30);
 
-        pane.getChildren().addAll(lbl, bn);
+        pane.getChildren().addAll(lbl, denominations, checkCurrent, bn);
         bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
     }
 

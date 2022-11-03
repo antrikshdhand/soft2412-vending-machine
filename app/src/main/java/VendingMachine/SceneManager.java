@@ -39,16 +39,13 @@ public class SceneManager {
     public void setUp() {
         database = new Database();
         session = new Session();
+        session.getTransaction().setSceneManager(this);
         ownerPortal = new OwnerPortal(this);
         cashierPortal = new CashierPortal(this);
         sellerPortal = new SellerPortal(this);
         login = new Login(this);
         inputCashPage = new InputCashPage(this);
         successfulPage = new SuccessfulPage(this);
-
-        database.openConn();
-        database.queryCancelledTransactions();
-        database.closeConn();
     }
 
 
@@ -186,15 +183,6 @@ public class SceneManager {
     public Session getSession() {
         return session;
     }
-
-
-    /**
-     * Method to create new default page
-     */
-    public void createNewDefaultPage() {
-        defaultPageController.updateSessionBox();
-    }
-
 
     /**
      * Setter method for default page controller

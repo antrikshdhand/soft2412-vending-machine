@@ -1,8 +1,5 @@
 package VendingMachine;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-
 import java.sql.*;
 import java.util.*;
 
@@ -35,7 +32,7 @@ public class Database {
         if (successfulConn == 0) {
             dropAllTables();
             this.initialiseSchema();
-            this.addDummyItems();
+            this.setUpInitialItemsAndUsers();
             this.setUpInitialCashAmounts();
             this.closeConn();
         }
@@ -78,45 +75,49 @@ public class Database {
             openStatement.executeUpdate(
                     """
                     CREATE TABLE IF NOT EXISTS items (
-                        item_name VARCHAR(20) PRIMARY KEY,
-                        category_name VARCHAR(20)
+                        item_code VARCHAR(20) PRIMARY KEY,
+                        item_name VARCHAR(20),
+                        category_name VARCHAR(20),
+                        quantity int,
+                        price double,
+                        quantity_sold int
                     );
                     """);
 
             openStatement.executeUpdate(
                     """
                     CREATE TABLE IF NOT EXISTS recent (
-                        item_name VARCHAR(20) PRIMARY KEY
+                        item_code VARCHAR(20) PRIMARY KEY
                     )
                     """);
 
             openStatement.executeUpdate(
                     """
-                    CREATE TABLE IF NOT EXISTS cash(
+                    CREATE TABLE IF NOT EXISTS cash (
                         currency VARCHAR(4) PRIMARY KEY,
                         quantity INTEGER,
                         CHECK (currency IN ('100', '50', '20', '10', '5', '2', '1', '0.5', '0.2', '0.1', '0.05'))
                     );
                     """);
 
+            openStatement.executeUpdate(
+                """
+                CREATE TABLE IF NOT EXISTS cards (
+                    username VARCHAR(20) PRIMARY KEY,
+                    card VARCHAR(16),
+                    cvv VARCHAR(3)
+                )
+                """);
 
             openStatement.executeUpdate("""
-                        CREATE TABLE IF NOT EXISTS cards (
-                            username VARCHAR(20) PRIMARY KEY,
-                            card VARCHAR(16),
-                            cvv VARCHAR(3)
-                        )
-                            """);
-
-            openStatement.executeUpdate("""
-                        CREATE TABLE IF NOT EXISTS transactions(
-                            time_added DATETIME DEFAULT (CURRENT_TIMESTAMP) PRIMARY KEY,
-                            status VARCHAR(16), -- Successful or Unsuccessful 
-                            users VARCHAR(20), -- who attempted the transaction, if guest should be anonymous 
-                            reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. ) 
-                            )
-                            """);
-            
+                CREATE TABLE IF NOT EXISTS transactions (
+                    time_added DATETIME DEFAULT (CURRENT_TIMESTAMP) PRIMARY KEY,
+                    status VARCHAR(16), -- Successful or Unsuccessful 
+                    users VARCHAR(20), -- who attempted the transaction, if guest should be anonymous 
+                    reason VARCHAR(50) -- there should only be a reasons only if the transaction has been cancelled. 
+                )
+                    """);
+    
             // The two lines below are commented out as they have already been "done"
             // Initialise db with a guest account
 
@@ -212,6 +213,56 @@ public class Database {
 
 
     /**
+     * FOR TESTING PURPOSES ONLY:
+     * Add a bit of dummy data to test the GUI during demonstrations.
+     * @return
+     */
+    public int setUpInitialItemsAndUsers() {
+        try {
+            Statement statement = dbConn.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.executeUpdate(String.format("insert into items values('1001', 'Mineral Water', 'Drinks', 7, 1.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1002', 'Sprite', 'Drinks', 7, 2.1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1003', 'Coca cola', 'Drinks', 7, 2.1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1004', 'Pepsi', 'Drinks', 7, 2.1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('1005', 'Juice', 'Drinks', 7, 5.3, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2001', 'Mars', 'Chocolate', 7, 1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2002', 'M&M', 'Chocolate', 7, 3.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2003', 'Bounty', 'Chocolate', 7, 1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('2004', 'Snickers', 'Chocolate', 7, 1, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3001', 'Smiths', 'Chips', 7, 4.3, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3002', 'Pringles', 'Chips', 7, 4, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3003', 'Kettle', 'Chips', 7, 4.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('3004', 'Thins', 'Chips', 7, 2.15, 0);"));
+            statement.executeUpdate(String.format("insert into items values('4001', 'Mentos', 'Candies', 7, 1.5, 0);"));
+            statement.executeUpdate(String.format("insert into items values('4002', 'Sour Patches', 'Candies', 7, 3, 0);"));
+            statement.executeUpdate(String.format("insert into items values('4003', 'Skittles', 'Candies', 7, 3.8, 0);"));
+
+            statement.executeUpdate(String.format("insert into recent values('%s')", "3002"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "1003"));
+            statement.executeUpdate(String.format("insert into recent values('%s')", "4002"));
+
+            insertNewUser("guest", "guest", "GUEST");
+            insertNewUser("owner", "ownerp", "OWNER");
+            insertNewUser("cashier", "cashierp", "cashier");
+            insertNewUser("seller", "sellerp", "SELLER");
+
+            insertNewUser("user1", "user1p", "REGISTERED CUSTOMER");
+            insertNewUser("user2", "user2p", "REGISTERED CUSTOMER");
+            insertNewUser("user3", "user3p", "REGISTERED CUSTOMER");
+
+            System.out.println("Finished setUpInitialItemsAndUsers");
+
+        } catch (SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
+    /**
      * Function that sets up the initial cash amount for the first run.
      * @return if successful return 0, else return -1
      */
@@ -238,63 +289,6 @@ public class Database {
             return -1;
         }
 
-        return 0;
-    }
-
-
-    /**
-     * FOR TESTING PURPOSES ONLY:
-     * Add a bit of dummy data to test the GUI during demonstrations.
-     * @return
-     */
-    public int addDummyItems() {
-        try {
-            Statement statement = dbConn.createStatement();
-            statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mineral Water", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sprite", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Coca cola", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pepsi", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Juice", "Drinks"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mars", "Chocolate"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "M&M", "Chocolate"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Mentos", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Sour Patches", "Candies"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Smiths", "Chips"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Pringles", "Chips"));
-            statement.executeUpdate(String.format("insert into items values('%s', '%s')", "Cocaine", "Chips"));
-
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Pringles"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Mars"));
-            statement.executeUpdate(String.format("insert into recent values('%s')", "Sprite"));
-            
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "owner", "ownerp", "OWNER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
-//
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user1", "user1p", "REGISTERED CUSTOMER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user2", "user2p", "REGISTERED CUSTOMER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "user3", "user3p", "REGISTERED CUSTOMER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "seller", "sellerp", "SELLER"));
-//            statement.executeUpdate(String.format("insert into users values('%s', '%s', '%s')", "cashier", "cashierp", "CASHIER"));
-//
-            insertNewUser("guest", "guest", "GUEST");
-            insertNewUser("owner", "ownerp", "OWNER");
-            insertNewUser("cashier", "cashierp", "cashier");
-            insertNewUser("seller", "sellerp", "SELLER");
-
-            insertNewUser("user1", "user1p", "REGISTERED CUSTOMER");
-            insertNewUser("user2", "user2p", "REGISTERED CUSTOMER");
-            insertNewUser("user3", "user3p", "REGISTERED CUSTOMER");
-
-            System.out.println("Added dummy values");
-
-        } catch (SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println(e.getMessage());
-            return -1;
-        }
         return 0;
     }
 
@@ -393,7 +387,7 @@ public class Database {
         try {
             ResultSet query = openStatement.executeQuery(String.format("SELECT * FROM recent"));
             while (query.next()) {
-                items.add(query.getString("item_name"));
+                items.add(query.getString("item_code"));
             }
         } catch (SQLException e) {
             // if the error message is "out of memory",
@@ -431,15 +425,15 @@ public class Database {
      * @param category
      * @return items
      */
-    public ArrayList<String> queryCategory(String category) {
+    public ArrayList<String> queryAllItemsByCategory(String category) {
 
         ArrayList<String> items = new ArrayList<>();
 
         try {
-            String sql = String.format("SELECT item_name FROM items WHERE category_name = '%s'", category);
+            String sql = String.format("SELECT item_code FROM items WHERE category_name = '%s'", category);
             ResultSet query = openStatement.executeQuery(sql);
             while (query.next()) {
-                items.add(query.getString("item_name"));
+                items.add(query.getString("item_code"));
             }
         } catch(SQLException e) {
             // if the error message is "out of memory",
@@ -449,6 +443,63 @@ public class Database {
 
         return items;
 
+    }
+
+    /**
+     * Function that allows for a item to be queried.
+     * @param itemCode
+     * @return itemsName
+     */
+    public String queryItemName(String itemCode) {
+
+        try {
+            String sql = String.format("SELECT item_name FROM items WHERE item_code = '%s'", itemCode);
+            ResultSet query = openStatement.executeQuery(sql);
+            return query.getString("item_name");
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Function that allows for an item to be queried.
+     * @param itemCode
+     * @return itemPrice
+     */
+    public Double queryItemPrice(String itemCode) {
+
+        try {
+            String sql = String.format("SELECT price FROM items WHERE item_code = '%s'", itemCode);
+            ResultSet query = openStatement.executeQuery(sql);
+            return query.getDouble("price");
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Function that allows for an item to be queried.
+     * @param itemCode
+     * @return Quantity
+     */
+    public int queryItemQuantity(String itemCode) {
+
+        try {
+            String sql = String.format("SELECT quantity FROM items WHERE item_code = '%s'", itemCode);
+            ResultSet query = openStatement.executeQuery(sql);
+            return query.getInt("quantity");
+        } catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        return -1;
     }
 
 
@@ -818,24 +869,28 @@ public class Database {
     /**
      * Function which returns all items currently in the database
      */
-    public int getAllItems() {
+    public ArrayList<String[]> getAllItems() {
+
+        ArrayList<String[]> itemList = new ArrayList<String[]>();
+
         String sql = """
-                SELECT *
+                SELECT item_name, category_name
                 FROM items
                 """;
         try {
             ResultSet query = openStatement.executeQuery(sql);
-            if (query.next()) {
-                System.out.println(query.next());
-            } else {
-                return 0;
+            while (query.next()) {
+                String[] item = new String[] {
+                    query.getString("item_name"), 
+                    query.getString("category_name")
+                };
+                itemList.add(item);
             }
         } catch (SQLException e) {
-            String[] errorMessage = null;
-            return -1;
+            return null;
         }
 
-        return 0;
+        return itemList;
     }
 
 }

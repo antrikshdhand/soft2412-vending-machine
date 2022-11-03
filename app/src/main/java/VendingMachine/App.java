@@ -3,6 +3,7 @@ package VendingMachine;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -27,8 +28,7 @@ public class App extends Application {
 
 
         // If you want to add an icon for the program:
-        // Image icon = new Image('File path')
-        // primaryStage.setIcon(icon);
+        primaryStage.getIcons().add(new Image("images/logo.jpg"));
 
         // with javafx, by default with window will appear in the middle, unlike Swing, so no changes are needed.
         // String sceneFile = "/fxml/Main.fxml";

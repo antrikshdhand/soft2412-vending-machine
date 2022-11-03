@@ -190,7 +190,7 @@ public class Login extends Page {
         sceneManager.getSession().setRole(role);
 
         // change back to the defualt page, but this time its logged in
-        sceneManager.createNewDefaultPage();
+        sceneManager.getDefaultPageController().login();
         sceneManager.switchScenes(sceneManager.getDefaultPageScene()); 
         
     }

@@ -4,18 +4,24 @@ import VendingMachine.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultPageController {
@@ -24,8 +30,11 @@ public class DefaultPageController {
     private SceneManager sceneManager = new SceneManager();
     private Database database;
     private Session session;
+    Font font = new Font("System", 15);
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    private HashMap<String, Image> images = new HashMap<>();
 
     @FXML
     Label roleLabel;
@@ -45,19 +54,34 @@ public class DefaultPageController {
     @FXML
     Button loginBtn;
 
-    @FXML
-    Button proceedToPortalBtn;
-
     public DefaultPageController() {
         sceneManager.setDefaultPageController(this);
         database = sceneManager.getDatabase();
         session = sceneManager.getSession();
-        // ((VBox) proceedToPortalBtn.getParent()).getChildren().remove(proceedToPortalBtn);
-        // proceedToPortalBtn.setDisable(false);
-        // database.openConn();
-        // ArrayList<String> c = database.queryUsername();
-        // database.closeConn();
-        // System.out.println(c);
+        loadImages();
+    }
+
+    public void loadImages() {
+        int requestedWidth = 100;
+        int requestedHeight = 100;
+        boolean preseveRatio = false;
+        boolean smooth = false;
+        images.put("1001", new Image("images/Mineral Water.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1002", new Image("images/Sprite.jpeg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1003", new Image("images/Coca cola.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1004", new Image("images/Pepsi.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("1005", new Image("images/Juice.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2001", new Image("images/Mars.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2002", new Image("images/M&M.jpeg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2003", new Image("images/Bounty.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("2004", new Image("images/Snickers.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3001", new Image("images/Smiths.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3002", new Image("images/Pringles.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3003", new Image("images/Kettle.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("3004", new Image("images/Thins.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("4001", new Image("images/Mentos.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("4002", new Image("images/Sour Patch.jpeg", requestedWidth, requestedHeight, preseveRatio, smooth));
+        images.put("4003", new Image("images/Skittles.jpg", requestedWidth, requestedHeight, preseveRatio, smooth));
     }
 
     public void setDefaultPageAndStage(ActionEvent event) {
@@ -83,25 +107,51 @@ public class DefaultPageController {
                 sceneManager.switchScenes(sceneManager.getCashierPortalScene());
             }
         }
+        else {
+            alertPleaseLoginFirst();
+        }
+    }
+
+    /**
+     * Method to show error
+     */
+    private void alertPleaseLoginFirst() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Not logged in");
+        alert.setHeaderText("Please login first");
+        alert.setContentText("Please try again");
+        alert.showAndWait();
+    }
+
+    /**
+     * Method to show error
+     */
+    private void alertPleaseAddItemsToCartFirst() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("No items in cart");
+        alert.setHeaderText("Please add items to cart first");
+        alert.setContentText("Please try again");
+        alert.showAndWait();
     }
 
     public void proceedToCheckout(ActionEvent event) {
-        setDefaultPageAndStage(event);
-        sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
+        if (sceneManager.getSession().getTransaction().getItems().size() > 0) {
+            setDefaultPageAndStage(event);
+            sceneManager.switchScenes(sceneManager.getCheckoutPageScene());
+        }
+        else {
+            alertPleaseAddItemsToCartFirst();
+        }
+
     }
 
-    public void login(ActionEvent event) {
+    public void loginButtonAction(ActionEvent event) {
         if (!session.isLoggedIn()) {
             setDefaultPageAndStage(event);
             sceneManager.switchScenes(sceneManager.getLoginScene());
         }
         else {
-            session.resetSession();
-            updateSessionBox();
-            loginBtn.setText("Log In");
-            proceedToPortalBtn.setText("Please login first");
-            // proceedToPortalBtn.setDisable(false);
-
+            logout();
         }
     }
 
@@ -109,16 +159,26 @@ public class DefaultPageController {
         session.resetSession();
         updateSessionBox();
         loginBtn.setText("Log In");
-        proceedToPortalBtn.setText("Please login first");
+        clearTransaction();
+    }
+
+    public void login() {
+        updateSessionBox();
+        loginBtn.setText("Log Out");
+        clearTransaction();
     }
 
     public void updateSessionBox() {
         roleLabel.setText("Role: " + session.getRole());
         accountLabel.setText("Account: " + session.getUserName());
-        loginBtn.setText("Log Out");
-        proceedToPortalBtn.setText("Proceed to Portal");
-            // proceedToPortalBtn.setDisable(true);
     }
+
+    public void clearTransaction() {
+        session.getTransaction().reset();
+        displayItemStrings(new ArrayList<>());
+        updateCart();
+    }
+
 
     public void displayItemStrings(ArrayList<String> itemStrings) {
 
@@ -126,24 +186,62 @@ public class DefaultPageController {
         items.setSpacing(30);
         scrollPane.setContent(items);
 
-        for (String i : itemStrings) {
+        for (String itemCode : itemStrings) {
+
             HBox item = new HBox();
             item.setPadding(new Insets(10));
             HBox.setMargin(item, new Insets(50));
             item.setPrefSize(500, 100);
 
-            Button button = new Button("Add to Cart");
+            database.openConn();
+            String itemName = database.queryItemName(itemCode);
+            Double itemPrice = database.queryItemPrice(itemCode);
+            int itemQuantity = database.queryItemQuantity(itemCode);
+            database.closeConn();
 
-            button.setOnAction(event -> {
-                session.getTransaction().addItem(i);
-                session.getTransaction().addToTotal(1);
-                updateCart();
-            });
+            Label nameLabel = new Label(itemName);
+            nameLabel.setFont(font);
+
+            Region region0 = new Region();
+            HBox.setHgrow(region0, Priority.ALWAYS);
 
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
 
-            item.getChildren().addAll(new Label(i), region1, button);
+            Label priceLabel = new Label("$" + df.format(itemPrice));
+            priceLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
+
+            Region region2 = new Region();
+            HBox.setHgrow(region2, Priority.ALWAYS);
+
+            Label quantityLabel = new Label("Stock: " + itemQuantity);
+            quantityLabel.setFont(font);
+
+            Region region3 = new Region();
+            HBox.setHgrow(region3, Priority.ALWAYS);
+
+            Button button = new Button("Add to Cart");
+            button.setFont(font);
+
+            button.setOnAction(event -> {
+                session.getTransaction().addItem(itemCode);
+                updateCart();
+            });
+
+            ImageView imageView = new ImageView();
+            imageView.setImage(images.get(itemCode));
+
+            item.getChildren().addAll(
+                    imageView,
+                    region0,
+                    nameLabel,
+                    region1,
+                    priceLabel,
+                    region2,
+                    quantityLabel,
+                    region3,
+                    button
+            );
 
             item.setStyle("-fx-background-color:#98aded");
             items.getChildren().add(item);
@@ -165,7 +263,7 @@ public class DefaultPageController {
     public void displayCategory(String category) {
 
         database.openConn();
-        ArrayList<String> itemStrings = database.queryCategory(category);
+        ArrayList<String> itemStrings = database.queryAllItemsByCategory(category);
         database.closeConn();
 
         displayItemStrings(itemStrings);
@@ -194,39 +292,62 @@ public class DefaultPageController {
         items.setSpacing(30);
         cartScrollPane.setContent(items);
 
+        session.getTransaction().calculateTotal();
         totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
 
         for (Map.Entry<String,Integer> entry : session.getTransaction().getItems().entrySet()) {
-            // System.out.println("Key = " + entry.getKey() +
-            //         ", Value = " + entry.getValue());
 
             HBox item = new HBox();
             item.setPadding(new Insets(10));
             HBox.setMargin(item, new Insets(20));
             item.setPrefSize(250, 50);
+            item.setStyle("-fx-background-color:#98aded");
 
-            Button button = new Button("Remove");
-
-            Label label = new Label(entry.getKey() + " - qty: " + entry.getValue());
-
-            button.setOnAction(event -> {
-                session.getTransaction().removeItem(entry.getKey());
-                label.setText(entry.getKey() + " - qty: " + session.getTransaction().getItems().get(entry.getKey()));
-                if (session.getTransaction().getItems().get(entry.getKey()) == null) {
-                    items.getChildren().remove(item);
-                }
-                session.getTransaction().addToTotal(-1);
-                totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
-            });
+            database.openConn();
+            String itemName = database.queryItemName(entry.getKey());
+            database.closeConn();
+            Label label = new Label(itemName);
+            label.setFont(font);
 
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
 
-            item.getChildren().addAll(label, region1, button);
+            Region region2 = new Region();
+            HBox.setHgrow(region2, Priority.ALWAYS);
 
-            item.setStyle("-fx-background-color:#98aded");
+            Region region3 = new Region();
+            HBox.setHgrow(region3, Priority.ALWAYS);
+
+            Label quantityLabel = new Label("" + entry.getValue());
+            quantityLabel.setFont(font);
+
+            Button removeButton = new Button("-");
+            removeButton.setFont(font);
+            removeButton.setOnAction(event -> {
+                session.getTransaction().removeItem(entry.getKey());
+                quantityLabel.setText("" + session.getTransaction().getItems().get(entry.getKey()));
+                if (session.getTransaction().getItems().get(entry.getKey()) == null) {
+                    items.getChildren().remove(item);
+                }
+                session.getTransaction().calculateTotal();
+                totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
+            });
+
+            Button addButton = new Button("+");
+            addButton.setFont(font);
+            addButton.setOnAction(event -> {
+                session.getTransaction().addItem(entry.getKey());
+                quantityLabel.setText("" + session.getTransaction().getItems().get(entry.getKey()));
+                session.getTransaction().calculateTotal();
+                totalLabel.setText("Total: $" + df.format(session.getTransaction().getTotal()));
+            });
+
+            HBox cartButtons = new HBox();
+            cartButtons.setPrefSize(90, 50);
+            cartButtons.getChildren().addAll(removeButton, region2, quantityLabel, region3, addButton);
+
+            item.getChildren().addAll(label, region1, cartButtons);
             items.getChildren().add(item);
-
 
         }
 

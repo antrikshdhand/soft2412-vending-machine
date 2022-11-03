@@ -6,8 +6,11 @@ import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Transaction {
+
+    private SceneManager sceneManager;
 
     private HashMap<String, Integer> items;
 
@@ -83,7 +86,7 @@ public class Transaction {
 
 
     /**
-     * function for increasing the total price
+     * Function for increasing the total price
      * @param n
      */
 
@@ -96,6 +99,14 @@ public class Transaction {
 
 
     /**
+     * Function that gets the total price of all the items in the cart.
+     * @return total
+     */
+    public double getTotal() {
+        return total;
+    }
+
+    /**
      * Function that return the HashMap with the number of items.
      * @return items
      */
@@ -103,14 +114,26 @@ public class Transaction {
         return items;
     }
 
-
     /**
-     * Function that gets the total price of all the items in the cart.
-     * @return total
+     * Function that calculateTotal
      */
-    public double getTotal() {
-        return total;
+    public void calculateTotal() {
+
+        total = 0;
+
+        for (Map.Entry<String,Integer> entry : items.entrySet()) {
+            sceneManager.getDatabase().openConn();
+            double price = sceneManager.getDatabase().queryItemPrice(entry.getKey());
+            sceneManager.getDatabase().closeConn();
+
+            total += price * entry.getValue();
+        }
+
+        calculateDue();
+        calculateChange();
+
     }
+
 
 
     /**
@@ -269,5 +292,9 @@ public class Transaction {
      */
     public int getQuantityPaid(String key) {
         return currentlyPaid.get(key);
+    }
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
     }
 }
