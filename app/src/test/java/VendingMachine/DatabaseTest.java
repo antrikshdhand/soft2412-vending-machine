@@ -604,4 +604,22 @@ public class DatabaseTest {
         assertEquals(-1, value);
     }
 
+
+    @Test
+    void testChangeRole() {
+        db.openConn();
+        boolean changeRole = db.changeRole("seller", "OWNER");
+        assertTrue(changeRole);
+        assertEquals("OWNER", db.getRole("seller"));
+        db.closeConn();
+    }
+
+    @Test
+    void testRemoveUser() {
+        db.openConn();
+        int removeUser = db.removeUser("user1");
+        assertEquals(0, removeUser);
+        db.closeConn();
+    }
+
 }
