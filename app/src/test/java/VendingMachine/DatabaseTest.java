@@ -22,7 +22,6 @@ public class DatabaseTest {
         db = new Database();
     }
 
-
     // Get rid of the database
     @AfterEach
     void tearDown() {
@@ -574,7 +573,9 @@ public class DatabaseTest {
 
     }
 
-    // simple Test for validateUsername()
+    /**
+     * Simple Test for validateUsername()
+     */
     @Test
     void simpleValidateUsername() {
         db.openConn();
@@ -584,7 +585,9 @@ public class DatabaseTest {
         assertNotNull(value);
     }
 
-    // advanced Test for validateUsername()
+    /**
+     * Advanced Test for validateUsername()
+     */
     @Test
     void AdvancedValidateUsername() {
         db.openConn();
@@ -603,7 +606,9 @@ public class DatabaseTest {
         assertEquals( 0, value);
     }
 
-    // simple test login
+    /**
+     * Simple test login
+     */
     @Test
     void simpleLogin() {
         db.openConn();
@@ -701,7 +706,9 @@ public class DatabaseTest {
         db.closeConn();
     }
 
-    // Test addition of new card to the database.
+    /**
+     * Test addition of new cards to the database.
+     */
     @Test
     void testInsertNewCard() {
         db.openConn();
