@@ -224,7 +224,7 @@ public class InputCashPage extends Page {
                 sm.getSession().getTransaction().reset();
                 sm.getSession().getTransaction().initialHashMap();
                 notEnoughChange();
-                sm.switchScenes(sm.getDefaultPageScene());
+                sm.switchScenes(sm.getClearedDefaultPageScene());
                 return;
             }
 
@@ -241,7 +241,7 @@ public class InputCashPage extends Page {
                     sm.getSession().getTransaction().reset();
                     sm.getSession().getTransaction().initialHashMap();
                     notEnoughChange();
-                    sm.switchScenes(sm.getDefaultPageScene());
+                    sm.switchScenes(sm.getClearedDefaultPageScene());
                     return;
                 }
                 // Adding the currently paid to the database.
@@ -358,8 +358,6 @@ public class InputCashPage extends Page {
         nullUsernameAlert.setHeaderText("There is not enough change in the vending machine for the money you have put in");
         nullUsernameAlert.setContentText("Continue to default page");
         nullUsernameAlert.showAndWait();
-        sm.switchScenes(sm.getDefaultPageScene());
-
     }
 
 
