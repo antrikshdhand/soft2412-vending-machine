@@ -55,6 +55,7 @@ public class SuccessfulPage extends  Page{
         pane.getChildren().add(box);
 
         continue_Shopping.setOnAction(event -> {
+            sm.getDefaultPageController().clearTransaction();
             sm.switchScenes(sm.getDefaultPageScene());
         });
 

@@ -22,7 +22,6 @@ public class DatabaseTest {
         db = new Database();
     }
 
-
     // Get rid of the database
     @AfterEach
     void tearDown() {
@@ -316,6 +315,24 @@ public class DatabaseTest {
        assertNotNull(value);
 
     }
+
+
+    // Testing Query Roles
+    @Test
+    void testQueryRoles() {
+        ArrayList<String> tester = new ArrayList<String>();
+        tester.add("GUEST");
+        tester.add("OWNER");
+        tester.add("CASHIER");
+        tester.add("SELLER");
+
+        tester.add("REGISTERED CUSTOMER");
+
+        db.openConn();
+        assertEquals(tester, db.queryRoles());
+        db.closeConn();
+    }
+
 
 
 

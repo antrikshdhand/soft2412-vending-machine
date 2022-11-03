@@ -141,6 +141,9 @@ public class Transaction {
 
 
 
+
+
+
     /**
      * Function that return the changes the transaction needs to return.
      * @return change
