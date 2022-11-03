@@ -604,4 +604,44 @@ public class DatabaseTest {
         assertEquals(-1, value);
     }
 
+
+    @Test
+    void testChangeRole() {
+        db.openConn();
+        boolean changeRole = db.changeRole("seller", "OWNER");
+        assertTrue(changeRole);
+        assertEquals("OWNER", db.getRole("seller"));
+        db.closeConn();
+    }
+
+    @Test
+    void testRemoveUser() {
+        db.openConn();
+        int removeUser = db.removeUser("user1");
+        assertEquals(0, removeUser);
+        db.closeConn();
+    }
+
+    @Test
+    void testQueryItemPrice() {
+        db.openConn();
+        assertEquals(2.1, db.queryItemPrice("1002"), 0.01);
+        db.closeConn();
+    }
+
+    @Test
+    void testQueryItemName() {
+        db.openConn();
+        assertEquals("Sprite", db.queryItemName("1002"));
+
+        db.closeConn();
+    }
+
+    @Test
+    void testQueryItemQuantity() {
+        db.openConn();
+        assertEquals(7, db.queryItemQuantity("1002"));
+        db.closeConn();
+    }
+
 }
