@@ -339,6 +339,13 @@ public class OwnerPortal extends Page {
         HashMap<String, String> hm = sm.getDatabase().queryUsernameAndRole();
 
         File file = new File("reports/cancelledTransactionsReport.csv");
+        // attempt to delete the file
+        try {
+            file.delete();
+        } catch (Exception e) {
+            System.out.println("Generating new file...");
+        }
+        
         try {
             // Create FileWriter object with file as parameter
             FileWriter outputFile = new FileWriter(file, true);

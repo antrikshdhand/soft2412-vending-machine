@@ -362,9 +362,14 @@ public class Database {
         HashMap<String,Integer> availableCashMap = this.getCashSummary();
 
         try {
+            int newAmount = availableCashMap.get(currency) - quantityToDeduct;
+            if (newAmount < 0) {
+                throw new SQLException();
+            }
+
             Statement statement = dbConn.createStatement();
             statement.setQueryTimeout(30); // set timeout to 30 sec.
-            statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", availableCashMap.get(currency) - quantityToDeduct,  currency));
+            statement.executeUpdate(String.format("update cash set quantity = %d where currency = '%s'", newAmount, currency));
 
         } catch (SQLException e) {
             // if the error message is "out of memory",

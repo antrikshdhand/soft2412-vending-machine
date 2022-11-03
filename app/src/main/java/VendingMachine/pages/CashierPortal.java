@@ -96,9 +96,6 @@ public class CashierPortal extends Page {
      */
     public void createModifyCash() {
 
-        VBox modifyCashBox = new VBox();
-        pane.getChildren().add(modifyCashBox);
-
         ArrayList<String> denomsArr = new ArrayList<String>();
         denomsArr.add("100");
         denomsArr.add("50");
@@ -115,39 +112,83 @@ public class CashierPortal extends Page {
         StackPane pane = new StackPane();
         modifyCashPage = new Scene(pane, WIDTH, HEIGHT);
 
+        VBox modifyCashBox = new VBox();
+        pane.getChildren().add(modifyCashBox);
+        modifyCashBox.setSpacing(10);
+
         Label lbl = new Label("Modify Available Cash");
         lbl.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-        
-        pane.setAlignment(lbl, Pos.TOP_CENTER);
-        lbl.setTranslateY(20);
-        lbl.relocate(0, 30);
-        
-        sm.getDatabase().openConn();
-        HashMap<String, Integer> current_cash = sm.getDatabase().getCashSummary();
-        sm.getDatabase().closeConn();
 
-        for (Entry<String, Integer> e : current_cash.entrySet()) {
-            System.out.println(e.getKey());
-            System.out.println(e.getValue());
-            System.out.println();
-        }
+        Button bn = new Button("Return to Cashier Portal");
+        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        
+        ////////////////////////
+        
+        // for (Entry<String, Integer> e : current_cash.entrySet()) {
+        //     System.out.println(e.getKey());
+        //     System.out.println(e.getValue());
+        //     System.out.println();
+        // }
 
+        Label currentAvailableLbl = new Label();
+        
         ComboBox denominations = new ComboBox();
         denominations.getItems().addAll(FXCollections.observableArrayList(denomsArr));
-
-        Button checkCurrent = new Button("Check current numbers");
-        checkCurrent.setOnAction(event -> {
+        denominations.setOnAction(event -> {
+            String selectedDenom = (String) denominations.getValue();
+            if (!selectedDenom.equals(null)) {
             
+                HashMap<String, Integer> currentCash = getCurrentCash();
+                int availableCash = currentCash.get(selectedDenom);
+
+                currentAvailableLbl.setText("There are currently " + availableCash + " coins/notes of denomination A$" + selectedDenom + " available in the vending machine.");
+            }
+        });
+
+        Button decreaseCurr = new Button ("-");
+        decreaseCurr.setOnAction(event -> {
+            String selectedDenom = (String) denominations.getValue();
+
+            sm.getDatabase().openConn();
+            int decrease = sm.getDatabase().decreaseCashQuantity(selectedDenom, 1);
+            sm.getDatabase().closeConn();
+
+            HashMap<String, Integer> currentCash = getCurrentCash();
+            int availableCash = currentCash.get(selectedDenom);
+            currentAvailableLbl.setText("There are currently " + availableCash + " coins/notes of denomination A$" + selectedDenom + " available in the vending machine.");
+        });
+
+        Button increaseCurr = new Button ("+");
+        increaseCurr.setOnAction(event -> {
+            String selectedDenom = (String) denominations.getValue();
+
+            sm.getDatabase().openConn();
+            int decrease = sm.getDatabase().increaseCashQuantity(selectedDenom, 1);
+            sm.getDatabase().closeConn();
+
+            HashMap<String, Integer> currentCash = getCurrentCash();
+            int availableCash = currentCash.get(selectedDenom);
+            currentAvailableLbl.setText("There are currently " + availableCash + " coins/notes of denomination A$" + selectedDenom + " available in the vending machine.");
         });
 
 
-        Button bn = new Button("Return to Cashier Portal");
-        bn.setTranslateX(-550);
-        bn.setTranslateY(320);
+        
+        /////////////////////////
+        
+        modifyCashBox.getChildren().add(lbl);
+        modifyCashBox.getChildren().add(denominations);
+        modifyCashBox.getChildren().add(currentAvailableLbl);
+        modifyCashBox.getChildren().add(decreaseCurr);
+        modifyCashBox.getChildren().add(increaseCurr);
+        modifyCashBox.getChildren().add(bn);
+    }
 
+    private HashMap<String, Integer> getCurrentCash() {
+        sm.getDatabase().openConn();
+        HashMap<String, Integer> currentCash = sm.getDatabase().getCashSummary();
+        sm.getDatabase().closeConn();
 
-        pane.getChildren().addAll(lbl, denominations, checkCurrent, bn);
-        bn.setOnAction(e -> sm.switchScenes(sm.getCashierPortalScene()));
+        return currentCash;
     }
 
     /**
