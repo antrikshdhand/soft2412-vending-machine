@@ -58,6 +58,7 @@ public class SuccessfulPage extends  Page{
             sm.switchScenes(sm.getDefaultPageScene());
         });
 
+        // Logout on cancelled transaction
         logOut.setOnAction(event -> {
             sm.switchScenes(sm.getDefaultPageScene());
             sm.getDefaultPageController().logout();
