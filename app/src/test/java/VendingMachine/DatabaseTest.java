@@ -622,4 +622,11 @@ public class DatabaseTest {
         db.closeConn();
     }
 
+    @Test
+    void testQueryItemPrice() {
+        db.openConn();
+        assertEquals(2.1, db.queryItemPrice("Sprite"), 0.01);
+        db.closeConn();
+    }
+
 }
