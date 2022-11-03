@@ -31,23 +31,22 @@ public class App extends Application {
         // primaryStage.setIcon(icon);
 
         // with javafx, by default with window will appear in the middle, unlike Swing, so no changes are needed.
-//        String sceneFile = "/fxml/Main.fxml";
-//        Parent root2= null;
-//        URL    url2 = null;
-//        try
-//        {
-//            url2 = getClass().getResource( sceneFile );
-//            root2= FXMLLoader.load( url2 );
-//            System.out.println( "  fxmlResource = " + sceneFile );
-//        }
-//        catch ( Exception ex )
-//        {
-//            System.out.println( "Exception on FXMLLoader.load()" );
-//            System.out.println( "  * url: " + url2 );
-//            System.out.println( "  * " + ex );
-//            System.out.println( "    ----------------------------------------\n" );
-////            throw ex;
-//        }
+        // String sceneFile = "/fxml/Main.fxml";
+        // Parent root2= null;
+        // URL    url2 = null;
+        // try
+        // {
+        //     url2 = getClass().getResource( sceneFile );
+        //     root2= FXMLLoader.load( url2 );
+        //     System.out.println( "  fxmlResource = " + sceneFile );
+        // }
+        // catch ( Exception ex )
+        // {
+        //     System.out.println( "Exception on FXMLLoader.load()" );
+        //     System.out.println( "  * url: " + url2 );
+        //     System.out.println( "  * " + ex );
+        //     System.out.println( "    ----------------------------------------\n" );
+        // }
 
 
         URL url = getClass().getResource("/fxml/Main.fxml");

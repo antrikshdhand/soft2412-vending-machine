@@ -97,7 +97,7 @@ public class Transaction {
 
     /**
      * Function that return the HashMap with the number of items.
-     * @return
+     * @return items
      */
     public HashMap<String, Integer> getItems() {
         return items;
@@ -143,10 +143,7 @@ public class Transaction {
             } else {
                 items.put(item, n);
             }
-
         }
-
-
     }
 
 
@@ -159,7 +156,6 @@ public class Transaction {
             this.change = 0;
         }
         changeAmount.set(change);
-
     }
 
 
@@ -169,9 +165,9 @@ public class Transaction {
 
     void calculateDue() {
         this.due = total - paid;
-        if (due < 0) {
+        if (due < 0)
             due = 0;
-        }
+
         dueAmount.set(due);
     }
 
