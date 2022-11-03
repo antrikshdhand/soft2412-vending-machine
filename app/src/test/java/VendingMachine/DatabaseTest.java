@@ -279,6 +279,21 @@ public class DatabaseTest {
     }
 
 
+    // Get all test items test simple, testing not null.
+    @Test
+    void testGetAllItems(){
+        db.openConn();
+        ArrayList<String []> name = db.getAllItems();
+        db.closeConn();
+
+        assertNotNull(name);
+    }
+
+
+
+    // t
+
+
 
     // All tests for check role
     @Test
