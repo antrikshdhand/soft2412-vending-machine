@@ -685,7 +685,7 @@ public class DatabaseTest {
 
     // Test addition of new card to the database.
     @Test
-    void testInsertNewCard()) {
+    void testInsertNewCard() {
         db.openConn();
         assertEquals(0, db.insertNewCard("UserTest", "1234", "123"));
         db.closeConn();
