@@ -162,7 +162,6 @@ public class Transaction {
     /**
      * Function that recalculates the due amount for the transaction.
      */
-
     void calculateDue() {
         this.due = total - paid;
         if (due < 0)

@@ -193,7 +193,6 @@ public class PayCard extends Page {
 
     /**
      * Writes transaction details to transactions.csv file
-     * 
      * @param username
      * @param cardNumber
      * @param cvv
