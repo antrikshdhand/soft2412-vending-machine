@@ -156,7 +156,7 @@ public class PayCard extends Page {
                 writeTransaction(username, cardNumber, cvv, total);
                 Alert paymentSuccessfulAlert = new Alert(AlertType.ERROR);
                 paymentSuccessfulAlert.setTitle("Success!");
-                paymentSuccessfulAlert.setHeaderText("Your payment was a success.");
+                paymentSuccessfulAlert.setHeaderText("Your payment of $" + total + " was a success.");
                 paymentSuccessfulAlert.setContentText("Have a great day!");
 
                 // Add to database
