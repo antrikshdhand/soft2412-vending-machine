@@ -5,35 +5,14 @@
 <br />
 <div align="center">
   <a href="https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine">
-    <img src="https://scontent-syd2-1.xx.fbcdn.net/v/t1.6435-9/94925368_1329016233956102_2389402461245800448_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=OB4LJubXIsoAX8s5V1v&_nc_ht=scontent-syd2-1.xx&oh=00_AT_KDw20LnvfVVk0v99eiA5xylVRzflnymLC4oc_2UjuHw&oe=6361B99F" alt="Logo" width="80" height="80">
+    <img src="https://scontent-syd2-1.xx.fbcdn.net/v/t1.6435-9/94925368_1329016233956102_2389402461245800448_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=4uLXd2WDZTIAX-T5Gzk&_nc_ht=scontent-syd2-1.xx&oh=00_AfAzcpoM1rSsCIRw1lRQ6iHXHloeqDbdKE0auqCqVgkn1g&oe=63955C5F" alt="Logo" width="100" height="100">
   </a>
 
 <h3 align="center">Vending Machine</h3>
 
   <p align="center">
-    Subtitle here.
-    <br />
-    <a href="https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine">View Demo</a>
-    ·
-    <a href="https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine/issues">Report Bug</a>
-  </p>
+    A vending machine simulator built in JavaFX.
 </div>
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-![Currency Converter][product-screenshot-2]
-
-ABOUT THE PROJECT
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-### Built With
-
-[![Java][Java]][Java-url]
-[![SQLite][SQLite]][SQLite-url]
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -82,42 +61,13 @@ We recommend using the [`sdkman`](https://sdkman.io) package manager to install 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
-## Usage
 
-Add usage here.
+### Built With
 
-![Currency Converter][product-screenshot-3]
-
-
-### How to test code
-
-1. Navigate to the `vending-machine/app` directory
-2. Run testing using `gradle` 
-
-  ```sh
-  gradle test
-  ```
-
-3. On successful testing, the terminal will display *BUILD SUCCESSFUL*
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[![Java][Java]][Java-url]
+[![SQLite][SQLite]][SQLite-url]
 
 
-<!-- CONTRIBUTING -->
-## Contributing
-
-**Notes for the team on how to contribute/collaborate on the codebase:** [main/notes/README.md](https://github.sydney.edu.au/adha5655/currency-converter/blob/main/notes/README.md)
-
-We welcome any collaboration and contributions from the public to this open source project. If you have a suggestion that would make this better, please fork the repo and create a pull request. These steps are listed below:
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 ## Contact
