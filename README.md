@@ -14,6 +14,12 @@
     A vending machine simulator built in JavaFX.
 </div>
 
+<div align="center">
+<em>
+NOTE: This repo is a clone of <a href="https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine">the original repo</a> which was stored in the USYD Github Enterprise.
+</em>
+</div>
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
