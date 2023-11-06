@@ -1,13 +1,6 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.sydney.edu.au/SOT2412-COMP9412-2022S2/vending-machine">
-    <img src="https://scontent-syd2-1.xx.fbcdn.net/v/t1.6435-9/94925368_1329016233956102_2389402461245800448_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=4uLXd2WDZTIAX-T5Gzk&_nc_ht=scontent-syd2-1.xx&oh=00_AfAzcpoM1rSsCIRw1lRQ6iHXHloeqDbdKE0auqCqVgkn1g&oe=63955C5F" alt="Logo" width="100" height="100">
-  </a>
-
 <h3 align="center">Vending Machine</h3>
 
   <p align="center">
